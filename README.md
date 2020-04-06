@@ -8,6 +8,19 @@ Run the uploader with a FASTA file and accompanying metadata:
 
     python3 bh20sequploader/main.py example/sequence.fasta example/metadata.json
 
+# Add a workflow
+
+get your SARS-CoV-2 sequences from GenBank in seqs.fa
+
+```sh
+minimap2 -cx asm20 -X seqs.fa seqs.fa >seqs.paf
+seqwish -s seqs.fa -p seqs.paf -g seqs.gfa
+odgi build -g seqs.gfa -s -o seqs.odgi
+odgi viz -i seqs.odgi -o seqs.png -x 4000 -y 500 -R -P 5
+```
+
+from https://github.com/virtual-biohackathons/covid-19-bh20/wiki/Pangenome#pangenome-model-from-available-genomes
+
 # Installation
 
 This tool requires the arvados Python module which can be installed

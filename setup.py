@@ -15,7 +15,7 @@ try:
 except ImportError:
     tagger = egg_info_cmd.egg_info
 
-install_requires = []
+install_requires = ["arvados-python-client"]
 
 needs_pytest = {"pytest", "test", "ptr"}.intersection(sys.argv)
 pytest_runner = ["pytest < 6", "pytest-runner < 5"] if needs_pytest else []
@@ -35,7 +35,7 @@ setup(
     tests_require=["pytest<5"],
     entry_points={
         "console_scripts": [
-            "bh20sequploader=bh20sequploader.main:main"
+            "bh20-seq-uploader=bh20sequploader.main:main"
         ]
     },
     zip_safe=True,

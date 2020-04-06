@@ -17,18 +17,22 @@ def main():
     parser.add_argument('metadata', type=argparse.FileType('r'), help='sequence metadata json')
     args = parser.parse_args()
 
-    api = arvados.api(host=ARVADOS_API_HOST, token=ARVADOS_API_TOKEN)
+    api = arvados.api(host=ARVADOS_API_HOST, token=ARVADOS_API_TOKEN, insecure=True)
 
     col = arvados.collection.Collection(api_client=api)
 
+    print("Reading FASTA")
     with col.open("sequence.fasta", "w") as f:
         r = args.sequence.read(65536)
+        print(r[0:20])
         while r:
             f.write(r)
             r = args.sequence.read(65536)
 
+    print("Reading JSONLD")
     with col.open("metadata.jsonld", "w") as f:
         r = args.metadata.read(65536)
+        print(r[0:20])
         while r:
             f.write(r)
             r = args.metadata.read(65536)
@@ -44,3 +48,5 @@ def main():
     col.save_new(owner_uuid=UPLOAD_PROJECT, name="Uploaded by %s from %s" %
                  (properties['upload_user'], properties['upload_ip']),
                  properties=properties, ensure_unique_name=True)
+
+main()

@@ -29,13 +29,14 @@ setup(
     author="Peter Amstutz",
     author_email="peter.amstutz@curii.com",
     license="Apache 2.0",
-    packages=["bh20sequploader"],
+    packages=["bh20sequploader", "bh20seqanalyzer"],
     install_requires=install_requires,
     setup_requires=[] + pytest_runner,
     tests_require=["pytest<5"],
     entry_points={
         "console_scripts": [
-            "bh20-seq-uploader=bh20sequploader.main:main"
+            "bh20-seq-uploader=bh20sequploader.main:main",
+            "bh20-seq-analyzer=bh20seqanalyzer.main:main"
         ]
     },
     zip_safe=True,

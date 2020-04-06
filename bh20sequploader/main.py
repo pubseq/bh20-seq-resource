@@ -10,7 +10,6 @@ import getpass
 ARVADOS_API_HOST='lugli.arvadosapi.com'
 ARVADOS_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
 UPLOAD_PROJECT='lugli-j7d0g-n5clictpuvwk8aa'
-WORKFLOW=''
 
 def main():
     parser = argparse.ArgumentParser(description='Upload SARS-CoV-19 sequences for analysis')

@@ -49,4 +49,5 @@ def main():
                  (properties['upload_user'], properties['upload_ip']),
                  properties=properties, ensure_unique_name=True)
 
-main()
+if __name__ == "__main__":
+    main()

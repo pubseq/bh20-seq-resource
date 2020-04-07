@@ -11,7 +11,7 @@ logging.basicConfig(format="[%(asctime)s] %(levelname)s %(message)s", datefmt="%
                     level=logging.INFO)
 logging.getLogger("googleapiclient.discovery").setLevel(logging.WARN)
 
-def validate_upload(api, collection, validated_project):
+def validate_upload(api, collection, validated_project, latest_result_uuid):
     col = arvados.collection.Collection(collection["uuid"])
 
     # validate the collection here.  Check metadata, etc.
@@ -79,12 +79,31 @@ def start_analysis(api,
         logging.error(comp.stderr.decode('utf-8'))
 
 
+def copy_most_recent_result(api, analysis_project, latest_result_uuid):
+    most_recent_analysis = api.groups().list(filters=[['owner_uuid', '=', analysis_project]],
+                                                  order="created_at desc").execute()
+    for m in most_recent_analysis["items"]:
+        cr = api.container_requests().list(filters=[['owner_uuid', '=', m["uuid"]],
+                                                    ["requesting_container_uuid", "=", None]]).execute()
+        if cr["items"] and cr["items"][0]["output_uuid"]:
+            wf = cr["items"][0]
+            src = api.collections().get(uuid=wf["output_uuid"]).execute()
+            dst = api.collections().get(uuid=latest_result_uuid).execute()
+            if src["portable_data_hash"] != dst["portable_data_hash"]:
+                logging.info("Copying latest result from '%s' to %s", m["name"], latest_result_uuid)
+                api.collections().update(uuid=latest_result_uuid,
+                                         body={"manifest_text": src["manifest_text"],
+                                               "description": "latest result from %s %s" % (m["name"], wf["uuid"])}).execute()
+            break
+
+
 def main():
     parser = argparse.ArgumentParser(description='Analyze collections uploaded to a project')
     parser.add_argument('--uploader-project', type=str, default='lugli-j7d0g-n5clictpuvwk8aa', help='')
     parser.add_argument('--analysis-project', type=str, default='lugli-j7d0g-y4k4uswcqi3ku56', help='')
     parser.add_argument('--validated-project', type=str, default='lugli-j7d0g-5ct8p1i1wrgyjvp', help='')
     parser.add_argument('--workflow-uuid', type=str, default='lugli-7fd4e-mqfu9y3ofnpnho1', help='')
+    parser.add_argument('--latest-result-uuid', type=str, default='lugli-4zz18-z513nlpqm03hpca', help='')
     args = parser.parse_args()
 
     api = arvados.api()
@@ -101,4 +120,7 @@ def main():
             start_analysis(api, args.analysis_project,
                            args.workflow_uuid,
                            args.validated_project)
+
+        copy_most_recent_result(api, args.analysis_project, args.latest_result_uuid)
+
         time.sleep(10)

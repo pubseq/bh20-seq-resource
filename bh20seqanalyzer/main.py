@@ -6,12 +6,14 @@ import subprocess
 import tempfile
 import json
 import logging
+import ruamel.yaml
+from bh20sequploader.qc_metadata import qc_metadata
 
 logging.basicConfig(format="[%(asctime)s] %(levelname)s %(message)s", datefmt="%Y-%m-%d %H:%M:%S",
                     level=logging.INFO)
 logging.getLogger("googleapiclient.discovery").setLevel(logging.WARN)
 
-def validate_upload(api, collection, validated_project, latest_result_uuid):
+def validate_upload(api, collection, validated_project):
     col = arvados.collection.Collection(collection["uuid"])
 
     # validate the collection here.  Check metadata, etc.
@@ -20,9 +22,12 @@ def validate_upload(api, collection, validated_project, latest_result_uuid):
     if "sequence.fasta" not in col:
         valid = False
         logging.warn("Upload '%s' missing sequence.fasta", collection["name"])
-    if "metadata.jsonld" not in col:
-        logging.warn("Upload '%s' missing metadata.jsonld", collection["name"])
+    if "metadata.yaml" not in col:
+        logging.warn("Upload '%s' missing metadata.yaml", collection["name"])
         valid = False
+    else:
+        metadata_content = ruamel.yaml.round_trip_load(col.open("metadata.yaml"))
+        valid = qc_metadata(metadata_content) and valid
 
     dup = api.collections().list(filters=[["owner_uuid", "=", validated_project],
                                           ["portable_data_hash", "=", col.portable_data_hash()]]).execute()

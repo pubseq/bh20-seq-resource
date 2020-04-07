@@ -1,13 +1,21 @@
-import yamale
+import schema_salad.schema
+import logging
+import pkg_resources
 
-## NOTE: this is just a DUMMY. Everything about this can and will change
 def qc_metadata(metadatafile):
-    print("Start metadata validation...")
-    schema = yamale.make_schema('../example/dummyschema.yaml')
-    data = yamale.make_data(metadatafile)
-    # Validate data against the schema. Throws a ValueError if data is invalid.
-    yamale.validate(schema, data)
-    print("...complete!")
+    schema_resource = pkg_resources.resource_stream(__name__, "bh20seq-schema.yml")
+    cache = {"https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-schema.yml": schema_resource.read().decode("utf-8")}
+    (document_loader,
+     avsc_names,
+     schema_metadata,
+     metaschema_loader) = schema_salad.schema.load_schema("https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-schema.yml", cache=cache)
 
-#qc_metadata("../example/metadata.yaml")
+    if not isinstance(avsc_names, schema_salad.avro.schema.Names):
+        print(avsc_names)
+        return False
 
+    try:
+        doc, metadata = schema_salad.schema.load_and_validate(document_loader, avsc_names, metadatafile, True)
+        return True
+    except:
+        return False

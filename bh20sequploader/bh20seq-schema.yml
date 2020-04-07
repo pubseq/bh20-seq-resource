@@ -1,0 +1,36 @@
+$graph:
+
+- name: sampleInformationSchema
+  type: record
+  fields:
+    location: string
+    host: string
+    sequenceTechnology: string
+    assemblyMethod: string
+
+- name: InstituteInformationSchema
+  type: record
+  fields:
+    OriginatingLab: string
+    SubmittingLab: string
+
+- name: SubmitterInformationSchema
+  type: record
+  fields:
+    Submitter: string
+    submissionDate: string
+
+- name: VirusDetailSchema
+  type: record
+  fields:
+    VirusName: string
+    AccessionId: string
+
+- name: MainSchema
+  type: record
+  documentRoot: true
+  fields:
+    sampleInformation: sampleInformationSchema
+    InstituteInformation: InstituteInformationSchema
+    SubmitterInformation: SubmitterInformationSchema
+    VirusDetail: VirusDetailSchema

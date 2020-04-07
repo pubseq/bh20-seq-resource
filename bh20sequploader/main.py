@@ -6,6 +6,7 @@ import json
 import urllib.request
 import socket
 import getpass
+from .qc_metadata import qc_metadata
 
 ARVADOS_API_HOST='lugli.arvadosapi.com'
 ARVADOS_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
@@ -19,6 +20,8 @@ def main():
 
     api = arvados.api(host=ARVADOS_API_HOST, token=ARVADOS_API_TOKEN, insecure=True)
 
+    qc_metadata(args.metadata.name)
+
     col = arvados.collection.Collection(api_client=api)
 
     print("Reading FASTA")
@@ -29,8 +32,8 @@ def main():
             f.write(r)
             r = args.sequence.read(65536)
 
-    print("Reading JSONLD")
-    with col.open("metadata.jsonld", "w") as f:
+    print("Reading metadata")
+    with col.open("metadata.yaml", "w") as f:
         r = args.metadata.read(65536)
         print(r[0:20])
         while r:

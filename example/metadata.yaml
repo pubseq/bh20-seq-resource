@@ -1,0 +1,17 @@
+sampleInformation:
+  location: "USA"
+  host : "Homo Sapiens"
+  sequenceTechnology: "Sanger"
+  assemblyMethod: "CLC Genomics"
+
+InstituteInformation:
+  OriginatingLab: "Erik's kitchen"
+  SubmittingLab: "National Institute for Viral Disease Control and Prevention, China CDC"
+
+SubmitterInformation:
+  Submitter: "National Institute for Viral Disease Control and Prevention, China CDC"
+  submissionDate: "04-04-2020"
+
+VirusDetail:
+  VirusName: "hCoV-19/USA/identifer/2020"
+  AccessionId: "EPI_ISL_Random"

@@ -1,0 +1,16 @@
+#sampleInformation: include('sampleInformation')
+#InstituteInformation: include('InstituteInformation')
+---
+sampleInformation:
+  location : str()
+  host : str()
+  sequenceTechnology: str()
+  assemblyMethod: str()
+
+InstituteInformation:
+  OriginatingLab: str()
+  SubmittingLab: str()
+
+VirusDetail:
+  VirusName: str()
+  AccessionId: str()

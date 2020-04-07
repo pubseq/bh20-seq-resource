@@ -6,7 +6,7 @@ import setuptools.command.egg_info as egg_info_cmd
 from setuptools import setup
 
 SETUP_DIR = os.path.dirname(__file__)
-README = os.path.join(SETUP_DIR, "README.rst")
+README = os.path.join(SETUP_DIR, "README.md")
 
 try:
     import gittaggers

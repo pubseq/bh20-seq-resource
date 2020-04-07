@@ -81,7 +81,7 @@ def start_analysis(api,
 
 def copy_most_recent_result(api, analysis_project, latest_result_uuid):
     most_recent_analysis = api.groups().list(filters=[['owner_uuid', '=', analysis_project]],
-                                                  order="created_at desc").execute()
+                                                  order="created_at desc", limit=1).execute()
     for m in most_recent_analysis["items"]:
         cr = api.container_requests().list(filters=[['owner_uuid', '=', m["uuid"]],
                                                     ["requesting_container_uuid", "=", None]]).execute()

@@ -1,7 +1,8 @@
 ---
-title: 'Logic Programming Working Group'
+title: 'Public Sequence Resource for COVID-19'
 tags:
-  - logic programming
+  - Sequencing
+  - COVID
 authors:
   - name: Pjotr Prins
     orcid: 0000-0002-8021-9162

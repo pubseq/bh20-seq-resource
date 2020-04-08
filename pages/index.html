@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Simple Web Uploader for Public SARS-CoV-2 Sequence Resource</title>
+    </head>
+    <body>
+        <h1>Simple Web Uploader for Public SARS-CoV-2 Sequence Resource</h1>
+        <hr>
+        <p>
+            This tool can be used to upload sequenced genomes of SARS-CoV-2 samples to the <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">Public SARS-CoV-2 Sequence Resource</a>. Your uploaded sequence will automatically be processed and incorporated into the public pangenome.
+        </p>
+        <hr>
+        <form action="/submit" method="POST" enctype="multipart/form-data">
+            <label for="fasta">Select FASTA file for assembled genome (max 1MB):</label>
+            <br>
+            <input type="file" id="fasta" name="fasta" accept=".fa,.fasta,.fna">
+            <br>
+            <label for="metadata">Select JSON-LD metadata file following <a href="https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-schema.yml">this schema</a> (max 1MB):</label>
+            <br>
+            <input type="file" id="metadata" name="metadata" accept=".json">
+            <br>
+            <input type="submit" value="Add to Pangenome">
+        </form>
+        <hr>
+    </body>
+</html>

@@ -2,7 +2,7 @@
 
 This repository provides a sequence uploader for the COVID-19 Virtual Biohackathon's Public Sequence Resource project. You can use it to upload the genomes of SARS-CoV-2 samples to make them publicly and freely available to other researchers.
 
-To get started, first [install the uploader](#installation), and use the `bh20-seq-uploader` command to [uplaod your data](#usage).
+To get started, first [install the uploader](#installation), and use the `bh20-seq-uploader` command to [upload your data](#usage).
 
 # Installation
 

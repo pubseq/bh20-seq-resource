@@ -20,12 +20,18 @@ def main():
 
     api = arvados.api(host=ARVADOS_API_HOST, token=ARVADOS_API_TOKEN, insecure=True)
 
-    qc_metadata(args.metadata.name)
+    if not qc_metadata(args.metadata.name):
+        print("Failed metadata qc")
+        exit(1)
 
     col = arvados.collection.Collection(api_client=api)
 
-    print("Reading FASTA")
-    with col.open("sequence.fasta", "w") as f:
+    if args.sequence.name.endswith("fasta") or args.sequence.name.endswith("fa"):
+        target = "sequence.fasta"
+    elif args.sequence.name.endswith("fastq") or args.sequence.name.endswith("fq"):
+        target = "reads.fastq"
+
+    with col.open(target, "w") as f:
         r = args.sequence.read(65536)
         print(r[0:20])
         while r:
@@ -51,6 +57,8 @@ def main():
     col.save_new(owner_uuid=UPLOAD_PROJECT, name="Uploaded by %s from %s" %
                  (properties['upload_user'], properties['upload_ip']),
                  properties=properties, ensure_unique_name=True)
+
+    print("Done")
 
 if __name__ == "__main__":
     main()

@@ -26,7 +26,7 @@ def type_to_heading(type_name):
     """
     Turn a type name like "sampleSchema" from the metadata schema into a human-readable heading.
     """
-    
+
     # Remove camel case
     decamel = re.sub('([A-Z])', r' \1', type_name)
     # Split
@@ -35,12 +35,12 @@ def type_to_heading(type_name):
     filtered = [part.capitalize() for part in parts if (part.lower() != 'schema' and part != '')]
     # Reassemble
     return ' '.join(filtered)
-    
+
 def name_to_label(field_name):
     """
     Turn a filed name like "host_health_status" from the metadata schema into a human-readable label.
     """
-    
+
     return string.capwords(field_name.replace('_', ' '))
 
 def generate_form(schema):
@@ -50,10 +50,10 @@ def generate_form(schema):
     form section in the template) or an 'id', 'label', 'type', and 'required'
     (in which case we make a form field in the template).
     """
-    
+
     # Get the list of form components, one of which is the root
     components = schema.get('$graph', [])
-    
+
     # Find the root
     root_name = None
     # And also index components by type name
@@ -67,8 +67,8 @@ def generate_form(schema):
         if component.get('documentRoot', False):
             # Find whichever one is the root
             root_name = component_name
-            
-            
+
+
     def walk_fields(type_name, parent_keys=['metadata'], subtree_optional=False):
         """
         Do a traversal of the component tree.
@@ -76,14 +76,14 @@ def generate_form(schema):
         Form IDs are .-separated keypaths for where they are in the structure.
         parent_keys is the path of field names to where we are in the root record's document tree.
         """
-        
+
         if len(parent_keys) > 1:
             # First make a heading, if we aren't the very root of the form
             yield {'heading': type_to_heading(type_name)}
-            
+
         for field_name, field_type in by_name.get(type_name, {}).get('fields', {}).items():
             # For each field
-            
+
             ref_url = None
             if not isinstance(field_type, str):
                 # If the type isn't a string
@@ -91,7 +91,7 @@ def generate_form(schema):
                 ref_url = field_type.get('jsonldPredicate', {}).get('_id', None)
                 # Grab out its type field
                 field_type = field_type.get('type', '')
-                
+
             # Decide if the field is optional (type ends in ?)
             optional = False
             if len(field_type) > 0 and field_type[-1] == '?':
@@ -99,7 +99,7 @@ def generate_form(schema):
                 optional = True
                 # Drop the ?
                 field_type = field_type[:-1]
-                
+
             if field_type in by_name:
                 # This is a subrecord. We need to recurse
                 for item in walk_fields(field_type, parent_keys + [field_name], subtree_optional or optional):
@@ -119,9 +119,9 @@ def generate_form(schema):
                 else:
                     raise NotImplementedError('Unimplemented field type {} in {} in metadata schema'.format(field_type, type_name))
                 yield record
-                
+
     return list(walk_fields(root_name))
-    
+
 # At startup, we need to load the current metadata schema so we can make a form for it
 METADATA_SCHEMA = yaml.safe_load(urllib.request.urlopen('https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-schema.yml'))
 FORM_ITEMS = generate_form(METADATA_SCHEMA)
@@ -131,23 +131,23 @@ def send_form():
     """
     Send the file upload form/front page.
     """
-    
+
     return render_template('form.html', fields=FORM_ITEMS)
-    
+
 class FileTooBigError(RuntimeError):
     """
     Raised when the user gives a file that is too large.
     """
     pass
-    
+
 def copy_with_limit(in_file, out_file, limit=1024*1024):
     """
     Copy a file stream, and raise FileTooBigError if the file is too big.
     """
-    
+
     bytes_used = 0
     buf_size = 65536
-    
+
     buf = in_file.read(buf_size)
     bytes_used += len(buf)
     while buf:
@@ -156,28 +156,28 @@ def copy_with_limit(in_file, out_file, limit=1024*1024):
         out_file.write(buf)
         buf = in_file.read(buf_size)
         bytes_used += len(buf)
-    
+
 def parse_input(input_string, html_type):
     """
     Parse an input from the given HTML input type into a useful Python type.
-    
+
     Raise ValueError if something does not parse.
     Raise NotImplementedError if we forgot to implement a type.
     """
-    
+
     if html_type == 'text':
         return input_string
     elif html_type == 'number':
         return int(input_string)
     else:
         raise NotImplementedError('Unimplemented input type: {}'.format(html_type))
-    
+
 @app.route('/submit', methods=['POST'])
-def recieve_files():
+def receive_files():
     """
-    Recieve the uploaded files.
+    Receive the uploaded files.
     """
-    
+
     # We're going to work in one directory per request
     dest_dir = tempfile.mkdtemp()
     fasta_dest = os.path.join(dest_dir, 'fasta.fa')
@@ -192,7 +192,7 @@ def recieve_files():
         except FileTooBigError as e:
             # Delegate to the 413 error handler
             return handle_large_file(e)
-            
+
         if request.form.get('metadata_type', None) == 'upload':
             if 'metadata' not in request.files:
                 return (render_template('error.html',
@@ -206,12 +206,12 @@ def recieve_files():
         elif request.form.get('metadata_type', None) == 'fill':
             # Build a metadata dict
             metadata = {}
-            
+
             for item in FORM_ITEMS:
                 # Pull all the field values we wanted from the form
                 if 'heading' in item:
                     continue
-                
+
                 if item['id'] in request.form and len(request.form[item['id']]) > 0:
                     # We have this thing. Make a place in the dict tree for it.
                     parts = item['id'].split('.')
@@ -223,7 +223,7 @@ def recieve_files():
                         if parent not in dest_dict:
                             dest_dict[parent] = {}
                         dest_dict = dest_dict[parent]
-                        
+
                     try:
                         # Now finally add the item
                         dest_dict[key] = parse_input(request.form[item['id']], item['type'])
@@ -234,18 +234,18 @@ def recieve_files():
                 elif item['required']:
                     return (render_template('error.html',
                             error_message="You omitted the required metadata item {}".format(item['id'])), 403)
-            
+
             # Now serialize the file with all the items
             with open(metadata_dest, 'w') as out_stream:
                 yaml.dump(metadata, out_stream)
         else:
             return (render_template('error.html',
                     error_message="You did not include metadata."), 403)
-        
+
         # Try and upload files to Arvados
         result = subprocess.run(['bh20-seq-uploader', fasta_dest, metadata_dest],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            
+
         if result.returncode != 0:
             # It didn't work. Complain.
             error_message="Upload failed. Uploader returned {} and said:\n{}".format(result.returncode, result.stderr)
@@ -255,7 +255,3 @@ def recieve_files():
             return render_template('success.html', log=result.stdout.decode('utf-8', errors='replace'))
     finally:
         shutil.rmtree(dest_dir)
-        
-    
-    
-

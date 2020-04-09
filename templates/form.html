@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Simple Web Uploader for Public SARS-CoV-2 Sequence Resource</title>
+    </head>
+    <body>
+        <h1>Simple Web Uploader for Public SARS-CoV-2 Sequence Resource</h1>
+        <hr>
+        <p>
+            This tool can be used to upload sequenced genomes of SARS-CoV-2 samples to the <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">Public SARS-CoV-2 Sequence Resource</a>. Your uploaded sequence will automatically be processed and incorporated into the public pangenome.
+        </p>
+        <hr>
+        <form action="/submit" method="POST" enctype="multipart/form-data" id="main_form">
+            <label for="fasta">Select FASTA file for assembled genome (max 1MB):</label>
+            <br>
+            <input type="file" id="fasta" name="fasta" accept=".fa,.fasta,.fna" required>
+            <br>
+            
+            <label>Select metadata submission method:</label>
+            <br>
+            <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="setMode()" checked required>
+            <label for="metadata_upload">Upload metadata file</label>
+            <br>
+            <input type="radio" id="metadata_form" name="metadata_type" value="fill" onchange="setMode()" required>
+            <label for="metadata_form">Fill in metadata manually</label>
+            <br>
+            
+            <div id="metadata_upload_form_spot">
+                <div id="metadata_upload_form">
+                    <label for="metadata">Select JSON or YAML metadata file following <a href="https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-schema.yml">this schema</a> (max 1MB):</label>
+                    <br>
+                    <input type="file" id="metadata" name="metadata" accept=".json,.yml,.yaml" required>
+                    <br>
+                </div>
+            </div>
+            
+            <div id="metadata_fill_form_spot">
+                <div id="metadata_fill_form">
+                    {% for record in fields %}
+                        {% if 'heading' in record %}
+                            <h4>{{ record['heading'] }}</h4>
+                        {% else %}
+                            <label for="{{ record['id'] }}">
+                                {{ record['label'] }}
+                                {{ "*" if record['required'] else "" }}
+                                {% if 'ref_url' in record %}
+                                    <a href="{{ record['ref_url'] }}" title="More Info" target="_blank">?</a>
+                                {% endif %}
+                            </label>
+                            <br>
+                            <input type="{{ record['type'] }}" id="{{ record['id'] }}" name="{{ record['id'] }}" {{ "required" if record['required'] else "" }}>
+                            <br>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <input type="submit" value="Add to Pangenome">
+        </form>
+        <hr>
+        <small><a href="https://github.com/adamnovak/bh20-simple-web-uploader">Source</a> &middot; Made for <a href="https://github.com/virtual-biohackathons/covid-19-bh20">COVID-19-BH20</a></small>
+        <script type="text/javascript">
+            let uploadForm = document.getElementById('metadata_upload_form')
+            let uploadFormSpot = document.getElementById('metadata_upload_form_spot')
+            let fillForm = document.getElementById('metadata_fill_form')
+            let fillFormSpot = document.getElementById('metadata_fill_form_spot')
+            
+            function setUploadMode() {
+                // Make the upload form the one in use
+                uploadFormSpot.appendChild(uploadForm)
+                fillFormSpot.removeChild(fillForm)
+            }
+            
+            function setFillMode() {
+                // Make the fillable form the one in use
+                uploadFormSpot.removeChild(uploadForm)
+                fillFormSpot.appendChild(fillForm)
+            }
+            
+            function setMode() {
+                // Pick mode based on radio
+                if (document.getElementById('metadata_upload').checked) {
+                    setUploadMode()
+                } else {
+                    setFillMode()
+                }
+            }
+            
+            // Start in mode appropriate to selected form item
+            setMode()
+        </script>
+    </body>
+</html>

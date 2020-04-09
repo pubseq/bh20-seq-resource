@@ -1,3 +1,8 @@
+$base: http://biohackathon.org/bh20-seq-schema
+$namespaces:
+  sch: https://schema.org/
+  efo: http://www.ebi.ac.uk/efo/
+  obo: http://purl.obolibrary.org/obo/
 $graph:
 
 - name: hostSchema
@@ -76,3 +81,9 @@ $graph:
     virus: virusSchema?
     technology: technologySchema
     submitter: submitterSchema
+    sequencefile:
+      doc: The subject (eg the fasta/fastq file) that this metadata describes
+      type: string?
+      jsonldPredicate:
+        _id: "@id"
+        _type: "@id"

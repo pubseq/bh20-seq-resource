@@ -29,3 +29,23 @@ arvados-python-client-2.0.1 ciso8601-2.1.3 future-0.18.2 google-api-python-clien
 ```sh
 ~/opt/guix/bin/guix environment guix --ad-hoc git python openssl python-pycurl nss-certs -- python3 bh20sequploader/main.py
 ```
+
+### Using the Web Uploader
+
+To run the web uploader in a GNU Guix environment
+
+```
+guix environment guix --ad-hoc git python python-flask python-pyyaml nss-certs --network openssl -- env FLASK_APP=bh20simplewebuploader/main.py flask run
+```
+
+The containerized version looks like
+
+```
+guix environment -C guix --ad-hoc git python python-flask python-pyyaml nss-certs --network openssl
+```
+
+and
+
+```
+env FLASK_APP=bh20simplewebuploader/main.py flask run
+```

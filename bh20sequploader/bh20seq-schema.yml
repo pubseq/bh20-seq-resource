@@ -3,14 +3,20 @@ $graph:
 - name: hostSchema
   type: record
   fields:
+    host_species:
+        type: string
+        jsonldPredicate:
+          _id: http://www.ebi.ac.uk/efo/EFO_0000532
     host_id: string
-    host_species: string
     host_common_name: string?
     host_sex: string?
     host_age: int?
     host_age_unit: string?
     host_health_status: string?
-    host_treatment: string?
+    host_treatment:
+      type: string?
+      jsonldPredicate:
+          _id: http://www.ebi.ac.uk/efo/EFO_0000727
     additional_host_information: string?
 
 - name: sampleSchema
@@ -20,7 +26,10 @@ $graph:
     collecting_institution: string
     specimen_source: string?
     collection_date: string?
-    collection_location: string?
+    collection_location:
+      type: string?
+      jsonldPredicate:
+        _id: https://schema.org/fromLocation
     sample_storage_conditions: string?
     additional_collection_information: string?
 
@@ -33,9 +42,18 @@ $graph:
 - name: technologySchema
   type: record
   fields:
-    sample_sequencing_technology: string
-    sequence_assembly_method: string?
-    sequencing_coverage: string?
+    sample_sequencing_technology:
+      type: string
+      jsonldPredicate:
+        _id: http://www.ebi.ac.uk/efo/EFO_0000532
+    sequence_assembly_method:
+      type: string?
+      jsonldPredicate:
+        _id: http://www.ebi.ac.uk/efo/EFO_0002699
+    sequencing_coverage:
+      type: string?
+      jsonldPredicate:
+        _id: http://purl.obolibrary.org/obo/FLU_0000848
 
 - name: submitterSchema
   type: record

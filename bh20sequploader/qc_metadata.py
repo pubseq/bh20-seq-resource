@@ -1,6 +1,7 @@
 import schema_salad.schema
 import logging
 import pkg_resources
+import logging
 
 def qc_metadata(metadatafile):
     schema_resource = pkg_resources.resource_stream(__name__, "bh20seq-schema.yml")
@@ -17,5 +18,6 @@ def qc_metadata(metadatafile):
     try:
         doc, metadata = schema_salad.schema.load_and_validate(document_loader, avsc_names, metadatafile, True)
         return True
-    except:
-        return False
+    except Exception as e:
+        logging.warn(e)
+    return False

@@ -122,19 +122,7 @@ It should print some instructions about how to use the uploader.
 
 ## Installation with GNU Guix
 
-Another way to install this tool is inside a [GNU Guix Environment](https://guix.gnu.org/manual/en/html_node/Invoking-guix-environment.html), which can handle installing dependencies for you even when you don't have root access on an Ubuntu system.
-
-1. **Set up and enter a container with the necessary dependencies.** After installing Guix as `~/opt/guix/bin/guix`, run:
-
-```sh
-~/opt/guix/bin/guix environment -C guix --ad-hoc git python openssl python-pycurl nss-certs
-```
-   
-2. **Install the tool.** From there you can follow the [user installation instructions](#installation-with-pip3---user). In brief:
-
-```sh
-pip3 install --user git+https://github.com/arvados/bh20-seq-resource.git@master
-```
+For running/developing the uploader with GNU Guix see [INSTALL.md](./doc/INSTALL.md)
 
 # Usage
 
@@ -148,7 +136,7 @@ bh20-seq-uploader example/sequence.fasta example/metadata.json
 
 All these uploaded sequences are being fed into a workflow to generate a [pangenome](https://academic.oup.com/bib/article/19/1/118/2566735) for the virus. You can replicate this workflow yourself.
 
-Get your SARS-CoV-2 sequences from GenBank in `seqs.fa`, and then run:
+An example is to get your SARS-CoV-2 sequences from GenBank in `seqs.fa`, and then run a series of commands
 
 ```sh
 minimap2 -cx asm20 -X seqs.fa seqs.fa >seqs.paf
@@ -156,6 +144,9 @@ seqwish -s seqs.fa -p seqs.paf -g seqs.gfa
 odgi build -g seqs.gfa -s -o seqs.odgi
 odgi viz -i seqs.odgi -o seqs.png -x 4000 -y 500 -R -P 5
 ```
+
+Here we convert such a pipeline into the Common Workflow Language (CWL) and
+sources can be found [here](https://github.com/hpobio-lab/viral-analysis/tree/master/cwl/pangenome-generate).
 
 For more information on building pangenome models, [see this wiki page](https://github.com/virtual-biohackathons/covid-19-bh20/wiki/Pangenome#pangenome-model-from-available-genomes).
 

@@ -19,9 +19,9 @@ authors:
   - name: Erik Garrison
     orcid: 0000
     affiliation: 5
-  - name: Michael Crusoe
-    orcid: 0000
-    affiliation: 6
+  - name: Michael R. Crusoe
+    orcid: 0000-0002-2961-9670
+    affiliation: 6, 2
   - name: Rutger Vos
     orcid: 0000
     affiliation: 7
@@ -34,6 +34,8 @@ affiliations:
     index: 1
   - name: Curii, Boston, USA
     index: 2
+  - name: Department of Computer Science, Faculty of Sciences, Vrije Universiteit Amsterdam, The Netherlands
+    index: 6
 date: 11 April 2020
 bibliography: paper.bib
 ---

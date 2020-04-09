@@ -242,7 +242,7 @@ def receive_files():
             return (render_template('error.html',
                     error_message="You did not include metadata."), 403)
 
-        # Try and upload files to Arvados
+        # Try and upload files to Arvados using the sequence uploader CLI
         result = subprocess.run(['bh20-seq-uploader', fasta_dest, metadata_dest],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 

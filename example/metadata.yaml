@@ -1,0 +1,38 @@
+host:
+    host_id: XX1
+    host_species: string
+    host_common_name: string
+    host_sex: string
+    host_age: 20
+    host_age_unit: string
+    host_health_status: string
+    host_treatment: string
+    additional_host_information: string
+
+sample:
+    collector_name: XXX
+    collecting_institution: XXX
+    specimen_source: XXX
+    collection_date: XXX
+    collection_location: XXX
+    sample_storage_conditions: XXX
+    additional_collection_information: XXX
+
+virus:
+    virus_species: XX
+    virus_strain: XX
+
+technology:
+    sample_sequencing_technology: XX
+    sequence_assembly_method: XX
+    sequencing_coverage: 70x
+
+submitter:
+    submitter_name: tester
+    submitter_address: testerAdd
+    originating_lab: testLab
+    lab_address: labAdd
+    provider_sample_id: string
+    submitter_sample_id: string
+    authors: testAuthor
+    submitter_id: X12

@@ -6,6 +6,7 @@ import json
 import urllib.request
 import socket
 import getpass
+from .qc_metadata import qc_metadata
 
 ARVADOS_API_HOST='lugli.arvadosapi.com'
 ARVADOS_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
@@ -19,18 +20,26 @@ def main():
 
     api = arvados.api(host=ARVADOS_API_HOST, token=ARVADOS_API_TOKEN, insecure=True)
 
+    if not qc_metadata(args.metadata.name):
+        print("Failed metadata qc")
+        exit(1)
+
     col = arvados.collection.Collection(api_client=api)
 
-    print("Reading FASTA")
-    with col.open("sequence.fasta", "w") as f:
+    if args.sequence.name.endswith("fasta") or args.sequence.name.endswith("fa"):
+        target = "sequence.fasta"
+    elif args.sequence.name.endswith("fastq") or args.sequence.name.endswith("fq"):
+        target = "reads.fastq"
+
+    with col.open(target, "w") as f:
         r = args.sequence.read(65536)
         print(r[0:20])
         while r:
             f.write(r)
             r = args.sequence.read(65536)
 
-    print("Reading JSONLD")
-    with col.open("metadata.jsonld", "w") as f:
+    print("Reading metadata")
+    with col.open("metadata.yaml", "w") as f:
         r = args.metadata.read(65536)
         print(r[0:20])
         while r:
@@ -49,4 +58,7 @@ def main():
                  (properties['upload_user'], properties['upload_ip']),
                  properties=properties, ensure_unique_name=True)
 
-main()
+    print("Done")
+
+if __name__ == "__main__":
+    main()

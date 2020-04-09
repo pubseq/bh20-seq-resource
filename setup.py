@@ -6,7 +6,7 @@ import setuptools.command.egg_info as egg_info_cmd
 from setuptools import setup
 
 SETUP_DIR = os.path.dirname(__file__)
-README = os.path.join(SETUP_DIR, "README.rst")
+README = os.path.join(SETUP_DIR, "README.md")
 
 try:
     import gittaggers
@@ -15,7 +15,7 @@ try:
 except ImportError:
     tagger = egg_info_cmd.egg_info
 
-install_requires = ["arvados-python-client"]
+install_requires = ["arvados-python-client", "schema-salad"]
 
 needs_pytest = {"pytest", "test", "ptr"}.intersection(sys.argv)
 pytest_runner = ["pytest < 6", "pytest-runner < 5"] if needs_pytest else []
@@ -30,6 +30,7 @@ setup(
     author_email="peter.amstutz@curii.com",
     license="Apache 2.0",
     packages=["bh20sequploader", "bh20seqanalyzer"],
+    package_data={"bh20sequploader": ["bh20seq-schema.yml"]},
     install_requires=install_requires,
     setup_requires=[] + pytest_runner,
     tests_require=["pytest<5"],

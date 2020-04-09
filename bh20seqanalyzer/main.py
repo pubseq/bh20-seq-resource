@@ -110,13 +110,20 @@ def start_pangenome_analysis(api,
                              validated_project):
     validated = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", validated_project]])
     inputobj = {
-        "inputReads": []
+        "inputReads": [],
+        "metadata": [],
+        "subjects": []
     }
     for v in validated:
         inputobj["inputReads"].append({
             "class": "File",
             "location": "keep:%s/sequence.fasta" % v["portable_data_hash"]
         })
+        inputobj["metadata"].append({
+            "class": "File",
+            "location": "keep:%s/metadata.yaml" % v["portable_data_hash"]
+        })
+        inputobj["subjects"].append("keep:%s/sequence.fasta" % v["portable_data_hash"])
     run_workflow(api, analysis_project, pangenome_workflow_uuid, "Pangenome analysis", inputobj)
 
 

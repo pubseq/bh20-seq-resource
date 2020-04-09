@@ -1,36 +1,60 @@
 $graph:
 
-- name: sampleInformationSchema
+- name: hostSchema
   type: record
   fields:
-    location: string
-    host: string
-    sequenceTechnology: string
-    assemblyMethod: string
+    host_id: string
+    host_species: string
+    host_common_name: string?
+    host_sex: string?
+    host_age: int?
+    host_age_unit: string?
+    host_health_status: string?
+    host_treatment: string?
+    additional_host_information: string?
 
-- name: InstituteInformationSchema
+- name: sampleSchema
   type: record
   fields:
-    OriginatingLab: string
-    SubmittingLab: string
+    collector_name: string
+    collecting_institution: string
+    specimen_source: string?
+    collection_date: string?
+    collection_location: string?
+    sample_storage_conditions: string?
+    additional_collection_information: string?
 
-- name: SubmitterInformationSchema
+- name: virusSchema
   type: record
   fields:
-    Submitter: string
-    submissionDate: string
+    virus_species: string?
+    virus_strain: string?
 
-- name: VirusDetailSchema
+- name: technologySchema
   type: record
   fields:
-    VirusName: string
-    AccessionId: string
+    sample_sequencing_technology: string
+    sequence_assembly_method: string?
+    sequencing_coverage: string?
+
+- name: submitterSchema
+  type: record
+  fields:
+    submitter_name: string
+    submitter_address: string?
+    originating_lab: string
+    lab_address: string?
+    provider_sample_id: string?
+    submitter_sample_id: string?
+    authors: string?
+    submitter_id: string?
 
 - name: MainSchema
   type: record
   documentRoot: true
   fields:
-    sampleInformation: sampleInformationSchema
-    InstituteInformation: InstituteInformationSchema
-    SubmitterInformation: SubmitterInformationSchema
-    VirusDetail: VirusDetailSchema
+    host: hostSchema
+    sample: sampleSchema
+    virus: virusSchema?
+    technology: technologySchema
+    submitter: submitterSchema

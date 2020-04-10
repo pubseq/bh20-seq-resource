@@ -29,7 +29,7 @@ def validate_upload(api, collection, validated_project,
     else:
         try:
             metadata_content = ruamel.yaml.round_trip_load(col.open("metadata.yaml"))
-            metadata_content["id"] = "keep:%s/metadata.yaml" % collection["portable_data_hash"]
+            metadata_content["id"] = "http://arvados.org/keep:%s/metadata.yaml" % collection["portable_data_hash"]
             add_lc_filename(metadata_content, metadata_content["id"])
             valid = qc_metadata(metadata_content) and valid
         except Exception as e:
@@ -146,7 +146,7 @@ def start_pangenome_analysis(api,
             "class": "File",
             "location": "keep:%s/metadata.yaml" % v["portable_data_hash"]
         })
-        inputobj["subjects"].append("keep:%s/sequence.fasta" % v["portable_data_hash"])
+        inputobj["subjects"].append("http://arvados.org/keep:%s/sequence.fasta" % v["portable_data_hash"])
     run_workflow(api, analysis_project, pangenome_workflow_uuid, "Pangenome analysis", inputobj)
 
 

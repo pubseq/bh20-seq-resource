@@ -169,11 +169,6 @@ $graph:
     virus: virusSchema?
     technology: technologySchema
     submitter: submitterSchema
-    submission:
-      type: string
-      jsonldPredicate:
-        _id: "@id"
-        #_type: "@id"
     id:
       doc: The subject (eg the fasta/fastq file) that the metadata describes
       type: string?

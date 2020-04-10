@@ -88,7 +88,11 @@ def generate_form(schema):
             if not isinstance(field_type, str):
                 # If the type isn't a string
                 # See if it has a more info/what goes here URL
-                ref_url = field_type.get('jsonldPredicate', {}).get('_id', None)
+                predicate = field_type.get('jsonldPredicate', {})
+                if not isinstance(predicate, str):
+                    ref_url = predicate.get('_id', None)
+                else:
+                    ref_url = predicate # not sure this is correct
                 # Grab out its type field
                 field_type = field_type.get('type', '')
 

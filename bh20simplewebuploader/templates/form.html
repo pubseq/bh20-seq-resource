@@ -1,95 +1,210 @@
 <!DOCTYPE html>
 <html>
+    <style>
+     hr {
+         margin: auto 0;
+     }
+
+     body {
+         color: #101010;
+     }
+
+     h1, h4 {
+         font-family: 'Roboto Slab', serif;
+     }
+
+     h1 {
+         text-align: center;
+     }
+
+     p {
+         color: #505050;
+         font-style: italic;
+     }
+
+     p, form {
+         font-family: 'Raleway', sans-serif;
+         line-height: 1.5;
+     }
+
+     form h4 {
+         text-transform: 'uppercase';
+     }
+
+     .intro, form {
+         padding: 20px;
+     }
+
+     .intro {
+         margin: 0 auto;
+         padding: 20px;
+     }
+
+     .grid-container {
+         display: grid;
+         grid-template-columns: repeat(4, 1fr);
+         grid-template-rows: auto;
+         row-gap:5px;
+         grid-template-areas:
+             "a a b b"
+             "a a c c"
+             "a a d d"
+             "e e e e"
+             "f f f f";
+         grid-auto-flow: column;
+     }
+
+     .intro {
+         grid-area: a;
+     }
+
+     .fasta-file-select {
+         grid-area: b;
+     }
+
+     .metadata {
+         grid-area: c;
+     }
+
+     #metadata_upload_form_spot {
+         grid-area: d;
+     }
+
+     #metadata_fill_form_spot {
+         grid-area: e;
+     }
+
+     #metadata_fill_form {
+         column-count: 4;
+         margin-top: 0.5em;
+         column-width: 250px;
+     }
+
+     .record {
+         display: flex;
+         flex-direction: column;
+         border: solid 1px #808080;
+         padding: 1em;
+         background: #F8F8F8;
+         margin-bottom: 1em;
+     }
+
+     .record label {
+         font-size: small;
+         margin-top: 10px;
+     }
+
+     .submit {
+         grid-area: f;
+         width: 17em;
+         justify-self: center;
+     }
+    </style>
+
     <head>
         <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Roboto+Slab&display=swap" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Simple Web Uploader for Public SARS-CoV-2 Sequence Resource</title>
     </head>
     <body>
         <h1>Simple Web Uploader for Public SARS-CoV-2 Sequence Resource</h1>
         <hr>
-        <p>
-            This tool can be used to upload sequenced genomes of SARS-CoV-2 samples to the <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">Public SARS-CoV-2 Sequence Resource</a>. Your uploaded sequence will automatically be processed and incorporated into the public pangenome.
-        </p>
-        <hr>
-        <form action="/submit" method="POST" enctype="multipart/form-data" id="main_form">
-            <label for="fasta">Select FASTA file for assembled genome (max 1MB):</label>
-            <br>
-            <input type="file" id="fasta" name="fasta" accept=".fa,.fasta,.fna" required>
-            <br>
-            
-            <label>Select metadata submission method:</label>
-            <br>
-            <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="setMode()" checked required>
-            <label for="metadata_upload">Upload metadata file</label>
-            <br>
-            <input type="radio" id="metadata_form" name="metadata_type" value="fill" onchange="setMode()" required>
-            <label for="metadata_form">Fill in metadata manually</label>
-            <br>
-            
-            <div id="metadata_upload_form_spot">
-                <div id="metadata_upload_form">
-                    <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> (<a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/metadata.yaml" target="_blank">Example 1</a>, <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/minimal_example.yaml" target="_blank">Example 2</a>, max 1MB):</label>
+        <section>
+            <form action="/submit" method="POST" enctype="multipart/form-data" id="main_form" class="grid-container">
+                <p class="intro">
+                    This tool can be used to upload sequenced genomes of SARS-CoV-2 samples to the <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">Public SARS-CoV-2 Sequence Resource</a>. Your uploaded sequence will automatically be processed and incorporated into the public pangenome.
+                </p>
+                <div class="fasta-file-select">
+                    <label for="fasta">Select FASTA file for assembled genome (max 1MB):</label>
                     <br>
-                    <input type="file" id="metadata" name="metadata" accept=".json,.yml,.yaml" required>
+                    <input type="file" id="fasta" name="fasta" accept=".fa,.fasta,.fna" required>
                     <br>
                 </div>
-            </div>
-            
-            <div id="metadata_fill_form_spot">
-                <div id="metadata_fill_form">
-                    {% for record in fields %}
+
+                <div class="metadata">
+                    <label>Select metadata submission method:</label>
+                    <br>
+                    <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="setMode()" checked required>
+                    <label for="metadata_upload">Upload metadata file</label>
+                    <input type="radio" id="metadata_form" name="metadata_type" value="fill" onchange="setMode()" required>
+                    <label for="metadata_form">Fill in metadata manually</label>
+                    <br>
+                </div>
+
+                <div id="metadata_upload_form_spot">
+                    <div id="metadata_upload_form">
+                        <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> (<a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/metadata.yaml" target="_blank">Example 1</a>, <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/minimal_example.yaml" target="_blank">Example 2</a>, max 1MB):</label>
+                        <br>
+                        <input type="file" id="metadata" name="metadata" accept=".json,.yml,.yaml" required>
+                        <br>
+                    </div>
+                </div>
+
+                <div id="metadata_fill_form_spot">
+                    <div id="metadata_fill_form">
+                        {{ record }}
+                        {% for record in fields %}
+
                         {% if 'heading' in record %}
-                            <h4>{{ record['heading'] }}</h4>
+                        {% if loop.index > 1 %}
+                    </div>
+                    {% endif %}
+                    <div class="record">
+                        <h4>{{ record['heading'] }}</h4>
                         {% else %}
-                            <label for="{{ record['id'] }}">
-                                {{ record['label'] }}
-                                {{ "*" if record['required'] else "" }}
-                                {% if 'ref_url' in record %}
-                                    <a href="{{ record['ref_url'] }}" title="More Info" target="_blank">?</a>
-                                {% endif %}
-                            </label>
-                            <br>
-                            <input type="{{ record['type'] }}" id="{{ record['id'] }}" name="{{ record['id'] }}" {{ "required" if record['required'] else "" }}>
-                            <br>
+                        <label for="{{ record['id'] }}">
+                            {{ record['label'] }}
+                            {{ "*" if record['required'] else "" }}
+                            {% if 'ref_url' in record %}
+                            <a href="{{ record['ref_url'] }}" title="More Info" target="_blank">?</a>
+                            {% endif %}
+                        </label>
+                        <input type="{{ record['type'] }}" id="{{ record['id'] }}" name="{{ record['id'] }}" {{ "required" if record['required'] else "" }}>
                         {% endif %}
+                        {% if loop.index == loop.length %}
+                    </div>
+                    {% endif %}
                     {% endfor %}
                 </div>
-            </div>
-            
-            <input type="submit" value="Add to Pangenome">
-        </form>
+                </div>
+
+
+                <input class="submit" type="submit" value="Add to Pangenome">
+            </form>
+        </section>
         <hr>
-        <small><a href="https://github.com/arvados/bh20-seq-resource">Source</a> &middot; Made for <a href="https://github.com/virtual-biohackathons/covid-19-bh20">COVID-19-BH20</a></small>
+        <small><a href="https://github.com/adamnovak/bh20-simple-web-uploader">Source</a> &middot; Made for <a href="https://github.com/virtual-biohackathons/covid-19-bh20">COVID-19-BH20</a></small>
+
         <script type="text/javascript">
-            let uploadForm = document.getElementById('metadata_upload_form')
-            let uploadFormSpot = document.getElementById('metadata_upload_form_spot')
-            let fillForm = document.getElementById('metadata_fill_form')
-            let fillFormSpot = document.getElementById('metadata_fill_form_spot')
-            
-            function setUploadMode() {
-                // Make the upload form the one in use
-                uploadFormSpot.appendChild(uploadForm)
-                fillFormSpot.removeChild(fillForm)
-            }
-            
-            function setFillMode() {
-                // Make the fillable form the one in use
-                uploadFormSpot.removeChild(uploadForm)
-                fillFormSpot.appendChild(fillForm)
-            }
-            
-            function setMode() {
-                // Pick mode based on radio
-                if (document.getElementById('metadata_upload').checked) {
-                    setUploadMode()
-                } else {
-                    setFillMode()
-                }
-            }
-            
-            // Start in mode appropriate to selected form item
-            setMode()
+         let uploadForm = document.getElementById('metadata_upload_form')
+         let uploadFormSpot = document.getElementById('metadata_upload_form_spot')
+         let fillForm = document.getElementById('metadata_fill_form')
+         let fillFormSpot = document.getElementById('metadata_fill_form_spot')
+
+         function setUploadMode() {
+             // Make the upload form the one in use
+             uploadFormSpot.appendChild(uploadForm)
+             fillFormSpot.removeChild(fillForm)
+         }
+
+         function setFillMode() {
+             // Make the fillable form the one in use
+             uploadFormSpot.removeChild(uploadForm)
+             fillFormSpot.appendChild(fillForm)
+         }
+
+         function setMode() {
+             // Pick mode based on radio
+             if (document.getElementById('metadata_upload').checked) {
+                 setUploadMode()
+             } else {
+                 setFillMode()
+             }
+         }
+
+         // Start in mode appropriate to selected form item
+         setMode()
         </script>
     </body>
 </html>

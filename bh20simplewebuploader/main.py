@@ -184,15 +184,17 @@ def receive_files():
 
     # We're going to work in one directory per request
     dest_dir = tempfile.mkdtemp()
+    # The uploader will happily accept a FASTQ with this name
     fasta_dest = os.path.join(dest_dir, 'fasta.fa')
     metadata_dest = os.path.join(dest_dir, 'metadata.json')
     try:
         if 'fasta' not in request.files:
             return (render_template('error.html',
-                error_message="You did not include a FASTA file."), 403)
+                error_message="You did not include a FASTA or FASTQ file."), 403)
         try:
             with open(fasta_dest, 'wb') as out_stream:
-                copy_with_limit(request.files.get('fasta').stream, out_stream)
+                # Use a plausible file size limit for a little FASTQ
+                copy_with_limit(request.files.get('fasta').stream, out_stream, limit=50*1024*1024)
         except FileTooBigError as e:
             # Delegate to the 413 error handler
             return handle_large_file(e)

@@ -126,10 +126,10 @@ For running/developing the uploader with GNU Guix see [INSTALL.md](./doc/INSTALL
 
 # Usage
 
-Run the uploader with a FASTA file and accompanying metadata file in [JSON-LD format](https://json-ld.org/):
+Run the uploader with a FASTA or FASTQ file and accompanying metadata file in JSON or YAML:
 
 ```sh
-bh20-seq-uploader example/sequence.fasta example/metadata.json
+bh20-seq-uploader example/sequence.fasta example/metadata.yaml
 ```
 
 ## Workflow for Generating a Pangenome

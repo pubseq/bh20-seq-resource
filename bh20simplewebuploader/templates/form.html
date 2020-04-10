@@ -13,9 +13,9 @@
         </p>
         <hr>
         <form action="/submit" method="POST" enctype="multipart/form-data" id="main_form">
-            <label for="fasta">Select FASTA file for assembled genome (max 1MB):</label>
+            <label for="fasta">Select FASTA file of assembled genome, or FASTQ of reads (max 50MB):</label>
             <br>
-            <input type="file" id="fasta" name="fasta" accept=".fa,.fasta,.fna" required>
+            <input type="file" id="fasta" name="fasta" accept=".fa,.fasta,.fna,.fq" required>
             <br>
             
             <label>Select metadata submission method:</label>

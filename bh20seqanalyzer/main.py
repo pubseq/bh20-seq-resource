@@ -47,6 +47,7 @@ def validate_upload(api, collection, validated_project,
                 valid = False
         else:
             if "reads.fastq" in col:
+                logging.info("Upload '%s' running fastq2fasta", collection["name"])
                 start_fastq_to_fasta(api, collection, fastq_project, fastq_workflow_uuid)
                 return False
             else:

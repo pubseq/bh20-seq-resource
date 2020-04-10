@@ -21,8 +21,8 @@ def qc_fasta(sequence):
                 raise ValueError("FASTA file contains multiple entries")
                 break
         sequence.seek(0)
-        return "reads.fastq"
-    elif seq_type == "text/fastq":
         return "sequence.fasta"
+    elif seq_type == "text/fastq":
+        return "reads.fastq"
     else:
         raise ValueError("Sequence file does not look like FASTA or FASTQ")

@@ -149,3 +149,32 @@ Here we convert such a pipeline into the Common Workflow Language (CWL) and
 sources can be found [here](https://github.com/hpobio-lab/viral-analysis/tree/master/cwl/pangenome-generate).
 
 For more information on building pangenome models, [see this wiki page](https://github.com/virtual-biohackathons/covid-19-bh20/wiki/Pangenome#pangenome-model-from-available-genomes).
+
+# Web Interface
+
+This project comes with a simple web server that lets you use the sequence uploader from a browser. It will work as long as you install the packager with the `web` extra.
+
+To run it locally:
+
+```
+virtualenv --python python3 venv
+. venv/bin/activate
+pip install -e .[web]
+env FLASK_APP=bh20simplewebuploader/main.py flask run
+```
+
+Then visit [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
+
+## Production
+
+For production deployment, you can use [gunicorn](https://flask.palletsprojects.com/en/1.1.x/deploying/wsgi-standalone/#gunicorn):
+
+```
+pip3 install gunicorn
+gunicorn bh20simplewebuploader.main:app
+```
+
+This runs on [http://127.0.0.1:8000/](http://127.0.0.1:8000/) by default, but can be adjusted with various [gunicorn options](http://docs.gunicorn.org/en/latest/run.html#commonly-used-arguments)
+
+
+

@@ -1,3 +1,5 @@
+submission: publicSequenceResource
+
 host:
     host_id: XX1
     host_species: string
@@ -10,6 +12,7 @@ host:
     additional_host_information: string
 
 sample:
+    sample_id: XXX
     collector_name: XXX
     collecting_institution: XXX
     specimen_source: XXX
@@ -36,3 +39,4 @@ submitter:
     submitter_sample_id: string
     authors: testAuthor
     submitter_id: X12
+    submitter_date: Subdate

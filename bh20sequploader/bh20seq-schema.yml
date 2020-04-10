@@ -3,6 +3,10 @@ $namespaces:
   sch: https://schema.org/
   efo: http://www.ebi.ac.uk/efo/
   obo: http://purl.obolibrary.org/obo/
+  sio: http://semanticscience.org/resource/
+  edam: http://edamontology.org/
+  evs: http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#
+
 $graph:
 
 - name: hostSchema
@@ -12,37 +16,93 @@ $graph:
         type: string
         jsonldPredicate:
           _id: http://www.ebi.ac.uk/efo/EFO_0000532
-    host_id: string
-    host_common_name: string?
-    host_sex: string?
-    host_age: int?
-    host_age_unit: string?
-    host_health_status: string?
+    host_id:
+        type: string
+        jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_000115
+    host_common_name:
+        type: string?
+        jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/NOMEN_0000037
+    host_sex:
+        type: string
+        jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/PATO_0000047
+    host_age:
+        type: int?
+        jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/PATO_0000011
+    host_age_unit:
+        type: string?
+        jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/UO_0000036
+    host_health_status:
+        type: string?
+        jsonldPredicate: http://purl.obolibrary.org/obo/NCIT_C25688
     host_treatment:
       type: string?
       jsonldPredicate:
           _id: http://www.ebi.ac.uk/efo/EFO_0000727
-    additional_host_information: string?
+    host_vaccination:
+      type: string?
+      jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/VO_0000001
+    additional_host_information:
+      type: string?
+      jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_001167
 
 - name: sampleSchema
   type: record
   fields:
-    collector_name: string
-    collecting_institution: string
-    specimen_source: string?
-    collection_date: string?
+    collector_name:
+      type: string
+      jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/OBI_0001895
+    collecting_institution:
+      type: string
+      jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_001167
+    specimen_source:
+      type: string?
+      jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/OBI_0001479
+    collection_date:
+      type: string?
+      jsonldPredicate:
+          _id: http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164
     collection_location:
       type: string?
       jsonldPredicate:
-        _id: https://schema.org/fromLocation
-    sample_storage_conditions: string?
-    additional_collection_information: string?
+        _id: http://purl.obolibrary.org/obo/GAZ_00000448
+    sample_storage_conditions:
+      type: string?
+      jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/OBI_0001472
+    additional_collection_information:
+      type: string?
+      jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_001167
+    sample_id:
+      type: string
+      jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_000115
+    source_database_accession:
+      type: string?
+      jsonldPredicate:
+          _id: http://edamontology.org/data_2091
 
 - name: virusSchema
   type: record
   fields:
-    virus_species: string?
-    virus_strain: string?
+    virus_species:
+      type: string?
+      jsonldPredicate:
+          _id: http://edamontology.org/data_1875
+    virus_strain:
+      type: string?
+      jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_010055
 
 - name: technologySchema
   type: record
@@ -50,7 +110,7 @@ $graph:
     sample_sequencing_technology:
       type: string
       jsonldPredicate:
-        _id: http://www.ebi.ac.uk/efo/EFO_0000532
+        _id: http://purl.obolibrary.org/obo/OBI_0600047
     sequence_assembly_method:
       type: string?
       jsonldPredicate:
@@ -63,14 +123,42 @@ $graph:
 - name: submitterSchema
   type: record
   fields:
-    submitter_name: string
-    submitter_address: string?
-    originating_lab: string
-    lab_address: string?
-    provider_sample_id: string?
-    submitter_sample_id: string?
-    authors: string?
-    submitter_id: string?
+    submitter_name:
+      type: string
+      jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_000116
+    submitter_date:
+      type: string
+      jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/NCIT_C94162
+    submitter_address:
+      type: string?
+      jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_000172
+    originating_lab:
+      type: string
+      jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/NCIT_C37984
+    lab_address:
+      type: string?
+      jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/OBI_0600047
+    provider_sample_id:
+      type: string?
+      jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/NCIT_C37900
+    submitter_sample_id:
+      type: string?
+      jsonldPredicate:
+          _id: http://www.ebi.ac.uk/efo/EFO_0001741
+    authors:
+      type: string?
+      jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/NCIT_C42781
+    submitter_id:
+      type: string?
+      jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_000115
 
 - name: MainSchema
   type: record
@@ -81,6 +169,11 @@ $graph:
     virus: virusSchema?
     technology: technologySchema
     submitter: submitterSchema
+    submission:
+      type: string
+      jsonldPredicate:
+        _id: "@id"
+        #_type: "@id"
     sequencefile:
       doc: The subject (eg the fasta/fastq file) that this metadata describes
       type: string?

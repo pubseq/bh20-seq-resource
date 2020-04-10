@@ -27,7 +27,7 @@ authors:
     orcid: 0000
     affiliation: 7
   - name: Michael Heuer
-    orcid: 0000
+    orcid: 0000-0002-9052-6000
     affiliation: 8
   - name: Adam Novak
     orcid: 0000
@@ -46,6 +46,8 @@ affiliations:
     index: 1
   - name: Curii, Boston, USA
     index: 2
+  - name: RISE Lab, University of California Berkeley, Berkeley, CA, USA.
+    index: 8
 date: 11 April 2020
 event: COVID2020
 group: Public Sequence Uploader

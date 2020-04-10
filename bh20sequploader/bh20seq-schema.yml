@@ -174,8 +174,8 @@ $graph:
       jsonldPredicate:
         _id: "@id"
         #_type: "@id"
-    sequencefile:
-      doc: The subject (eg the fasta/fastq file) that this metadata describes
+    id:
+      doc: The subject (eg the fasta/fastq file) that the metadata describes
       type: string?
       jsonldPredicate:
         _id: "@id"

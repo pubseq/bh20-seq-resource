@@ -22,7 +22,7 @@ def main():
 
     api = arvados.api(host=ARVADOS_API_HOST, token=ARVADOS_API_TOKEN, insecure=True)
 
-    if not qc_metadata(args.metadata.name):
+    if not bh20sequploader.qc_metadata.qc_metadata(args.metadata.name):
         print("Failed metadata qc")
         exit(1)
 

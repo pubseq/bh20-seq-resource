@@ -8,6 +8,8 @@ import json
 import logging
 import ruamel.yaml
 from bh20sequploader.qc_metadata import qc_metadata
+import pkg_resources
+from schema_salad.sourceline import add_lc_filename
 
 logging.basicConfig(format="[%(asctime)s] %(levelname)s %(message)s", datefmt="%Y-%m-%d %H:%M:%S",
                     level=logging.INFO)
@@ -24,8 +26,14 @@ def validate_upload(api, collection, validated_project,
         logging.warn("Upload '%s' missing metadata.yaml", collection["name"])
         valid = False
     else:
-        metadata_content = ruamel.yaml.round_trip_load(col.open("metadata.yaml"))
-        #valid = qc_metadata(metadata_content) and valid
+        try:
+            metadata_content = ruamel.yaml.round_trip_load(col.open("metadata.yaml"))
+            metadata_content["id"] = "keep:%s/metadata.yaml" % collection["portable_data_hash"]
+            add_lc_filename(metadata_content, metadata_content["id"])
+            valid = qc_metadata(metadata_content) and valid
+        except Exception as e:
+            logging.warn(e)
+            valid = False
         if not valid:
             logging.warn("Failed metadata qc")
 
@@ -52,9 +60,10 @@ def validate_upload(api, collection, validated_project,
             "owner_uuid": validated_project,
             "name": "%s (%s)" % (collection["name"], time.asctime(time.gmtime()))}).execute()
     else:
+        pass
         # It is invalid, delete it.
-        logging.warn("Deleting '%s'" % collection["name"])
-        api.collections().delete(uuid=collection["uuid"]).execute()
+        #logging.warn("Deleting '%s'" % collection["name"])
+        #api.collections().delete(uuid=collection["uuid"]).execute()
 
     return valid
 
@@ -107,12 +116,17 @@ def start_fastq_to_fasta(api, collection,
 def start_pangenome_analysis(api,
                              analysis_project,
                              pangenome_workflow_uuid,
-                             validated_project):
+                             validated_project,
+                             schema_ref):
     validated = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", validated_project]])
     inputobj = {
         "inputReads": [],
         "metadata": [],
-        "subjects": []
+        "subjects": [],
+        "metadataSchema": {
+            "class": "File",
+            "location": schema_ref
+        }
     }
     for v in validated:
         inputobj["inputReads"].append({
@@ -166,12 +180,26 @@ def move_fastq_to_fasta_results(api, analysis_project, uploader_project):
             api.groups().update(uuid=p["uuid"], body={"properties": p["properties"]}).execute()
 
 
+def upload_schema(api, workflow_def_project):
+    schema_resource = pkg_resources.resource_stream('bh20sequploader.qc_metadata', "bh20seq-schema.yml")
+    c = arvados.collection.Collection()
+    with c.open("schema.yml", "wb") as f:
+        f.write(schema_resource.read())
+    pdh = c.portable_data_hash()
+    wd = api.collections().list(filters=[["owner_uuid", "=", workflow_def_project],
+                                         ["portable_data_hash", "=", pdh]]).execute()
+    if len(wd["items"]) == 0:
+        c.save_new(owner_uuid=workflow_def_project, name="Metadata schema", ensure_unique_name=True)
+    return "keep:%s/schema.yml" % pdh
+
+
 def main():
     parser = argparse.ArgumentParser(description='Analyze collections uploaded to a project')
     parser.add_argument('--uploader-project', type=str, default='lugli-j7d0g-n5clictpuvwk8aa', help='')
     parser.add_argument('--pangenome-analysis-project', type=str, default='lugli-j7d0g-y4k4uswcqi3ku56', help='')
     parser.add_argument('--fastq-project', type=str, default='lugli-j7d0g-xcjxp4oox2u1w8u', help='')
     parser.add_argument('--validated-project', type=str, default='lugli-j7d0g-5ct8p1i1wrgyjvp', help='')
+    parser.add_argument('--workflow-def-project', type=str, default='lugli-j7d0g-5hswinmpyho8dju', help='')
 
     parser.add_argument('--pangenome-workflow-uuid', type=str, default='lugli-7fd4e-mqfu9y3ofnpnho1', help='')
     parser.add_argument('--fastq-workflow-uuid', type=str, default='lugli-7fd4e-2zp9q4jo5xpif9y', help='')
@@ -182,6 +210,8 @@ def main():
     api = arvados.api()
 
     logging.info("Starting up, monitoring %s for uploads" % (args.uploader_project))
+
+    schema_ref = upload_schema(api, args.workflow_def_project)
 
     while True:
         move_fastq_to_fasta_results(api, args.fastq_project, args.uploader_project)
@@ -198,7 +228,8 @@ def main():
             start_pangenome_analysis(api,
                                      args.pangenome_analysis_project,
                                      args.pangenome_workflow_uuid,
-                                     args.validated_project)
+                                     args.validated_project,
+                                     schema_ref)
 
         copy_most_recent_result(api,
                                 args.pangenome_analysis_project,

@@ -8,7 +8,8 @@ from pathlib import Path
 import urllib.request
 import socket
 import getpass
-from qc_metadata import qc_metadata
+from .qc_metadata import qc_metadata
+from .qc_fasta import qc_fasta
 
 ARVADOS_API_HOST='lugli.arvadosapi.com'
 ARVADOS_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
@@ -22,33 +23,13 @@ def main():
 
     api = arvados.api(host=ARVADOS_API_HOST, token=ARVADOS_API_TOKEN, insecure=True)
 
-    if not bh20sequploader.qc_metadata.qc_metadata(args.metadata.name):
+    target = qc_fasta(args.sequence)
+
+    if not qc_metadata(args.metadata.name):
         print("Failed metadata qc")
         exit(1)
 
     col = arvados.collection.Collection(api_client=api)
-
-    magic_file = Path(__file__).parent / "validation" / "formats.mgc"
-    val = magic.Magic(magic_file=magic_file.resolve().as_posix(),
-                      uncompress=False, mime=True)
-    seq_type = val.from_file(args.sequence.name).lower()
-    print(f"Sequence type: {seq_type}")
-    if seq_type == "text/fasta":
-        # ensure that contains only one entry
-        entries = 0
-        for line in args.sequence:
-            if line.startswith(">"):
-                entries += 1
-            if entries > 1:
-                raise ValueError("FASTA file contains multiple entries")
-                break
-        args.sequence.close()
-        args.sequence = open(args.sequence.name, "r")
-        target = "reads.fastq"
-    elif seq_type == "text/fastq":
-        target = "sequence.fasta"
-    else:
-        raise ValueError("Sequence file does not look like FASTA or FASTQ")
 
     with col.open(target, "w") as f:
         r = args.sequence.read(65536)

@@ -8,6 +8,7 @@ import json
 import logging
 import ruamel.yaml
 from bh20sequploader.qc_metadata import qc_metadata
+from bh20sequploader.qc_fasta import qc_fasta
 import pkg_resources
 from schema_salad.sourceline import add_lc_filename
 
@@ -38,7 +39,13 @@ def validate_upload(api, collection, validated_project,
             logging.warn("Failed metadata qc")
 
     if valid:
-        if "sequence.fasta" not in col:
+        if "sequence.fasta" in col:
+            try:
+                qc_fasta(col.open("sequence.fasta"))
+            except Exception as e:
+                logging.warn(e)
+                valid = False
+        else:
             if "reads.fastq" in col:
                 start_fastq_to_fasta(api, collection, fastq_project, fastq_workflow_uuid)
                 return False

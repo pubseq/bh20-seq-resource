@@ -34,22 +34,16 @@ guix environment guix --ad-hoc git python openssl python-pycurl nss-certs -- pyt
 
 ### Using the Web Uploader
 
-To run the web uploader in a GNU Guix environment
+To run the web uploader in a GNU Guix environment/container
 
 ```
-guix environment guix --ad-hoc git python python-flask python-pyyaml nss-certs --network openssl -- env FLASK_APP=bh20simplewebuploader/main.py flask run
-```
-
-The containerized version looks like
-
-```
-guix environment -C guix --ad-hoc git python python-flask python-pyyaml nss-certs --network openssl
-```
-
-and
-
-```
-env FLASK_APP=bh20simplewebuploader/main.py flask run
+guix environment -C guix --ad-hoc git python python-flask python-pyyaml nss-certs --network openssl -- env FLASK_APP=bh20simplewebuploader/main.py flask run
+ * Serving Flask app "bh20simplewebuploader/main.py"
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
 
 WIP: add gunicorn container

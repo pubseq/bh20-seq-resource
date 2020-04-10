@@ -1,0 +1,4 @@
+0	regex	\^\>.+\r?\n([acgtnACGTN]+\r?\n)*[acgtnACGTN]+(\r?\n)?$	FASTA
+!:mime	text/fasta
+0	regex	\^@.+\r?\n[acgtnACGTN]*\n\\+.*\n[!-i]*(\r\n)?	FASTQ
+!:mime	text/fastq

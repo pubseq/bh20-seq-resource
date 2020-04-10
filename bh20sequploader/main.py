@@ -3,6 +3,8 @@ import time
 import arvados
 import arvados.collection
 import json
+import magic
+from pathlib import Path
 import urllib.request
 import socket
 import getpass
@@ -14,7 +16,7 @@ UPLOAD_PROJECT='lugli-j7d0g-n5clictpuvwk8aa'
 
 def main():
     parser = argparse.ArgumentParser(description='Upload SARS-CoV-19 sequences for analysis')
-    parser.add_argument('sequence', type=argparse.FileType('r'), help='sequence FASTA')
+    parser.add_argument('sequence', type=argparse.FileType('r'), help='sequence FASTA/FASTQ')
     parser.add_argument('metadata', type=argparse.FileType('r'), help='sequence metadata json')
     args = parser.parse_args()
 
@@ -26,10 +28,27 @@ def main():
 
     col = arvados.collection.Collection(api_client=api)
 
-    if args.sequence.name.endswith("fasta") or args.sequence.name.endswith("fa"):
-        target = "sequence.fasta"
-    elif args.sequence.name.endswith("fastq") or args.sequence.name.endswith("fq"):
+    magic_file = Path(__file__).parent / "validation" / "formats.mgc"
+    val = magic.Magic(magic_file=magic_file.resolve().as_posix(),
+                      uncompress=False, mime=True)
+    seq_type = val.from_file(args.sequence.name).lower()
+    print(f"Sequence type: {seq_type}")
+    if seq_type == "text/fasta":
+        # ensure that contains only one entry
+        entries = 0
+        for line in args.sequence:
+            if line.startswith(">"):
+                entries += 1
+            if entries > 1:
+                raise ValueError("FASTA file contains multiple entries")
+                break
+        args.sequence.close()
+        args.sequence = open(args.sequence.name, "r")
         target = "reads.fastq"
+    elif seq_type == "text/fastq":
+        target = "sequence.fasta"
+    else:
+        raise ValueError("Sequence file does not look like FASTA or FASTQ")
 
     with col.open(target, "w") as f:
         r = args.sequence.read(65536)
@@ -37,6 +56,7 @@ def main():
         while r:
             f.write(r)
             r = args.sequence.read(65536)
+    args.sequence.close()
 
     print("Reading metadata")
     with col.open("metadata.yaml", "w") as f:
@@ -45,6 +65,7 @@ def main():
         while r:
             f.write(r)
             r = args.metadata.read(65536)
+    args.metadata.close()
 
     external_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
 

@@ -39,20 +39,21 @@ def validate_upload(api, collection, validated_project,
             logging.warn("Failed metadata qc")
 
     if valid:
-        if "sequence.fasta" in col:
-            try:
-                qc_fasta(col.open("sequence.fasta"))
-            except Exception as e:
-                logging.warn(e)
-                valid = False
-        else:
-            if "reads.fastq" in col:
-                logging.info("Upload '%s' running fastq2fasta", collection["name"])
-                start_fastq_to_fasta(api, collection, fastq_project, fastq_workflow_uuid)
-                return False
-            else:
-                valid = False
-                logging.warn("Upload '%s' missing sequence.fasta", collection["name"])
+        tgt = None
+        for n in ("sequence.fasta", "reads.fastq"):
+            if n not in col:
+                continue
+            with col.open(n) as qf:
+                tgt = qc_fasta(qf)
+                if tgt != n:
+                    logging.info("Expected %s but magic says it should be %s", n, tgt)
+                    valid = False
+                elif tgt == "reads.fastq":
+                    start_fastq_to_fasta(api, collection, fastq_project, fastq_workflow_uuid)
+                    return False
+        if tgt is None:
+            valid = False
+            logging.warn("Upload '%s' does not contain sequence.fasta or reads.fastq", collection["name"])
 
     dup = api.collections().list(filters=[["owner_uuid", "=", validated_project],
                                           ["portable_data_hash", "=", col.portable_data_hash()]]).execute()

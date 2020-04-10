@@ -29,7 +29,7 @@ arvados-python-client-2.0.1 ciso8601-2.1.3 future-0.18.2 google-api-python-clien
 3. Run the tool directly with
 
 ```sh
-guix environment guix --ad-hoc git python openssl python-pycurl nss-certs -- python3 bh20sequploader/main.py
+guix environment guix --ad-hoc git python openssl python-pycurl python-magic nss-certs -- python3 bh20sequploader/main.py example/sequence.fasta example/metadata.yaml
 ```
 
 ### Using the Web Uploader
@@ -37,7 +37,7 @@ guix environment guix --ad-hoc git python openssl python-pycurl nss-certs -- pyt
 To run the web uploader in a GNU Guix environment/container
 
 ```
-guix environment -C guix --ad-hoc git python python-flask python-pyyaml nss-certs --network openssl -- env FLASK_APP=bh20simplewebuploader/main.py flask run
+guix environment -C guix --ad-hoc git python python-flask python-pyyaml python-magic nss-certs --network openssl -- env FLASK_APP=bh20simplewebuploader/main.py flask run
  * Serving Flask app "bh20simplewebuploader/main.py"
  * Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.

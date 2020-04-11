@@ -1,3 +1,5 @@
+id: placeholder
+
 host:
     host_id: XX1
     host_species: string
@@ -36,5 +38,4 @@ submitter:
     provider_sample_id: string
     submitter_sample_id: string
     authors: testAuthor
-    submitter_id: X12
-    submitter_date: Subdate
+    submitter_orchid: X12

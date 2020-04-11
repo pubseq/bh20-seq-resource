@@ -1,8 +1,9 @@
-submission: publicSequenceResource
+id: placeholder
 
 host:
     host_id: XX
     host_species: string
+    host_sex: string
 
 sample:
     sample_id: XXX
@@ -15,4 +16,3 @@ technology:
 submitter:
     submitter_name: tester
     originating_lab: testLab
-    submitter_date: Subdate

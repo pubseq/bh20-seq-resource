@@ -13,6 +13,7 @@ $graph:
   type: record
   fields:
     host_species:
+        ## autocomplete # NCBITAXON
         doc: Host species as defined in NCBITaxon (e.g. http://purl.obolibrary.org/obo/NCBITaxon_9606 for Homo sapiens)
         type: string
         jsonldPredicate:
@@ -205,4 +206,5 @@ $graph:
       type: string
       jsonldPredicate:
         _id: "@id"
-        #_type: "@id" # Error (contains undefined reference) if I keep this file but we need a toplevel id to tie things together
+        _type: "@id"
+        noLinkCheck: true

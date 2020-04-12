@@ -59,7 +59,7 @@ sudo apt install -y virtualenv git libcurl4-openssl-dev build-essential python3-
 pip3 install --user git+https://github.com/arvados/bh20-seq-resource.git@master
 ```
 
-3. **Make sure the tool is on your `PATH`.** THe `pip3` command will install the uploader in `.local/bin` inside your home directory. Your shell may not know to look for commands there by default. To fix this for the terminal you currently have open, run:
+3. **Make sure the tool is on your `PATH`.** The `pip3` command will install the uploader in `.local/bin` inside your home directory. Your shell may not know to look for commands there by default. To fix this for the terminal you currently have open, run:
 
 ```sh
 export PATH=$PATH:$HOME/.local/bin
@@ -126,10 +126,10 @@ For running/developing the uploader with GNU Guix see [INSTALL.md](./doc/INSTALL
 
 # Usage
 
-Run the uploader with a FASTA file and accompanying metadata file in [JSON-LD format](https://json-ld.org/):
+Run the uploader with a FASTA or FASTQ file and accompanying metadata file in JSON or YAML:
 
 ```sh
-bh20-seq-uploader example/sequence.fasta example/metadata.json
+bh20-seq-uploader example/sequence.fasta example/metadata.yaml
 ```
 
 ## Workflow for Generating a Pangenome
@@ -174,7 +174,7 @@ pip3 install gunicorn
 gunicorn bh20simplewebuploader.main:app
 ```
 
-This runs on [http://127.0.0.1:8000/](http://127.0.0.1:8000/) by default, but can be adjusted with various [gunicorn options](http://docs.gunicorn.org/en/latest/run.html#commonly-used-arguments)
+This runs on [http://127.0.0.1:8000/](http://127.0.0.1:8000/) by default, but can be adjusted with various [gunicorn options](http://docs.gunicorn.org/en/latest/run.html#commonly-used-arguments).
 
 
 

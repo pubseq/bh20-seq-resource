@@ -1,0 +1,18 @@
+id: placeholder
+
+host:
+    host_id: XX
+    host_species: string
+    host_sex: string
+
+sample:
+    sample_id: XXX
+    collector_name: XXX
+    collecting_institution: XXX
+
+technology:
+    sample_sequencing_technology: XX
+
+submitter:
+    submitter_name: tester
+    originating_lab: testLab

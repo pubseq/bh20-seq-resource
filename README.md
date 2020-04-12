@@ -1,6 +1,13 @@
 # Sequence uploader
 
-This repository provides a sequence uploader for the COVID-19 Virtual Biohackathon's Public Sequence Resource project. You can use it to upload the genomes of SARS-CoV-2 samples to make them publicly and freely available to other researchers.
+This repository provides a sequence uploader for the COVID-19 Virtual
+Biohackathon's Public Sequence Resource project. There are two
+versions, one that runs on the command line and another that acts as
+web interface. You can use it to upload the genomes of SARS-CoV-2
+samples to make them publicly and freely available to other
+researchers.
+
+![alt text](./image/website.png "Website")
 
 To get started, first [install the uploader](#installation), and use the `bh20-seq-uploader` command to [upload your data](#usage).
 
@@ -175,6 +182,3 @@ gunicorn bh20simplewebuploader.main:app
 ```
 
 This runs on [http://127.0.0.1:8000/](http://127.0.0.1:8000/) by default, but can be adjusted with various [gunicorn options](http://docs.gunicorn.org/en/latest/run.html#commonly-used-arguments).
-
-
-

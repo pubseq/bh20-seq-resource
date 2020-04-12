@@ -130,6 +130,9 @@
       <section class="header">
       <div class="logo"><a href="https://github.com/tylermorganwall/coronaobj/"><img src="static/image/coronasmallcomp.gif" width="150" /></a></div>
       <h1>Web Uploader for Public SARS-CoV-2 Sequence Resource</h1>
+
+<small>Disabled until we got everything wired up</small>
+
       </section>
         <hr>
 
@@ -152,25 +155,28 @@
               </p>
 
                 <div class="fasta-file-select">
-                    <label for="fasta">Select FASTA file of assembled genome (max 40K), or FASTQ of reads (max 50MB):</label>
+                    <label for="fasta">Select FASTA file of assembled genome (max 50K), or FASTQ of reads (max 500MB):</label>
                     <br>
                     <input type="file" id="fasta" name="fasta" accept=".fa,.fasta,.fna,.fq" required>
                     <br>
+                    <small>
+                    Note that by uploading your data you automatically agree to a <a hef="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0 license</a>. </small>
                 </div>
 
                 <div class="metadata">
                     <label>Select metadata submission method:</label>
                     <br>
-                    <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="setMode()" checked required>
-                    <label for="metadata_upload">Upload metadata file</label>
-                    <input type="radio" id="metadata_form" name="metadata_type" value="fill" onchange="setMode()" required>
+                    <input type="radio" id="metadata_form" name="metadata_type" value="fill" onchange="setMode()" checked required>
                     <label for="metadata_form">Fill in metadata manually</label>
+                    <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="setMode()" required>
+                    <label for="metadata_upload">Upload metadata file</label>
                     <br>
+                    <small>Make sure the metadata has submitter attribution details.</small>
                 </div>
 
                 <div id="metadata_upload_form_spot">
                     <div id="metadata_upload_form">
-                        <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> (<a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/metadata.yaml" target="_blank">Example 1</a>, <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/minimal_example.yaml" target="_blank">Example 2</a>, max 1MB):</label>
+                        <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> and <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/metadata.yaml" target="_blank">example</a> (max 50K):</label>
                         <br>
                         <input type="file" id="metadata" name="metadata" accept=".json,.yml,.yaml" required>
                         <br>
@@ -206,11 +212,31 @@
                 </div>
 
 
-                <input class="submit" type="submit" value="Add to Pangenome">
+<input class="submit" type="submit" value="Add to Pangenome" disabled>
             </form>
         </section>
-        <hr>
-        <small><a href="https://github.com/arvados/bh20-seq-resource">Source</a> &middot; Made for <a href="https://github.com/virtual-biohackathons/covid-19-bh20">COVID-19-BH20</a></small>
+<hr>
+<br>
+<div class="intro">
+  <h3>ABOUT</h3>
+  <small>This a public repository created at the COVID-19 BioHackathon
+    that has a low barrier to entry for uploading sequence data using
+    best practices. I.e., data is published with a creative commons
+    4.0 (CC-4.0) license with metadata using state-of-the art
+    standards and, perhaps most importantly, providing standardized
+    workflows that get triggered on upload, so that results are
+    immediately available in standardized data formats. The repository
+    will be maintained and expanded for the duration of the
+    pandemic. To contribute data simply upload it! To contribute code
+    and/or workflows see
+    the <a href="https://github.com/arvados/bh20-seq-resource">project
+    repository</a>. For more information see the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/paper/paper.md">paper</a> (WIP).</small>
+</p>
+                    <br>
+
+                    <hr>
+        <small><a href="https://github.com/arvados/bh20-seq-resource">Source</a> &middot; Made for <a href="https://github.com/virtual-biohackathons/covid-19-bh20">COVID-19-BH20</a> | For more information E-mail pjotr.public444 at thebird.nl
+        </small>
         <a href="https://github.com/virtual-biohackathons/covid-19-bh20">
         <img src="static/image/covid19biohackathon.png" align="right" width="300"></a>
 

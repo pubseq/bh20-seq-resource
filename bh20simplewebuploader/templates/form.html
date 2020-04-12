@@ -52,6 +52,9 @@
          padding: 20px;
      }
 
+span.dropt {border-bottom: thin dotted; background: #ffeedd;}
+span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
+
      .grid-container {
          display: grid;
          grid-template-columns: repeat(4, 1fr);
@@ -155,7 +158,7 @@
               </p>
 
                 <div class="fasta-file-select">
-                    <label for="fasta">Select FASTA file of assembled genome (max 50K), or FASTQ of reads (max 500MB):</label>
+                    <label for="fasta">Select FASTA file of assembled genome (max 50K), or FASTQ of reads (<span class="dropt" title="For a larger fastq file you'll need to use a CLI uploader">max 150MB<span style="width:500px;"></span></span>) : </label>
                     <br>
                     <input type="file" id="fasta" name="fasta" accept=".fa,.fasta,.fna,.fq" required>
                     <br>

@@ -41,6 +41,9 @@ authors:
   - name: Joep de Ligt
     orcid: 0000
     affiliation: 12
+  - name: Bonface Munyoki
+    orcid: 0000
+    affiliation: 13
 affiliations:
   - name: Department of Genetics, Genomics and Informatics, The University of Tennessee Health Science Center, Memphis, TN, USA.
     index: 1

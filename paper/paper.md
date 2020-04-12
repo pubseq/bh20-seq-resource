@@ -27,7 +27,7 @@ authors:
     orcid: 0000
     affiliation: 7
   - name: Michael Heuer
-    orcid: 0000
+    orcid: 0000-0002-9052-6000
     affiliation: 8
   - name: Adam M Novak
     orcid: 0000-0001-5828-047X
@@ -46,6 +46,8 @@ affiliations:
     index: 1
   - name: Curii, Boston, USA
     index: 2
+  - name: RISE Lab, University of California Berkeley, Berkeley, CA, USA.
+    index: 8
   - name: UC Santa Cruz Genomics Institute, University of California, Santa Cruz, CA 95064, USA.
     index: 5
 date: 11 April 2020

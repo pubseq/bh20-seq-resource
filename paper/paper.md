@@ -46,12 +46,12 @@ affiliations:
     index: 1
   - name: Curii, Boston, USA
     index: 2
+  - name: UC Santa Cruz Genomics Institute, University of California, Santa Cruz, CA 95064, USA.
+    index: 5
   - name: Department of Computer Science, Faculty of Sciences, Vrije Universiteit Amsterdam, The Netherlands
     index: 6
   - name: RISE Lab, University of California Berkeley, Berkeley, CA, USA.
     index: 8
-  - name: UC Santa Cruz Genomics Institute, University of California, Santa Cruz, CA 95064, USA.
-    index: 5
 date: 11 April 2020
 event: COVID2020
 group: Public Sequence Uploader

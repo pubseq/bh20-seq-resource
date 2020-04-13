@@ -8,8 +8,11 @@ from pathlib import Path
 import urllib.request
 import socket
 import getpass
-from .qc_metadata import qc_metadata
-from .qc_fasta import qc_fasta
+# please don't use the .qc_metadata notation
+#   from .qc_metadata import qc_metadata
+#   from .qc_fasta import qc_fasta
+from qc_metadata import qc_metadata
+from qc_fasta import qc_fasta
 
 ARVADOS_API_HOST='lugli.arvadosapi.com'
 ARVADOS_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'

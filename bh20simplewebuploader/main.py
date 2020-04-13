@@ -3,6 +3,7 @@ import tempfile
 import shutil
 import subprocess
 import os
+import sys
 import re
 import string
 import yaml
@@ -250,12 +251,14 @@ def receive_files():
                     error_message="You did not include metadata."), 403)
 
         # Try and upload files to Arvados using the sequence uploader CLI
-        result = subprocess.run(['bh20-seq-uploader', fasta_dest, metadata_dest],
+
+        result = subprocess.run(['python3','bh20sequploader/main.py', fasta_dest, metadata_dest],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         if result.returncode != 0:
             # It didn't work. Complain.
-            error_message="Upload failed. Uploader returned {} and said:\n{}".format(result.returncode, result.stderr)
+            error_message="Uploader returned value {} and said:".format(result.returncode) + str(result.stderr.decode('utf-8'))
+            print(error_message, file=sys.stderr)
             return (render_template('error.html', error_message=error_message), 403)
         else:
             # It worked. Say so.

@@ -10,6 +10,11 @@ import yaml
 import urllib.request
 from flask import Flask, request, redirect, send_file, send_from_directory, render_template
 
+import os.path
+
+if not os.path.isfile('bh20sequploader/mainx.py'):
+    print("WARNING: run FLASK from the root of the source repository!", file=sys.stderr)
+
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 
 # Limit file upload size. We shouldn't be working with anything over 1 MB; these are small genomes.
@@ -252,7 +257,9 @@ def receive_files():
 
         # Try and upload files to Arvados using the sequence uploader CLI
 
-        result = subprocess.run(['python3','bh20sequploader/main.py', fasta_dest, metadata_dest],
+        cmd = ['python3','bh20sequploader/main.py', fasta_dest, metadata_dest]
+        print(" ".join(cmd),file=sys.stderr)
+        result = subprocess.run(cmd,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         if result.returncode != 0:

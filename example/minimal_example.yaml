@@ -2,8 +2,8 @@ id: placeholder
 
 host:
     host_id: XX
-    host_species: string
-    host_sex: string
+    host_species: http://purl.obolibrary.org/obo/NCBITaxon_9606
+    host_sex: http://purl.obolibrary.org/obo/NCIT_C20197
 
 sample:
     sample_id: XXX

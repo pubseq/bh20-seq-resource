@@ -8,6 +8,8 @@ from pathlib import Path
 import urllib.request
 import socket
 import getpass
+import sys
+sys.path.insert(0,'.')
 from bh20sequploader.qc_metadata import qc_metadata
 from bh20sequploader.qc_fasta import qc_fasta
 

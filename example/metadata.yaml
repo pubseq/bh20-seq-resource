@@ -2,11 +2,11 @@ id: placeholder
 
 host:
     host_id: XX1
-    host_species: string
+    host_species: http://purl.obolibrary.org/obo/NCBITaxon_9606
     host_common_name: string
-    host_sex: string
+    host_sex: http://purl.obolibrary.org/obo/NCIT_C27993
     host_age: 20
-    host_age_unit: string
+    host_age_unit: http://purl.obolibrary.org/obo/UO_0000036
     host_health_status: string
     host_treatment: string
     additional_host_information: string
@@ -17,12 +17,12 @@ sample:
     collecting_institution: XXX
     specimen_source: XXX
     collection_date: XXX
-    collection_location: XXX
+    collection_location: http://purl.obolibrary.org/obo/NCIT_C16428
     sample_storage_conditions: XXX
     additional_collection_information: XXX
 
 virus:
-    virus_species: XX
+    virus_species: http://purl.obolibrary.org/obo/NCBITaxon_2697049
     virus_strain: XX
 
 technology:

@@ -13,11 +13,11 @@ $graph:
   type: record
   fields:
     host_species:
-        ## autocomplete # NCBITAXON
         doc: Host species as defined in NCBITaxon (e.g. http://purl.obolibrary.org/obo/NCBITaxon_9606 for Homo sapiens)
         type: string
         jsonldPredicate:
           _id: http://www.ebi.ac.uk/efo/EFO_0000532
+          _type: "@id"
     host_id:
         doc: Identifer for the host. If you submit multiple samples from the same host, use the same host_id for those samples
         type: string
@@ -33,16 +33,18 @@ $graph:
         type: string
         jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/PATO_0000047
+          _type: "@id"
     host_age:
         doc: Age of the host as number (e.g. 50)
         type: int?
         jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/PATO_0000011
     host_age_unit:
-        doc: Unit of host age.... this field is unstable as of now (might be removed)
+        doc: Unit of host age e.g. http://purl.obolibrary.org/obo/UO_0000036
         type: string?
         jsonldPredicate:
-          _id: http://purl.obolibrary.org/obo/UO_0000036
+          _id: http://purl.obolibrary.org/obo/NCIT_C42574
+          _type: "@id"
     host_health_status:
         doc: A condition or state at a particular time
         type: string?
@@ -91,6 +93,7 @@ $graph:
       type: string?
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/GAZ_00000448
+        _type: "@id"
     sample_storage_conditions:
       doc: Information aboout storage of a specified type, e.g.  frozen specimen, paraffin, fresh ....
       type: string?
@@ -120,6 +123,7 @@ $graph:
       type: string?
       jsonldPredicate:
           _id: http://edamontology.org/data_1875
+          _type: "@id"
     virus_strain:
       doc: Name of the virus strain
       type: string?

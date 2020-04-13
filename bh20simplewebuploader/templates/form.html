@@ -10,8 +10,9 @@
          background-color: #F9EDE1;
      }
 
-     h1, h4 {
+     h1, h2, h3, h4 {
          font-family: 'Roboto Slab', serif;
+         color: darkblue;
      }
 
      h1 {
@@ -23,9 +24,9 @@
          font-style: italic;
      }
      .header {
+         background-color: white;
          margin: 0 auto;
          padding: 20px;
-         color: blue;
          text-align: center;
          height: 150px;
      }
@@ -34,7 +35,7 @@
          float: right;
      }
 
-     p, form {
+     p, form, .about, .footer {
          font-family: 'Raleway', sans-serif;
          line-height: 1.5;
      }
@@ -48,8 +49,19 @@
      }
 
      .intro {
+         background-color: lightgrey;
          margin: 0 auto;
          padding: 20px;
+     }
+
+     .about {
+         background-color: lightgrey;
+         margin: 0 auto;
+         padding: 20px;
+     }
+     .footer {
+         background-color: white;
+         margin: 0 auto;
      }
 
 span.dropt {border-bottom: thin dotted; background: #ffeedd;}
@@ -74,10 +86,16 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
      }
 
      .fasta-file-select {
+         padding: 1em;
          grid-area: b;
      }
 
      .metadata {
+         padding: 1em;
+         grid-area: c;
+     }
+     .metadata_upload_form {
+         padding: 1em;
          grid-area: c;
      }
 
@@ -127,12 +145,12 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
         <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Roboto+Slab&display=swap" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Web Uploader for Public SARS-CoV-2 Sequence Resource</title>
+        <title>Web uploader for Public SARS-CoV-2 Sequence Resource</title>
     </head>
     <body>
       <section class="header">
       <div class="logo"><a href="https://github.com/tylermorganwall/coronaobj/"><img src="static/image/coronasmallcomp.gif" width="150" /></a></div>
-      <h1>Web Uploader for Public SARS-CoV-2 Sequence Resource</h1>
+      <h1>Web uploader for Public SARS-CoV-2 Sequence Resource</h1>
 
 <small>Disabled until we got everything wired up</small>
 
@@ -148,7 +166,7 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
                 <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">download</a>!
                 Your uploaded sequence will automatically be processed
                 and incorporated into the public pangenome with
-                metadata. All data is published under
+                metadata using worklows from the High Performance Open Biology Lab defined <a href="https://github.com/hpobio-lab/viral-analysis/tree/master/cwl/pangenome-generate">here</a>. All data is published under
                 a <a href="https://creativecommons.org/licenses/by/4.0/">Creative
                 Commons 4.0 attribution license</a> (CC-BY-4.0). You
                 can take the published (GFA/RDF/FASTA) data and store it in
@@ -163,27 +181,28 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
                     <input type="file" id="fasta" name="fasta" accept=".fa,.fasta,.fna,.fq" required>
                     <br>
                     <small>
-                    Note that by uploading your data you automatically agree to a <a hef="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0 license</a>. </small>
+                    Note that by uploading your data you automatically agree to a <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0 license</a>. </small>
                 </div>
 
                 <div class="metadata">
-                    <label>Select metadata submission method:</label>
-                    <br>
-                    <input type="radio" id="metadata_form" name="metadata_type" value="fill" onchange="setMode()" checked required>
-                    <label for="metadata_form">Fill in metadata manually</label>
-                    <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="setMode()" required>
-                    <label for="metadata_upload">Upload metadata file</label>
-                    <br>
-                    <small>Make sure the metadata has submitter attribution details.</small>
-                </div>
+                  <label>Select metadata submission method:</label>
+                  <br>
+                  <input type="radio" id="metadata_form" name="metadata_type" value="fill" onchange="setMode()" checked required>
+                  <label for="metadata_form">Fill in metadata manually</label>
+                  <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="setMode()" required>
+                  <label for="metadata_upload">Upload metadata file</label>
+                  <br>
+                  <small>Make sure the metadata has submitter attribution details.</small>
 
-                <div id="metadata_upload_form_spot">
+                  <div id="metadata_upload_form_spot">
                     <div id="metadata_upload_form">
-                        <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> and <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/metadata.yaml" target="_blank">example</a> (max 50K):</label>
-                        <br>
-                        <input type="file" id="metadata" name="metadata" accept=".json,.yml,.yaml" required>
-                        <br>
+                      <br>
+                      <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> and <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/metadata.yaml" target="_blank">example</a> (max 50K):</label>
+                      <br>
+                      <input type="file" id="metadata" name="metadata" accept=".json,.yml,.yaml" required>
+                      <br>
                     </div>
+                  </div>
                 </div>
 
                 <div id="metadata_fill_form_spot">
@@ -220,9 +239,10 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
         </section>
 <hr>
 <br>
-<div class="intro">
+<div class="about">
   <h3>ABOUT</h3>
-  <small>This a public repository created at the COVID-19 BioHackathon
+  <p>
+  This a public repository created at the COVID-19 BioHackathon
     that has a low barrier to entry for uploading sequence data using
     best practices. I.e., data is published with a creative commons
     4.0 (CC-4.0) license with metadata using state-of-the art
@@ -233,19 +253,26 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
     pandemic. To contribute data simply upload it! To contribute code
     and/or workflows see
     the <a href="https://github.com/arvados/bh20-seq-resource">project
-    repository</a>. For more information see the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/paper/paper.md">paper</a> (WIP).</small>
-</p>
+    repository</a>. For more information see the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/paper/paper.md">paper</a> (WIP).
+  </p>
                     <br>
+</div>
 
                     <hr>
-        <a href="https://arvados.org/"><img src="static/image/arvados-logo.png"></a>
-
-        <small><a href="https://github.com/arvados/bh20-seq-resource">Source</a> &middot; Made for <a href="https://github.com/virtual-biohackathons/covid-19-bh20">COVID-19-BH20</a> | For more information E-mail pjotr.public444 at thebird.nl
-        </small>
-
+<div class="footer">
+                    <a href="https://arvados.org/"><img src="static/image/arvados-logo.png" height="80"></a>
+                    <a href="https://www.commonwl.org/"><img src="static/image/CWL-Logo-Header.png" height="80"></a>
 
         <a href="https://github.com/virtual-biohackathons/covid-19-bh20">
-        <img src="static/image/covid19biohackathon.png" align="right" width="300"></a>
+        <img src="static/image/covid19biohackathon.png" align="right" height="80"></a>
+
+        <center>
+        <small><a href="https://github.com/arvados/bh20-seq-resource">Source code</a> &middot; Powered by <a href="https://www.commonwl.org/">Common Workflow Language</a> &amp; <a href="https://arvados.org/">Arvados</a>; Made for <a href="https://github.com/virtual-biohackathons/covid-19-bh20">COVID-19-BH20</a>
+        </small>
+        </center>
+
+
+</div>
 
         <script type="text/javascript">
          let uploadForm = document.getElementById('metadata_upload_form')

@@ -44,6 +44,9 @@ authors:
   - name: Bonface Munyoki
     orcid: 0000
     affiliation: 13
+  - name: Andrea Guarracino
+    orcid: https://orcid.org/0000-0001-9744-131X
+    affiliation: 14
 affiliations:
   - name: Department of Genetics, Genomics and Informatics, The University of Tennessee Health Science Center, Memphis, TN, USA.
     index: 1
@@ -55,6 +58,8 @@ affiliations:
     index: 6
   - name: RISE Lab, University of California Berkeley, Berkeley, CA, USA.
     index: 8
+  - name: Centre for Molecular Bioinformatics, Department of Biology, University Of Rome Tor Vergata, Rome, Italy
+    index: 14
 date: 11 April 2020
 event: COVID2020
 group: Public Sequence Uploader

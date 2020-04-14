@@ -1,0 +1,59 @@
+PREFIX : <http://whatever/>
+PREFIX MainSchema: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+PREFIX hostSchema: <http://biohackathon.org/bh20-seq-schema#hostSchema/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX efo: <http://www.ebi.ac.uk/efo/>
+PREFIX evs: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+PREFIX edam: <http://edamontology.org/>
+
+:submissionShape {
+  MainSchema:host   @:hostShape ;
+  MainSchema:sample @:sampleShape ;
+  MainSchema:submitter @:submitterShape ;
+  MainSchema:technology @:technologyShape ;
+  MainSchema:virus @:virusShape;
+}
+
+:hostShape  {
+  	efo:EFO_0000532 [ obo:NCBITaxon_~ ] ;
+    obo:PATO_0000047 [ obo:NCIT_C20197  obo:NCIT_C27993  obo:NCIT_C17998 ] ;
+    sio:SIO_000115 xsd:string ;
+    obo:PATO_0000011 xsd:integer ?;
+    obo:NCIT_C42574 [ obo:UO_~ ] ?;
+    sio:SIO_001167 xsd:string ?;
+    efo:EFO_0000727 xsd:string ?;
+}
+
+:sampleShape  {
+    obo:OBI_0001895 xsd:string ;
+    sio:SIO_000115 xsd:string ;
+    sio:SIO_001167 xsd:string ;
+	evs:C25164 xsd:string ?;
+    obo:GAZ_00000448 [obo:GAZ_~] ?;
+    obo:OBI_0001472 xsd:string ?;
+    obo:OBI_0001479 xsd:string ?;
+}
+
+:submitterShape {
+    sio:SIO_000116 xsd:string ;
+	obo:NCIT_C37984 xsd:string ;
+	obo:NCIT_C37900 xsd:string ?;
+    obo:NCIT_C42781 xsd:string ?;
+    obo:OBI_0600047 xsd:string ?;
+    sio:SIO_000115 /https:\u002F\u002Forcid.org\u002F[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/?;
+    sio:SIO_000172 xsd:string ?;
+    efo:EFO_0001741 xsd:string ?;
+}
+
+:technologyShape {
+    obo:OBI_0600047 xsd:string ;
+    obo:FLU_0000848 xsd:integer ?;
+    efo:EFO_0002699 xsd:string ?;
+}
+
+:virusShape{
+	edam:data_1875 [ obo:NCBITaxon_~ ] ;
+  	sio:SIO_010055 xsd:string ?;
+}

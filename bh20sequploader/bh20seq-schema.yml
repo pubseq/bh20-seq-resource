@@ -23,11 +23,12 @@ $graph:
         type: string
         jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000115
-    host_common_name:
-        doc: Text label for the host species (e.g. homo sapiens)
-        type: string?
-        jsonldPredicate:
-          _id: http://purl.obolibrary.org/obo/NOMEN_0000037
+# Removed_common_name. Not necessary since we turned species into IRI
+#    host_common_name:
+#        doc: Text label for the host species (e.g. homo sapiens)
+#        type: string?
+#        jsonldPredicate:
+#          _id: http://purl.obolibrary.org/obo/NOMEN_0000037
     host_sex:
         doc: Sex of the host as define in NCIT, IRI expected (http://purl.obolibrary.org/obo/C20197 (Male), http://purl.obolibrary.org/obo/NCIT_C27993 (Female) or unkown (http://purl.obolibrary.org/obo/NCIT_C17998))
         type: string
@@ -120,7 +121,7 @@ $graph:
   fields:
     virus_species:
       doc: The name of a taxon from the NCBI taxonomy database
-      type: string?
+      type: string
       jsonldPredicate:
           _id: http://edamontology.org/data_1875
           _type: "@id"
@@ -145,7 +146,7 @@ $graph:
         _id: http://www.ebi.ac.uk/efo/EFO_0002699
     sequencing_coverage:
       doc: Sequence coverage defined as the average number of reads representing a given nucleotide (e.g. 100x)
-      type: string?
+      type: int?
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/FLU_0000848
 

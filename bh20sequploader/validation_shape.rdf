@@ -42,7 +42,7 @@ PREFIX edam: <http://edamontology.org/>
 	obo:NCIT_C37900 xsd:string ?;
     obo:NCIT_C42781 xsd:string ?;
     obo:OBI_0600047 xsd:string ?;
-    sio:SIO_000115 /https:\u002F\u002Forcid.org\u002F[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/?;
+    sio:SIO_000115 /https:\u002F\u002Forcid.org\u002F.{4}-.{4}-.{4}-.{4}/?;
     sio:SIO_000172 xsd:string ?;
     efo:EFO_0001741 xsd:string ?;
 }

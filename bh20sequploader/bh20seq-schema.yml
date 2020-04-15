@@ -191,8 +191,8 @@ $graph:
       type: string?
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/NCIT_C19026
-    submitter_orchid:
-      doc: ORCHID of the submitter
+    submitter_orcid:
+      doc: ORCID of the submitter as a full URI, e.g. https://orcid.org/0000-0002-1825-0097
       type: string?
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000115

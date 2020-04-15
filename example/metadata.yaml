@@ -37,4 +37,4 @@ submitter:
     provider_sample_id: string
     submitter_sample_id: string
     authors: testAuthor
-    submitter_orchid: https://orcid.org/00A0-0002-1825-009X
+    submitter_orcid: https://orcid.org/0000-0002-1825-0097

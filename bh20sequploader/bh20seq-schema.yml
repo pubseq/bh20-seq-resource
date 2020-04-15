@@ -56,10 +56,10 @@ $graph:
       jsonldPredicate:
           _id: http://www.ebi.ac.uk/efo/EFO_0000727
     host_vaccination:
-      doc: Field is unstable
+      doc: List of vaccines given to the host
       type: string?
       jsonldPredicate:
-          _id: http://purl.obolibrary.org/obo/VO_0000001
+          _id: http://purl.obolibrary.org/obo/VO_0000002
     additional_host_information:
       doc: Field for additional host information
       type: string?

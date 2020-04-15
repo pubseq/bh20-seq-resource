@@ -7,7 +7,7 @@ import os
 
 path_ncbi_virus_accession = 'sequences.acc'
 
-date = '20200414'
+date = '20200415'
 path_seq_fasta = 'seq_from_nuccore.{}.fasta'.format(date)
 path_metadata_xml = 'metadata_from_nuccore.{}.xml'.format(date)
 
@@ -19,9 +19,15 @@ for term in term_list:
     tmp_list = Entrez.read(
         Entrez.esearch(db='nuccore', term=term, idtype='acc', retmax='10000')
     )['IdList']
-    print(term, len(tmp_list))
-    
+
+    # Remove mRNAs, ncRNAs, Proteins, and predicted models (more information here: https://en.wikipedia.org/wiki/RefSeq)
+    tmp_list = [x for x in tmp_list if x[:2] not in ['NM', 'NR', 'NP', 'XM', 'XR', 'XP', 'WP']]
+
     # Remove the version in the id
+    tmp_list = [x.split('.')[0] for x in tmp_list]
+    
+    print(term, len(tmp_list))
+
     id_set.update([x.split('.')[0] for x in tmp_list])
 
 print(term_list, len(id_set))

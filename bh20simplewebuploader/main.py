@@ -49,6 +49,17 @@ def name_to_label(field_name):
 
     return string.capwords(field_name.replace('_', ' '))
 
+def is_url(string):
+    """
+    Return True if the given string looks like a URL, and False otherwise.
+
+    Used for finding type URLs in the schema.
+
+    Right now only supports http(s) URLs because that's all we have in our schema.
+    """
+
+    return string.startswith('http')
+
 def generate_form(schema):
     """
     Linearize the schema and send a bunch of dicts.
@@ -93,13 +104,28 @@ def generate_form(schema):
             ref_url = None
             if not isinstance(field_type, str):
                 # If the type isn't a string
+
                 # See if it has a more info/what goes here URL
                 predicate = field_type.get('jsonldPredicate', {})
-                if not isinstance(predicate, str):
-                    ref_url = predicate.get('_id', None)
+                # Predicate may be a URL, a dict with a URL in _id, maybe a
+                # dict with a URL in _type, or a dict with _id and _type but no
+                # URLs anywhere. Some of these may not technically be allowed
+                # by the format, but if they occur, we might as well try to
+                # handle them.
+                if isinstance(predicate, str):
+                    if is_url(predicate):
+                        ref_url = predicate
                 else:
-                    ref_url = predicate # not sure this is correct
-                # Grab out its type field
+                    # Assume it's a dict. Look at the fields we know about.
+                    for field in ['_id', 'type']:
+                        field_value = predicate.get(field, None)
+                        if isinstance(field_value, str) and is_url(field_value) and ref_url is None:
+                            # Take the first URL-looking thing we find
+                            ref_url = field_value
+                            break
+
+
+                # Now overwrite the field type with the actual type string
                 field_type = field_type.get('type', '')
 
             # Decide if the field is optional (type ends in ?)

@@ -7,7 +7,7 @@ import sys
 import re
 import string
 import yaml
-import urllib.request
+import pkg_resources
 from flask import Flask, request, redirect, send_file, send_from_directory, render_template
 
 import os.path
@@ -133,8 +133,8 @@ def generate_form(schema):
     return list(walk_fields(root_name))
 
 
-# At startup, we need to load the current metadata schema so we can make a form for it
-METADATA_SCHEMA = yaml.safe_load(urllib.request.urlopen('https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-schema.yml'))
+# At startup, we need to load the metadata schema from the uploader module, so we can make a form for it
+METADATA_SCHEMA = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-schema.yml"))
 FORM_ITEMS = generate_form(METADATA_SCHEMA)
 
 @app.route('/')

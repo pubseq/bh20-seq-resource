@@ -25,7 +25,7 @@ app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 @app.errorhandler(413)
 def handle_large_file(e):
     return (render_template('error.html',
-        error_message="One of your files is too large. The maximum file size is 1 megabyte."), 413)
+        error_message="One of your files is too large. The maximum file size is 50 megabytes."), 413)
 
 
 def type_to_heading(type_name):

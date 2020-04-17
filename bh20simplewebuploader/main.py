@@ -76,9 +76,6 @@ def generate_form(schema, options):
     IRI.
     """
 
-    print(schema)
-    print(options)
-
     # Get the list of form components, one of which is the root
     components = schema.get('$graph', [])
 
@@ -160,10 +157,7 @@ def generate_form(schema, options):
                 if ref_iri:
                     record['ref_iri'] = ref_iri
 
-                print(field_name)
-
                 if field_name in options:
-                    print("Has options: {}".format(options[field_name]))
                     # The field will be a 'select' type no matter what its real
                     # data type is.
                     record['type'] = 'select' # Not a real HTML input type. It's its own tag.

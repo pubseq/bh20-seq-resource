@@ -223,8 +223,11 @@
                         <label for="{{ record['id'] }}" title="{{ record.get('docstring', '') }}">
                             {{ record['label'] }}
                             {{ "*" if record['required'] else "" }}
+                            {% if 'docstring' in record %}
+                            <a href='javascript:alert({{ record['docstring'] | tojson }})'>❓</a>
+                            {% endif %}
                             {% if 'ref_iri' in record %}
-                            <a href="{{ record['ref_iri'] }}" target="_blank">?</a>
+                            <a href="{{ record['ref_iri'] }}" target="_blank" title="Ontology Link">🔗</a>
                             {% endif %}
                         </label>
                         {% if record['type'] == 'select' %}

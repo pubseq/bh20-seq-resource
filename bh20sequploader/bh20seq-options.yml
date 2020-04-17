@@ -1,0 +1,16 @@
+# Contains suggested human-readable field values and their corresponding IRIs.
+# Keyed on the field names in the types in the schema. Relies on field names
+# being unique or at least using the same options in different containing
+# types.
+
+host_age_unit:
+  year: http://purl.obolibrary.org/obo/UO_0000036
+  month: http://purl.obolibrary.org/obo/UO_0000035
+  week: http://purl.obolibrary.org/obo/UO_0000035
+  day: http://purl.obolibrary.org/obo/UO_0000034
+  hour: http://purl.obolibrary.org/obo/UO_0000032
+
+host_sex:
+  Male: http://purl.obolibrary.org/obo/NCIT_C20197
+  Female: http://purl.obolibrary.org/obo/NCIT_C27993
+  unknown: http://purl.obolibrary.org/obo/NCIT_C17998

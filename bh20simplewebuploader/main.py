@@ -60,13 +60,24 @@ def is_iri(string):
 
     return string.startswith('http')
 
-def generate_form(schema):
+def generate_form(schema, options):
     """
-    Linearize the schema and send a bunch of dicts.
+    Linearize the schema into a list of dicts.
+
     Each dict either has a 'heading' (in which case we put a heading for a
     form section in the template) or an 'id', 'label', 'type', and 'required'
-    (in which case we make a form field in the template).
+    (in which case we make a form field in the template). Non-heading dicts
+    with type 'select' will have an 'options' field, with a list of (name,
+    value) tuples, and represent a form dropdown element.
+
+    Takes the deserialized metadata schema YAML, and also a deserialized YAML
+    of option values. The option values are keyed on (unscoped) field name in
+    the schema, and each is a dict of human readable option -> corresponding
+    IRI.
     """
+
+    print(schema)
+    print(options)
 
     # Get the list of form components, one of which is the root
     components = schema.get('$graph', [])
@@ -141,14 +152,27 @@ def generate_form(schema):
                 for item in walk_fields(field_type, parent_keys + [field_name], subtree_optional or optional):
                     yield item
             else:
-                # We know how to make a string input
+                # This is a leaf field. We need an input for it.
                 record = {}
                 record['id'] = '.'.join(parent_keys + [field_name])
                 record['label'] = name_to_label(field_name)
                 record['required'] = not optional and not subtree_optional
                 if ref_iri:
                     record['ref_iri'] = ref_iri
-                if field_type == 'string':
+
+                print(field_name)
+
+                if field_name in options:
+                    print("Has options: {}".format(options[field_name]))
+                    # The field will be a 'select' type no matter what its real
+                    # data type is.
+                    record['type'] = 'select' # Not a real HTML input type. It's its own tag.
+                    # We have a set of values to present
+                    record['options'] = []
+                    for name, value in options[field_name].items():
+                        # Make a tuple for each one
+                        record['options'].append((name, value))
+                elif field_type == 'string':
                     record['type'] = 'text' # HTML input type
                 elif field_type == 'int':
                     record['type'] = 'number'
@@ -161,7 +185,8 @@ def generate_form(schema):
 
 # At startup, we need to load the metadata schema from the uploader module, so we can make a form for it
 METADATA_SCHEMA = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-schema.yml"))
-FORM_ITEMS = generate_form(METADATA_SCHEMA)
+METADATA_OPTION_DEFINITIONS = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-options.yml"))
+FORM_ITEMS = generate_form(METADATA_SCHEMA, METADATA_OPTION_DEFINITIONS)
 
 @app.route('/')
 def send_form():

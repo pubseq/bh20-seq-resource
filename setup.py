@@ -31,7 +31,7 @@ setup(
     author_email="peter.amstutz@curii.com",
     license="Apache 2.0",
     packages=["bh20sequploader", "bh20seqanalyzer", "bh20simplewebuploader"],
-    package_data={"bh20sequploader": ["bh20seq-schema.yml", "validation/formats"],
+    package_data={"bh20sequploader": ["bh20seq-schema.yml", "bh20seq-options.yml", "validation/formats"],
     },
     install_requires=install_requires,
     extras_require={

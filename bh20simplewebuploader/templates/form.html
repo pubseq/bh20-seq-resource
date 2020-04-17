@@ -211,7 +211,6 @@
 
                 <div id="metadata_fill_form_spot">
                     <div id="metadata_fill_form">
-                        {{ record }}
                         {% for record in fields %}
 
                         {% if 'heading' in record %}
@@ -228,7 +227,16 @@
                             <a href="{{ record['ref_iri'] }}" title="More Info" target="_blank">?</a>
                             {% endif %}
                         </label>
+                        {% if record['type'] == 'select' %}
+                        <select id="{{ record['id'] }}" name="{{ record['id'] }}" {{ "required" if record['required'] else "" }}>
+                            <option value="" selected>Choose one...</option>
+                            {% for option in record['options'] %}
+                            <option value="{{ option[1] }}">{{ option[0] }}</option>
+                            {% endfor %}
+                        </select>
+                        {% else %}
                         <input type="{{ record['type'] }}" id="{{ record['id'] }}" name="{{ record['id'] }}" {{ "required" if record['required'] else "" }}>
+                        {% endif %}
                         {% endif %}
                         {% if loop.index == loop.length %}
                     </div>

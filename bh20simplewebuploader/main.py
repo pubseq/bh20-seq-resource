@@ -68,7 +68,8 @@ def generate_form(schema, options):
     form section in the template) or an 'id', 'label', 'type', and 'required'
     (in which case we make a form field in the template). Non-heading dicts
     with type 'select' will have an 'options' field, with a list of (name,
-    value) tuples, and represent a form dropdown element.
+    value) tuples, and represent a form dropdown element. Non-heading dicts may
+    have a human-readable 'docstring' field describing them.
 
     Takes the deserialized metadata schema YAML, and also a deserialized YAML
     of option values. The option values are keyed on (unscoped) field name in
@@ -110,8 +111,12 @@ def generate_form(schema, options):
             # For each field
 
             ref_iri = None
+            docstring = None
             if not isinstance(field_type, str):
                 # If the type isn't a string
+                
+                # It may have documentation
+                docstring = field_type.get('doc', None)
 
                 # See if it has a more info/what goes here URL
                 predicate = field_type.get('jsonldPredicate', {})
@@ -156,6 +161,8 @@ def generate_form(schema, options):
                 record['required'] = not optional and not subtree_optional
                 if ref_iri:
                     record['ref_iri'] = ref_iri
+                if docstring:
+                    record['docstring'] = docstring
 
                 if field_name in options:
                     # The field will be a 'select' type no matter what its real

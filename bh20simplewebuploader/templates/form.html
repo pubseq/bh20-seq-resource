@@ -224,7 +224,7 @@
                             {{ record['label'] }}
                             {{ "*" if record['required'] else "" }}
                             {% if 'ref_iri' in record %}
-                            <a href="{{ record['ref_iri'] }}" title="More Info" target="_blank">?</a>
+                            <a href="{{ record['ref_iri'] }}" title="{{ record.get('docstring', 'More Info') }}" target="_blank">?</a>
                             {% endif %}
                         </label>
                         {% if record['type'] == 'select' %}

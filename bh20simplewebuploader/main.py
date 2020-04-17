@@ -49,11 +49,11 @@ def name_to_label(field_name):
 
     return string.capwords(field_name.replace('_', ' '))
 
-def is_url(string):
+def is_iri(string):
     """
-    Return True if the given string looks like a URL, and False otherwise.
+    Return True if the given string looks like an IRI, and False otherwise.
 
-    Used for finding type URLs in the schema.
+    Used for finding type IRIs in the schema.
 
     Right now only supports http(s) URLs because that's all we have in our schema.
     """
@@ -101,7 +101,7 @@ def generate_form(schema):
         for field_name, field_type in by_name.get(type_name, {}).get('fields', {}).items():
             # For each field
 
-            ref_url = None
+            ref_iri = None
             if not isinstance(field_type, str):
                 # If the type isn't a string
 
@@ -113,15 +113,15 @@ def generate_form(schema):
                 # by the format, but if they occur, we might as well try to
                 # handle them.
                 if isinstance(predicate, str):
-                    if is_url(predicate):
-                        ref_url = predicate
+                    if is_iri(predicate):
+                        ref_iri = predicate
                 else:
                     # Assume it's a dict. Look at the fields we know about.
                     for field in ['_id', 'type']:
                         field_value = predicate.get(field, None)
-                        if isinstance(field_value, str) and is_url(field_value) and ref_url is None:
+                        if isinstance(field_value, str) and is_iri(field_value) and ref_iri is None:
                             # Take the first URL-looking thing we find
-                            ref_url = field_value
+                            ref_iri = field_value
                             break
 
 
@@ -146,8 +146,8 @@ def generate_form(schema):
                 record['id'] = '.'.join(parent_keys + [field_name])
                 record['label'] = name_to_label(field_name)
                 record['required'] = not optional and not subtree_optional
-                if ref_url:
-                    record['ref_url'] = ref_url
+                if ref_iri:
+                    record['ref_iri'] = ref_iri
                 if field_type == 'string':
                     record['type'] = 'text' # HTML input type
                 elif field_type == 'int':

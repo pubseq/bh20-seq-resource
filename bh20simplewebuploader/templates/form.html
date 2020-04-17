@@ -224,8 +224,8 @@
                         <label for="{{ record['id'] }}">
                             {{ record['label'] }}
                             {{ "*" if record['required'] else "" }}
-                            {% if 'ref_url' in record %}
-                            <a href="{{ record['ref_url'] }}" title="More Info" target="_blank">?</a>
+                            {% if 'ref_iri' in record %}
+                            <a href="{{ record['ref_iri'] }}" title="More Info" target="_blank">?</a>
                             {% endif %}
                         </label>
                         <input type="{{ record['type'] }}" id="{{ record['id'] }}" name="{{ record['id'] }}" {{ "required" if record['required'] else "" }}>

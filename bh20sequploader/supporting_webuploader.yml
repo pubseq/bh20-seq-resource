@@ -10,6 +10,34 @@ host_sex:
   Female: http://purl.obolibrary.org/obo/NCIT_C27993
   unknown: http://purl.obolibrary.org/obo/NCIT_C17998
 
+sample_sequencing_technology:
+  Illumina NextSeq 500: http://www.ebi.ac.uk/efo/EFO_0009173
+  Oxford Nanopore MinION: http://www.ebi.ac.uk/efo/EFO_0008632
+  Illumina MiSeq: http://www.ebi.ac.uk/efo/EFO_0004205
+  IonTorrent: http://purl.obolibrary.org/obo/NCIT_C125894
+  Oxford Nanopore Sequencing: http://purl.obolibrary.org/obo/NCIT_C146818
+  Sanger dideoxy sequencing: http://purl.obolibrary.org/obo/NCIT_C19641
+
+sample_sequencing_technology2:
+  Illumina NextSeq 500: http://www.ebi.ac.uk/efo/EFO_0009173
+  Oxford Nanopore MinION: http://www.ebi.ac.uk/efo/EFO_0008632
+  Illumina MiSeq: http://www.ebi.ac.uk/efo/EFO_0004205
+  IonTorrent: http://purl.obolibrary.org/obo/NCIT_C125894
+  Oxford Nanopore Sequencing: http://purl.obolibrary.org/obo/NCIT_C146818
+  Sanger dideoxy sequencing: http://purl.obolibrary.org/obo/NCIT_C19641
+
+specimen_source:
+  nasopharyngeal swab: http://purl.obolibrary.org/obo/NCIT_C155831
+  oropharyngeal swab: http://purl.obolibrary.org/obo/NCIT_C155835
+  sputum: http://purl.obolibrary.org/obo/NCIT_C13278
+  bronchoalveolar lavage fluid: http://purl.obolibrary.org/obo/NCIT_C13195
+
+specimen_source2:
+  nasopharyngeal swab: http://purl.obolibrary.org/obo/NCIT_C155831
+  oropharyngeal swab: http://purl.obolibrary.org/obo/NCIT_C155835
+  sputum: http://purl.obolibrary.org/obo/NCIT_C13278
+  bronchoalveolar lavage fluid: http://purl.obolibrary.org/obo/NCIT_C13195
+
 host_species:
   OLS-ontology: ncbitaxon
 

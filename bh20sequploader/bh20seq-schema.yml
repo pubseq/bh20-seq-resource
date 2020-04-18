@@ -84,6 +84,11 @@ $graph:
       type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/OBI_0001479
+    specimen_source2:
+      doc: A specimen that derives from an anatomical part or substance arising from an organism, e.g.  tissue, organ
+      type: string?
+      jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/OBI_0001479
     collection_date:
       doc: Date when the sample was taken
       type: string?
@@ -139,6 +144,11 @@ $graph:
       type: string
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/OBI_0600047
+    sample_sequencing_technology2:
+      doc: Technology that was used to sequence this sample (e.g Sanger, Nanopor MiniION)
+      type: string?
+      jsonldPredicate:
+        _id: http://purl.obolibrary.org/obo/OBI_0600047
     sequence_assembly_method:
       doc: Protocol which provides instructions on the alignment of sequencing reads to reference genome
       type: string?
@@ -146,9 +156,19 @@ $graph:
         _id: http://www.ebi.ac.uk/efo/EFO_0002699
     sequencing_coverage:
       doc: Sequence coverage defined as the average number of reads representing a given nucleotide (e.g. 100x)
-      type: int?
+      type: float?
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/FLU_0000848
+    sequencing_coverage2:
+      doc: If a second sequence technology was use you can submit its coverage here
+      type: float?
+      jsonldPredicate:
+        _id: http://purl.obolibrary.org/obo/FLU_0000848
+    additional_technology_information:
+      doc: Field for additional technology information
+      type: string?
+      jsonldPredicate:
+        _id: http://semanticscience.org/resource/SIO_001167
 
 - name: submitterSchema
   type: record

@@ -7,7 +7,7 @@ import sys
 import re
 import string
 import yaml
-import urllib.request
+import pkg_resources
 from flask import Flask, request, redirect, send_file, send_from_directory, render_template
 
 import os.path
@@ -25,7 +25,7 @@ app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 @app.errorhandler(413)
 def handle_large_file(e):
     return (render_template('error.html',
-        error_message="One of your files is too large. The maximum file size is 1 megabyte."), 413)
+        error_message="One of your files is too large. The maximum file size is 50 megabytes."), 413)
 
 
 def type_to_heading(type_name):
@@ -49,12 +49,32 @@ def name_to_label(field_name):
 
     return string.capwords(field_name.replace('_', ' '))
 
-def generate_form(schema):
+def is_iri(string):
     """
-    Linearize the schema and send a bunch of dicts.
+    Return True if the given string looks like an IRI, and False otherwise.
+
+    Used for finding type IRIs in the schema.
+
+    Right now only supports http(s) URLs because that's all we have in our schema.
+    """
+
+    return string.startswith('http')
+
+def generate_form(schema, options):
+    """
+    Linearize the schema into a list of dicts.
+
     Each dict either has a 'heading' (in which case we put a heading for a
     form section in the template) or an 'id', 'label', 'type', and 'required'
-    (in which case we make a form field in the template).
+    (in which case we make a form field in the template). Non-heading dicts
+    with type 'select' will have an 'options' field, with a list of (name,
+    value) tuples, and represent a form dropdown element. Non-heading dicts may
+    have a human-readable 'docstring' field describing them.
+
+    Takes the deserialized metadata schema YAML, and also a deserialized YAML
+    of option values. The option values are keyed on (unscoped) field name in
+    the schema, and each is a dict of human readable option -> corresponding
+    IRI.
     """
 
     # Get the list of form components, one of which is the root
@@ -90,16 +110,35 @@ def generate_form(schema):
         for field_name, field_type in by_name.get(type_name, {}).get('fields', {}).items():
             # For each field
 
-            ref_url = None
+            ref_iri = None
+            docstring = None
             if not isinstance(field_type, str):
                 # If the type isn't a string
+                
+                # It may have documentation
+                docstring = field_type.get('doc', None)
+
                 # See if it has a more info/what goes here URL
                 predicate = field_type.get('jsonldPredicate', {})
-                if not isinstance(predicate, str):
-                    ref_url = predicate.get('_id', None)
+                # Predicate may be a URL, a dict with a URL in _id, maybe a
+                # dict with a URL in _type, or a dict with _id and _type but no
+                # URLs anywhere. Some of these may not technically be allowed
+                # by the format, but if they occur, we might as well try to
+                # handle them.
+                if isinstance(predicate, str):
+                    if is_iri(predicate):
+                        ref_iri = predicate
                 else:
-                    ref_url = predicate # not sure this is correct
-                # Grab out its type field
+                    # Assume it's a dict. Look at the fields we know about.
+                    for field in ['_id', 'type']:
+                        field_value = predicate.get(field, None)
+                        if isinstance(field_value, str) and is_iri(field_value) and ref_iri is None:
+                            # Take the first URL-looking thing we find
+                            ref_iri = field_value
+                            break
+
+
+                # Now overwrite the field type with the actual type string
                 field_type = field_type.get('type', '')
 
             # Decide if the field is optional (type ends in ?)
@@ -115,14 +154,26 @@ def generate_form(schema):
                 for item in walk_fields(field_type, parent_keys + [field_name], subtree_optional or optional):
                     yield item
             else:
-                # We know how to make a string input
+                # This is a leaf field. We need an input for it.
                 record = {}
                 record['id'] = '.'.join(parent_keys + [field_name])
                 record['label'] = name_to_label(field_name)
                 record['required'] = not optional and not subtree_optional
-                if ref_url:
-                    record['ref_url'] = ref_url
-                if field_type == 'string':
+                if ref_iri:
+                    record['ref_iri'] = ref_iri
+                if docstring:
+                    record['docstring'] = docstring
+
+                if field_name in options:
+                    # The field will be a 'select' type no matter what its real
+                    # data type is.
+                    record['type'] = 'select' # Not a real HTML input type. It's its own tag.
+                    # We have a set of values to present
+                    record['options'] = []
+                    for name, value in options[field_name].items():
+                        # Make a tuple for each one
+                        record['options'].append((name, value))
+                elif field_type == 'string':
                     record['type'] = 'text' # HTML input type
                 elif field_type == 'int':
                     record['type'] = 'number'
@@ -133,9 +184,10 @@ def generate_form(schema):
     return list(walk_fields(root_name))
 
 
-# At startup, we need to load the current metadata schema so we can make a form for it
-METADATA_SCHEMA = yaml.safe_load(urllib.request.urlopen('https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-schema.yml'))
-FORM_ITEMS = generate_form(METADATA_SCHEMA)
+# At startup, we need to load the metadata schema from the uploader module, so we can make a form for it
+METADATA_SCHEMA = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-schema.yml"))
+METADATA_OPTION_DEFINITIONS = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-options.yml"))
+FORM_ITEMS = generate_form(METADATA_SCHEMA, METADATA_OPTION_DEFINITIONS)
 
 @app.route('/')
 def send_form():

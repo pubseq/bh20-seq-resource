@@ -186,7 +186,7 @@ if not os.path.exists(dir_fasta_and_yaml_today):
                         if GBQualifier_value_text in term_to_uri_dict:
                             info_for_yaml_dict['sample']['specimen_source'] = term_to_uri_dict[GBQualifier_value_text]
                         else:
-                            if GBQualifier_value_text in ['NP/OP swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab', 'np/np swab']:
+                            if GBQualifier_value_text in ['NP/OP swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab', 'np/np swab', 'np/op']:
                                 info_for_yaml_dict['sample']['specimen_source'] = term_to_uri_dict['nasopharyngeal swab']
                                 info_for_yaml_dict['sample']['specimen_source2'] = term_to_uri_dict['oropharyngeal swab']
                             else:

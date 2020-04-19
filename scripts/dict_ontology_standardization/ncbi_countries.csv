@@ -1,4 +1,6 @@
 30.59 N 114.3 E,http://www.wikidata.org/entity/Q11746
+35.92 N 74.33 E,http://www.wikidata.org/entity/Q609024
+39.54 N 116.23 E,http://www.wikidata.org/entity/Q198244
 Afghanistan,http://www.wikidata.org/entity/Q889
 Albania,http://www.wikidata.org/entity/Q222
 Algeria,http://www.wikidata.org/entity/Q262
@@ -41,15 +43,18 @@ China: Chongqing,http://www.wikidata.org/entity/Q11725
 China: Fujian,http://www.wikidata.org/entity/Q41705
 China: Gansu,http://www.wikidata.org/entity/Q42392
 China: Guangdong,http://www.wikidata.org/entity/Q15175
+"“China: Guangdong, Guangzhou”",http://www.wikidata.org/entity/Q16572
 China: Guangxi Zhuang Autonomous Region,http://www.wikidata.org/entity/Q15176
+China: Guangzhou,http://www.wikidata.org/entity/Q16572
 China: Guizhou,http://www.wikidata.org/entity/Q47097
 China: Hainan,http://www.wikidata.org/entity/Q42200
 China: Hebei,http://www.wikidata.org/entity/Q21208
 China: Heilongjiang,http://www.wikidata.org/entity/Q19206
 China: Henan,http://www.wikidata.org/entity/Q43684
 China: Hong Kong,http://www.wikidata.org/entity/Q8646
+China: HuaShang,http://www.wikidata.org/entity/Q148
 China: Hubei,http://www.wikidata.org/entity/Q46862
-"China: Hubei, Wuhan",http://www.wikidata.org/entity/Q11746
+"“China: Hubei, Wuhan”",http://www.wikidata.org/entity/Q11746
 China: Hunan,http://www.wikidata.org/entity/Q45761
 China: Inner Mongolia,http://www.wikidata.org/entity/Q41079
 China: Jiangsu,http://www.wikidata.org/entity/Q16963
@@ -63,13 +68,17 @@ China: Shaanxi,http://www.wikidata.org/entity/Q47974
 China: Shandong,http://www.wikidata.org/entity/Q43407
 China: Shanghai,http://www.wikidata.org/entity/Q8686
 China: Shanxi,http://www.wikidata.org/entity/Q46913
+China: Shenzhen,http://www.wikidata.org/entity/Q15174
 China: Sichuan,http://www.wikidata.org/entity/Q19770
 China: Tianjin,http://www.wikidata.org/entity/Q11736
 China: Tibet Autonomous Region,http://www.wikidata.org/entity/Q17269
+China: Wuhan,http://www.wikidata.org/entity/Q11746
 China: Xinjiang,http://www.wikidata.org/entity/Q34800
 China: Yunnan,http://www.wikidata.org/entity/Q43194
 China: Zhejiang,http://www.wikidata.org/entity/Q16967
+"“China: Zhejiang, Hangzhou”",http://www.wikidata.org/entity/Q4970
 Colombia,http://www.wikidata.org/entity/Q739
+Colombia: Antioquia,http://www.wikidata.org/entity/Q123304
 Comoros,http://www.wikidata.org/entity/Q970
 Costa Rica,http://www.wikidata.org/entity/Q800
 Croatia,http://www.wikidata.org/entity/Q224
@@ -110,8 +119,10 @@ Hungary,http://www.wikidata.org/entity/Q28
 Iceland,http://www.wikidata.org/entity/Q189
 Icelandic Commonwealth,http://www.wikidata.org/entity/Q62389
 India,http://www.wikidata.org/entity/Q668
+India: Kerala State,http://www.wikidata.org/entity/Q1186
 Indonesia,http://www.wikidata.org/entity/Q252
 Iran,http://www.wikidata.org/entity/Q794
+Iran: Qum,http://www.wikidata.org/entity/Q131664
 Iran: Tehran,http://www.wikidata.org/entity/Q3616
 Iraq,http://www.wikidata.org/entity/Q796
 Ireland,http://www.wikidata.org/entity/Q27
@@ -163,12 +174,15 @@ New Zealand,http://www.wikidata.org/entity/Q664
 Nicaragua,http://www.wikidata.org/entity/Q811
 Niger,http://www.wikidata.org/entity/Q1032
 Nigeria,http://www.wikidata.org/entity/Q1033
+Nigeria: Lagos,http://www.wikidata.org/entity/Q8673
 North Korea,http://www.wikidata.org/entity/Q423
 North Macedonia,http://www.wikidata.org/entity/Q221
 Norway,http://www.wikidata.org/entity/Q20
 Oman,http://www.wikidata.org/entity/Q842
 Ottoman Empire,http://www.wikidata.org/entity/Q12560
 Pakistan,http://www.wikidata.org/entity/Q843
+Pakistan: Gilgit,http://www.wikidata.org/entity/Q609024
+Pakistan: KPK,http://www.wikidata.org/entity/Q183314
 Palau,http://www.wikidata.org/entity/Q695
 Panama,http://www.wikidata.org/entity/Q804
 Papua New Guinea,http://www.wikidata.org/entity/Q691
@@ -203,6 +217,7 @@ Slovenia,http://www.wikidata.org/entity/Q215
 Solomon Islands,http://www.wikidata.org/entity/Q685
 Somalia,http://www.wikidata.org/entity/Q1045
 South Africa,http://www.wikidata.org/entity/Q258
+South Africa: KwaZulu-Natal,http://www.wikidata.org/entity/Q81725
 South African Republic,http://www.wikidata.org/entity/Q550374
 South Korea,http://www.wikidata.org/entity/Q884
 South Sudan,http://www.wikidata.org/entity/Q958
@@ -215,6 +230,7 @@ Suriname,http://www.wikidata.org/entity/Q730
 Sweden,http://www.wikidata.org/entity/Q34
 Switzerland,http://www.wikidata.org/entity/Q39
 Syria,http://www.wikidata.org/entity/Q858
+Taiwan,http://www.wikidata.org/entity/Q865
 Tajikistan,http://www.wikidata.org/entity/Q863
 Tanzania,http://www.wikidata.org/entity/Q924
 Thailand,http://www.wikidata.org/entity/Q869
@@ -224,6 +240,7 @@ Togo,http://www.wikidata.org/entity/Q945
 Tonga,http://www.wikidata.org/entity/Q678
 Trinidad and Tobago,http://www.wikidata.org/entity/Q754
 Tunisia,http://www.wikidata.org/entity/Q948
+Tunisia: Tunis,http://www.wikidata.org/entity/Q3572
 Turkey,http://www.wikidata.org/entity/Q43
 Turkmenistan,http://www.wikidata.org/entity/Q874
 Tuvalu,http://www.wikidata.org/entity/Q672
@@ -240,6 +257,7 @@ USA: AL,http://www.wikidata.org/entity/Q173
 USA: AR,http://www.wikidata.org/entity/Q1612
 USA: AZ,http://www.wikidata.org/entity/Q816
 USA: CA,http://www.wikidata.org/entity/Q99
+"“USA: CA, San Diego County”",http://www.wikidata.org/entity/Q108143
 USA: CO,http://www.wikidata.org/entity/Q1261
 USA: CT,http://www.wikidata.org/entity/Q779
 USA: DE,http://www.wikidata.org/entity/Q1393
@@ -249,6 +267,7 @@ USA: HI,http://www.wikidata.org/entity/Q782
 USA: IA,http://www.wikidata.org/entity/Q1546
 USA: ID,http://www.wikidata.org/entity/Q1221
 USA: IL,http://www.wikidata.org/entity/Q1204
+USA: Illinois,http://www.wikidata.org/entity/Q1204
 USA: IN,http://www.wikidata.org/entity/Q1415
 USA: KS,http://www.wikidata.org/entity/Q1558
 USA: KY,http://www.wikidata.org/entity/Q1603
@@ -274,6 +293,7 @@ USA: OK,http://www.wikidata.org/entity/Q1649
 USA: OR,http://www.wikidata.org/entity/Q824
 USA: PA,http://www.wikidata.org/entity/Q1400
 USA: RI,http://www.wikidata.org/entity/Q1387
+"“USA: San Francisco, CA”",http://www.wikidata.org/entity/Q62
 USA: SC,http://www.wikidata.org/entity/Q1456
 USA: SD,http://www.wikidata.org/entity/Q1211
 USA: TN,http://www.wikidata.org/entity/Q1509
@@ -289,9 +309,10 @@ Uzbekistan,http://www.wikidata.org/entity/Q265
 Vanuatu,http://www.wikidata.org/entity/Q686
 Vatican City,http://www.wikidata.org/entity/Q237
 Venezuela,http://www.wikidata.org/entity/Q717
-Vietnam,http://www.wikidata.org/entity/Q881
 Viet nam,http://www.wikidata.org/entity/Q881
+Viet Nam,http://www.wikidata.org/entity/Q881
 Viet Nam: Ho Chi Minh city,http://www.wikidata.org/entity/Q1854
+Vietnam,http://www.wikidata.org/entity/Q881
 Yemen,http://www.wikidata.org/entity/Q805
 Zambia,http://www.wikidata.org/entity/Q953
 Zimbabwe,http://www.wikidata.org/entity/Q954

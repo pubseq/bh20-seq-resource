@@ -5,6 +5,7 @@ Oxford Nanopore MinION,http://www.ebi.ac.uk/efo/EFO_0008632
 ONT (Oxford Nanopore Technologies),http://www.ebi.ac.uk/efo/EFO_0008632
 Oxford Nanopore technologies MinION,http://www.ebi.ac.uk/efo/EFO_0008632
 MinION Oxford Nanopore,http://www.ebi.ac.uk/efo/EFO_0008632
+Nanopore,http://purl.obolibrary.org/obo/NCIT_C146818
 Illumina MiSeq,http://www.ebi.ac.uk/efo/EFO_0004205
 Illumina,http://purl.obolibrary.org/obo/OBI_0000759
 Oxford Nanopore technology,http://purl.obolibrary.org/obo/NCIT_C146818
@@ -12,6 +13,7 @@ Oxford Nanopore Technologies,http://purl.obolibrary.org/obo/NCIT_C146818
 Oxford Nanopore,http://purl.obolibrary.org/obo/NCIT_C146818
 IonTorrent,http://purl.obolibrary.org/obo/NCIT_C125894
 Ion Torrent X5Plus,http://purl.obolibrary.org/obo/NCIT_C125894
+ThermoFisher S5Plus,http://purl.obolibrary.org/obo/NCIT_C125894
 Sanger dideoxy sequencing,http://purl.obolibrary.org/obo/NCIT_C19641
-MGISEQ 2000, http://virtual-bh/MGISEQ2000
-MGISEQ2000,	http://virtual-bh/MGISEQ2000
+MGISEQ 2000,http://virtual-bh/MGISEQ2000
+MGISEQ2000,http://virtual-bh/MGISEQ2000

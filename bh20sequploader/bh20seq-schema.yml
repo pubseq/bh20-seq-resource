@@ -23,15 +23,9 @@ $graph:
         type: string
         jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000115
-# Removed_common_name. Not necessary since we turned species into IRI
-#    host_common_name:
-#        doc: Text label for the host species (e.g. homo sapiens)
-#        type: string?
-#        jsonldPredicate:
-#          _id: http://purl.obolibrary.org/obo/NOMEN_0000037
     host_sex:
         doc: Sex of the host as defined in NCIT, IRI expected (http://purl.obolibrary.org/obo/NCIT_C20197 (Male), http://purl.obolibrary.org/obo/NCIT_C27993 (Female), http://purl.obolibrary.org/obo/NCIT_C45908 (Intersex), or http://purl.obolibrary.org/obo/NCIT_C17998 (Unknown))
-        type: string
+        type: string?
         jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/PATO_0000047
           _type: "@id"

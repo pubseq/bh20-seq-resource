@@ -11,7 +11,40 @@ host_age_unit:
   Hours: http://purl.obolibrary.org/obo/UO_0000032
 
 host_sex:
-  Male: http://purl.obolibrary.org/obo/NCIT_C20197
-  Female: http://purl.obolibrary.org/obo/NCIT_C27993
-  Intersex: http://purl.obolibrary.org/obo/NCIT_C45908
-  Unknown: http://purl.obolibrary.org/obo/NCIT_C17998
+  Male: http://purl.obolibrary.org/obo/PATO_0000384
+  Female: http://purl.obolibrary.org/obo/PATO_0000383
+
+sample_sequencing_technology:
+  Illumina NextSeq 500: http://www.ebi.ac.uk/efo/EFO_0009173
+  Illumina NextSeq 550: http://www.ebi.ac.uk/efo/EFO_0008566
+  Illumina HiSeq X: http://www.ebi.ac.uk/efo/EFO_0008567
+  Illumina MiSeq: http://www.ebi.ac.uk/efo/EFO_0004205
+  Illumina: http://purl.obolibrary.org/obo/OBI_0000759
+  IonTorrent: http://purl.obolibrary.org/obo/NCIT_C125894
+  Oxford Nanopore MinION: http://www.ebi.ac.uk/efo/EFO_0008632
+  Oxford Nanopore Sequencing: http://purl.obolibrary.org/obo/NCIT_C146818
+  Sanger dideoxy sequencing: http://purl.obolibrary.org/obo/NCIT_C19641
+
+sample_sequencing_technology2:
+  Illumina NextSeq 500: http://www.ebi.ac.uk/efo/EFO_0009173
+  Illumina NextSeq 550: http://www.ebi.ac.uk/efo/EFO_0008566
+  Illumina HiSeq X: http://www.ebi.ac.uk/efo/EFO_0008567
+  Illumina MiSeq: http://www.ebi.ac.uk/efo/EFO_0004205
+  Illumina: http://purl.obolibrary.org/obo/OBI_0000759
+  IonTorrent: http://purl.obolibrary.org/obo/NCIT_C125894
+  Ion Semiconductor Sequencing: http://purl.obolibraryorg/obo/NCIT_C125894
+  Oxford Nanopore MinION: http://www.ebi.ac.uk/efo/EFO_0008632
+  Oxford Nanopore Sequencing: http://purl.obolibrary.org/obo/NCIT_C146818
+  Sanger dideoxy sequencing: http://purl.obolibrary.org/obo/NCIT_C19641
+
+specimen_source:
+  nasopharyngeal swab: http://purl.obolibrary.org/obo/NCIT_C155831
+  oropharyngeal swab: http://purl.obolibrary.org/obo/NCIT_C155835
+  sputum: http://purl.obolibrary.org/obo/NCIT_C13278
+  bronchoalveolar lavage fluid: http://purl.obolibrary.org/obo/NCIT_C13195
+
+specimen_source2:
+  nasopharyngeal swab: http://purl.obolibrary.org/obo/NCIT_C155831
+  oropharyngeal swab: http://purl.obolibrary.org/obo/NCIT_C155835
+  sputum: http://purl.obolibrary.org/obo/NCIT_C13278
+  bronchoalveolar lavage fluid: http://purl.obolibrary.org/obo/NCIT_C13195

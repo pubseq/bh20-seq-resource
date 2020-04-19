@@ -6,35 +6,38 @@ host:
     host_sex: http://purl.obolibrary.org/obo/NCIT_C27993
     host_age: 20
     host_age_unit: http://purl.obolibrary.org/obo/UO_0000036
-    host_health_status: string
-    host_treatment: string
-    additional_host_information: string
+    host_health_status: A condition or state at a particular time
+    host_treatment: Process in which the act is intended to modify or alter host status
+    host_vaccination: List of vaccines given to the host
+    additional_host_information: Field for additional host information
 
 sample:
-    sample_id: XXX
-    collector_name: XXX
-    collecting_institution: XXX
-    specimen_source: XXX
-    collection_date: 2020-01
-    collection_location: http://purl.obolibrary.org/obo/GAZ_00002459
+    sample_id: Id of the sample as defined by the submitter
+    collector_name: Name of the person that took the sample
+    collecting_institution: Institute that was responsible of sampeling
+    specimen_source: Method how specimen was derived
+    specimen_source2: Method how specimen was derived if two methods were used
+    collection_date: Date when the sample was taken
+    collection_location: http://www.wikidata.org/entity/Q148
     sample_storage_conditions: XXX
     additional_collection_information: XXX
 
 virus:
     virus_species: http://purl.obolibrary.org/obo/NCBITaxon_2697049
-    virus_strain: XX
+    virus_strain: SARS-CoV-2/human/CHN/HS_8/2020
 
 technology:
-    sample_sequencing_technology: XX
-    sequence_assembly_method: XX
+    sample_sequencing_technology: http://www.ebi.ac.uk/efo/EFO_0009173
+    sample_sequencing_technology2: http://www.ebi.ac.uk/efo/EFO_0009173
+    sequence_assembly_method: Protocol used for assembly
     sequencing_coverage: 70
 
 submitter:
-    submitter_name: tester
-    submitter_address: testerAdd
-    originating_lab: testLab
-    lab_address: labAdd
-    provider_sample_id: string
-    submitter_sample_id: string
-    authors: testAuthor
-    submitter_orcid: https://orcid.org/0000-0002-1825-0097
+    submitter_name: John Doe
+    submitter_address: John Doe's adress
+    originating_lab: John Doe kitchen
+    lab_address: John Doe's adress
+    provider_sample_id: HmX
+    submitter_sample_id: xXx
+    authors: John Doe et all
+    submitter_orcid: https://orcid.org/0000-0000-0000-0000

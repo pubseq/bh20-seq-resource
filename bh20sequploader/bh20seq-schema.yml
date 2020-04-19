@@ -13,7 +13,7 @@ $graph:
   type: record
   fields:
     host_species:
-        doc: Host species as defined in NCBITaxon (e.g. http://purl.obolibrary.org/obo/NCBITaxon_9606 for Homo sapiens)
+        doc: Host species as defined in NCBITaxon, e.g. http://purl.obolibrary.org/obo/NCBITaxon_9606 for Homo sapiens
         type: string
         jsonldPredicate:
           _id: http://www.ebi.ac.uk/efo/EFO_0000532
@@ -45,7 +45,7 @@ $graph:
         type: string?
         jsonldPredicate: http://purl.obolibrary.org/obo/NCIT_C25688
     host_treatment:
-      doc: Process in which the act is intended to modify or alter
+      doc: Process in which the act is intended to modify or alter host status
       type: string?
       jsonldPredicate:
           _id: http://www.ebi.ac.uk/efo/EFO_0000727
@@ -74,12 +74,12 @@ $graph:
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_001167
     specimen_source:
-      doc: A specimen that derives from an anatomical part or substance arising from an organism, e.g.  tissue, organ
+      doc: Method how the specimen was derived as NCIT IRI, e.g. http://purl.obolibrary.org/obo/NCIT_C155831 (=nasopharyngeal swab)
       type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/OBI_0001479
     specimen_source2:
-      doc: A specimen that derives from an anatomical part or substance arising from an organism, e.g.  tissue, organ
+      doc: Method how the specimen was derived as NCIT IRI, e.g. http://purl.obolibrary.org/obo/NCIT_C155835 (=throat swabb)
       type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/OBI_0001479
@@ -89,7 +89,7 @@ $graph:
       jsonldPredicate:
           _id: http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164
     collection_location:
-      doc: Geographical location where the sample was collected as Gazetteer (https://www.ebi.ac.uk/ols/ontologies/gaz) reference, e.g.  http://purl.obolibrary.org/obo/GAZ_00002845 (China)
+      doc: Geographical location where the sample was collected as wikidata reference, e.g. http://www.wikidata.org/entity/Q148 (China)
       type: string?
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/GAZ_00000448

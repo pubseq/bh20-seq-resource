@@ -1,21 +1,20 @@
 id: placeholder
 
 host:
-    host_id: XX
+    host_id: XX1
     host_species: http://purl.obolibrary.org/obo/NCBITaxon_9606
-    host_sex: http://purl.obolibrary.org/obo/NCIT_C20197
 
 sample:
-    sample_id: XXX
-    collector_name: XXX
-    collecting_institution: XXX
+    sample_id: XX
+    collector_name: John Doe
+    collecting_institution: Doe university
 
 virus:
     virus_species: http://purl.obolibrary.org/obo/NCBITaxon_2697049
 
 technology:
-    sample_sequencing_technology: XX
+    sample_sequencing_technology: http://www.ebi.ac.uk/efo/EFO_0008632
 
 submitter:
-    submitter_name: tester
-    originating_lab: testLab
+    submitter_name: John Doe
+    originating_lab: John Doe's kitchen

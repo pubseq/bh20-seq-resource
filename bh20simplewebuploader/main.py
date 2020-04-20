@@ -183,7 +183,13 @@ def generate_form(schema, options):
                         # Make a tuple for each one
                         record['options'].append((name, value))
                 elif field_type == 'string':
-                    record['type'] = 'text' # HTML input type
+                    if field_name.endswith('date'):
+                        # Use a date picker to generate a good string.
+                        # Comes back YYYY-MM-DD.
+                        record['type'] = 'date'
+                    else:
+                        # Normal text string
+                        record['type'] = 'text'
                 elif field_type == 'int':
                     record['type'] = 'number'
                 elif field_type == 'float':

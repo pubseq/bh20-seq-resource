@@ -13,6 +13,7 @@ host_age_unit:
 host_sex:
   Male: http://purl.obolibrary.org/obo/PATO_0000384
   Female: http://purl.obolibrary.org/obo/PATO_0000383
+  Intersex: http://purl.obolibrary.org/obo/PATO_0001340
 
 sample_sequencing_technology:
   Illumina NextSeq 500: http://www.ebi.ac.uk/efo/EFO_0009173

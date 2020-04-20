@@ -21,15 +21,24 @@ def main():
     parser = argparse.ArgumentParser(description='Upload SARS-CoV-19 sequences for analysis')
     parser.add_argument('sequence', type=argparse.FileType('r'), help='sequence FASTA/FASTQ')
     parser.add_argument('metadata', type=argparse.FileType('r'), help='sequence metadata json')
+    parser.add_argument("--validate", action="store_true", help="Dry run, validate only")
     args = parser.parse_args()
 
     api = arvados.api(host=ARVADOS_API_HOST, token=ARVADOS_API_TOKEN, insecure=True)
 
-    target = qc_fasta(args.sequence)
+    try:
+        target = qc_fasta(args.sequence)
+    except ValueError as e:
+        print(e)
+        exit(1)
 
     if not qc_metadata(args.metadata.name):
         print("Failed metadata qc")
         exit(1)
+
+    if args.validate:
+        print("Valid")
+        exit(0)
 
     col = arvados.collection.Collection(api_client=api)
 

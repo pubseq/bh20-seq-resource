@@ -15,7 +15,7 @@ try:
 except ImportError:
     tagger = egg_info_cmd.egg_info
 
-install_requires = ["arvados-python-client", "schema-salad", "python-magic"]
+install_requires = ["arvados-python-client", "schema-salad", "python-magic", "pyshex"]
 web_requires = ["flask", "pyyaml"]
 
 needs_pytest = {"pytest", "test", "ptr"}.intersection(sys.argv)
@@ -31,7 +31,10 @@ setup(
     author_email="peter.amstutz@curii.com",
     license="Apache 2.0",
     packages=["bh20sequploader", "bh20seqanalyzer", "bh20simplewebuploader"],
-    package_data={"bh20sequploader": ["bh20seq-schema.yml", "bh20seq-options.yml", "validation/formats"],
+    package_data={"bh20sequploader": ["bh20seq-schema.yml",
+                                      "bh20seq-options.yml",
+                                      "bh20seq-shex.rdf",
+                                      "validation/formats"],
     },
     install_requires=install_requires,
     extras_require={

@@ -1,5 +1,5 @@
 from Bio import Entrez
-Entrez.email = 'andresguarahino@gmail.com'
+Entrez.email = 'insert_your_email@gmail.com'
 
 import xml.etree.ElementTree as ET
 import yaml
@@ -54,7 +54,7 @@ if not os.path.exists(dir_metadata_today):
     
     for i, id_x_list in enumerate(chunks(list(id_set), num_ids_for_request)):
         path_metadata_xxx_xml = os.path.join(dir_metadata_today, 'metadata_{}.xml'.format(i))
-        print('Requesting {} ids --> {}'.format(len(id_x_list), path_metadata_xml))
+        print('Requesting {} ids --> {}'.format(len(id_x_list), path_metadata_xxx_xml))
 
         with open(path_metadata_xxx_xml, 'w') as fw:
             fw.write(
@@ -69,7 +69,11 @@ for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_x
 
     with open(path_dict_xxx_csv) as f:
         for line in f:
-            term, uri = line.strip('\n').split(',')
+            if len(line.split(',')) > 2:
+                term, uri = line.strip('\n').split('",')
+                term = term.strip('"')
+            else:    
+                term, uri = line.strip('\n').split(',')
 
             term_to_uri_dict[term] = uri
 
@@ -78,7 +82,7 @@ species_to_taxid_dict = {
 }
 
 
-if os.path.exists(dir_fasta_and_yaml_today):
+if not os.path.exists(dir_fasta_and_yaml_today):
     os.makedirs(dir_fasta_and_yaml_today)
 
     for path_metadata_xxx_xml in [os.path.join(dir_metadata_today, name_metadata_xxx_xml) for name_metadata_xxx_xml in os.listdir(dir_metadata_today) if name_metadata_xxx_xml.endswith('.xml')]:
@@ -182,7 +186,7 @@ if os.path.exists(dir_fasta_and_yaml_today):
                         if GBQualifier_value_text in term_to_uri_dict:
                             info_for_yaml_dict['sample']['specimen_source'] = term_to_uri_dict[GBQualifier_value_text]
                         else:
-                            if GBQualifier_value_text in ['NP/OP swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab', 'np/np swab']:
+                            if GBQualifier_value_text in ['NP/OP swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab', 'np/np swab', 'np/op']:
                                 info_for_yaml_dict['sample']['specimen_source'] = term_to_uri_dict['nasopharyngeal swab']
                                 info_for_yaml_dict['sample']['specimen_source2'] = term_to_uri_dict['oropharyngeal swab']
                             else:
@@ -203,7 +207,7 @@ if os.path.exists(dir_fasta_and_yaml_today):
                         info_for_yaml_dict['virus']['virus_strain'] = GBQualifier_value_text
                     elif GBQualifier_name_text == 'db_xref':
                         info_for_yaml_dict['virus']['virus_species'] = int(GBQualifier_value_text.split('taxon:')[1])
-
+                        
             with open(os.path.join(dir_fasta_and_yaml_today, '{}.fasta'.format(accession_version)), 'w') as fw:
                 fw.write('>{}\n{}'.format(accession_version, GBSeq_sequence.text.upper()))
 

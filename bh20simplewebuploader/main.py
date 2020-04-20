@@ -46,8 +46,11 @@ def name_to_label(field_name):
     """
     Turn a filed name like "host_health_status" from the metadata schema into a human-readable label.
     """
-
-    return string.capwords(field_name.replace('_', ' '))
+    
+    # May end in a number, which should be set off by a space
+    set_off_number = re.sub('([0-9])$', r' \1', field_name)
+    
+    return string.capwords(set_off_number.replace('_', ' '))
 
 def is_iri(string):
     """
@@ -66,10 +69,16 @@ def generate_form(schema, options):
 
     Each dict either has a 'heading' (in which case we put a heading for a
     form section in the template) or an 'id', 'label', 'type', and 'required'
-    (in which case we make a form field in the template). Non-heading dicts
-    with type 'select' will have an 'options' field, with a list of (name,
-    value) tuples, and represent a form dropdown element. Non-heading dicts may
-    have a human-readable 'docstring' field describing them.
+    (in which case we make a form field in the template).
+    
+    Non-heading dicts with type 'select' will have an 'options' field, with a
+    list of (name, value) tuples, and represent a form dropdown element.
+    
+    Non-heading dicts with type 'number' may have a 'step', which, if <1 or
+    'any', allows the number to be a float.
+    
+    Non-heading dicts may have a human-readable 'docstring' field describing
+    them.
 
     Takes the deserialized metadata schema YAML, and also a deserialized YAML
     of option values. The option values are keyed on (unscoped) field name in
@@ -177,6 +186,10 @@ def generate_form(schema, options):
                     record['type'] = 'text' # HTML input type
                 elif field_type == 'int':
                     record['type'] = 'number'
+                elif field_type == 'float':
+                    record['type'] = 'number'
+                    # Choose a reasonable precision for the control
+                    record['step'] = '0.0001'
                 else:
                     raise NotImplementedError('Unimplemented field type {} in {} in metadata schema'.format(field_type, type_name))
                 yield record

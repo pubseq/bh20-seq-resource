@@ -21,7 +21,7 @@ $graph:
           identity: true
     host_id:
         doc: Identifer for the host. If you submit multiple samples from the same host, use the same host_id for those samples
-        type: string
+        type: string?
         jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000115
     host_sex:
@@ -66,16 +66,27 @@ $graph:
 - name: sampleSchema
   type: record
   fields:
+    collection_date:
+      doc: Date when the sample was taken
+      type: string
+      jsonldPredicate:
+        _id: http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164
+    collection_location:
+      doc: Geographical location where the sample was collected as wikidata reference, e.g. http://www.wikidata.org/entity/Q148 (China)
+      type: string
+      jsonldPredicate:
+        _id: http://purl.obolibrary.org/obo/GAZ_00000448
+        _type: "@id"
     collector_name:
       doc: Name of the person that took the sample
-      type: string
+      type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/OBI_0001895
     collecting_institution:
       doc: Institute that was responsible of sampeling
-      type: string
+      type: string?
       jsonldPredicate:
-          _id: http://semanticscience.org/resource/SIO_001167
+          _id: http://purl.obolibrary.org/obo/NCIT_C41206
     specimen_source:
       doc: Method how the specimen was derived as NCIT IRI, e.g. http://purl.obolibrary.org/obo/NCIT_C155831 (=nasopharyngeal swab)
       type: string?
@@ -89,19 +100,6 @@ $graph:
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/OBI_0001479
           _type: "@id"
-          identity: true
-    collection_date:
-      doc: Date when the sample was taken
-      type: string
-      jsonldPredicate:
-          _id: http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164
-    collection_location:
-      doc: Geographical location where the sample was collected as wikidata reference, e.g. http://www.wikidata.org/entity/Q148 (China)
-      type: string
-      jsonldPredicate:
-        _id: http://purl.obolibrary.org/obo/GAZ_00000448
-        _type: "@id"
-        identity: true
     sample_storage_conditions:
       doc: Information about storage of a specified type, e.g.  frozen specimen, paraffin, fresh ....
       type: string?
@@ -114,7 +112,7 @@ $graph:
           _id: http://semanticscience.org/resource/SIO_001167
     sample_id:
       doc: Id of the sample as defined by the submitter
-      type: string
+      type: string?
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000115
     source_database_accession:
@@ -167,7 +165,7 @@ $graph:
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/FLU_0000848
     sequencing_coverage2:
-      doc: If a second sequence technology was use you can submit its coverage here
+      doc: If a second sequence technology was used you can submit its coverage here
       type: float?
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/FLU_0000848
@@ -180,9 +178,14 @@ $graph:
 - name: submitterSchema
   type: record
   fields:
+    authors:
+      doc: Name of the author(s)
+      type: string
+      jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/NCIT_C42781
     submitter_name:
       doc: Name of the submitter
-      type: string
+      type: string?
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000116
     submitter_address:
@@ -192,7 +195,7 @@ $graph:
           _id: http://semanticscience.org/resource/SIO_000172
     originating_lab:
       doc: Name of the laboratory that took the sample
-      type: string
+      type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C37984
     lab_address:
@@ -208,11 +211,6 @@ $graph:
       type: string?
       jsonldPredicate:
           _id: http://www.ebi.ac.uk/efo/EFO_0001741
-    authors:
-      doc: Name of the author(s)
-      type: string?
-      jsonldPredicate:
-          _id: http://purl.obolibrary.org/obo/NCIT_C42781
     publication:
       doc: Reference to publication of this sample (e.g. DOI, pubmed ID, ...)
       type: string?
@@ -232,7 +230,7 @@ $graph:
   fields:
     host: hostSchema
     sample: sampleSchema
-    virus: virusSchema?
+    virus: virusSchema
     technology: technologySchema
     submitter: submitterSchema
     id:

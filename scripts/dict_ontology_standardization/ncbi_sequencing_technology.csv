@@ -2,7 +2,7 @@ Illumian NextSeq 500,http://www.ebi.ac.uk/efo/EFO_0009173
 Illumina NextSeq 500,http://www.ebi.ac.uk/efo/EFO_0009173
 Nanopore MinION,http://www.ebi.ac.uk/efo/EFO_0008632
 Oxford Nanopore MinION,http://www.ebi.ac.uk/efo/EFO_0008632
-ONT (Oxford Nanopore Technologies),http://www.ebi.ac.uk/efo/EFO_0008632
+ONT (Oxford Nanopore Technologies),http://purl.obolibrary.org/obo/NCIT_C146818
 Oxford Nanopore technologies MinION,http://www.ebi.ac.uk/efo/EFO_0008632
 MinION Oxford Nanopore,http://www.ebi.ac.uk/efo/EFO_0008632
 Nanopore,http://purl.obolibrary.org/obo/NCIT_C146818

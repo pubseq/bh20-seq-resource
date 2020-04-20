@@ -18,7 +18,7 @@ $graph:
         jsonldPredicate:
           _id: http://www.ebi.ac.uk/efo/EFO_0000532
           _type: "@id"
-          identity: true
+          noLinkCheck: true
     host_id:
         doc: Identifer for the host. If you submit multiple samples from the same host, use the same host_id for those samples
         type: string?
@@ -30,7 +30,7 @@ $graph:
         jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/PATO_0000047
           _type: "@id"
-          identity: true
+          noLinkCheck: true
     host_age:
         doc: Age of the host as number (e.g. 50)
         type: int?
@@ -42,7 +42,7 @@ $graph:
         jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C42574
           _type: "@id"
-          identity: true
+          noLinkCheck: true
     host_health_status:
         doc: A condition or state at a particular time
         type: string?
@@ -77,7 +77,7 @@ $graph:
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/GAZ_00000448
         _type: "@id"
-        identity: true
+        noLinkCheck: true
     collector_name:
       doc: Name of the person that took the sample
       type: string?
@@ -94,7 +94,7 @@ $graph:
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/OBI_0001479
           _type: "@id"
-          identity: true
+          noLinkCheck: true
     specimen_source2:
       doc: Method how the specimen was derived as NCIT IRI, e.g. http://purl.obolibrary.org/obo/NCIT_C155835 (=throat swabb)
       type: string?
@@ -131,7 +131,7 @@ $graph:
       jsonldPredicate:
           _id: http://edamontology.org/data_1875
           _type: "@id"
-          identity: true
+          noLinkCheck: true
     virus_strain:
       doc: Name of the virus strain
       type: string?
@@ -147,14 +147,14 @@ $graph:
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/OBI_0600047
         _type: "@id"
-        identity: true
+        noLinkCheck: true
     sample_sequencing_technology2:
       doc: Technology that was used to sequence this sample (e.g Sanger, Nanopor MiniION)
       type: string?
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/OBI_0600047
         _type: "@id"
-        identity: true
+        noLinkCheck: true
     sequence_assembly_method:
       doc: Protocol which provides instructions on the alignment of sequencing reads to reference genome
       type: string?
@@ -223,7 +223,7 @@ $graph:
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000115
           _type: "@id"
-          identity: true
+          noLinkCheck: true
 
 - name: MainSchema
   type: record

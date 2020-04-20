@@ -1,14 +1,14 @@
 cwlVersion: v1.1
 class: CommandLineTool
 inputs:
-  readsFA: File[]
+  readsFA: File
 outputs:
   readsMergeDedup:
     type: File
     outputBinding:
       glob: readsMergeDedup.fasta
   dups:
-    type: File
+    type: File?
     outputBinding:
       glob: dups.txt
 requirements:

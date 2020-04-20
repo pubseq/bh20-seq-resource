@@ -5,7 +5,13 @@ inputs:
   subjects: string[]
 outputs:
   relabeledSeqs:
-    type: stdout
+    type: File
+    outputBinding:
+      glob: relabeledSeqs.fasta
+  originalLabels:
+    type: File
+    outputBinding:
+      glob: originalLabels.ttl
 requirements:
   InlineJavascriptRequirement: {}
   InitialWorkDirRequirement:
@@ -15,5 +21,5 @@ requirements:
 hints:
   DockerRequirement:
     dockerPull: commonworkflowlanguage/cwltool_module
-stdout: relabeledSeqs.fasta
+stdout:
 baseCommand: [python, relabel-seqs.py]

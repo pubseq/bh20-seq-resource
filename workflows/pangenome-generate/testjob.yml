@@ -1,0 +1,16 @@
+inputReads:
+  - class: File
+    location: ../../example/sequence.fasta
+  - class: File
+    location: ../../example/sequence.fasta
+metadata:
+  - class: File
+    location: ../../example/metadata.yaml
+  - class: File
+    location: ../../example/metadata.yaml
+metadataSchema:
+  class: File
+  location: ../../bh20sequploader/bh20seq-schema.yml
+subjects:
+  - http://arvados.org/keep/seq1
+  - http://arvados.org/keep/seq2

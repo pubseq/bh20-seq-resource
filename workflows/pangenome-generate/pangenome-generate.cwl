@@ -26,15 +26,11 @@ steps:
     in:
       readsFA: inputReads
       subjects: subjects
-    out: [relabeledSeqs]
+    out: [relabeledSeqs, originalLabels]
     run: relabel-seqs.cwl
-  common:
-    in: {readsFA: relabel/relabeledSeqs}
-    out: [duplicatedReads]
-    run: seqkit-common.cwl
   dedup:
     in: {readsFA: relabel/relabeledSeqs}
-    out: [readsMergeDedup]
+    out: [readsMergeDedup, dups]
     run: seqkit-rmdup.cwl
   overlapReads:
     in: {readsFA: dedup/readsMergeDedup}
@@ -63,5 +59,7 @@ steps:
       metadata: metadata
       metadataSchema: metadataSchema
       subjects: subjects
+      dups: dedup/dups
+      originalLabels: relabel/originalLabels
     out: [merged]
     run: merge-metadata.cwl

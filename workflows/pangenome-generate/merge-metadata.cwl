@@ -7,6 +7,8 @@ inputs:
   metadata: File[]
   metadataSchema: File
   subjects: string[]
+  dups: File?
+  originalLabels: File
 outputs:
   merged: stdout
 stdout: mergedmetadata.ttl

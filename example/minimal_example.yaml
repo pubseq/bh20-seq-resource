@@ -8,6 +8,8 @@ sample:
     sample_id: XX
     collector_name: John Doe
     collecting_institution: Doe university
+    collection_date: 2020-01
+    collection_location: http://www.wikidata.org/entity/Q148
 
 virus:
     virus_species: http://purl.obolibrary.org/obo/NCBITaxon_2697049

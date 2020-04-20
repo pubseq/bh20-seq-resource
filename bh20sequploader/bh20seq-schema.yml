@@ -87,12 +87,12 @@ $graph:
           _type: "@id"
     collection_date:
       doc: Date when the sample was taken
-      type: string?
+      type: string
       jsonldPredicate:
           _id: http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164
     collection_location:
       doc: Geographical location where the sample was collected as wikidata reference, e.g. http://www.wikidata.org/entity/Q148 (China)
-      type: string?
+      type: string
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/GAZ_00000448
         _type: "@id"
@@ -214,6 +214,8 @@ $graph:
       type: string?
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000115
+          _type: "@id"
+          noLinkCheck: true
 
 - name: MainSchema
   type: record

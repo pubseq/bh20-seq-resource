@@ -17,7 +17,7 @@ sample:
     collecting_institution: Institute that was responsible of sampeling
     specimen_source: http://purl.obolibrary.org/obo/NCIT_C155831
     specimen_source2: http://purl.obolibrary.org/obo/NCIT_C155835
-    collection_date: Date when the sample was taken
+    collection_date: 2020-01-01
     collection_location: http://www.wikidata.org/entity/Q148
     sample_storage_conditions: XXX
     additional_collection_information: XXX

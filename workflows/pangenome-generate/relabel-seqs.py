@@ -12,4 +12,7 @@ for i, r in enumerate(reads):
         data = fa.read(8096)
         while data:
             relabeled_fasta.write(data)
+            endswithnewline = data.endswith("\\n")
             data = fa.read(8096)
+        if not endswithnewline:
+            relabeled_fasta.write("\\n")

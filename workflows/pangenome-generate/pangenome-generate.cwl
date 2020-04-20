@@ -22,8 +22,18 @@ outputs:
     type: File
     outputSource: mergeMetadata/merged
 steps:
+  relabel:
+    in:
+      readsFA: inputReads
+      subjects: subjects
+    out: [relabeledSeqs]
+    run: relabel-seqs.cwl
+  common:
+    in: {readsFA: relabel/relabeledSeqs}
+    out: [duplicatedReads]
+    run: seqkit-common.cwl
   dedup:
-    in: {readsFA: inputReads}
+    in: {readsFA: relabel/relabeledSeqs}
     out: [readsMergeDedup]
     run: seqkit-rmdup.cwl
   overlapReads:

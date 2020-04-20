@@ -18,6 +18,9 @@ outputs:
   odgiRDF:
     type: File
     outputSource: odgi2rdf/rdf
+  readsMergeDedup:
+    type: File
+    outputSource: dedup/readsMergeDedup
   mergedMetadata:
     type: File
     outputSource: mergeMetadata/merged

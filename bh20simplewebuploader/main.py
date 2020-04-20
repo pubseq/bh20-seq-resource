@@ -48,7 +48,7 @@ def name_to_label(field_name):
     """
     
     # May end in a number, which should be set off by a space
-    set_off_number = re.sub('([0-9])$', r' \1', field_name)
+    set_off_number = re.sub('([0-9]+)$', r' \1', field_name)
     
     return string.capwords(set_off_number.replace('_', ' '))
 

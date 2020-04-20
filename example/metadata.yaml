@@ -15,8 +15,8 @@ sample:
     sample_id: Id of the sample as defined by the submitter
     collector_name: Name of the person that took the sample
     collecting_institution: Institute that was responsible of sampeling
-    specimen_source: Method how specimen was derived
-    specimen_source2: Method how specimen was derived if two methods were used
+    specimen_source: http://purl.obolibrary.org/obo/NCIT_C155831
+    specimen_source2: http://purl.obolibrary.org/obo/NCIT_C155835
     collection_date: Date when the sample was taken
     collection_location: http://www.wikidata.org/entity/Q148
     sample_storage_conditions: XXX

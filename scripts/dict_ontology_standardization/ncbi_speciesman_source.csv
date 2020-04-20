@@ -20,3 +20,6 @@ swab,http://purl.obolibrary.org/obo/NCIT_C13195
 oral swab,http://purl.obolibrary.org/obo/NCIT_C13195
 bronchoalveolar lavage,http://purl.obolibrary.org/obo/NCIT_C13195
 sputum,http://purl.obolibrary.org/obo/NCIT_C13278
+aspirate,http://purl.obolibrary.org/obo/NCIT_C13347
+stool,http://purl.obolibrary.org/obo/NCIT_C13234
+serum,http://purl.obolibrary.org/obo/NCIT_C13325

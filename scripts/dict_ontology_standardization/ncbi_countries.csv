@@ -11,6 +11,7 @@ Argentina,http://www.wikidata.org/entity/Q414
 Armenia,http://www.wikidata.org/entity/Q399
 Australia,http://www.wikidata.org/entity/Q408
 Australia: Queensland,http://www.wikidata.org/entity/Q36074
+Australia: Victoria,http://www.wikidata.org/entity/Q36687
 Austria,http://www.wikidata.org/entity/Q40
 Azerbaijan,http://www.wikidata.org/entity/Q227
 Bahrain,http://www.wikidata.org/entity/Q398
@@ -43,7 +44,7 @@ China: Chongqing,http://www.wikidata.org/entity/Q11725
 China: Fujian,http://www.wikidata.org/entity/Q41705
 China: Gansu,http://www.wikidata.org/entity/Q42392
 China: Guangdong,http://www.wikidata.org/entity/Q15175
-"“China: Guangdong, Guangzhou”",http://www.wikidata.org/entity/Q16572
+"China: Guangdong, Guangzhou",http://www.wikidata.org/entity/Q16572
 China: Guangxi Zhuang Autonomous Region,http://www.wikidata.org/entity/Q15176
 China: Guangzhou,http://www.wikidata.org/entity/Q16572
 China: Guizhou,http://www.wikidata.org/entity/Q47097
@@ -54,7 +55,7 @@ China: Henan,http://www.wikidata.org/entity/Q43684
 China: Hong Kong,http://www.wikidata.org/entity/Q8646
 China: HuaShang,http://www.wikidata.org/entity/Q148
 China: Hubei,http://www.wikidata.org/entity/Q46862
-"“China: Hubei, Wuhan”",http://www.wikidata.org/entity/Q11746
+"China: Hubei, Wuhan",http://www.wikidata.org/entity/Q11746
 China: Hunan,http://www.wikidata.org/entity/Q45761
 China: Inner Mongolia,http://www.wikidata.org/entity/Q41079
 China: Jiangsu,http://www.wikidata.org/entity/Q16963
@@ -73,10 +74,11 @@ China: Sichuan,http://www.wikidata.org/entity/Q19770
 China: Tianjin,http://www.wikidata.org/entity/Q11736
 China: Tibet Autonomous Region,http://www.wikidata.org/entity/Q17269
 China: Wuhan,http://www.wikidata.org/entity/Q11746
+China:Wuhan,http://www.wikidata.org/entity/Q11746
 China: Xinjiang,http://www.wikidata.org/entity/Q34800
 China: Yunnan,http://www.wikidata.org/entity/Q43194
 China: Zhejiang,http://www.wikidata.org/entity/Q16967
-"“China: Zhejiang, Hangzhou”",http://www.wikidata.org/entity/Q4970
+"China: Zhejiang, Hangzhou",http://www.wikidata.org/entity/Q4970
 Colombia,http://www.wikidata.org/entity/Q739
 Colombia: Antioquia,http://www.wikidata.org/entity/Q123304
 Comoros,http://www.wikidata.org/entity/Q970
@@ -257,7 +259,7 @@ USA: AL,http://www.wikidata.org/entity/Q173
 USA: AR,http://www.wikidata.org/entity/Q1612
 USA: AZ,http://www.wikidata.org/entity/Q816
 USA: CA,http://www.wikidata.org/entity/Q99
-"“USA: CA, San Diego County”",http://www.wikidata.org/entity/Q108143
+"USA: CA, San Diego County",http://www.wikidata.org/entity/Q108143
 USA: CO,http://www.wikidata.org/entity/Q1261
 USA: CT,http://www.wikidata.org/entity/Q779
 USA: DE,http://www.wikidata.org/entity/Q1393
@@ -286,6 +288,7 @@ USA: NE,http://www.wikidata.org/entity/Q1553
 USA: NH,http://www.wikidata.org/entity/Q759
 USA: NJ,http://www.wikidata.org/entity/Q1408
 USA: NM,http://www.wikidata.org/entity/Q1522
+USA: North Carolina,http://www.wikidata.org/entity/Q1454
 USA: NV,http://www.wikidata.org/entity/Q1227
 USA: NY,http://www.wikidata.org/entity/Q1384
 USA: OH,http://www.wikidata.org/entity/Q1397
@@ -293,9 +296,10 @@ USA: OK,http://www.wikidata.org/entity/Q1649
 USA: OR,http://www.wikidata.org/entity/Q824
 USA: PA,http://www.wikidata.org/entity/Q1400
 USA: RI,http://www.wikidata.org/entity/Q1387
-"“USA: San Francisco, CA”",http://www.wikidata.org/entity/Q62
+"USA: San Francisco, CA",http://www.wikidata.org/entity/Q62
 USA: SC,http://www.wikidata.org/entity/Q1456
 USA: SD,http://www.wikidata.org/entity/Q1211
+"USA: Snohomish County, WA",http://www.wikidata.org/entity/Q110403
 USA: TN,http://www.wikidata.org/entity/Q1509
 USA: TX,http://www.wikidata.org/entity/Q1439
 USA: UT,http://www.wikidata.org/entity/Q829

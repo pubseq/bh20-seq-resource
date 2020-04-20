@@ -77,6 +77,7 @@ $graph:
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/GAZ_00000448
         _type: "@id"
+        identity: true
     collector_name:
       doc: Name of the person that took the sample
       type: string?

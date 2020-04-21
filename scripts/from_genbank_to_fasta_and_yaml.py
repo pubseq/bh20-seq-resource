@@ -130,9 +130,12 @@ if not os.path.exists(dir_fasta_and_yaml_today):
 
                         if field_in_yaml == 'sequencing_coverage':
                             # A regular expression would be better!
-                            info_for_yaml_dict['technology'][field_in_yaml] = ';'.join(
-                                [x.strip('(average)').strip("reads/nt").replace(',', '.').strip(' xX>') for x in tech_info_to_parse.split(';')]
-                            )
+                            try:
+                                info_for_yaml_dict['technology'][field_in_yaml] = float(
+                                    tech_info_to_parse.strip('(average)').strip("reads/nt").replace(',', '.').strip(' xX>'))
+                            except ValueError:
+                                print(accession_version, "Couldn't make sense of Coverage '%s'" % tech_info_to_parse)
+                                pass
                         elif field_in_yaml == 'sample_sequencing_technology':
                             new_seq_tec_list = []
                             for seq_tec in tech_info_to_parse.split(';'):

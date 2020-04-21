@@ -63,6 +63,7 @@ def main():
     external_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
 
     properties = {
+        "sequence_label": seqlabel,
         "upload_app": "bh20-seq-uploader",
         "upload_ip": external_ip,
         "upload_user": "%s@%s" % (getpass.getuser(), socket.gethostname())

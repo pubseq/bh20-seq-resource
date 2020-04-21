@@ -26,19 +26,21 @@ requirements:
           var out = [];
           for (; i < inputs.readsFA.length; i++) {
             var block = [];
-            for (; i < (b*100) && i < inputs.readsFA.length; i++) {
+            var sub = [];
+            for (; i < (b*150) && i < inputs.readsFA.length; i++) {
               block.push(inputs.readsFA[i]);
+              sub.push(inputs.subjects[i]);
             }
             out.push({
               entryname: "block"+b,
               entry: JSON.stringify(block)
             });
+            out.push({
+              entryname: "subs"+b,
+              entry: JSON.stringify(sub)
+            });
             b++;
           }
-          out.push({
-            entry: JSON.stringify(inputs.subjects),
-            entryname: "subjects"
-          });
           return out;
           }
 hints:

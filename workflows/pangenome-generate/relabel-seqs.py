@@ -1,15 +1,17 @@
 import os
 import json
 
-reads = []
-b = 1
-while os.path.exists("block%i" % b):
-    with open("block%i" % b) as f:
-        reads.extend(json.load(f))
-    b += 1
+def readitems(stem):
+    items = []
+    b = 1
+    while os.path.exists("%s%i" % (stem, b)):
+        with open("%s%i" % (stem, b)) as f:
+            items.extend(json.load(f))
+        b += 1
+    return items
 
-with open("subjects") as f:
-    subjects = json.load(f)
+reads = readitems("block")
+subjects = readitems("subs")
 
 relabeled_fasta = open("relabeledSeqs.fasta", "wt")
 original_labels = open("originalLabels.ttl", "wt")

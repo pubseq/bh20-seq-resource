@@ -44,7 +44,8 @@ def main():
 
     with col.open(target, "w") as f:
         r = args.sequence.read(65536)
-        print(r[0:20])
+        seqlabel = r[1:r.index("\n")]
+        print(seqlabel)
         while r:
             f.write(r)
             r = args.sequence.read(65536)
@@ -67,8 +68,8 @@ def main():
         "upload_user": "%s@%s" % (getpass.getuser(), socket.gethostname())
     }
 
-    col.save_new(owner_uuid=UPLOAD_PROJECT, name="Uploaded by %s from %s" %
-                 (properties['upload_user'], properties['upload_ip']),
+    col.save_new(owner_uuid=UPLOAD_PROJECT, name="%s uploaded by %s from %s" %
+                 (seqlabel, properties['upload_user'], properties['upload_ip']),
                  properties=properties, ensure_unique_name=True)
 
     print("Done")

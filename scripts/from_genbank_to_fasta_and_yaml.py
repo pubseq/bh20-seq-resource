@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
+
 from Bio import Entrez
 Entrez.email = 'another_email@gmail.com'
 
 import xml.etree.ElementTree as ET
-import yaml
+import json
 import os
 
 from datetime import date
@@ -29,7 +31,7 @@ for term in term_list:
 
     # Remove the version in the id
     tmp_list = [x.split('.')[0] for x in tmp_list]
-    
+
     print(term, len(tmp_list))
     tmp_list=tmp_list
 #    tmp_list = tmp_list[0:2] # restricting to small run
@@ -49,11 +51,11 @@ print(term_list + ['NCBI Virus'], len(id_set))
 def chunks(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
-        
+
 num_ids_for_request = 100
 if not os.path.exists(dir_metadata_today):
     os.makedirs(dir_metadata_today)
-    
+
     for i, id_x_list in enumerate(chunks(list(id_set), num_ids_for_request)):
         path_metadata_xxx_xml = os.path.join(dir_metadata_today, 'metadata_{}.xml'.format(i))
         print('Requesting {} ids --> {}'.format(len(id_x_list), path_metadata_xxx_xml))
@@ -63,7 +65,7 @@ if not os.path.exists(dir_metadata_today):
                 Entrez.efetch(db='nuccore', id=id_x_list, retmode='xml').read()
             )
 
-            
+
 term_to_uri_dict = {}
 
 for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_xxx_csv) for name_xxx_csv in os.listdir(dir_dict_ontology_standardization) if name_xxx_csv.endswith('.csv')]:
@@ -74,7 +76,7 @@ for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_x
             if len(line.split(',')) > 2:
                 term, uri = line.strip('\n').split('",')
                 term = term.strip('"')
-            else:    
+            else:
                 term, uri = line.strip('\n').split(',')
 
             term_to_uri_dict[term] = uri
@@ -125,7 +127,7 @@ if not os.path.exists(dir_fasta_and_yaml_today):
                 ):
                     if info_to_check in GBSeq_comment_text:
                         tech_info_to_parse = GBSeq_comment_text.split('{} :: '.format(info_to_check))[1].split(' ;')[0]
-                        
+
                         if field_in_yaml == 'sequencing_coverage':
                             # A regular expression would be better!
                             info_for_yaml_dict['technology'][field_in_yaml] = ';'.join(
@@ -139,7 +141,7 @@ if not os.path.exists(dir_fasta_and_yaml_today):
                                     seq_tec = term_to_uri_dict[seq_tec]
                                 else:
                                     print(accession_version, 'missing technologies:', seq_tec)
- 
+
                                 new_seq_tec_list.append(seq_tec)
 
                             for n, seq_tec in enumerate(new_seq_tec_list):
@@ -147,7 +149,7 @@ if not os.path.exists(dir_fasta_and_yaml_today):
                         else:
                             info_for_yaml_dict['technology'][field_in_yaml] = tech_info_to_parse
 
-                        
+
                         #term_to_uri_dict
 
             for GBFeature in GBSeq.iter('GBFeature'):
@@ -211,12 +213,12 @@ if not os.path.exists(dir_fasta_and_yaml_today):
                         info_for_yaml_dict['virus']['virus_species'] = "http://purl.obolibrary.org/obo/NCBITaxon_"+GBQualifier_value_text.split('taxon:')[1]
 
 
-            #Remove technology key if empty!
+            # Remove technology key if empty!
             if (info_for_yaml_dict['technology']=={}):
-                del info_for_yaml_dict['key']
+                del info_for_yaml_dict['technology']
 
             with open(os.path.join(dir_fasta_and_yaml_today, '{}.fasta'.format(accession_version)), 'w') as fw:
                 fw.write('>{}\n{}'.format(accession_version, GBSeq_sequence.text.upper()))
 
             with open(os.path.join(dir_fasta_and_yaml_today, '{}.yaml'.format(accession_version)), 'w') as fw:
-                yaml.dump(info_for_yaml_dict, fw, default_flow_style=False)
+                json.dump(info_for_yaml_dict, fw, indent=2)

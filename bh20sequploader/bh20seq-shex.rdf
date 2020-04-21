@@ -28,11 +28,11 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
 }
 
 :sampleShape  {
-	evs:C25164 xsd:string?;
+    sio:SIO_000115 xsd:string;
     obo:GAZ_00000448 [wikidata:~] ;
+	evs:C25164 xsd:string;
     obo:OBI_0001895 xsd:string ?;
     sio:SIO_001167 xsd:string ?;
-    sio:SIO_000115 xsd:string ?;
     obo:OBI_0001472 xsd:string ?;
     obo:OBI_0001479 IRI {0,2};
 }

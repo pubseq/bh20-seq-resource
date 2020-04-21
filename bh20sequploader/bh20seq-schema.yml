@@ -66,6 +66,11 @@ $graph:
 - name: sampleSchema
   type: record
   fields:
+    sample_id:
+      doc: Id of the sample as defined by the submitter
+      type: string
+      jsonldPredicate:
+        _id: http://semanticscience.org/resource/SIO_000115
     collection_date:
       doc: Date when the sample was taken
       type: string
@@ -111,11 +116,6 @@ $graph:
       type: string?
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_001167
-    sample_id:
-      doc: Id of the sample as defined by the submitter
-      type: string?
-      jsonldPredicate:
-          _id: http://semanticscience.org/resource/SIO_000115
     source_database_accession:
       doc: If data is deposit at a public resource (e.g. Genbank, ENA) enter the Accession Id here
       type: string?

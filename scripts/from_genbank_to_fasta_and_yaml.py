@@ -1,5 +1,5 @@
 from Bio import Entrez
-Entrez.email = 'insert_your_email@gmail.com'
+Entrez.email = 'another_email@gmail.com'
 
 import xml.etree.ElementTree as ET
 import yaml
@@ -31,6 +31,8 @@ for term in term_list:
     tmp_list = [x.split('.')[0] for x in tmp_list]
     
     print(term, len(tmp_list))
+    tmp_list=tmp_list
+#    tmp_list = tmp_list[0:2] # restricting to small run
 
     id_set.update([x.split('.')[0] for x in tmp_list])
 
@@ -78,7 +80,7 @@ for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_x
             term_to_uri_dict[term] = uri
 
 species_to_taxid_dict = {
-    'Homo sapiens': 9606
+    'Homo sapiens': 'http://purl.obolibrary.org/obo/NCBITaxon_9606'
 }
 
 
@@ -108,8 +110,8 @@ if not os.path.exists(dir_fasta_and_yaml_today):
                 'submitter': {}
             }
 
-
             info_for_yaml_dict['sample']['sample_id'] = accession_version
+            info_for_yaml_dict['sample']['source_database_accession'] = accession_version
             info_for_yaml_dict['submitter']['authors'] = ';'.join([x.text for x in GBSeq.iter('GBAuthor')])
 
 
@@ -163,7 +165,7 @@ if not os.path.exists(dir_fasta_and_yaml_today):
                     if GBQualifier_name_text == 'host':
                         GBQualifier_value_text_list = GBQualifier_value_text.split('; ')
 
-                        info_for_yaml_dict['host']['host_common_name'] = GBQualifier_value_text_list[0]
+                        #info_for_yaml_dict['host']['host_common_name'] = GBQualifier_value_text_list[0] # Removed
 
                         if GBQualifier_value_text_list[0] in species_to_taxid_dict:
                             info_for_yaml_dict['host']['host_species'] = species_to_taxid_dict[GBQualifier_value_text_list[0]]
@@ -206,8 +208,13 @@ if not os.path.exists(dir_fasta_and_yaml_today):
                     elif GBQualifier_name_text == 'isolate':
                         info_for_yaml_dict['virus']['virus_strain'] = GBQualifier_value_text
                     elif GBQualifier_name_text == 'db_xref':
-                        info_for_yaml_dict['virus']['virus_species'] = int(GBQualifier_value_text.split('taxon:')[1])
-                        
+                        info_for_yaml_dict['virus']['virus_species'] = "http://purl.obolibrary.org/obo/NCBITaxon_"+GBQualifier_value_text.split('taxon:')[1]
+
+
+            #Remove technology key if empty!
+            if (info_for_yaml_dict['technology']=={}):
+                del info_for_yaml_dict['key']
+
             with open(os.path.join(dir_fasta_and_yaml_today, '{}.fasta'.format(accession_version)), 'w') as fw:
                 fw.write('>{}\n{}'.format(accession_version, GBSeq_sequence.text.upper()))
 

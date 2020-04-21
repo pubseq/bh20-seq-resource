@@ -213,7 +213,7 @@ if not os.path.exists(dir_fasta_and_yaml_today):
 
             #Remove technology key if empty!
             if (info_for_yaml_dict['technology']=={}):
-                del info_for_yaml_dict['key']
+                del info_for_yaml_dict['technology']
 
             with open(os.path.join(dir_fasta_and_yaml_today, '{}.fasta'.format(accession_version)), 'w') as fw:
                 fw.write('>{}\n{}'.format(accession_version, GBSeq_sequence.text.upper()))

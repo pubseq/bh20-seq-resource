@@ -46,7 +46,8 @@ $graph:
     host_health_status:
         doc: A condition or state at a particular time, must be one of the following (obo:NCIT_C115935 obo:NCIT_C3833 obo:NCIT_C25269 obo:GENEPIO_0002020 obo:GENEPIO_0001849 obo:NCIT_C28554 obo:NCIT_C37987)
         type: string?
-        jsonldPredicate: http://purl.obolibrary.org/obo/NCIT_C25688
+        jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/NCIT_C25688
     host_treatment:
       doc: Process in which the act is intended to modify or alter host status
       type: string?

@@ -23,7 +23,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
     obo:PATO_0000047 [ obo:PATO_0000384 obo:PATO_0000383 ] ?;
     obo:PATO_0000011 xsd:integer ?;
     obo:NCIT_C42574 [ obo:UO_~ ] ?;
-	obo:NCIT_C25688 xsd:string ? ;
+	obo:NCIT_C25688 [obo:NCIT_C115935 obo:NCIT_C3833 obo:NCIT_C25269 obo:GENEPIO_0002020 obo:GENEPIO_0001849 obo:NCIT_C28554 obo:NCIT_C37987 ] ? ;
     efo:EFO_0000727 xsd:string ?;
     obo:VO_0000002 xsd:string ?;
     sio:SIO_001167 xsd:string ?;

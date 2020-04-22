@@ -53,7 +53,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
 }
 
 :technologyShape {
-    obo:OBI_0600047 IRI {0,2} ?;
+    obo:OBI_0600047 IRI {0,2} ;
     efo:EFO_0002699 xsd:string ?;
     obo:FLU_0000848 xsd:double {0,2};
     sio:SIO_001167 xsd:string ?;

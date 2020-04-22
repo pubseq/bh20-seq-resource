@@ -106,6 +106,7 @@ $graph:
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/OBI_0001479
           _type: "@id"
+          noLinkCheck: true
     sample_storage_conditions:
       doc: Information about storage of a specified type, e.g.  frozen specimen, paraffin, fresh ....
       type: string?

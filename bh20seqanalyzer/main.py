@@ -214,13 +214,25 @@ def main():
     parser.add_argument('--fastq-workflow-uuid', type=str, default='lugli-7fd4e-2zp9q4jo5xpif9y', help='')
 
     parser.add_argument('--latest-result-collection', type=str, default='lugli-4zz18-z513nlpqm03hpca', help='')
+    parser.add_argument('--kickoff', action="store_true")
     args = parser.parse_args()
 
     api = arvados.api()
 
-    logging.info("Starting up, monitoring %s for uploads" % (args.uploader_project))
+
 
     schema_ref = upload_schema(api, args.workflow_def_project)
+
+    if args.kickoff:
+        logging.info("Starting a single analysis run")
+        start_pangenome_analysis(api,
+                                 args.pangenome_analysis_project,
+                                 args.pangenome_workflow_uuid,
+                                 args.validated_project,
+                                 schema_ref)
+        return
+
+    logging.info("Starting up, monitoring %s for uploads" % (args.uploader_project))
 
     while True:
         move_fastq_to_fasta_results(api, args.fastq_project, args.uploader_project)

@@ -6,7 +6,7 @@ host:
     host_sex: http://purl.obolibrary.org/obo/NCIT_C27993
     host_age: 20
     host_age_unit: http://purl.obolibrary.org/obo/UO_0000036
-    host_health_status: A condition or state at a particular time
+    host_health_status: http://purl.obolibrary.org/obo/NCIT_C25269
     host_treatment: Process in which the act is intended to modify or alter host status (Compounds)
     host_vaccination: List of vaccines given to the host (RRIDs?)
     additional_host_information: Field for additional host information

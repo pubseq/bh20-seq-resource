@@ -8,10 +8,11 @@ import json
 import os
 
 from datetime import date
-today = date.today().strftime("%Y%m%d")
+#today = date.today().strftime("%Y%m%d")
 
-dir_metadata_today = 'metadata_from_nuccore_{}'.format(today)
-dir_fasta_and_yaml_today = 'fasta_and_yaml_{}'.format(today)
+
+dir_metadata_today = 'metadata_from_nuccore' #_{}'.format(today)
+dir_fasta_and_yaml_today = 'fasta_and_yaml' #'.format(today)
 
 dir_dict_ontology_standardization = 'dict_ontology_standardization/'
 
@@ -177,7 +178,10 @@ if not os.path.exists(dir_fasta_and_yaml_today):
 
                         if len(GBQualifier_value_text_list) > 1:
                             if GBQualifier_value_text_list[1] in ['male', 'female']:
-                                info_for_yaml_dict['host']['host_sex'] = GBQualifier_value_text_list[1]
+                                if GBQualifier_value_text_list[1]=='male':
+                                    info_for_yaml_dict['host']['host_sex'] = "http://purl.obolibrary.org/obo/PATO_0000384"
+                                elif GBQualifier_value_text_list[1]=='female':
+                                    info_for_yaml_dict['host']['host_sex'] = "http://purl.obolibrary.org/obo/PATO_0000383"
                             else:
                                 info_for_yaml_dict['host']['host_health_status'] = GBQualifier_value_text_list[1]
 

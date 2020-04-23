@@ -110,9 +110,26 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
             'submitter': {}
         }
 
+        
         info_for_yaml_dict['sample']['sample_id'] = accession_version
         info_for_yaml_dict['sample']['source_database_accession'] = accession_version
-        info_for_yaml_dict['submitter']['authors'] = ';'.join([x.text for x in GBSeq.iter('GBAuthor')])
+        
+        
+        # submitter info
+        GBSeq_references = GBSeq.find('GBSeq_references')
+        if GBSeq_references is not None:
+            info_for_yaml_dict['submitter']['authors'] = ';'.join([x.text for x in GBSeq_references.iter('GBAuthor')])
+            
+            GBReference = GBSeq_references.find('GBReference')
+            if GBReference is not None:
+                GBReference_journal = GBReference.find('GBReference_journal')
+                
+                if GBReference_journal is not None and GBReference_journal.text != 'Unpublished':
+                    if 'Submitted' in GBReference_journal.text:
+                        info_for_yaml_dict['submitter']['submitter_name'] = GBReference_journal.text.split(') ')[1].split(',')[0].strip()
+                        info_for_yaml_dict['submitter']['submitter_address'] = ','.join(GBReference_journal.text.split(') ')[1].split(',')[1:]).strip()
+                    else:
+                        info_for_yaml_dict['submitter']['additional_submitter_information'] = GBReference_journal.text
 
 
         GBSeq_comment = GBSeq.find('GBSeq_comment')
@@ -130,7 +147,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                         # A regular expression would be better!
                         try:
                             info_for_yaml_dict['technology'][field_in_yaml] = float(
-                                tech_info_to_parse.strip('(average)').strip("reads/nt").replace(',', '.').strip(' xX>'))
+                                tech_info_to_parse.strip('(average)').strip("reads/nt").strip('(average for 6 sequences)').replace(',', '.').strip(' xX>'))
                         except ValueError:
                             print(accession_version, "Couldn't make sense of Coverage '%s'" % tech_info_to_parse)
                             pass
@@ -141,7 +158,6 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                             if seq_tec in term_to_uri_dict:
                                 seq_tec = term_to_uri_dict[seq_tec]
                             else:
-                                #print(accession_version, 'missing sample_sequencing_technology:', seq_tec)
                                 missing_value_list.append('\t'.join([accession_version, 'sample_sequencing_technology', seq_tec]))
 
                             new_seq_tec_list.append(seq_tec)
@@ -151,8 +167,6 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                     else:
                         info_for_yaml_dict['technology'][field_in_yaml] = tech_info_to_parse
 
-
-                    #term_to_uri_dict
 
         for GBFeature in GBSeq.iter('GBFeature'):
             if GBFeature.find('GBFeature_key').text != 'source':
@@ -169,8 +183,6 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                 if GBQualifier_name_text == 'host':
                     GBQualifier_value_text_list = GBQualifier_value_text.split('; ')
 
-                    #info_for_yaml_dict['host']['host_common_name'] = GBQualifier_value_text_list[0] # Removed
-
                     if GBQualifier_value_text_list[0] in species_to_taxid_dict:
                         info_for_yaml_dict['host']['host_species'] = species_to_taxid_dict[GBQualifier_value_text_list[0]]
 
@@ -183,7 +195,6 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                         elif GBQualifier_value_text_list[1] in term_to_uri_dict:
                             info_for_yaml_dict['host']['host_health_status'] = term_to_uri_dict[GBQualifier_value_text_list[1]]
                         else:
-                            #print(accession_version, 'missing {}:'.format(GBQualifier_name_text), GBQualifier_value_text_list[1])
                             missing_value_list.append('\t'.join([accession_version, GBQualifier_name_text, GBQualifier_value_text_list[1]]))
 
                         if 'age' in GBQualifier_value_text:
@@ -211,7 +222,6 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                             info_for_yaml_dict['sample']['specimen_source'] = term_to_uri_dict['nasopharyngeal aspirate']
                             info_for_yaml_dict['sample']['specimen_source2'] = term_to_uri_dict['throat swab']
                         else:
-                            #print(accession_version, 'missing specimen_source:', GBQualifier_value_text)
                             missing_value_list.append('\t'.join([accession_version, 'specimen_source', GBQualifier_value_text]))
                 elif GBQualifier_name_text == 'collection_date':
                     # TO_DO: which format we will use?
@@ -219,12 +229,10 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                 elif GBQualifier_name_text in ['lat_lon', 'country']:
                     if GBQualifier_value_text == 'Hong Kong':
                         GBQualifier_value_text = 'China: Hong Kong'
-                 
-                    
+
                     if GBQualifier_value_text in term_to_uri_dict:
                         GBQualifier_value_text = term_to_uri_dict[GBQualifier_value_text]
                     else:
-                        #print(accession_version, 'missing {}:'.format(GBQualifier_name_text), GBQualifier_value_text)
                         missing_value_list.append('\t'.join([accession_version, GBQualifier_name_text, GBQualifier_value_text]))
 
                     info_for_yaml_dict['sample']['collection_location'] = GBQualifier_value_text

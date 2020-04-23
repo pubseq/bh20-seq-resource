@@ -238,7 +238,7 @@
                             {% endfor %}
                         </select>
                         {% else %}
-                        <input type="{{ record['type'] }}" id="{{ record['id'] }}" name="{{ record['id'] }}" {{ "required" if record['required'] else "" }}>
+                        <input type="{{ record['type'] }}" id="{{ record['id'] }}" name="{{ record['id'] }}" {{ "required" if record['required'] else "" }} {{ ("step=" + record['step']) if 'step' in record else ""}}>
                         {% endif %}
                         {% endif %}
                         {% if loop.index == loop.length %}

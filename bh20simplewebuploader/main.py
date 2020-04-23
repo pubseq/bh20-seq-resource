@@ -9,8 +9,9 @@ import string
 import yaml
 import pkg_resources
 from flask import Flask, request, redirect, send_file, send_from_directory, render_template
-
 import os.path
+import requests
+
 
 if not os.path.isfile('bh20sequploader/mainx.py'):
     print("WARNING: run FLASK from the root of the source repository!", file=sys.stderr)
@@ -343,3 +344,83 @@ def receive_files():
             return render_template('success.html', log=result.stdout.decode('utf-8', errors='replace'))
     finally:
         shutil.rmtree(dest_dir)
+
+
+## Dynamic API functions starting here
+## This is quick and dirty for now, just to get something out and demonstrate the queries
+## Feel free to rename the functions/endpoints, feel free to process result so we get nicer JSON
+## but most likley you don't want to touch the queries, Cheers.
+baseURL='http://sparql.genenetwork.org/sparql/'
+
+@app.route('/api/getAllaccessions', methods=['GET'])
+def getAllaccessions():
+    query="""SELECT DISTINCT ?fasta ?value WHERE {?fasta ?x[ <http://edamontology.org/data_2091> ?value ]}"""
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return str(result)
+
+
+# parameter must be encoded e.g. http://arvados.org/keep:6e6276698ed8b0e6cd21f523e4f91179+123/sequence.fasta must become
+# http%3A%2F%2Farvados.org%2Fkeep%3A6e6276698ed8b0e6cd21f523e4f91179%2B123%2Fsequence.fasta
+@app.route('/api/getDetailsForSeq', methods=['GET'])
+def getDetailsForSeq():
+    seq_id = request.args.get('seq')
+    query="""SELECT DISTINCT ?key ?value WHERE {<placeholder> ?x [?key ?value]}"""
+    query=query.replace("placeholder", seq_id)
+    print(query)
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return str(result)
+
+@app.route('/api/getSEQbytech', methods=['GET'])
+def getSEQbytech():
+    query="""SELECT ?specimen_source ?specimen_source_label (count(?fasta) as ?fastaCount) WHERE 
+    {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047>  ?specimen_source] 
+    BIND (concat(?specimen_source,"_label") as ?specimen_source_label)}
+    GROUP BY ?specimen_source ?specimen_source_label ORDER BY DESC (?fastaCount)
+    """
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return str(result)
+
+@app.route('/api/getSEQbyLocation', methods=['GET'])
+def getSEQbyLocation():
+    query="""SELECT ?geoLocation ?geoLocation_label (count(?fasta) as ?fastaCount)  WHERE
+    {?fasta ?x [<http://purl.obolibrary.org/obo/GAZ_00000448> ?geoLocation]
+    BIND (concat(?geoLocation,"_label") as ?geoLocation_label)}
+    GROUP BY ?geoLocation ?geoLocation_label ORDER BY DESC (?fastaCount)
+    """
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return str(result)
+
+@app.route('/api/getSEQbySpecimenSource', methods=['GET'])
+def getSEQbySpecimenSource():
+    query="""SELECT ?specimen_source ?specimen_source_label (count(?fasta) as ?fastaCount)  WHERE
+    {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0001479>  ?specimen_source]
+    BIND (concat(?specimen_source,"_label") as ?specimen_source_label)}
+    GROUP BY ?specimen_source ?specimen_source_label
+    ORDER BY DESC (?fastaCount)
+    """
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return str(result)
+
+#No data for this atm
+@app.route('/api/getSEQbyHostHealthStatus', methods=['GET'])
+def getSEQbyHostHealthStatus():
+    query="""SELECT ?health_status ?health_status_label (count(?fasta) as ?fastaCount)  WHERE
+    {?fasta ?x [<http://purl.obolibrary.org/obo/NCIT_C25688> ?health_status]
+    BIND (concat(?health_status,"_label") as ?health_status_label)}
+    GROUP BY ?health_status ?health_status_label
+    ORDER BY DESC (?fastaCount)
+    """
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return str(result)

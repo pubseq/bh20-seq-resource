@@ -1,13 +1,10 @@
 id: placeholder
 
 host:
-    host_id: XX1
     host_species: http://purl.obolibrary.org/obo/NCBITaxon_9606
 
 sample:
     sample_id: XX
-    collector_name: John Doe
-    collecting_institution: Doe university
     collection_date: 2020-01
     collection_location: http://www.wikidata.org/entity/Q148
 
@@ -18,5 +15,4 @@ technology:
     sample_sequencing_technology: http://www.ebi.ac.uk/efo/EFO_0008632
 
 submitter:
-    submitter_name: John Doe
-    originating_lab: John Doe's kitchen
+    authors: John Doe

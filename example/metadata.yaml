@@ -6,15 +6,15 @@ host:
     host_sex: http://purl.obolibrary.org/obo/NCIT_C27993
     host_age: 20
     host_age_unit: http://purl.obolibrary.org/obo/UO_0000036
-    host_health_status: A condition or state at a particular time
-    host_treatment: Process in which the act is intended to modify or alter host status
-    host_vaccination: List of vaccines given to the host
+    host_health_status: http://purl.obolibrary.org/obo/NCIT_C25269
+    host_treatment: Process in which the act is intended to modify or alter host status (Compounds)
+    host_vaccination: List of vaccines given to the host (RRIDs?)
     additional_host_information: Field for additional host information
 
 sample:
-    sample_id: Id of the sample as defined by the submitter
+    sample_id: Id of the sample as defined by the submitter 
     collector_name: Name of the person that took the sample
-    collecting_institution: Institute that was responsible of sampeling
+    collecting_institution: Institute that was responsible of sampling  
     specimen_source: http://purl.obolibrary.org/obo/NCIT_C155831
     specimen_source2: http://purl.obolibrary.org/obo/NCIT_C155835
     collection_date: "2020-01-01"
@@ -36,7 +36,7 @@ submitter:
     submitter_name: John Doe
     submitter_address: John Doe's adress
     originating_lab: John Doe kitchen
-    lab_address: John Doe's adress
+    lab_address: John Doe's address
     provider_sample_id: HmX
     submitter_sample_id: xXx
     authors: John Doe et all

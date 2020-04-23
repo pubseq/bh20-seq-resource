@@ -18,13 +18,22 @@ outputs:
   odgiRDF:
     type: File
     outputSource: odgi2rdf/rdf
+  readsMergeDedup:
+    type: File
+    outputSource: dedup/readsMergeDedup
   mergedMetadata:
     type: File
     outputSource: mergeMetadata/merged
 steps:
+  relabel:
+    in:
+      readsFA: inputReads
+      subjects: subjects
+    out: [relabeledSeqs, originalLabels]
+    run: relabel-seqs.cwl
   dedup:
-    in: {readsFA: inputReads}
-    out: [readsMergeDedup]
+    in: {readsFA: relabel/relabeledSeqs}
+    out: [readsMergeDedup, dups]
     run: seqkit-rmdup.cwl
   overlapReads:
     in: {readsFA: dedup/readsMergeDedup}
@@ -53,5 +62,7 @@ steps:
       metadata: metadata
       metadataSchema: metadataSchema
       subjects: subjects
+      dups: dedup/dups
+      originalLabels: relabel/originalLabels
     out: [merged]
     run: merge-metadata.cwl

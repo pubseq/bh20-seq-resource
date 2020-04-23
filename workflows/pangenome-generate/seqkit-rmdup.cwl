@@ -1,12 +1,16 @@
 cwlVersion: v1.1
 class: CommandLineTool
 inputs:
-  readsFA: File[]
+  readsFA: File
 outputs:
   readsMergeDedup:
     type: File
     outputBinding:
       glob: readsMergeDedup.fasta
+  dups:
+    type: File?
+    outputBinding:
+      glob: dups.txt
 requirements:
   InlineJavascriptRequirement: {}
 hints:
@@ -28,5 +32,6 @@ baseCommand: seqkit
 arguments: [rmdup,
             --by-seq,
             --ignore-case,
+            --dup-num-file, dups.txt,
             -o, readsMergeDedup.fasta,
             $(inputs.readsFA)]

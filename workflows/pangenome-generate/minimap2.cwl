@@ -12,7 +12,7 @@ hints:
   ResourceRequirement:
     coresMin: 8
     coresMax: 32
-    ramMin: $(7 * 1024)
+    ramMin: $(9 * 1024)
     outdirMin: $(Math.ceil(inputs.readsFA.size/(1024*1024*1024) + 20))
 stdout: $(inputs.readsFA.nameroot).paf
 baseCommand: minimap2

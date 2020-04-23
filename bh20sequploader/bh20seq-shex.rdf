@@ -7,6 +7,7 @@ PREFIX sio: <http://semanticscience.org/resource/>
 PREFIX efo: <http://www.ebi.ac.uk/efo/>
 PREFIX evs: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
 PREFIX edam: <http://edamontology.org/>
+PREFIX wikidata: <http://www.wikidata.org/entity/>
 
 :submissionShape {
   MainSchema:host   @:hostShape ;
@@ -18,39 +19,44 @@ PREFIX edam: <http://edamontology.org/>
 
 :hostShape  {
   	efo:EFO_0000532 [ obo:NCBITaxon_~ ] ;
-    obo:PATO_0000047 [ obo:NCIT_C20197  obo:NCIT_C27993  obo:NCIT_C17998 ] ;
-    sio:SIO_000115 xsd:string ;
+    sio:SIO_000115 xsd:string ?;
+    obo:PATO_0000047 [ obo:PATO_0000384 obo:PATO_0000383 ] ?;
     obo:PATO_0000011 xsd:integer ?;
     obo:NCIT_C42574 [ obo:UO_~ ] ?;
-    sio:SIO_001167 xsd:string ?;
+	obo:NCIT_C25688 [obo:NCIT_C115935 obo:NCIT_C3833 obo:NCIT_C25269 obo:GENEPIO_0002020 obo:GENEPIO_0001849 obo:NCIT_C28554 obo:NCIT_C37987 ] ? ;
     efo:EFO_0000727 xsd:string ?;
+    obo:VO_0000002 xsd:string ?;
+    sio:SIO_001167 xsd:string ?;
 }
 
 :sampleShape  {
-    obo:OBI_0001895 xsd:string ;
-    sio:SIO_000115 xsd:string ;
-    sio:SIO_001167 xsd:string ;
-	evs:C25164 xsd:string ?;
-    obo:GAZ_00000448 [obo:GAZ_~] ?;
+    sio:SIO_000115 xsd:string;
+	evs:C25164 xsd:string;
+	obo:GAZ_00000448 [wikidata:~] ;
+    obo:OBI_0001895 xsd:string ?;
+    obo:NCIT_C41206 xsd:string ?;
+    obo:OBI_0001479 IRI {0,2};
     obo:OBI_0001472 xsd:string ?;
-    obo:OBI_0001479 xsd:string ?;
+    sio:SIO_001167 xsd:string ?;
 }
 
 :submitterShape {
-    sio:SIO_000116 xsd:string ;
-	obo:NCIT_C37984 xsd:string ;
-	obo:NCIT_C37900 xsd:string ?;
-    obo:NCIT_C42781 xsd:string ?;
-    obo:OBI_0600047 xsd:string ?;
-    sio:SIO_000115 /https:\u002F\u002Forcid.org\u002F.{4}-.{4}-.{4}-.{4}/?;
+    obo:NCIT_C42781 xsd:string ;
+    sio:SIO_000116 xsd:string ?;
     sio:SIO_000172 xsd:string ?;
+    obo:NCIT_C37984 xsd:string ?;
+    obo:OBI_0600047 xsd:string ?;
+  	obo:NCIT_C37900 xsd:string ?;
     efo:EFO_0001741 xsd:string ?;
+    obo:NCIT_C19026 xsd:string ?;
+    sio:SIO_000115 /https:\u002F\u002Forcid.org\u002F.{4}-.{4}-.{4}-.{4}/?;
 }
 
 :technologyShape {
-    obo:OBI_0600047 xsd:string ;
-    obo:FLU_0000848 xsd:integer ?;
+    obo:OBI_0600047 IRI {0,2} ;
     efo:EFO_0002699 xsd:string ?;
+    obo:FLU_0000848 xsd:double {0,2};
+    sio:SIO_001167 xsd:string ?;
 }
 
 :virusShape{

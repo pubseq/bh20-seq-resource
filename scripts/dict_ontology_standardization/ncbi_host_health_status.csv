@@ -1,0 +1,8 @@
+healthy,http://purl.obolibrary.org/obo/NCIT_C115935
+asymptomatic,http://purl.obolibrary.org/obo/NCIT_C3833
+sympotmatic,http://purl.obolibrary.org/obo/NCIT_C25269
+admitted to hospital,http://purl.obolibrary.org/obo/GENEPIO_0002020
+hospitalized patient,http://purl.obolibrary.org/obo/GENEPIO_0002020
+discharged from hospital,http://purl.obolibrary.org/obo/GENEPIO_0001849
+dead,http://purl.obolibrary.org/obo/NCIT_C28554
+alive,http://purl.obolibrary.org/obo/NCIT_C37987

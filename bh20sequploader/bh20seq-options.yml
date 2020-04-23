@@ -15,6 +15,15 @@ host_sex:
   Female: http://purl.obolibrary.org/obo/PATO_0000383
   Intersex: http://purl.obolibrary.org/obo/PATO_0001340
 
+host_health_status:
+  healthy: http://purl.obolibrary.org/obo/NCIT_C115935
+  asymptomatic:	http://purl.obolibrary.org/obo/NCIT_C3833
+  sympotmatic:	http://purl.obolibrary.org/obo/NCIT_C25269
+  admitted to hospital:	http://purl.obolibrary.org/obo/GENEPIO_0002020
+  discharged from hospital:	http://purl.obolibrary.org/obo/GENEPIO_0001849
+  dead:	http://purl.obolibrary.org/obo/NCIT_C28554
+  alive: http://purl.obolibrary.org/obo/NCIT_C37987
+
 sample_sequencing_technology:
   Illumina NextSeq 500: http://www.ebi.ac.uk/efo/EFO_0009173
   Illumina NextSeq 550: http://www.ebi.ac.uk/efo/EFO_0008566

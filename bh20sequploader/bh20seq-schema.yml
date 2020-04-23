@@ -157,6 +157,13 @@ $graph:
         _id: http://purl.obolibrary.org/obo/OBI_0600047
         _type: "@id"
         noLinkCheck: true
+    sample_sequencing_technology3:
+      doc: Technology that was used to sequence this sample (e.g Sanger, Nanopor MiniION)
+      type: string?
+      jsonldPredicate:
+        _id: http://purl.obolibrary.org/obo/OBI_0600047
+        _type: "@id"
+        noLinkCheck: true
     sequence_assembly_method:
       doc: Protocol which provides instructions on the alignment of sequencing reads to reference genome
       type: string?

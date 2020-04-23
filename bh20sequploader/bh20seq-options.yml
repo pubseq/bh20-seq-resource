@@ -17,11 +17,11 @@ host_sex:
 
 host_health_status:
   healthy: http://purl.obolibrary.org/obo/NCIT_C115935
-  asymptomatic:	http://purl.obolibrary.org/obo/NCIT_C3833
-  sympotmatic:	http://purl.obolibrary.org/obo/NCIT_C25269
-  admitted to hospital:	http://purl.obolibrary.org/obo/GENEPIO_0002020
-  discharged from hospital:	http://purl.obolibrary.org/obo/GENEPIO_0001849
-  dead:	http://purl.obolibrary.org/obo/NCIT_C28554
+  asymptomatic: http://purl.obolibrary.org/obo/NCIT_C3833
+  symptomatic: http://purl.obolibrary.org/obo/NCIT_C25269
+  admitted to hospital: http://purl.obolibrary.org/obo/GENEPIO_0002020
+  discharged from hospital: http://purl.obolibrary.org/obo/GENEPIO_0001849
+  dead: http://purl.obolibrary.org/obo/NCIT_C28554
   alive: http://purl.obolibrary.org/obo/NCIT_C37987
 
 sample_sequencing_technology:
@@ -36,6 +36,18 @@ sample_sequencing_technology:
   Sanger dideoxy sequencing: http://purl.obolibrary.org/obo/NCIT_C19641
 
 sample_sequencing_technology2:
+  Illumina NextSeq 500: http://www.ebi.ac.uk/efo/EFO_0009173
+  Illumina NextSeq 550: http://www.ebi.ac.uk/efo/EFO_0008566
+  Illumina HiSeq X: http://www.ebi.ac.uk/efo/EFO_0008567
+  Illumina MiSeq: http://www.ebi.ac.uk/efo/EFO_0004205
+  Illumina: http://purl.obolibrary.org/obo/OBI_0000759
+  IonTorrent: http://purl.obolibrary.org/obo/NCIT_C125894
+  Ion Semiconductor Sequencing: http://purl.obolibraryorg/obo/NCIT_C125894
+  Oxford Nanopore MinION: http://www.ebi.ac.uk/efo/EFO_0008632
+  Oxford Nanopore Sequencing: http://purl.obolibrary.org/obo/NCIT_C146818
+  Sanger dideoxy sequencing: http://purl.obolibrary.org/obo/NCIT_C19641
+
+sample_sequencing_technology3:
   Illumina NextSeq 500: http://www.ebi.ac.uk/efo/EFO_0009173
   Illumina NextSeq 550: http://www.ebi.ac.uk/efo/EFO_0008566
   Illumina HiSeq X: http://www.ebi.ac.uk/efo/EFO_0008567

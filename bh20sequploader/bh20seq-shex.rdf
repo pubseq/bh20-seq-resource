@@ -50,6 +50,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
     efo:EFO_0001741 xsd:string ?;
     obo:NCIT_C19026 xsd:string ?;
     sio:SIO_000115 /https:\u002F\u002Forcid.org\u002F.{4}-.{4}-.{4}-.{4}/?;
+    sio:SIO_001167 xsd:string ?;
 }
 
 :technologyShape {

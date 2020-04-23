@@ -233,6 +233,11 @@ $graph:
           _id: http://semanticscience.org/resource/SIO_000115
           _type: "@id"
           noLinkCheck: true
+    additional_submitter_information:
+      doc: Field for additional submitter information
+      type: string?
+      jsonldPredicate:
+        _id: http://semanticscience.org/resource/SIO_001167
 
 - name: MainSchema
   type: record

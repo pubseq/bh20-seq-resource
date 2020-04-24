@@ -37,7 +37,7 @@ guix environment guix --ad-hoc git python openssl python-pycurl python-magic nss
 To run the web uploader in a GNU Guix environment/container
 
 ```
-guix environment -C guix --ad-hoc git python python-flask python-pyyaml python-magic nss-certs --network openssl -- env FLASK_APP=bh20simplewebuploader/main.py flask run
+guix environment guix --ad-hoc git python python-flask python-pyyaml python-pycurl python-magic  nss-certs --network openssl -- env FLASK_ENV=development PYTHONPATH=$PYTHONPATH:./bh20sequploader FLASK_APP=bh20simplewebuploader/main.py flask run
  * Serving Flask app "bh20simplewebuploader/main.py"
  * Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.

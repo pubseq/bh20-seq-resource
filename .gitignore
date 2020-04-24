@@ -1,2 +1,4 @@
 *.py~
 build/
+cache.txt
+metadata.ttl

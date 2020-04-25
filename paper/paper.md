@@ -84,7 +84,7 @@ Note that author order will change!
 
 # Introduction
 
-As part of the COVID-19 Biohackathion 2020 we formed a working
+As part of the COVID-19 Biohackathon 2020 we formed a working
 group to create a COVID-19 Public Sequence Resource (COVID-19 PubSeq) for
 Corona virus sequences. The general idea is to create a
 repository that has a low barrier to entry for uploading sequence

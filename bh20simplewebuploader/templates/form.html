@@ -46,16 +46,16 @@
                 </div>
 
                 <div class="metadata">
-                  <label>Select metadata submission method:</label>
-                  <br>
-                  <input type="radio" id="metadata_form" name="metadata_type" value="fill" onchange="setMode()" checked required>
-                  <label for="metadata_form">Fill in metadata manually</label>
-                  <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="setMode()" required>
-                  <label for="metadata_upload">Upload metadata file</label>
-                  <br>
-                  <small>Make sure the metadata has submitter attribution details.</small>
+                    <label>Select metadata submission method:</label>
+                    <br>
+                    <input type="radio" id="metadata_form" name="metadata_type" value="fill" checked  onchange="displayForm()" required>
+                    <label for="metadata_form">Fill in metadata manually</label>
+                    <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="displayForm()" required>
+                    <label for="metadata_upload">Upload metadata file</label>
+                    <br>
+                    <small>Make sure the metadata has submitter attribution details.</small>
 
-                  <div id="metadata_upload_form_spot">
+                    <div id="metadata_upload_form_spot">
                     <div id="metadata_upload_form">
                       <br>
                       <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> and <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/metadata.yaml" target="_blank">example</a> (max 50K):</label>
@@ -63,9 +63,9 @@
                       <input type="file" id="metadata" name="metadata" accept=".json,.yml,.yaml" required>
                       <br>
                     </div>
-                  </div>
-                </div>
+                    </div>
 
+                </div>
                 <div id="metadata_fill_form_spot">
                     <div id="metadata_fill_form">
                         {% for record in fields %}
@@ -103,6 +103,7 @@
                     {% endif %}
                     {% endfor %}
                 </div>
+
                 </div>
 
 

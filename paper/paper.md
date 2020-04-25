@@ -1,6 +1,6 @@
 ---
-title: 'CPSR: COVID-19 Public Sequence Resource'
-title_short: 'CPSR: COVID-19 Public Sequence Resource'
+title: 'COVID-19 PubSeq: COVID-19 Public Sequence Resource'
+title_short: 'COVID-19 PubSeq'
 tags:
   - Sequencing
   - COVID-19
@@ -85,8 +85,8 @@ Note that author order will change!
 # Introduction
 
 As part of the COVID-19 Biohackathion 2020 we formed a working
-group to create a COVID-19 Public Sequence Resource (CPSR) for
-Corona virus sequences. The general idea was to create a
+group to create a COVID-19 Public Sequence Resource (COVID-19 PubSeq) for
+Corona virus sequences. The general idea is to create a
 repository that has a low barrier to entry for uploading sequence
 data using best practices. I.e., data published with a creative
 commons 4.0 (CC-4.0) license with metadata using state-of-the art
@@ -137,7 +137,7 @@ on CWL hub (FIXME).
 
 ## Cloud computing backend
 
-The development of CPSR was accelerated by using the Arvados
+The development of COVID-19 PubSeq was accelerated by using the Arvados
 Cloud platform. Arvados is an open source platform for managing,
 processing, and sharing genomic and other large scientific and
 biomedical data. The Arvados instance was deployed on Amazon AWS
@@ -186,24 +186,24 @@ WIP
 
 # Discussion
 
-CPSR is a data repository with computational pipelines that will
+COVID-19 PubSeq is a data repository with computational pipelines that will
 persist during pandemics.  Unlike other data repositories for
 Sars-COV-2 we created a repository that immediately computes the
 pangenome of all available data and presents that in useful
 formats for futher analysis, including visualisations, GFA and
 RDF. Code and data are available and written using best practises
-and state-of-the-art standards. CPSR can be deployed by anyone,
+and state-of-the-art standards. COVID-19 PubSeq can be deployed by anyone,
 anywhere.
 
-CPSR is designed to abide by FAIR data principles (expand...)
+COVID-19 PubSeq is designed to abide by FAIR data principles (expand...)
 
-CPSR is primed with viral data coming from repositories that have
+COVID-19 PubSeq is primed with viral data coming from repositories that have
 no sharing restrictions. The metadata includes relevant
 attribution to uploaders. Some institutes have already committed
-to uploading their data to CPSR first so as to warrant sharing
+to uploading their data to COVID-19 PubSeq first so as to warrant sharing
 for computation.
 
-CPSR is currently running on an Arvados cluster in the cloud. To
+COVID-19 PubSeq is currently running on an Arvados cluster in the cloud. To
 ascertain the service remains running we will source money from
 project during pandemics. The workflows are written in CWL which
 means they can be deployed on any infrastructure that runs
@@ -214,7 +214,7 @@ party. This guarantees the data will live on.
 
 <!-- Future work... -->
 
-We aim to add more workflows to CPSR, for example to prepare
+We aim to add more workflows to COVID-19 PubSeq, for example to prepare
 sequence data for submitting in other public repositories, such
 as EBI ENA and GISAID. This will allow researchers to share data
 in multiple systems without pain, circumventing current sharing

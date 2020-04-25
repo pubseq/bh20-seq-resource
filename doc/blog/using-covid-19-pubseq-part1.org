@@ -1,0 +1,144 @@
+* COVID-19 PubSeq (part 1)
+
+/by Pjotr Prins/
+
+As part of the COVID-19 Biohackathon 2020 we formed a working group
+to create a COVID-19 Public Sequence Resource (COVID-19 PubSeq) for
+Corona virus sequences. The general idea is to create a repository
+that has a low barrier to entry for uploading sequence data using best
+practices. I.e., data published with a creative commons 4.0 (CC-4.0)
+license with metadata using state-of-the art standards and, perhaps
+most importantly, providing standardised workflows that get triggered
+on upload, so that results are immediately available in standardised
+data formats.
+
+** What does this mean?
+
+This means that when someone uploads a SARS-CoV-2 sequence using one
+of our tools (CLI or web-based) they add some metadata which is
+expressed in a [[https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml][schema]] that looks like
+
+#+begin_src json
+- name: hostSchema
+  type: record
+  fields:
+    host_species:
+        doc: Host species as defined in NCBITaxon, e.g. http://purl.obolibrary.org/obo/NCBITaxon_9606 for Homo sapiens
+        type: string
+        jsonldPredicate:
+          _id: http://www.ebi.ac.uk/efo/EFO_0000532
+          _type: "@id"
+          noLinkCheck: true
+    host_sex:
+        doc: Sex of the host as defined in PATO, expect male () or female ()
+        type: string?
+        jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/PATO_0000047
+          _type: "@id"
+          noLinkCheck: true
+    host_age:
+        doc: Age of the host as number (e.g. 50)
+        type: int?
+        jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/PATO_0000011
+#+end_src
+
+this metadata gets transformed into an RDF database which means
+information can easily be fetched related to uploaded sequences.
+We'll show an example below where we query a live database.
+
+There is more: when a new sequence gets uploaded COVID-19 PubSeq kicks
+in with a number of workflows running in the cloud. These workflows
+generate a fresh variation graph (GFA) containing all sequences, an
+RDF file containing metadata, and an RDF file containing the variation
+graph in triples. Soon we will at multi sequence alignments (MSA) and
+more. Anyone can contribute data, tools and workflows to this
+initiative!
+
+* Fetch sequence data
+
+The latest run of the pipeline can be viewed [[https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca][here]]. Each of these
+generated files can just be downloaded for your own use and sharing!
+Data is published under a [[https://creativecommons.org/licenses/by/4.0/][Creative Commons 4.0 attribution license]]
+(CC-BY-4.0). This means that, unlike some other 'public' resources,
+you can use this data in any way you want, provided the submitter gets
+attributed.
+
+If you download the GFA or FASTA sequences you'll find sequences are
+named something like
+*keep:e17abc8a0269875ed4cfbff5d9897c6c+123/sequence.fasta* which
+refers to an internal Arvados Keep representation of the FASTA
+sequence.  Keep is content-addressable which means that
+e17abc8a0269875ed4cfbff5d9897c6c uniquely identifies the file by its
+contents. If the contents change, the identifier would change! We use
+these identifiers throughout.
+
+* Fetch submitter info and other metadata
+
+We are interested in e17abc8a0269875ed4cfbff5d9897c6c and now we
+want to get some metadata. We can use a SPARQL end point hosted at
+http://sparql.genenetwork.org/sparql/. Paste in a query like
+
+#+begin_src sql
+select ?p ?s
+{
+   <http://arvados.org/keep:e17abc8a0269875ed4cfbff5d9897c6c+123/sequence.fasta> ?p ?s
+}
+#+end_src
+
+which will tell you that original FASTA ID is "MT293175.1". It also
+says the submitter is nodeID://b31228.
+
+#+begin_src sql
+select distinct ?id ?p ?s
+{
+   <http://arvados.org/keep:e17abc8a0269875ed4cfbff5d9897c6c+123/sequence.fasta> <http://biohackathon.org/bh20-seq-schema#MainSchema/submitter> ?id .
+   ?id ?p ?s
+}
+#+end_src
+
+Tells you the submitter is "Roychoudhury,P.;Greninger,A.;Jerome,K."
+with [[http://purl.obolibrary.org/obo/NCIT_C42781][predicate]] explaining "The individual who is responsible for the
+content of a document." Welcome to the power of the semantic web.
+
+To get more information about the relevant sample
+
+#+begin_src sql
+select ?sample ?p ?o
+{
+    <http://arvados.org/keep:e17abc8a0269875ed4cfbff5d9897c6c+123/sequence.fasta> <http://biohackathon.org/bh20-seq-schema#MainSchema/sample> ?sample .
+    ?sample ?p ?o
+}
+#+end_src
+
+we find it originates from Washington state (object
+https://www.wikidata.org/wiki/Q1223) , dated "30-Mar-2020". The
+sequencing was executed with Illumina and pipeline "custom pipeline
+v. 2020-03" which is arguably not that descriptive.
+
+* Fetch all sequences from Washington state
+
+Now we know how to get at the origin we can do it the other way round
+and fetch all sequences referring to Washington state
+
+#+begin_src sql
+
+select ?seq ?sample
+{
+    ?seq <http://biohackathon.org/bh20-seq-schema#MainSchema/sample> ?sample .
+    ?sample <http://purl.obolibrary.org/obo/GAZ_00000448> <http://www.wikidata.org/entity/Q1223>
+}
+#+end_src
+
+which lists 300 sequences originating from Washington state! Which is almost
+half of the set coming out of GenBank.
+
+* Acknowledgements
+
+The overall effort was due to magnificent freely donated input by a
+great number of people. I particularly want to thank Thomas Liener for
+the great effort he made with the ontology group in getting ontology's
+and schema sorted! Peter Amstutz and Curii helped build the on-demand
+compute and back-ends. Thanks also to Michael Crusoe for supporting
+the CWL initiative. And without Erik Garrison this initiative would
+not have existed!

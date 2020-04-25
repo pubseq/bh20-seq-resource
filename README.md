@@ -1,11 +1,11 @@
-# Sequence uploader
+# COVID-19 PubSeq: Public Sequence uploader
 
 This repository provides a sequence uploader for the COVID-19 Virtual
 Biohackathon's Public Sequence Resource project. There are two
 versions, one that runs on the command line and another that acts as
 web interface. You can use it to upload the genomes of SARS-CoV-2
 samples to make them publicly and freely available to other
-researchers.
+researchers. For more information see the [paper](./paper/paper.md).
 
 ![alt text](./image/website.png "Website")
 

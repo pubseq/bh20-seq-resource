@@ -132,11 +132,14 @@
 
                     <hr>
 <div class="footer">
-                    <a href="https://arvados.org/"><img src="static/image/arvados-logo.png" align="top"></a>
-                    <a href="https://www.commonwl.org/"><img src="static/image/CWL-Logo-Header.png" height="70"></a>
+    <!-- Sponsors -->
+    <div class="sponsors">
+        <a href="https://arvados.org/"><img src="static/image/arvados-logo.png" align="top"></a>
+        <a href="https://www.commonwl.org/"><img src="static/image/CWL-Logo-Header.png" height="70"></a>
 
         <a href="https://github.com/virtual-biohackathons/covid-19-bh20">
-        <img src="static/image/covid19biohackathon.png" align="right" height="70"></a>
+            <img src="static/image/covid19biohackathon.png" align="right" height="70"></a>
+    </div>
 
         <center>
         <small><a href="https://github.com/arvados/bh20-seq-resource">Source code</a> &middot; Powered by <a href="https://www.commonwl.org/">Common Workflow Language</a> &amp; <a href="https://arvados.org/">Arvados</a>; Made for <a href="https://github.com/virtual-biohackathons/covid-19-bh20">COVID-19-BH20</a>
@@ -146,35 +149,45 @@
 
 </div>
 
-        <script type="text/javascript">
-         let uploadForm = document.getElementById('metadata_upload_form')
-         let uploadFormSpot = document.getElementById('metadata_upload_form_spot')
-         let fillForm = document.getElementById('metadata_fill_form')
-         let fillFormSpot = document.getElementById('metadata_fill_form_spot')
+<script type="text/javascript">
+ let scriptRoot = {{ request.script_root|tojson|safe }};
+ let r = new XMLHttpRequest();
+ let test;
+ r.open("GET", scriptRoot + "/api/getAllaccessions", true);
+ r.onreadystatechange = function () {
+     if (r.readyState != 4 || r.status != 200) return;
+     test = r.responseText;
+     console.log(JSON.parse(test));
+ };
+ r.send();
+ let uploadForm = document.getElementById('metadata_upload_form')
+ let uploadFormSpot = document.getElementById('metadata_upload_form_spot')
+ let fillForm = document.getElementById('metadata_fill_form')
+ let fillFormSpot = document.getElementById('metadata_fill_form_spot')
 
-         function setUploadMode() {
-             // Make the upload form the one in use
-             uploadFormSpot.appendChild(uploadForm)
-             fillFormSpot.removeChild(fillForm)
-         }
+ function setUploadMode() {
+     // Make the upload form the one in use
+     uploadFormSpot.appendChild(uploadForm)
+     fillFormSpot.removeChild(fillForm)
+ }
 
-         function setFillMode() {
-             // Make the fillable form the one in use
-             uploadFormSpot.removeChild(uploadForm)
-             fillFormSpot.appendChild(fillForm)
-         }
+ function setFillMode() {
+     // Make the fillable form the one in use
+     uploadFormSpot.removeChild(uploadForm)
+     fillFormSpot.appendChild(fillForm)
+ }
 
-         function setMode() {
-             // Pick mode based on radio
-             if (document.getElementById('metadata_upload').checked) {
-                 setUploadMode()
-             } else {
-                 setFillMode()
-             }
-         }
+ function setMode() {
+     // Pick mode based on radio
+     if (document.getElementById('metadata_upload').checked) {
+         setUploadMode()
+     } else {
+         setFillMode()
+     }
+ }
 
-         // Start in mode appropriate to selected form item
-         setMode()
-        </script>
+ // Start in mode appropriate to selected form item
+ setMode()
+</script>
     </body>
 </html>

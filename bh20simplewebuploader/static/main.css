@@ -147,6 +147,17 @@ footer {
     justify-content: space-around;
 }
 
+.metadata input#metadata_upload:checked ~ #metadata_upload_form_spot {
+    display: block;
+}
+
+.metadata input#metadata_upload ~ #metadata_upload_form_spot {
+    display: none;
+}
+
+.invisible {
+    display: none;
+}
 @media only screen and (max-device-width: 480px) {
     .grid-container {
         display: flex;

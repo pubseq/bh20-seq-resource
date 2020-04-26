@@ -376,8 +376,8 @@ def getDetailsForSeq():
                      'value': x['value']['value']} for x in result])
 
 
-@app.route('/api/getSEQbytech', methods=['GET'])
-def getSEQbytech():
+@app.route('/api/getSEQCountbytech', methods=['GET'])
+def getSEQCountbytech():
     query="""SELECT ?tech ?tech_label (count(?fasta) as ?fastaCount) WHERE 
     {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047>  ?tech] 
     BIND (concat(?tech,"_label") as ?tech_label)}
@@ -390,11 +390,22 @@ def getSEQbytech():
                      'tech': x['tech']['value'],
                      'Label': x['tech_label']['value']} for x in result])
 
+## Is this one really necessary or should we just use getSEQCountbytech instead?
+@app.route('/api/getAvailableTech', methods=['GET'])
+def getAvailableTech():
+    query="""SELECT distinct ?tech ?tech_label WHERE 
+    {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047> ?tech] 
+     BIND (concat(?tech,"_label") as ?tech_label)
+    } """
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return str(result)
 
 ## List all Sequences/submissions by a given tech, as example e.g. http://purl.obolibrary.org/obo/OBI_0000759
 ## Has to be encoded again so should be --> http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FOBI_0000759
-@app.route('/api/getSEQbySelectedtech', methods=['GET'])
-def getSEQbySelectedtech():
+@app.route('/api/getSEQbytech', methods=['GET'])
+def getSEQbytech():
     query="""SELECT ?fasta WHERE 
     {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047>  <placeholder>] }
     """
@@ -406,8 +417,21 @@ def getSEQbySelectedtech():
     return str(result)
 
 
+## Example location, encoded http%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ1223
 @app.route('/api/getSEQbyLocation', methods=['GET'])
 def getSEQbyLocation():
+    query="""SELECT ?fasta WHERE {?fasta ?x[ <http://purl.obolibrary.org/obo/GAZ_00000448> <placeholder>]}"""
+    location=request.args.get('location')
+    query=query.replace("placeholder", location)
+    print(query)
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return str(result)
+
+
+@app.route('/api/getSEQCountbyLocation', methods=['GET'])
+def getSEQCountbyLocation():
     query="""SELECT ?geoLocation ?geoLocation_label (count(?fasta) as ?fastaCount)  WHERE
     {?fasta ?x [<http://purl.obolibrary.org/obo/GAZ_00000448> ?geoLocation]
     BIND (concat(?geoLocation,"_label") as ?geoLocation_label)}
@@ -421,8 +445,8 @@ def getSEQbyLocation():
                      'GeoLocation Label': x['geoLocation_label']['value']} for x in result])
 
 
-@app.route('/api/getSEQbySpecimenSource', methods=['GET'])
-def getSEQbySpecimenSource():
+@app.route('/api/getSEQCountbySpecimenSource', methods=['GET'])
+def getSEQCountbySpecimenSource():
     query="""SELECT ?specimen_source ?specimen_source_label (count(?fasta) as ?fastaCount)  WHERE
     {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0001479>  ?specimen_source]
     BIND (concat(?specimen_source,"_label") as ?specimen_source_label)}
@@ -436,15 +460,61 @@ def getSEQbySpecimenSource():
                      'Specimen Source': x['specimen_source']['value'],
                      'Label': x['specimen_source_label']['value']} for x in result])
 
+# Example specimen http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C155831
+@app.route('/api/getSEQbySpecimenSource', methods=['GET'])
+def getSEQBySpecimenSource():
+    query="""SELECT ?fasta ?specimen_source ?specimen_source_label  WHERE
+    {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0001479> <placeholder>]
+    BIND (concat(?specimen_source,"_label") as ?specimen_source_label)}
+    """
+    specimen=request.args.get('specimen')
+    query = query.replace("placeholder", specimen)
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return str(result)
+
 #No data for this atm
-@app.route('/api/getSEQbyHostHealthStatus', methods=['GET'])
-def getSEQbyHostHealthStatus():
+@app.route('/api/getSEQCountbyHostHealthStatus', methods=['GET'])
+def getSEQCountbyHostHealthStatus():
     query="""SELECT ?health_status ?health_status_label (count(?fasta) as ?fastaCount)  WHERE
     {?fasta ?x [<http://purl.obolibrary.org/obo/NCIT_C25688> ?health_status]
     BIND (concat(?health_status,"_label") as ?health_status_label)}
     GROUP BY ?health_status ?health_status_label
     ORDER BY DESC (?fastaCount)
     """
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return str(result)
+
+@app.route('/api/getSEQbyLocationAndTech', methods=['GET'])
+def getSEQbyLocationAndTech():
+    query="""SELECT ?fasta WHERE { ?fasta ?x [ 
+        <http://purl.obolibrary.org/obo/GAZ_00000448> <placeholderLoc>; <http://purl.obolibrary.org/obo/OBI_0600047>  <placeholderTech> ]}"""
+    location=request.args.get('location')
+    tech=request.args.get('tech')
+    query=query.replace("placeholderLoc", location)
+    query = query.replace("placeholderTech", tech)
+    print(query)
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return str(result)
+
+
+# Example Location http%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ1223
+# Example specimen http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C155831
+@app.route('/api/getSEQbyLocationAndSpecimenSource', methods=['GET'])
+def getSEQbyLocationAndSpecimenSource():
+    query="""SELECT ?fasta WHERE { ?fasta ?x [ 
+        <http://purl.obolibrary.org/obo/GAZ_00000448> <placeholderLoc>; <http://purl.obolibrary.org/obo/OBI_0001479>  <placeholderSpecimen> ]}
+    """
+    location = request.args.get('location')
+    specimen = request.args.get('specimen')
+    query = query.replace("placeholderLoc", location)
+    query = query.replace("placeholderSpecimen", specimen)
+    print(query)
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)
     result = r.json()['results']['bindings']

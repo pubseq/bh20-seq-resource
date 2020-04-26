@@ -57,6 +57,15 @@ form h4 {
     margin: 0 auto;
     padding: 20px;
 }
+
+.button {
+    width: 6em;
+    border-radius: 5px;
+    background: #0ED1CD;
+    margin: 0.3em auto;
+    padding: 0.4em;
+}
+
 .footer {
     background-color: white;
     margin: 0 auto;
@@ -128,6 +137,22 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
     margin-top: 10px;
 }
 
+.search-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-section .filter-options {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    padding: 20px;
+}
+
+.search-section p {
+    margin: 0;
+}
+
 .submit {
     grid-area: f;
     width: 17em;
@@ -158,6 +183,7 @@ footer {
 .invisible {
     display: none;
 }
+
 @media only screen and (max-device-width: 480px) {
     .grid-container {
         display: flex;

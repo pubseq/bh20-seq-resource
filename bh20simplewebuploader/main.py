@@ -8,7 +8,7 @@ import re
 import string
 import yaml
 import pkg_resources
-from flask import Flask, request, redirect, send_file, send_from_directory, render_template
+from flask import Flask, request, redirect, send_file, send_from_directory, render_template, jsonify
 import os.path
 import requests
 
@@ -358,7 +358,8 @@ def getAllaccessions():
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)
     result = r.json()['results']['bindings']
-    return str(result)
+    return jsonify([{'uri': x['fasta']['value'],
+                     'value': x['value']['value']} for x in result])
 
 
 # parameter must be encoded e.g. http://arvados.org/keep:6e6276698ed8b0e6cd21f523e4f91179+123/sequence.fasta must become
@@ -368,11 +369,12 @@ def getDetailsForSeq():
     seq_id = request.args.get('seq')
     query="""SELECT DISTINCT ?key ?value WHERE {<placeholder> ?x [?key ?value]}"""
     query=query.replace("placeholder", seq_id)
-    print(query)
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)
     result = r.json()['results']['bindings']
-    return str(result)
+    return jsonify([{'uri': x['key']['value'],
+                     'value': x['value']['value']} for x in result])
+
 
 @app.route('/api/getSEQbytech', methods=['GET'])
 def getSEQbytech():
@@ -384,7 +386,9 @@ def getSEQbytech():
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)
     result = r.json()['results']['bindings']
-    return str(result)
+    return jsonify([{'Fasta Count': x['fastaCount']['value'],
+                     'Specimen Source': x['specimen_source']['value'],
+                     'Label': x['specimen_source_label']['value']} for x in result])
 
 @app.route('/api/getSEQbyLocation', methods=['GET'])
 def getSEQbyLocation():
@@ -396,7 +400,10 @@ def getSEQbyLocation():
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)
     result = r.json()['results']['bindings']
-    return str(result)
+    return jsonify([{'Fasta Count': x['fastaCount']['value'],
+                     'GeoLocation': x['geoLocation']['value'],
+                     'GeoLocation Label': x['geoLocation_label']['value']} for x in result])
+
 
 @app.route('/api/getSEQbySpecimenSource', methods=['GET'])
 def getSEQbySpecimenSource():
@@ -409,7 +416,9 @@ def getSEQbySpecimenSource():
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)
     result = r.json()['results']['bindings']
-    return str(result)
+    return jsonify([{'Fasta Count': x['fastaCount']['value'],
+                     'Specimen Source': x['specimen_source']['value'],
+                     'Label': x['specimen_source_label']['value']} for x in result])
 
 #No data for this atm
 @app.route('/api/getSEQbyHostHealthStatus', methods=['GET'])

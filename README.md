@@ -166,7 +166,7 @@ To run it locally:
 ```
 virtualenv --python python3 venv
 . venv/bin/activate
-pip install -e .[web]
+pip install -e ".[web]"
 env FLASK_APP=bh20simplewebuploader/main.py flask run
 ```
 

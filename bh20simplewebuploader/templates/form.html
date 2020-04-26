@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Roboto+Slab&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
         <link href="/static/main.css" rel="stylesheet" type="text/css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Web uploader for Public SARS-CoV-2 Sequence Resource</title>
@@ -47,24 +47,35 @@
 
         <section>
             <form action="/submit" method="POST" enctype="multipart/form-data" id="main_form" class="grid-container">
-              <p class="intro">
-                Upload your SARS-CoV-2 sequence (FASTA or FASTQ formats) with metadata (JSONLD) to the <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">public sequence resource</a>. The upload will trigger a
-                recompute with all available sequences into a Pangenome
-                available for
-                <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">download</a>!
-                Your uploaded sequence will automatically be processed
-                and incorporated into the public pangenome with
-                metadata using worklows from the High Performance Open Biology Lab defined <a href="https://github.com/hpobio-lab/viral-analysis/tree/master/cwl/pangenome-generate">here</a>. All data is published under
-                a <a href="https://creativecommons.org/licenses/by/4.0/">Creative
-                Commons 4.0 attribution license</a> (CC-BY-4.0). You
-                can take the published (GFA/RDF/FASTA) data and store it in
-                a triple store for further processing. We also plan to
-                combine identifiers with clinical data stored securely at <a href="https://redcap-covid19.elixir-luxembourg.org/redcap/">REDCap</a>.
-                A free command line version of the uploader can be
-                installed from <a href="https://github.com/arvados/bh20-seq-resource">source</a>.
-              </p>
+                <div class="intro">
+                    <p>
+                        Upload your SARS-CoV-2 sequence (FASTA or FASTQ formats) with metadata (JSONLD) to the <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">public sequence resource</a>. The upload will trigger a
+                        recompute with all available sequences into a Pangenome
+                        available for
+                        <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">download</a>!
+                    </p>
+                    <p>
+                        Your uploaded sequence will automatically be processed
+                        and incorporated into the public pangenome with
+                        metadata using worklows from the High Performance Open Biology Lab defined <a href="https://github.com/hpobio-lab/viral-analysis/tree/master/cwl/pangenome-generate">here</a>. All data is published under
+                        a <a href="https://creativecommons.org/licenses/by/4.0/">Creative
+                        Commons 4.0 attribution license</a> (CC-BY-4.0). You
+                        can take the published (GFA/RDF/FASTA) data and store it in
+                        a triple store for further processing. We also plan to
+                        combine identifiers with clinical data stored securely at <a href="https://redcap-covid19.elixir-luxembourg.org/redcap/">REDCap</a>.
+                        A free command line version of the uploader can be
+                        installed from <a href="https://github.com/arvados/bh20-seq-resource">source</a>.
+                    </p>
+
+                </div>
 
                 <div class="fasta-file-select">
+                    <h2><svg class="bi bi-cloud-upload" width="1.2em" height="1.2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.887 6.2l-.964-.165A2.5 2.5 0 103.5 11H6v1H3.5a3.5 3.5 0 11.59-6.95 5.002 5.002 0 119.804 1.98A2.501 2.501 0 0113.5 12H10v-1h3.5a1.5 1.5 0 00.237-2.981L12.7 7.854l.216-1.028a4 4 0 10-7.843-1.587l-.185.96z"/>
+                        <path fill-rule="evenodd" d="M5 8.854a.5.5 0 00.707 0L8 6.56l2.293 2.293A.5.5 0 1011 8.146L8.354 5.5a.5.5 0 00-.708 0L5 8.146a.5.5 0 000 .708z" clip-rule="evenodd"/>
+                        <path fill-rule="evenodd" d="M8 6a.5.5 0 01.5.5v8a.5.5 0 01-1 0v-8A.5.5 0 018 6z" clip-rule="evenodd"/>
+                    </svg> Upload SARS-CoV-2 Sequence</h2>
+                    
                     <label for="fasta">Select FASTA file of assembled genome (max 50K), or FASTQ of reads (<span class="dropt" title="For a larger fastq file you'll need to use a CLI uploader">max 150MB<span style="width:500px;"></span></span>) : </label>
                     <br>
                     <input type="file" id="fasta" name="fasta" accept=".fa,.fasta,.fna,.fq" required>
@@ -138,37 +149,37 @@
 <input class="submit" type="submit" value="Add to Pangenome">
             </form>
         </section>
-<hr>
 <br>
 <div class="about">
-  <h3>ABOUT</h3>
-  <p>
-  This a public repository created at the COVID-19 BioHackathon
-    that has a low barrier to entry for uploading sequence data using
-    best practices. I.e., data is published with a creative commons
-    4.0 (CC-4.0) license with metadata using state-of-the art
-    standards and, perhaps most importantly, providing standardized
-    workflows that get triggered on upload, so that results are
-    immediately available in standardized data formats. The repository
-    will be maintained and expanded for the duration of the
-    pandemic. To contribute data simply upload it! To contribute code
-    and/or workflows see
-    the <a href="https://github.com/arvados/bh20-seq-resource">project
-    repository</a>. For more information see the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/paper/paper.md">paper</a> (WIP).
-  </p>
-                    <br>
-</div>
+    <div>
+        <h1>ABOUT</h1>
+        <p>
+            This a public repository created at the COVID-19 BioHackathon
+            that has a low barrier to entry for uploading sequence data using
+            best practices. I.e., data is published with a creative commons
+            4.0 (CC-4.0) license with metadata using state-of-the art
+            standards and, perhaps most importantly, providing standardized
+            workflows that get triggered on upload, so that results are
+            immediately available in standardized data formats. The repository
+            will be maintained and expanded for the duration of the
+            pandemic. To contribute data simply upload it! To contribute code
+            and/or workflows see
+            the <a href="https://github.com/arvados/bh20-seq-resource">project
+            repository</a>. For more information see the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/paper/paper.md">paper</a> (WIP).
+        </p>
 
-                    <hr>
+    </div>
+  <div class="sponsors">
+      <a href="https://arvados.org/"><img src="static/image/arvados-logo.png"></a>
+      <a href="https://www.commonwl.org/"><img src="static/image/CWL-Logo-Header.png"></a>
+
+      <a href="https://github.com/virtual-biohackathons/covid-19-bh20">
+          <img src="static/image/covid19biohackathon.png"></a>
+  </div>
+</div>
 <div class="footer">
     <!-- Sponsors -->
-    <div class="sponsors">
-        <a href="https://arvados.org/"><img src="static/image/arvados-logo.png" align="top"></a>
-        <a href="https://www.commonwl.org/"><img src="static/image/CWL-Logo-Header.png" height="70"></a>
 
-        <a href="https://github.com/virtual-biohackathons/covid-19-bh20">
-            <img src="static/image/covid19biohackathon.png" align="right" height="70"></a>
-    </div>
 
         <center>
         <small><a href="https://github.com/arvados/bh20-seq-resource">Source code</a> &middot; Powered by <a href="https://www.commonwl.org/">Common Workflow Language</a> &amp; <a href="https://arvados.org/">Arvados</a>; Made for <a href="https://github.com/virtual-biohackathons/covid-19-bh20">COVID-19-BH20</a>

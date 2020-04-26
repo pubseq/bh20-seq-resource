@@ -15,7 +15,27 @@
 <small>Disabled until we got everything wired up</small>
 
       </section>
-        <hr>
+
+      <section class="search-section">
+          <div class="filter-options" action="#">
+              <p>[Demo] Display content sequences by: </p>
+
+              <button class="button">Source</button>
+              <button class="button">Location</button>
+          </div>
+
+          <form class="search">
+              <input id="search-input" id="global-search" type="search" placeholder="FASTA uri" required>
+              <button class="button search-button" type="submit" onclick="search()">
+		  <span class="icon ion-search">
+		      <span class="sr-only">Search</span>
+		  </span>
+	      </button>
+          </form>
+      </section>
+
+      <section class="results">
+      </section>
 
         <section>
             <form action="/submit" method="POST" enctype="multipart/form-data" id="main_form" class="grid-container">

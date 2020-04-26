@@ -42,7 +42,7 @@ form h4 {
     text-transform: 'uppercase';
 }
 
-.intro, form {
+.intro, form, .search {
     padding: 20px;
 }
 
@@ -59,7 +59,6 @@ form h4 {
 }
 
 .button {
-    width: 6em;
     border-radius: 5px;
     background: #0ED1CD;
     margin: 0.3em auto;
@@ -118,6 +117,17 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
     column-count: 4;
     margin-top: 0.5em;
     column-width: 250px;
+}
+
+pre code {
+    background-color: #eee;
+    display: flex;
+    width: max-content;
+    margin: 0 auto;
+    overflow-y: scroll;
+    max-height: 300px;
+    padding: 10px;
+    border: solid 1px black;
 }
 
 .record {
@@ -180,8 +190,25 @@ footer {
     display: none;
 }
 
+.loader {
+    display: block;
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    animation: spin 1.5s linear infinite;
+}
+
 .invisible {
     display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @media only screen and (max-device-width: 480px) {

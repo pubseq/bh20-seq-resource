@@ -20,21 +20,29 @@
           <div class="filter-options" action="#">
               <p>[Demo] Display content sequences by: </p>
 
-              <button class="button">Source</button>
-              <button class="button">Location</button>
+              <div>
+                  <button class="button" onclick="fetchSEQBySpecimen()">Specimen Source</button>
+                  <button class="button" onclick="fetchSEQByLocation()">Location</button>
+                  <button class="button" onclick="fetchSEQByTech()">Tech</button>
+                  <button class="button" onclick="fetchAllaccessions()">Allaccessions</button>
+              </div>
+
           </div>
 
-          <form class="search">
+          <div class="search">
               <input id="search-input" id="global-search" type="search" placeholder="FASTA uri" required>
               <button class="button search-button" type="submit" onclick="search()">
 		  <span class="icon ion-search">
 		      <span class="sr-only">Search</span>
 		  </span>
 	      </button>
-          </form>
+          </div>
       </section>
 
-      <section class="results">
+      <div id="loader" class="loader invisible"></div>
+
+      <section id="results" class="invisible">
+          <pre><code id="json"></code></pre>
       </section>
 
         <section>

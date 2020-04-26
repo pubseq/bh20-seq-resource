@@ -378,17 +378,33 @@ def getDetailsForSeq():
 
 @app.route('/api/getSEQbytech', methods=['GET'])
 def getSEQbytech():
-    query="""SELECT ?specimen_source ?specimen_source_label (count(?fasta) as ?fastaCount) WHERE 
-    {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047>  ?specimen_source] 
-    BIND (concat(?specimen_source,"_label") as ?specimen_source_label)}
-    GROUP BY ?specimen_source ?specimen_source_label ORDER BY DESC (?fastaCount)
+    query="""SELECT ?tech ?tech_label (count(?fasta) as ?fastaCount) WHERE 
+    {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047>  ?tech] 
+    BIND (concat(?tech,"_label") as ?tech_label)}
+    GROUP BY ?tech ?tech_label ORDER BY DESC (?fastaCount)
     """
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)
     result = r.json()['results']['bindings']
     return jsonify([{'Fasta Count': x['fastaCount']['value'],
-                     'Specimen Source': x['specimen_source']['value'],
-                     'Label': x['specimen_source_label']['value']} for x in result])
+                     'tech': x['tech']['value'],
+                     'Label': x['tech_label']['value']} for x in result])
+
+
+## List all Sequences/submissions by a given tech, as example e.g. http://purl.obolibrary.org/obo/OBI_0000759
+## Has to be encoded again so should be --> http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FOBI_0000759
+@app.route('/api/getSEQbySelectedtech', methods=['GET'])
+def getSEQbySelectedtech():
+    query="""SELECT ?fasta WHERE 
+    {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047>  <placeholder>] }
+    """
+    tech = request.args.get('tech')
+    query=query.replace("placeholder", tech)
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return str(result)
+
 
 @app.route('/api/getSEQbyLocation', methods=['GET'])
 def getSEQbyLocation():

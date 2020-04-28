@@ -3,7 +3,7 @@ class: CommandLineTool
 cwlVersion: v1.1
 hints:
   DockerRequirement:
-    dockerPull: spodgi/spodgi
+    dockerPull: jerven/spodgi
 requirements:
   InlineJavascriptRequirement: {}
   ShellCommandRequirement: {}

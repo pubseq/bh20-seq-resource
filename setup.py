@@ -34,7 +34,8 @@ setup(
     package_data={"bh20sequploader": ["bh20seq-schema.yml",
                                       "bh20seq-options.yml",
                                       "bh20seq-shex.rdf",
-                                      "validation/formats"],
+                                      "validation/formats",
+                                      "SARS-CoV-2-reference.fasta",],
     },
     install_requires=install_requires,
     extras_require={

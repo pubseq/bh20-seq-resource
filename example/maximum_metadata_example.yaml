@@ -29,7 +29,7 @@ virus:
 technology:
     sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0009173,http://www.ebi.ac.uk/efo/EFO_0009173]
     sequence_assembly_method: Protocol used for assembly
-    sequencing_coverage: [70, 100]
+    sequencing_coverage: [70.0, 100.0]
     additional_technology_information: Optional free text field for addtional information
 
 submitter:

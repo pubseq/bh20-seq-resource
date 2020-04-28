@@ -112,7 +112,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
         
         info_for_yaml_dict['sample']['sample_id'] = accession_version
-        info_for_yaml_dict['sample']['source_database_accession'] = accession_version
+        info_for_yaml_dict['sample']['source_database_accession'] = "http://identifiers.org/insdc/"+accession_version+"#sequence" #accession is turned into resolvable URL/URI now
         
         
         # submitter info

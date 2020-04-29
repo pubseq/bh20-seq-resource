@@ -46,7 +46,7 @@ def qc_fasta(sequence):
                        "-quicktree", "-iteration=none", "-type=DNA"]
                 print("QC checking similarity to reference")
                 print(" ".join(cmd))
-                result = subprocess.run(cmd, capture_output=True)
+                result = subprocess.run(cmd, stdout=subprocess.PIPE)
                 res = result.stdout.decode("utf-8")
                 g1 = re.search(r"^Sequence 1: [^ ]+ +(\d+) bp$", res, flags=re.MULTILINE)
                 refbp = float(g1.group(1))

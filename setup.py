@@ -26,7 +26,7 @@ setup(
     version="1.0",
     description="Biohackathon sequence uploader",
     long_description=open(README).read(),
-    long_description_content_type="text/x-rst",
+    long_description_content_type="text/markdown",
     author="Peter Amstutz",
     author_email="peter.amstutz@curii.com",
     license="Apache 2.0",

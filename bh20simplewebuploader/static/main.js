@@ -19,15 +19,15 @@ let search = () => {
 }
 
 let fetchSEQBySpecimen = () => {
-  fetchAPI("/api/getSEQbySpecimenSource");
+  fetchAPI("/api/getSEQCountbySpecimenSource");
 }
 
 let fetchSEQByLocation = () => {
-  fetchAPI("/api/getSEQbyLocation");
+  fetchAPI("/api/getSEQCountbyLocation");
 }
 
 let fetchSEQByTech = () => {
-  fetchAPI("/api/getSEQbytech");
+  fetchAPI("/api/getSEQCountbytech");
 }
 
 let fetchAllaccessions = () => {

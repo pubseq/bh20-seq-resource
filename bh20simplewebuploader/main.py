@@ -197,6 +197,14 @@ def generate_form(schema, options):
                     record['type'] = 'number'
                     # Choose a reasonable precision for the control
                     record['step'] = '0.0001'
+
+                ### This is to fix the homepage for the moment ## needs more love though
+                # implementation of the [] stuff instead of just text fields
+                ## ToDo - implement lists
+                elif field_type == 'string[]':
+                    record['type'] = 'text'
+                elif field_type == 'float[]':
+                    record['type'] = 'text'
                 else:
                     raise NotImplementedError('Unimplemented field type {} in {} in metadata schema'.format(field_type, type_name))
                 yield record

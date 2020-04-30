@@ -14,6 +14,12 @@ inputs:
       class: File
       location: from_genbank_to_fasta_and_yaml.py
     inputBinding: {position: 2}
+  dict:
+    type: Directory
+    default:
+      class: Directory
+      location: dict_ontology_standardization
+    inputBinding: {position: 3}
 outputs: []
 requirements:
   DockerRequirement:
@@ -21,4 +27,4 @@ requirements:
   NetworkAccess:
     networkAccess: true
   WorkReuse:
-    workReuse: false
+    enableReuse: false

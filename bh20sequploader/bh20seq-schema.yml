@@ -49,6 +49,7 @@ $graph:
         jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C25688
           _type: "@id"
+          noLinkCheck: true
     host_treatment:
       doc: Process in which the act is intended to modify or alter host status
       type: string?
@@ -59,6 +60,13 @@ $graph:
       type: string[]?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/VO_0000002
+    ethnicity:
+      doc: Ethinicity of the host e.g. http://purl.obolibrary.org/obo/HANCESTRO_0010
+      type: string?
+      jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_001014
+          _type: "@id"
+          noLinkCheck: true
     additional_host_information:
       doc: Field for additional host information
       type: string?
@@ -91,7 +99,7 @@ $graph:
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/OBI_0001895
     collecting_institution:
-      doc: Institute that was responsible of sampeling
+      doc: Institute that was responsible for sampeling
       type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C41206
@@ -118,12 +126,13 @@ $graph:
       jsonldPredicate:
           _id: http://edamontology.org/data_2091
           _type: "@id"
+          noLinkCheck: true
 
 - name: virusSchema
   type: record
   fields:
     virus_species:
-      doc: The name of a taxon from the NCBI taxonomy database
+      doc: The name of virus species from the NCBI taxonomy database, e.g. http://purl.obolibrary.org/obo/NCBITaxon_2697049 for Severe acute respiratory syndrome coronavirus 2
       type: string
       jsonldPredicate:
           _id: http://edamontology.org/data_1875
@@ -152,7 +161,7 @@ $graph:
         _id: http://www.ebi.ac.uk/efo/EFO_0002699
     sequencing_coverage:
       doc: Sequence coverage defined as the average number of reads representing a given nucleotide (e.g. [100]) - if multiple technologies were used multiple float values can be submitted e.g. [100, 20]
-      type: float[]?
+      type: double[]?
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/FLU_0000848
     additional_technology_information:

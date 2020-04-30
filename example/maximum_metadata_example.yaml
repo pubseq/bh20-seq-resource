@@ -9,6 +9,7 @@ host:
     host_health_status: http://purl.obolibrary.org/obo/NCIT_C25269
     host_treatment: Process in which the act is intended to modify or alter host status (Compounds)
     host_vaccination: [vaccines1,vaccine2]
+    ethnicity: http://purl.obolibrary.org/obo/HANCESTRO_0010
     additional_host_information: Optional free text field for addtional information
 
 sample:

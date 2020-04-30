@@ -7,6 +7,8 @@ import xml.etree.ElementTree as ET
 import json
 import os
 
+from dateutil import parser
+
 num_ids_for_request = 100
 
 dir_metadata = 'metadata_from_nuccore'
@@ -221,7 +223,32 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                             missing_value_list.append('\t'.join([accession_version, 'specimen_source', GBQualifier_value_text]))
                 elif GBQualifier_name_text == 'collection_date':
                     # TO_DO: which format we will use?
-                    info_for_yaml_dict['sample']['collection_date'] = GBQualifier_value_text
+                    date_to_write = GBQualifier_value_text
+                    
+                    if len(GBQualifier_value_text.split('-')) == 1:
+                        if int(GBQualifier_value_text) < 2020:
+                            date_to_write = "15 12 {}".format(GBQualifier_value_text)
+                        else:
+                            date_to_write = "15 01 {}".format(GBQualifier_value_text)
+
+                        if 'additional_collection_information' in info_for_yaml_dict['sample']:
+                            info_for_yaml_dict['sample']['additional_collection_information'] += "; The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
+                        else:
+                            info_for_yaml_dict['sample']['additional_collection_information'] = "The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
+                    elif len(GBQualifier_value_text.split('-')) == 2:
+                        date_to_write += '-15'
+                        
+                        if 'additional_collection_information' in info_for_yaml_dict['sample']:
+                            info_for_yaml_dict['sample']['additional_collection_information'] += "; The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
+                        else:
+                            info_for_yaml_dict['sample']['additional_collection_information'] = "The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
+                    elif len(GBQualifier_value_text.split('-')) == 3:
+                        GBQualifier_value_text_list = GBQualifier_value_text.split('-')
+
+                        if GBQualifier_value_text_list[1].isalpha():
+                            date_to_write = GBQualifier_value_text_list[1] + ' ' + GBQualifier_value_text_list[0] + ' ' + GBQualifier_value_text_list[2]
+
+                    info_for_yaml_dict['sample']['collection_date'] = date_to_write
                 elif GBQualifier_name_text in ['lat_lon', 'country']:
                     if GBQualifier_value_text == 'Hong Kong':
                         GBQualifier_value_text = 'China: Hong Kong'
@@ -233,7 +260,10 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
                     info_for_yaml_dict['sample']['collection_location'] = GBQualifier_value_text
                 elif GBQualifier_name_text == 'note':
-                    info_for_yaml_dict['sample']['additional_collection_information'] = GBQualifier_value_text
+                    if 'additional_collection_information' in info_for_yaml_dict['sample']:
+                        info_for_yaml_dict['sample']['additional_collection_information'] += '; ' + GBQualifier_value_text
+                    else:
+                        info_for_yaml_dict['sample']['additional_collection_information'] = GBQualifier_value_text
                 elif GBQualifier_name_text == 'isolate':
                     info_for_yaml_dict['virus']['virus_strain'] = GBQualifier_value_text
                 elif GBQualifier_name_text == 'db_xref':

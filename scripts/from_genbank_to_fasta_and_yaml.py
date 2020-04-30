@@ -200,7 +200,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
                         if 'age' in GBQualifier_value_text:
                             info_for_yaml_dict['host']['host_age'] = int(GBQualifier_value_text_list[2].split('age ')[1])
-                            info_for_yaml_dict['host']['host_age_unit'] = 'year'
+                            info_for_yaml_dict['host']['host_age_unit'] = 'http://purl.obolibrary.org/obo/UO_0000036'
                 elif GBQualifier_name_text == 'collected_by':
                     if any([x in GBQualifier_value_text.lower() for x in ['institute', 'hospital', 'city', 'center']]):
                         info_for_yaml_dict['sample']['collecting_institution'] = GBQualifier_value_text

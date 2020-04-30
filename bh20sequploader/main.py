@@ -62,11 +62,16 @@ def main():
 
     external_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
 
+    try:
+        username = getpass.getuser()
+    except KeyError:
+        username = "unknown"
+
     properties = {
         "sequence_label": seqlabel,
         "upload_app": "bh20-seq-uploader",
         "upload_ip": external_ip,
-        "upload_user": "%s@%s" % (getpass.getuser(), socket.gethostname())
+        "upload_user": "%s@%s" % (username, socket.gethostname())
     }
 
     col.save_new(owner_uuid=UPLOAD_PROJECT, name="%s uploaded by %s from %s" %

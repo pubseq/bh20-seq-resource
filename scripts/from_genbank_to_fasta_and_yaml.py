@@ -43,13 +43,13 @@ if not os.path.exists(dir_metadata):
 
     print(term_list, len(id_set))
 
-    with open(path_ncbi_virus_accession) as f:
-        tmp_list = [line.strip('\n') for line in f]
-
-    print('NCBI Virus', len(tmp_list))
-    id_set.update(tmp_list)
-
-    print(term_list + ['NCBI Virus'], len(id_set))
+    if os.path.exists(path_ncbi_virus_accession):
+        with open(path_ncbi_virus_accession) as f:
+            tmp_list = [line.strip('\n') for line in f]
+        print('NCBI Virus', len(tmp_list))
+        id_set.update(tmp_list)
+        term_list.append('NCBI Virus')
+        print(term_list, len(id_set))
 
     for i, id_x_list in enumerate(chunks(list(id_set), num_ids_for_request)):
         path_metadata_xxx_xml = os.path.join(dir_metadata, 'metadata_{}.xml'.format(i))
@@ -85,7 +85,7 @@ if not os.path.exists(dir_fasta_and_yaml):
     os.makedirs(dir_fasta_and_yaml)
 
 missing_value_list = []
-    
+
 for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) for name_metadata_xxx_xml in os.listdir(dir_metadata) if name_metadata_xxx_xml.endswith('.xml')]:
     tree = ET.parse(path_metadata_xxx_xml)
     GBSet = tree.getroot()
@@ -109,20 +109,20 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
             'submitter': {}
         }
 
-        
+
         info_for_yaml_dict['sample']['sample_id'] = accession_version
         info_for_yaml_dict['sample']['source_database_accession'] = ["http://identifiers.org/insdc/"+accession_version+"#sequence"] #accession is turned into resolvable URL/URI now
-        
-        
+
+
         # submitter info
         GBSeq_references = GBSeq.find('GBSeq_references')
         if GBSeq_references is not None:
             info_for_yaml_dict['submitter']['authors'] = ["{}".format(x.text) for x in GBSeq_references.iter('GBAuthor')]
-            
+
             GBReference = GBSeq_references.find('GBReference')
             if GBReference is not None:
                 GBReference_journal = GBReference.find('GBReference_journal')
-                
+
                 if GBReference_journal is not None and GBReference_journal.text != 'Unpublished':
                     if 'Submitted' in GBReference_journal.text:
                         info_for_yaml_dict['submitter']['submitter_name'] = ["{}".format(GBReference_journal.text.split(') ')[1].split(',')[0].strip())]
@@ -207,7 +207,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                 elif GBQualifier_name_text == 'isolation_source':
                     if GBQualifier_value_text.upper() in term_to_uri_dict:
                         GBQualifier_value_text = GBQualifier_value_text.upper() # For example, in case of 'usa: wa'
-                    
+
                     if GBQualifier_value_text in term_to_uri_dict:
                         info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict[GBQualifier_value_text]]
                     else:
@@ -250,7 +250,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
         with open(os.path.join(dir_fasta_and_yaml, '{}.yaml'.format(accession_version)), 'w') as fw:
             json.dump(info_for_yaml_dict, fw, indent=2)
 
-        
+
 if len(missing_value_list) > 0:
     with open('missing_terms.tsv', 'w') as fw:
         fw.write('\n'.join(missing_value_list))

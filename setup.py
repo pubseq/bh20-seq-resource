@@ -15,7 +15,8 @@ try:
 except ImportError:
     tagger = egg_info_cmd.egg_info
 
-install_requires = ["arvados-python-client", "schema-salad", "python-magic", "pyshex"]
+install_requires = ["arvados-python-client", "schema-salad",
+                    "python-magic", "pyshex", "py-dateutil"]
 web_requires = ["flask", "pyyaml"]
 
 needs_pytest = {"pytest", "test", "ptr"}.intersection(sys.argv)

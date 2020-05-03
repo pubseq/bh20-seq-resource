@@ -7,6 +7,8 @@ hints:
 requirements:
   InlineJavascriptRequirement: {}
   ShellCommandRequirement: {}
+  ResourceRequirement:
+    ramMin: $((2 * 1024) + 1)
 inputs:
   - id: odgi
     type: File

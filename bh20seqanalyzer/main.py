@@ -136,6 +136,7 @@ def start_pangenome_analysis(api,
             "location": schema_ref
         }
     }
+    validated.sort(key=lambda v: v["portable_data_hash"])
     for v in validated:
         inputobj["inputReads"].append({
             "class": "File",

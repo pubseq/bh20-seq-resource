@@ -90,7 +90,6 @@ def run_workflow(api, parent_project, workflow_uuid, name, inputobj):
         cmd = ["arvados-cwl-runner",
                "--submit",
                "--no-wait",
-               "--debug",
                "--project-uuid=%s" % project["uuid"],
                "arvwf:%s" % workflow_uuid,
                tmp.name]

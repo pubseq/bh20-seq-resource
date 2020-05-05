@@ -87,9 +87,9 @@
                 <div class="metadata">
                     <label>Select metadata submission method:</label>
                     <br>
-                    <input type="radio" id="metadata_form" name="metadata_type" value="fill" checked  onchange="displayForm()" required>
+                    <input type="radio" id="metadata_form" name="metadata_type" value="fill" checked  onchange="setMode()" required>
                     <label for="metadata_form">Fill in metadata manually</label>
-                    <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="displayForm()" required>
+                    <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="setMode()" required>
                     <label for="metadata_upload">Upload metadata file</label>
                     <br>
                     <small>Make sure the metadata has submitter attribution details.</small>
@@ -153,7 +153,6 @@
 
                 </div>
 
-                <input type="submit">
                 <input class="submit" type="submit" value="Add to Pangenome">
             </form>
         </section>

@@ -235,13 +235,6 @@ footer {
 .sponsors img {
     width: 100%;
 }
-.metadata input#metadata_upload:checked ~ #metadata_upload_form_spot {
-    display: block;
-}
-
-.metadata input#metadata_upload ~ #metadata_upload_form_spot {
-    display: none;
-}
 
 .loader {
     display: block;

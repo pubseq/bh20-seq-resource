@@ -10,10 +10,8 @@ requirements:
   ResourceRequirement:
     ramMin: $((2 * 1024) + 1)
 inputs:
-  - id: odgi
-    type: File
-  - id: output_name
-    type: string?
+  odgi: File
+  output_name: string?
 
 stdout: $(inputs.output_name || inputs.odgi.nameroot+'.ttl.xz')
 
@@ -23,5 +21,4 @@ arguments:
    xz, --stdout]
 
 outputs:
-  - id: rdf
-    type: stdout
+  rdf: stdout

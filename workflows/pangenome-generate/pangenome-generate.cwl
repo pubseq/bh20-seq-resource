@@ -23,7 +23,7 @@ outputs:
     outputSource: buildGraph/odgiGraph
   odgiPNG:
     type: File
-    outputSource: vizGraph/odgiPNG
+    outputSource: vizGraph/graph_image
   seqwishGFA:
     type: File
     outputSource: induceGraph/seqwishGFA
@@ -32,7 +32,7 @@ outputs:
     outputSource: odgi2rdf/rdf
   readsMergeDedup:
     type: File
-    outputSource: dedup/readsMergeDedup
+    outputSource: dedup/reads_dedup
   mergedMetadata:
     type: File
     outputSource: mergeMetadata/merged
@@ -50,17 +50,21 @@ steps:
     out: [relabeledSeqs, originalLabels]
     run: relabel-seqs.cwl
   dedup:
-    in: {readsFA: relabel/relabeledSeqs}
-    out: [readsMergeDedup, dups]
-    run: seqkit-rmdup.cwl
+    in: {reads: relabel/relabeledSeqs}
+    out: [reads_dedup, dups]
+    run: ../tools/seqkit/seqkit_rmdup.cwl
   overlapReads:
-    in: {readsFA: dedup/readsMergeDedup}
-    out: [readsPAF]
-    run: minimap2.cwl
+    in:
+      target: dedup/reads_dedup
+      query: dedup/reads_dedup
+      outputCIGAR:
+        default: true
+    out: [alignments]
+    run: ../tools/minimap2/minimap2_paf.cwl
   induceGraph:
     in:
-      readsFA: dedup/readsMergeDedup
-      readsPAF: overlapReads/readsPAF
+      readsFA: dedup/reads_dedup
+      readsPAF: overlapReads/alignments
     out: [seqwishGFA]
     run: seqwish.cwl
   buildGraph:
@@ -68,9 +72,18 @@ steps:
     out: [odgiGraph]
     run: odgi-build.cwl
   vizGraph:
-    in: {inputODGI: buildGraph/odgiGraph}
-    out: [odgiPNG]
-    run: odgi-viz.cwl
+    in:
+      sparse_graph_index: buildGraph/odgiGraph
+      width:
+        default: 50000
+      height:
+        default: 500
+      path_per_row:
+        default: true
+      path_height:
+        default: 4
+    out: [graph_image]
+    run: ../tools/odgi/odgi_viz.cwl
   odgi2rdf:
     in: {odgi: buildGraph/odgiGraph}
     out: [rdf]

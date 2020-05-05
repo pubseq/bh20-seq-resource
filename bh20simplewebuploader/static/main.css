@@ -167,21 +167,28 @@ pre code {
     border: solid 1px black;
 }
 
-.record {
+.record, .record .field-group, .record .field-group .field {
     display: flex;
     flex-direction: column;
-    border: solid 1px #808080;
-    padding: 1em;
-    background: #F8F8F8;
-    margin-bottom: 1em;
     -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
     page-break-inside: avoid; /* Firefox */
     break-inside: avoid;
 }
 
+.record {
+    border: solid 1px #808080;
+    padding: 1em;
+    background: #F8F8F8;
+    margin-bottom: 1em;
+}
+
 .record label {
     font-size: small;
     margin-top: 10px;
+}
+
+.hidden {
+    display: none;
 }
 
 .search-section {

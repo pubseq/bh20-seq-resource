@@ -268,6 +268,9 @@ def parse_input(input_string, html_type, number_step=None):
             return int(input_string)
         else:
             return float(input_string)
+    elif html_type == 'date':
+        # Don't do our own date validation; pass it on as a string
+        return input_string
     else:
         raise NotImplementedError('Unimplemented input type: {}'.format(html_type))
 

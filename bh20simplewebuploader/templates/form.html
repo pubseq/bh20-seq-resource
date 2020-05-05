@@ -32,10 +32,10 @@
           <div class="search">
               <input id="search-input" id="global-search" type="search" placeholder="FASTA uri" required>
               <button class="button search-button" type="submit" onclick="search()">
-		  <span class="icon ion-search">
-		      <span class="sr-only">Search</span>
-		  </span>
-	      </button>
+                  <span class="icon ion-search">
+                      <span class="sr-only">Search</span>
+                  </span>
+              </button>
           </div>
       </section>
 
@@ -116,26 +116,34 @@
                     <div class="record">
                         <h4>{{ record['heading'] }}</h4>
                         {% else %}
-                        <label for="{{ record['id'] }}" title="{{ record.get('docstring', '') }}">
-                            {{ record['label'] }}
-                            {{ "*" if record['required'] else "" }}
-                            {% if 'docstring' in record %}
-                            <a href='javascript:alert({{ record['docstring'] | tojson }})'>❓</a>
+                        <div class="field-group" data-keypath="{{ record['id'] }}">
+                            <div class="field" data-number="0">
+                                <label for="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" title="{{ record.get('docstring', '') }}">
+                                    {{ record['label'] }}
+                                    {{ "*" if record['required'] else "" }}
+                                    {% if 'docstring' in record %}
+                                    <a href='javascript:alert({{ record['docstring'] | tojson }})'>❓</a>
+                                    {% endif %}
+                                    {% if 'ref_iri' in record %}
+                                    <a href="{{ record['ref_iri'] }}" target="_blank" title="Ontology Link">🔗</a>
+                                    {% endif %}
+                                </label>
+                                {% if record['type'] == 'select' %}
+                                <select class="control" id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" {{ "required" if record['required'] else "" }}>
+                                    <option value="" selected>Choose one...</option>
+                                    {% for option in record['options'] %}
+                                    <option value="{{ option[1] }}">{{ option[0] }}</option>
+                                    {% endfor %}
+                                </select>
+                                {% else %}
+                                <input class="control" type="{{ record['type'] }}" id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" {{ "required" if record['required'] else "" }} {{ ("step=" + record['step']) if 'step' in record else ""}}>
+                                {% endif %}
+                            </div>
+                            {% if record['list'] %}
+                            <button type="button" title="Remove field" class="remove-field hidden">➖</button>
+                            <button type="button" title="Add field" class="add-field">➕</button>
                             {% endif %}
-                            {% if 'ref_iri' in record %}
-                            <a href="{{ record['ref_iri'] }}" target="_blank" title="Ontology Link">🔗</a>
-                            {% endif %}
-                        </label>
-                        {% if record['type'] == 'select' %}
-                        <select id="{{ record['id'] }}" name="{{ record['id'] }}" {{ "required" if record['required'] else "" }}>
-                            <option value="" selected>Choose one...</option>
-                            {% for option in record['options'] %}
-                            <option value="{{ option[1] }}">{{ option[0] }}</option>
-                            {% endfor %}
-                        </select>
-                        {% else %}
-                        <input type="{{ record['type'] }}" id="{{ record['id'] }}" name="{{ record['id'] }}" {{ "required" if record['required'] else "" }} {{ ("step=" + record['step']) if 'step' in record else ""}}>
-                        {% endif %}
+                        </div>
                         {% endif %}
                         {% if loop.index == loop.length %}
                     </div>
@@ -190,7 +198,7 @@
 </div>
 
 <script type="text/javascript">
- let scriptRoot = {{ request.script_root|tojson|safe }};
+    let scriptRoot = {{ request.script_root|tojson|safe }};
 </script>
 
 <script type="text/javascript" src="/static/main.js"></script>

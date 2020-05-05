@@ -187,10 +187,6 @@ pre code {
     margin-top: 10px;
 }
 
-.hidden {
-    display: none;
-}
-
 .search-section {
     display: flex;
     justify-content: space-between;

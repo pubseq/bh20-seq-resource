@@ -86,7 +86,7 @@ function addField(e) {
   fieldGroup.insertBefore(newField, minusButton)
   
   // Enable the minus button
-  minusButton.classList.remove('hidden')
+  minusButton.classList.remove('invisible')
 }
 
 /**
@@ -108,7 +108,7 @@ function removeField(e) {
   if (existingFields.length <= 1) {
     // Collection auto-updates. Now there's only one element. Don't let the
     // user remove it. If they don't want it, they can leave it empty.
-    this.classList.add('hidden')
+    this.classList.add('invisible')
   }
 }
 

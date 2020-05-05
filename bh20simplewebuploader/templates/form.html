@@ -95,13 +95,13 @@
                     <small>Make sure the metadata has submitter attribution details.</small>
 
                     <div id="metadata_upload_form_spot">
-                    <div id="metadata_upload_form">
-                      <br>
-                      <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> and <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/metadata.yaml" target="_blank">example</a> (max 50K):</label>
-                      <br>
-                      <input type="file" id="metadata" name="metadata" accept=".json,.yml,.yaml" required>
-                      <br>
-                    </div>
+                        <div id="metadata_upload_form">
+                          <br>
+                          <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> and <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/metadata.yaml" target="_blank">example</a> (max 50K):</label>
+                          <br>
+                          <input type="file" id="metadata" name="metadata" accept=".json,.yml,.yaml" required>
+                          <br>
+                        </div>
                     </div>
 
                 </div>
@@ -140,7 +140,7 @@
                                 {% endif %}
                             </div>
                             {% if record['list'] %}
-                            <button type="button" title="Remove field" class="remove-field hidden">➖</button>
+                            <button type="button" title="Remove field" class="remove-field invisible">➖</button>
                             <button type="button" title="Add field" class="add-field">➕</button>
                             {% endif %}
                         </div>
@@ -153,8 +153,8 @@
 
                 </div>
 
-
-<input class="submit" type="submit" value="Add to Pangenome">
+                <input type="submit">
+                <input class="submit" type="submit" value="Add to Pangenome">
             </form>
         </section>
 <br>

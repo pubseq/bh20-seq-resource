@@ -15,7 +15,8 @@ try:
 except ImportError:
     tagger = egg_info_cmd.egg_info
 
-install_requires = ["arvados-python-client", "schema-salad", "python-magic", "pyshex"]
+install_requires = ["arvados-python-client", "schema-salad",
+                    "python-magic", "pyshex", "py-dateutil"]
 web_requires = ["flask", "pyyaml"]
 
 needs_pytest = {"pytest", "test", "ptr"}.intersection(sys.argv)
@@ -26,7 +27,7 @@ setup(
     version="1.0",
     description="Biohackathon sequence uploader",
     long_description=open(README).read(),
-    long_description_content_type="text/x-rst",
+    long_description_content_type="text/markdown",
     author="Peter Amstutz",
     author_email="peter.amstutz@curii.com",
     license="Apache 2.0",
@@ -34,7 +35,8 @@ setup(
     package_data={"bh20sequploader": ["bh20seq-schema.yml",
                                       "bh20seq-options.yml",
                                       "bh20seq-shex.rdf",
-                                      "validation/formats"],
+                                      "validation/formats",
+                                      "SARS-CoV-2-reference.fasta",],
     },
     install_requires=install_requires,
     extras_require={

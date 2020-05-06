@@ -1,0 +1,24 @@
+<http://edamontology.org/data_1875> <http://www.w3.org/2000/01/rdf-schema#label> "NCBI taxon" .
+<http://purl.obolibrary.org/obo/GAZ_00000448> <http://www.w3.org/2000/01/rdf-schema#label> "geographic location" .
+<http://purl.obolibrary.org/obo/FLU_0000848> <http://www.w3.org/2000/01/rdf-schema#label> "sequence coverage" .
+<http://purl.obolibrary.org/obo/NCIT_C41206> <http://www.w3.org/2000/01/rdf-schema#label> "Institution" .
+<http://purl.obolibrary.org/obo/NCIT_C42781> <http://www.w3.org/2000/01/rdf-schema#label> "Author" .
+<http://purl.obolibrary.org/obo/OBI_0001479> <http://www.w3.org/2000/01/rdf-schema#label> "specimen from organism" .
+<http://purl.obolibrary.org/obo/OBI_0600047> <http://www.w3.org/2000/01/rdf-schema#label> "sequencing assay" .
+<http://semanticscience.org/resource/SIO_000115> <http://www.w3.org/2000/01/rdf-schema#label> "identifier" .
+<http://www.ebi.ac.uk/efo/EFO_0000532> <http://www.w3.org/2000/01/rdf-schema#label> "host" .
+<http://semanticscience.org/resource/SIO_001167> <http://www.w3.org/2000/01/rdf-schema#label> "comment" .
+<http://www.ebi.ac.uk/efo/EFO_0002699> <http://www.w3.org/2000/01/rdf-schema#label> "high throughput sequencer" .
+<http://semanticscience.org/resource/SIO_010055> <http://www.w3.org/2000/01/rdf-schema#label> "strain" .
+<http://purl.obolibrary.org/obo/OBI_0001895> <http://www.w3.org/2000/01/rdf-schema#label> "specimen collector" .
+<http://edamontology.org/data_2091> <http://www.w3.org/2000/01/rdf-schema#label> "Accession" .
+<http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164> <http://www.w3.org/2000/01/rdf-schema#label> "collection date" .
+<http://purl.obolibrary.org/obo/NCIT_C3833> <http://www.w3.org/2000/01/rdf-schema#label> "Asymptomatic" .
+<http://purl.obolibrary.org/obo/NCIT_C25269> <http://www.w3.org/2000/01/rdf-schema#label> "Symptomatic" .
+<http://purl.obolibrary.org/obo/GENEPIO_0002020> <http://www.w3.org/2000/01/rdf-schema#label> "admitted to hospital" .
+<http://purl.obolibrary.org/obo/GENEPIO_0001849> <http://www.w3.org/2000/01/rdf-schema#label> "discharged from hospital" .
+<http://purl.obolibrary.org/obo/NCIT_C28554> <http://www.w3.org/2000/01/rdf-schema#label> "Dead" .
+<http://purl.obolibrary.org/obo/NCIT_C37987> <http://www.w3.org/2000/01/rdf-schema#label> "Alive" .
+<http://purl.obolibrary.org/obo/NCIT_C115935> <http://www.w3.org/2000/01/rdf-schema#label> "Healthy" .
+<http://purl.obolibrary.org/obo/PATO_0000384> <http://www.w3.org/2000/01/rdf-schema#label> "male".
+<http://purl.obolibrary.org/obo/PATO_0000383> <http://www.w3.org/2000/01/rdf-schema#label> "female" .

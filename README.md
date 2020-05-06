@@ -35,6 +35,14 @@ Note that you will need to repeat the `. venv/bin/activate` step from this direc
 
 3. **Install the tool.** Once in your virtualenv, install this project:
 
+Install from PyPi:
+
+```sh
+pip3 bh20-seq-uploader
+```
+
+Install from git:
+
 ```sh
 pip3 install git+https://github.com/arvados/bh20-seq-resource.git@master
 ```
@@ -166,7 +174,7 @@ To run it locally:
 ```
 virtualenv --python python3 venv
 . venv/bin/activate
-pip install -e .[web]
+pip install -e ".[web]"
 env FLASK_APP=bh20simplewebuploader/main.py flask run
 ```
 

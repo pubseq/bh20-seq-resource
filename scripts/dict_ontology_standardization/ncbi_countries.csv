@@ -39,6 +39,7 @@ Chad,http://www.wikidata.org/entity/Q657
 Chile,http://www.wikidata.org/entity/Q298
 China,http://www.wikidata.org/entity/Q148
 China: Anhui,http://www.wikidata.org/entity/Q40956
+"China: Anhui, Fuyang":http://www.wikidata.org/entity/Q360584
 China: Beijing,http://www.wikidata.org/entity/Q956
 China: Chongqing,http://www.wikidata.org/entity/Q11725
 China: Fujian,http://www.wikidata.org/entity/Q41705
@@ -48,6 +49,7 @@ China: Guangdong,http://www.wikidata.org/entity/Q15175
 China: Guangxi Zhuang Autonomous Region,http://www.wikidata.org/entity/Q15176
 China: Guangzhou,http://www.wikidata.org/entity/Q16572
 China: Guizhou,http://www.wikidata.org/entity/Q47097
+China: Hangzhou,http://www.wikidata.org/entity/Q4970
 China: Hainan,http://www.wikidata.org/entity/Q42200
 China: Hebei,http://www.wikidata.org/entity/Q21208
 China: Heilongjiang,http://www.wikidata.org/entity/Q19206
@@ -109,6 +111,7 @@ France,http://www.wikidata.org/entity/Q142
 Gabon,http://www.wikidata.org/entity/Q1000
 Georgia,http://www.wikidata.org/entity/Q230
 Germany,http://www.wikidata.org/entity/Q183
+Germany: Dusseldorf,https://www.wikidata.org/wiki/Q1718
 Ghana,http://www.wikidata.org/entity/Q117
 Greece,http://www.wikidata.org/entity/Q41
 Grenada,http://www.wikidata.org/entity/Q769
@@ -123,6 +126,7 @@ Iceland,http://www.wikidata.org/entity/Q189
 Icelandic Commonwealth,http://www.wikidata.org/entity/Q62389
 India,http://www.wikidata.org/entity/Q668
 India: Kerala State,http://www.wikidata.org/entity/Q1186
+India: Rajkot,http://www.wikidata.org/entity/Q1815245
 Indonesia,http://www.wikidata.org/entity/Q252
 Iran,http://www.wikidata.org/entity/Q794
 Iran: Qum,http://www.wikidata.org/entity/Q131664
@@ -172,6 +176,7 @@ Mozambique,http://www.wikidata.org/entity/Q1029
 Myanmar,http://www.wikidata.org/entity/Q836
 Namibia,http://www.wikidata.org/entity/Q1030
 Nauru,http://www.wikidata.org/entity/Q697
+Netherlands: Milheeze,https://www.wikidata.org/wiki/Q3314115
 Nepal,http://www.wikidata.org/entity/Q837
 New Zealand,http://www.wikidata.org/entity/Q664
 Nicaragua,http://www.wikidata.org/entity/Q811
@@ -263,6 +268,7 @@ USA: CA,http://www.wikidata.org/entity/Q99
 "USA: CA, San Diego County",http://www.wikidata.org/entity/Q108143
 USA: CO,http://www.wikidata.org/entity/Q1261
 USA: CT,http://www.wikidata.org/entity/Q779
+USA: DC,http://www.wikidata.org/entity/Q3551781
 USA: DE,http://www.wikidata.org/entity/Q1393
 USA: FL,http://www.wikidata.org/entity/Q812
 USA: GA,http://www.wikidata.org/entity/Q1428
@@ -293,6 +299,7 @@ USA: NM,http://www.wikidata.org/entity/Q1522
 USA: North Carolina,http://www.wikidata.org/entity/Q1454
 USA: NV,http://www.wikidata.org/entity/Q1227
 USA: NY,http://www.wikidata.org/entity/Q1384
+USA: New York,http://www.wikidata.org/entity/Q1384
 USA: OH,http://www.wikidata.org/entity/Q1397
 USA: OK,http://www.wikidata.org/entity/Q1649
 USA: OR,http://www.wikidata.org/entity/Q824

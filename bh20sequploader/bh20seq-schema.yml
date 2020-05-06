@@ -48,6 +48,8 @@ $graph:
         type: string?
         jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C25688
+          _type: "@id"
+          noLinkCheck: true
     host_treatment:
       doc: Process in which the act is intended to modify or alter host status
       type: string?
@@ -55,9 +57,16 @@ $graph:
           _id: http://www.ebi.ac.uk/efo/EFO_0000727
     host_vaccination:
       doc: List of vaccines given to the host
-      type: string?
+      type: string[]?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/VO_0000002
+    ethnicity:
+      doc: Ethinicity of the host e.g. http://purl.obolibrary.org/obo/HANCESTRO_0010
+      type: string?
+      jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_001014
+          _type: "@id"
+          noLinkCheck: true
     additional_host_information:
       doc: Field for additional host information
       type: string?
@@ -90,20 +99,13 @@ $graph:
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/OBI_0001895
     collecting_institution:
-      doc: Institute that was responsible of sampeling
+      doc: Institute that was responsible for sampeling
       type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C41206
     specimen_source:
       doc: Method how the specimen was derived as NCIT IRI, e.g. http://purl.obolibrary.org/obo/NCIT_C155831 (=nasopharyngeal swab)
-      type: string?
-      jsonldPredicate:
-          _id: http://purl.obolibrary.org/obo/OBI_0001479
-          _type: "@id"
-          noLinkCheck: true
-    specimen_source2:
-      doc: Method how the specimen was derived as NCIT IRI, e.g. http://purl.obolibrary.org/obo/NCIT_C155835 (=throat swabb)
-      type: string?
+      type: string[]?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/OBI_0001479
           _type: "@id"
@@ -119,16 +121,18 @@ $graph:
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_001167
     source_database_accession:
-      doc: If data is deposit at a public resource (e.g. Genbank, ENA) enter the Accession Id here
-      type: string?
+      doc: If data is deposit at a public resource (e.g. Genbank, ENA) enter the Accession Id here. Please use a resolveable URL (e.g. http://identifiers.org/insdc/LC522350.1#sequence)
+      type: string[]?
       jsonldPredicate:
           _id: http://edamontology.org/data_2091
+          _type: "@id"
+          noLinkCheck: true
 
 - name: virusSchema
   type: record
   fields:
     virus_species:
-      doc: The name of a taxon from the NCBI taxonomy database
+      doc: The name of virus species from the NCBI taxonomy database, e.g. http://purl.obolibrary.org/obo/NCBITaxon_2697049 for Severe acute respiratory syndrome coronavirus 2
       type: string
       jsonldPredicate:
           _id: http://edamontology.org/data_1875
@@ -145,21 +149,7 @@ $graph:
   fields:
     sample_sequencing_technology:
       doc: Technology that was used to sequence this sample (e.g Sanger, Nanopor MiniION)
-      type: string?
-      jsonldPredicate:
-        _id: http://purl.obolibrary.org/obo/OBI_0600047
-        _type: "@id"
-        noLinkCheck: true
-    sample_sequencing_technology2:
-      doc: Technology that was used to sequence this sample (e.g Sanger, Nanopor MiniION)
-      type: string?
-      jsonldPredicate:
-        _id: http://purl.obolibrary.org/obo/OBI_0600047
-        _type: "@id"
-        noLinkCheck: true
-    sample_sequencing_technology3:
-      doc: Technology that was used to sequence this sample (e.g Sanger, Nanopor MiniION)
-      type: string?
+      type: string[]?
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/OBI_0600047
         _type: "@id"
@@ -170,13 +160,8 @@ $graph:
       jsonldPredicate:
         _id: http://www.ebi.ac.uk/efo/EFO_0002699
     sequencing_coverage:
-      doc: Sequence coverage defined as the average number of reads representing a given nucleotide (e.g. 100x)
-      type: float?
-      jsonldPredicate:
-        _id: http://purl.obolibrary.org/obo/FLU_0000848
-    sequencing_coverage2:
-      doc: If a second sequence technology was used you can submit its coverage here
-      type: float?
+      doc: Sequence coverage defined as the average number of reads representing a given nucleotide (e.g. [100]) - if multiple technologies were used multiple float values can be submitted e.g. [100, 20]
+      type: double[]?
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/FLU_0000848
     additional_technology_information:
@@ -189,13 +174,13 @@ $graph:
   type: record
   fields:
     authors:
-      doc: Name of the author(s)
-      type: string
+      doc: Name(s) of the author(s)
+      type: string[]
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C42781
     submitter_name:
-      doc: Name of the submitter
-      type: string?
+      doc: Name of the submitter(s)
+      type: string[]?
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000116
     submitter_address:
@@ -228,7 +213,7 @@ $graph:
         _id: http://purl.obolibrary.org/obo/NCIT_C19026
     submitter_orcid:
       doc: ORCID of the submitter as a full URI, e.g. https://orcid.org/0000-0002-1825-0097
-      type: string?
+      type: string[]?
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000115
           _type: "@id"

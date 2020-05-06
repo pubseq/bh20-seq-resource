@@ -25,8 +25,9 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
     obo:NCIT_C42574 [ obo:UO_~ ] ?;
 	obo:NCIT_C25688 [obo:NCIT_C115935 obo:NCIT_C3833 obo:NCIT_C25269 obo:GENEPIO_0002020 obo:GENEPIO_0001849 obo:NCIT_C28554 obo:NCIT_C37987 ] ? ;
     efo:EFO_0000727 xsd:string ?;
-    obo:VO_0000002 xsd:string ?;
+    obo:VO_0000002 xsd:string {0,10};
     sio:SIO_001167 xsd:string ?;
+    sio:SIO_001014 [ obo:HANCESTRO_~ ] ? ; #ethnicity
 }
 
 :sampleShape  {
@@ -38,25 +39,26 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
     obo:OBI_0001479 IRI {0,2};
     obo:OBI_0001472 xsd:string ?;
     sio:SIO_001167 xsd:string ?;
+	edam:data_2091 IRI {0,3};
 }
 
 :submitterShape {
-    obo:NCIT_C42781 xsd:string ;
-    sio:SIO_000116 xsd:string ?;
+    obo:NCIT_C42781 xsd:string + ;
+    sio:SIO_000116 xsd:string *;
     sio:SIO_000172 xsd:string ?;
     obo:NCIT_C37984 xsd:string ?;
     obo:OBI_0600047 xsd:string ?;
   	obo:NCIT_C37900 xsd:string ?;
     efo:EFO_0001741 xsd:string ?;
     obo:NCIT_C19026 xsd:string ?;
-    sio:SIO_000115 /https:\u002F\u002Forcid.org\u002F.{4}-.{4}-.{4}-.{4}/?;
+    sio:SIO_000115 /https:\u002F\u002Forcid.org\u002F.{4}-.{4}-.{4}-.{4}/ {0,10};
     sio:SIO_001167 xsd:string ?;
 }
 
 :technologyShape {
     obo:OBI_0600047 IRI {0,3} ;
     efo:EFO_0002699 xsd:string ?;
-    obo:FLU_0000848 xsd:double {0,2};
+    obo:FLU_0000848 xsd:double OR xsd:integer {0,3};
     sio:SIO_001167 xsd:string ?;
 }
 

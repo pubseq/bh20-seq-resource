@@ -1,152 +1,9 @@
 <!DOCTYPE html>
 <html>
-    <style>
-     hr {
-         margin: auto 0;
-     }
-
-     body {
-         color: #101010;
-         background-color: #F9EDE1;
-     }
-
-     h1, h2, h3, h4 {
-         font-family: 'Roboto Slab', serif;
-         color: darkblue;
-     }
-
-     h1 {
-         text-align: center;
-     }
-
-     p {
-         color: #505050;
-         font-style: italic;
-     }
-     .header {
-         background-color: white;
-         margin: 0 auto;
-         padding: 20px;
-         text-align: center;
-         height: 150px;
-     }
-
-     .logo {
-         float: right;
-     }
-
-     p, form, .about, .footer {
-         font-family: 'Raleway', sans-serif;
-         line-height: 1.5;
-     }
-
-     form h4 {
-         text-transform: 'uppercase';
-     }
-
-     .intro, form {
-         padding: 20px;
-     }
-
-     .intro {
-         background-color: lightgrey;
-         margin: 0 auto;
-         padding: 20px;
-     }
-
-     .about {
-         background-color: lightgrey;
-         margin: 0 auto;
-         padding: 20px;
-     }
-     .footer {
-         background-color: white;
-         margin: 0 auto;
-     }
-
-     span.dropt {border-bottom: thin dotted; background: #ffeedd;}
-     span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
-
-     .grid-container {
-         display: grid;
-         grid-template-columns: repeat(4, 1fr);
-         grid-template-rows: auto;
-         row-gap:5px;
-         grid-template-areas:
-             "a a b b"
-             "a a c c"
-             "a a d d"
-             "e e e e"
-             "f f f f";
-         grid-auto-flow: column;
-     }
-
-     .intro {
-         grid-area: a;
-     }
-
-     .fasta-file-select {
-         padding: 1em;
-         grid-area: b;
-     }
-
-     .metadata {
-         padding: 1em;
-         grid-area: c;
-     }
-     .metadata_upload_form {
-         padding: 1em;
-         grid-area: c;
-     }
-
-     #metadata_upload_form_spot {
-         grid-area: d;
-     }
-
-     #metadata_fill_form_spot {
-         grid-area: e;
-     }
-
-     #metadata_fill_form {
-         column-count: 4;
-         margin-top: 0.5em;
-         column-width: 250px;
-     }
-
-     .record {
-         display: flex;
-         flex-direction: column;
-         border: solid 1px #808080;
-         padding: 1em;
-         background: #F8F8F8;
-         margin-bottom: 1em;
-         -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
-         page-break-inside: avoid; /* Firefox */
-         break-inside: avoid;
-     }
-
-     .record label {
-         font-size: small;
-         margin-top: 10px;
-     }
-
-     .submit {
-         grid-area: f;
-         width: 17em;
-         justify-self: center;
-     }
-
-     @media only screen and (max-device-width: 480px) {
-         .grid-container {
-             display: flex;
-             flex-direction: column;
-         }
-     }
-    </style>
-
     <head>
         <meta charset="UTF-8">
-        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Roboto+Slab&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+        <link href="/static/main.css" rel="stylesheet" type="text/css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Web uploader for Public SARS-CoV-2 Sequence Resource</title>
     </head>
@@ -158,28 +15,67 @@
 <small>Disabled until we got everything wired up</small>
 
       </section>
-        <hr>
+
+      <section class="search-section">
+          <div class="filter-options" action="#">
+              <p>[Demo] Display content sequences by: </p>
+
+              <div>
+                  <button class="button" onclick="fetchSEQBySpecimen()">Specimen Source</button>
+                  <button class="button" onclick="fetchSEQByLocation()">Location</button>
+                  <button class="button" onclick="fetchSEQByTech()">Tech</button>
+                  <button class="button" onclick="fetchAllaccessions()">Allaccessions</button>
+              </div>
+
+          </div>
+
+          <div class="search">
+              <input id="search-input" id="global-search" type="search" placeholder="FASTA uri" required>
+              <button class="button search-button" type="submit" onclick="search()">
+		  <span class="icon ion-search">
+		      <span class="sr-only">Search</span>
+		  </span>
+	      </button>
+          </div>
+      </section>
+
+      <div id="loader" class="loader invisible"></div>
+
+      <section id="results" class="invisible">
+          <pre><code id="json"></code></pre>
+      </section>
 
         <section>
             <form action="/submit" method="POST" enctype="multipart/form-data" id="main_form" class="grid-container">
-              <p class="intro">
-                Upload your SARS-CoV-2 sequence (FASTA or FASTQ formats) with metadata (JSONLD) to the <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">public sequence resource</a>. The upload will trigger a
-                recompute with all available sequences into a Pangenome
-                available for
-                <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">download</a>!
-                Your uploaded sequence will automatically be processed
-                and incorporated into the public pangenome with
-                metadata using worklows from the High Performance Open Biology Lab defined <a href="https://github.com/hpobio-lab/viral-analysis/tree/master/cwl/pangenome-generate">here</a>. All data is published under
-                a <a href="https://creativecommons.org/licenses/by/4.0/">Creative
-                Commons 4.0 attribution license</a> (CC-BY-4.0). You
-                can take the published (GFA/RDF/FASTA) data and store it in
-                a triple store for further processing. We also plan to
-                combine identifiers with clinical data stored securely at <a href="https://redcap-covid19.elixir-luxembourg.org/redcap/">REDCap</a>.
-                A free command line version of the uploader can be
-                installed from <a href="https://github.com/arvados/bh20-seq-resource">source</a>.
-              </p>
+                <div class="intro">
+                    <p>
+                        Upload your SARS-CoV-2 sequence (FASTA or FASTQ formats) with metadata (JSONLD) to the <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">public sequence resource</a>. The upload will trigger a
+                        recompute with all available sequences into a Pangenome
+                        available for
+                        <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">download</a>!
+                    </p>
+                    <p>
+                        Your uploaded sequence will automatically be processed
+                        and incorporated into the public pangenome with
+                        metadata using worklows from the High Performance Open Biology Lab defined <a href="https://github.com/hpobio-lab/viral-analysis/tree/master/cwl/pangenome-generate">here</a>. All data is published under
+                        a <a href="https://creativecommons.org/licenses/by/4.0/">Creative
+                        Commons 4.0 attribution license</a> (CC-BY-4.0). You
+                        can take the published (GFA/RDF/FASTA) data and store it in
+                        a triple store for further processing. We also plan to
+                        combine identifiers with clinical data stored securely at <a href="https://redcap-covid19.elixir-luxembourg.org/redcap/">REDCap</a>.
+                        A free command line version of the uploader can be
+                        installed from <a href="https://github.com/arvados/bh20-seq-resource">source</a>.
+                    </p>
+
+                </div>
 
                 <div class="fasta-file-select">
+                    <h2><svg class="bi bi-cloud-upload" width="1.2em" height="1.2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.887 6.2l-.964-.165A2.5 2.5 0 103.5 11H6v1H3.5a3.5 3.5 0 11.59-6.95 5.002 5.002 0 119.804 1.98A2.501 2.501 0 0113.5 12H10v-1h3.5a1.5 1.5 0 00.237-2.981L12.7 7.854l.216-1.028a4 4 0 10-7.843-1.587l-.185.96z"/>
+                        <path fill-rule="evenodd" d="M5 8.854a.5.5 0 00.707 0L8 6.56l2.293 2.293A.5.5 0 1011 8.146L8.354 5.5a.5.5 0 00-.708 0L5 8.146a.5.5 0 000 .708z" clip-rule="evenodd"/>
+                        <path fill-rule="evenodd" d="M8 6a.5.5 0 01.5.5v8a.5.5 0 01-1 0v-8A.5.5 0 018 6z" clip-rule="evenodd"/>
+                    </svg> Upload SARS-CoV-2 Sequence</h2>
+                    
                     <label for="fasta">Select FASTA file of assembled genome (max 50K), or FASTQ of reads (<span class="dropt" title="For a larger fastq file you'll need to use a CLI uploader">max 150MB<span style="width:500px;"></span></span>) : </label>
                     <br>
                     <input type="file" id="fasta" name="fasta" accept=".fa,.fasta,.fna,.fq" required>
@@ -189,16 +85,16 @@
                 </div>
 
                 <div class="metadata">
-                  <label>Select metadata submission method:</label>
-                  <br>
-                  <input type="radio" id="metadata_form" name="metadata_type" value="fill" onchange="setMode()" checked required>
-                  <label for="metadata_form">Fill in metadata manually</label>
-                  <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="setMode()" required>
-                  <label for="metadata_upload">Upload metadata file</label>
-                  <br>
-                  <small>Make sure the metadata has submitter attribution details.</small>
+                    <label>Select metadata submission method:</label>
+                    <br>
+                    <input type="radio" id="metadata_form" name="metadata_type" value="fill" checked  onchange="displayForm()" required>
+                    <label for="metadata_form">Fill in metadata manually</label>
+                    <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="displayForm()" required>
+                    <label for="metadata_upload">Upload metadata file</label>
+                    <br>
+                    <small>Make sure the metadata has submitter attribution details.</small>
 
-                  <div id="metadata_upload_form_spot">
+                    <div id="metadata_upload_form_spot">
                     <div id="metadata_upload_form">
                       <br>
                       <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> and <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/metadata.yaml" target="_blank">example</a> (max 50K):</label>
@@ -206,9 +102,9 @@
                       <input type="file" id="metadata" name="metadata" accept=".json,.yml,.yaml" required>
                       <br>
                     </div>
-                  </div>
-                </div>
+                    </div>
 
+                </div>
                 <div id="metadata_fill_form_spot">
                     <div id="metadata_fill_form">
                         {% for record in fields %}
@@ -246,40 +142,44 @@
                     {% endif %}
                     {% endfor %}
                 </div>
+
                 </div>
 
 
 <input class="submit" type="submit" value="Add to Pangenome">
             </form>
         </section>
-<hr>
 <br>
 <div class="about">
-  <h3>ABOUT</h3>
-  <p>
-  This a public repository created at the COVID-19 BioHackathon
-    that has a low barrier to entry for uploading sequence data using
-    best practices. I.e., data is published with a creative commons
-    4.0 (CC-4.0) license with metadata using state-of-the art
-    standards and, perhaps most importantly, providing standardized
-    workflows that get triggered on upload, so that results are
-    immediately available in standardized data formats. The repository
-    will be maintained and expanded for the duration of the
-    pandemic. To contribute data simply upload it! To contribute code
-    and/or workflows see
-    the <a href="https://github.com/arvados/bh20-seq-resource">project
-    repository</a>. For more information see the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/paper/paper.md">paper</a> (WIP).
-  </p>
-                    <br>
+    <div>
+        <h1>ABOUT</h1>
+        <p>
+            This a public repository created at the COVID-19 BioHackathon
+            that has a low barrier to entry for uploading sequence data using
+            best practices. I.e., data is published with a creative commons
+            4.0 (CC-4.0) license with metadata using state-of-the art
+            standards and, perhaps most importantly, providing standardized
+            workflows that get triggered on upload, so that results are
+            immediately available in standardized data formats. The repository
+            will be maintained and expanded for the duration of the
+            pandemic. To contribute data simply upload it! To contribute code
+            and/or workflows see
+            the <a href="https://github.com/arvados/bh20-seq-resource">project
+            repository</a>. For more information see the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/paper/paper.md">paper</a> (WIP).
+        </p>
+
+    </div>
+  <div class="sponsors">
+      <a href="https://arvados.org/"><img src="static/image/arvados-logo.png"></a>
+      <a href="https://www.commonwl.org/"><img src="static/image/CWL-Logo-Header.png"></a>
+
+      <a href="https://github.com/virtual-biohackathons/covid-19-bh20">
+          <img src="static/image/covid19biohackathon.png"></a>
+  </div>
 </div>
-
-                    <hr>
 <div class="footer">
-                    <a href="https://arvados.org/"><img src="static/image/arvados-logo.png" align="top"></a>
-                    <a href="https://www.commonwl.org/"><img src="static/image/CWL-Logo-Header.png" height="70"></a>
+    <!-- Sponsors -->
 
-        <a href="https://github.com/virtual-biohackathons/covid-19-bh20">
-        <img src="static/image/covid19biohackathon.png" align="right" height="70"></a>
 
         <center>
         <small><a href="https://github.com/arvados/bh20-seq-resource">Source code</a> &middot; Powered by <a href="https://www.commonwl.org/">Common Workflow Language</a> &amp; <a href="https://arvados.org/">Arvados</a>; Made for <a href="https://github.com/virtual-biohackathons/covid-19-bh20">COVID-19-BH20</a>
@@ -289,35 +189,10 @@
 
 </div>
 
-        <script type="text/javascript">
-         let uploadForm = document.getElementById('metadata_upload_form')
-         let uploadFormSpot = document.getElementById('metadata_upload_form_spot')
-         let fillForm = document.getElementById('metadata_fill_form')
-         let fillFormSpot = document.getElementById('metadata_fill_form_spot')
+<script type="text/javascript">
+ let scriptRoot = {{ request.script_root|tojson|safe }};
+</script>
 
-         function setUploadMode() {
-             // Make the upload form the one in use
-             uploadFormSpot.appendChild(uploadForm)
-             fillFormSpot.removeChild(fillForm)
-         }
-
-         function setFillMode() {
-             // Make the fillable form the one in use
-             uploadFormSpot.removeChild(uploadForm)
-             fillFormSpot.appendChild(fillForm)
-         }
-
-         function setMode() {
-             // Pick mode based on radio
-             if (document.getElementById('metadata_upload').checked) {
-                 setUploadMode()
-             } else {
-                 setFillMode()
-             }
-         }
-
-         // Start in mode appropriate to selected form item
-         setMode()
-        </script>
+<script type="text/javascript" src="/static/main.js"></script>
     </body>
 </html>

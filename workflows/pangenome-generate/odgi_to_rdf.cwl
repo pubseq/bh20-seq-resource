@@ -3,10 +3,12 @@ class: CommandLineTool
 cwlVersion: v1.1
 hints:
   DockerRequirement:
-    dockerPull: spodgi/spodgi
+    dockerPull: jerven/spodgi:0.0.6
 requirements:
   InlineJavascriptRequirement: {}
   ShellCommandRequirement: {}
+  ResourceRequirement:
+    ramMin: $((2 * 1024) + 1)
 inputs:
   - id: odgi
     type: File

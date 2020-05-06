@@ -7,6 +7,8 @@ import xml.etree.ElementTree as ET
 import json
 import os
 
+from dateutil import parser
+
 num_ids_for_request = 100
 
 dir_metadata = 'metadata_from_nuccore'
@@ -37,20 +39,19 @@ if not os.path.exists(dir_metadata):
         tmp_list = [x.split('.')[0] for x in tmp_list]
 
         print(term, len(tmp_list))
-        tmp_list=tmp_list
-    #    tmp_list = tmp_list[0:2] # restricting to small run
+        #tmp_list = tmp_list[0:2] # restricting to small run
 
         id_set.update([x.split('.')[0] for x in tmp_list])
 
     print(term_list, len(id_set))
 
-    with open(path_ncbi_virus_accession) as f:
-        tmp_list = [line.strip('\n') for line in f]
-
-    print('NCBI Virus', len(tmp_list))
-    id_set.update(tmp_list)
-
-    print(term_list + ['NCBI Virus'], len(id_set))
+    if os.path.exists(path_ncbi_virus_accession):
+        with open(path_ncbi_virus_accession) as f:
+            tmp_list = [line.strip('\n') for line in f]
+        print('NCBI Virus', len(tmp_list))
+        id_set.update(tmp_list)
+        term_list.append('NCBI Virus')
+        print(term_list, len(id_set))
 
     for i, id_x_list in enumerate(chunks(list(id_set), num_ids_for_request)):
         path_metadata_xxx_xml = os.path.join(dir_metadata, 'metadata_{}.xml'.format(i))
@@ -86,7 +87,7 @@ if not os.path.exists(dir_fasta_and_yaml):
     os.makedirs(dir_fasta_and_yaml)
 
 missing_value_list = []
-    
+
 for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) for name_metadata_xxx_xml in os.listdir(dir_metadata) if name_metadata_xxx_xml.endswith('.xml')]:
     tree = ET.parse(path_metadata_xxx_xml)
     GBSet = tree.getroot()
@@ -110,23 +111,23 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
             'submitter': {}
         }
 
-        
+
         info_for_yaml_dict['sample']['sample_id'] = accession_version
-        info_for_yaml_dict['sample']['source_database_accession'] = accession_version
-        
-        
+        info_for_yaml_dict['sample']['source_database_accession'] = ["http://identifiers.org/insdc/"+accession_version+"#sequence"] #accession is turned into resolvable URL/URI now
+
+
         # submitter info
         GBSeq_references = GBSeq.find('GBSeq_references')
         if GBSeq_references is not None:
-            info_for_yaml_dict['submitter']['authors'] = ';'.join([x.text for x in GBSeq_references.iter('GBAuthor')])
-            
+            info_for_yaml_dict['submitter']['authors'] = ["{}".format(x.text) for x in GBSeq_references.iter('GBAuthor')]
+
             GBReference = GBSeq_references.find('GBReference')
             if GBReference is not None:
                 GBReference_journal = GBReference.find('GBReference_journal')
-                
+
                 if GBReference_journal is not None and GBReference_journal.text != 'Unpublished':
                     if 'Submitted' in GBReference_journal.text:
-                        info_for_yaml_dict['submitter']['submitter_name'] = GBReference_journal.text.split(') ')[1].split(',')[0].strip()
+                        info_for_yaml_dict['submitter']['submitter_name'] = ["{}".format(GBReference_journal.text.split(') ')[1].split(',')[0].strip())]
                         info_for_yaml_dict['submitter']['submitter_address'] = ','.join(GBReference_journal.text.split(') ')[1].split(',')[1:]).strip()
                     else:
                         info_for_yaml_dict['submitter']['additional_submitter_information'] = GBReference_journal.text
@@ -146,8 +147,9 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                     if field_in_yaml == 'sequencing_coverage':
                         # A regular expression would be better!
                         try:
-                            info_for_yaml_dict['technology'][field_in_yaml] = float(
-                                tech_info_to_parse.strip('(average)').strip("reads/nt").strip('(average for 6 sequences)').replace(',', '.').strip(' xX>'))
+                            info_for_yaml_dict['technology'][field_in_yaml] = [
+                                float(tech_info_to_parse.strip('(average)').strip("reads/nt").strip('(average for 6 sequences)').replace(',', '.').strip(' xX>'))
+                            ]
                         except ValueError:
                             print(accession_version, "Couldn't make sense of Coverage '%s'" % tech_info_to_parse)
                             pass
@@ -162,8 +164,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
                             new_seq_tec_list.append(seq_tec)
 
-                        for n, seq_tec in enumerate(new_seq_tec_list):
-                            info_for_yaml_dict['technology'][field_in_yaml + ('' if n == 0 else str(n + 1))] = seq_tec
+                        info_for_yaml_dict['technology']['sample_sequencing_technology'] = [x for x in new_seq_tec_list]
                     else:
                         info_for_yaml_dict['technology'][field_in_yaml] = tech_info_to_parse
 
@@ -199,7 +200,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
                         if 'age' in GBQualifier_value_text:
                             info_for_yaml_dict['host']['host_age'] = int(GBQualifier_value_text_list[2].split('age ')[1])
-                            info_for_yaml_dict['host']['host_age_unit'] = 'year'
+                            info_for_yaml_dict['host']['host_age_unit'] = 'http://purl.obolibrary.org/obo/UO_0000036'
                 elif GBQualifier_name_text == 'collected_by':
                     if any([x in GBQualifier_value_text.lower() for x in ['institute', 'hospital', 'city', 'center']]):
                         info_for_yaml_dict['sample']['collecting_institution'] = GBQualifier_value_text
@@ -208,24 +209,46 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                 elif GBQualifier_name_text == 'isolation_source':
                     if GBQualifier_value_text.upper() in term_to_uri_dict:
                         GBQualifier_value_text = GBQualifier_value_text.upper() # For example, in case of 'usa: wa'
-                    
+
                     if GBQualifier_value_text in term_to_uri_dict:
-                        info_for_yaml_dict['sample']['specimen_source'] = term_to_uri_dict[GBQualifier_value_text]
+                        info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict[GBQualifier_value_text]]
                     else:
                         if GBQualifier_value_text in ['NP/OP swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab', 'np/np swab', 'np/op']:
-                            info_for_yaml_dict['sample']['specimen_source'] = term_to_uri_dict['nasopharyngeal swab']
-                            info_for_yaml_dict['sample']['specimen_source2'] = term_to_uri_dict['oropharyngeal swab']
-                        elif GBQualifier_value_text in ['nasopharyngeal swab/throat swab']:
-                            info_for_yaml_dict['sample']['specimen_source'] = term_to_uri_dict['nasopharyngeal swab']
-                            info_for_yaml_dict['sample']['specimen_source2'] = term_to_uri_dict['throat swab']
+                            info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal swab'], term_to_uri_dict['oropharyngeal swab']]
+                        elif GBQualifier_value_text in ['nasopharyngeal swab/throat swab', 'nasopharyngeal/throat swab']:
+                            info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal swab'], term_to_uri_dict['throat swab']]
                         elif GBQualifier_value_text in ['nasopharyngeal aspirate/throat swab']:
-                            info_for_yaml_dict['sample']['specimen_source'] = term_to_uri_dict['nasopharyngeal aspirate']
-                            info_for_yaml_dict['sample']['specimen_source2'] = term_to_uri_dict['throat swab']
+                            info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal aspirate'], term_to_uri_dict['throat swab']]
                         else:
                             missing_value_list.append('\t'.join([accession_version, 'specimen_source', GBQualifier_value_text]))
                 elif GBQualifier_name_text == 'collection_date':
                     # TO_DO: which format we will use?
-                    info_for_yaml_dict['sample']['collection_date'] = GBQualifier_value_text
+                    date_to_write = GBQualifier_value_text
+                    
+                    if len(GBQualifier_value_text.split('-')) == 1:
+                        if int(GBQualifier_value_text) < 2020:
+                            date_to_write = "15 12 {}".format(GBQualifier_value_text)
+                        else:
+                            date_to_write = "15 01 {}".format(GBQualifier_value_text)
+
+                        if 'additional_collection_information' in info_for_yaml_dict['sample']:
+                            info_for_yaml_dict['sample']['additional_collection_information'] += "; The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
+                        else:
+                            info_for_yaml_dict['sample']['additional_collection_information'] = "The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
+                    elif len(GBQualifier_value_text.split('-')) == 2:
+                        date_to_write += '-15'
+                        
+                        if 'additional_collection_information' in info_for_yaml_dict['sample']:
+                            info_for_yaml_dict['sample']['additional_collection_information'] += "; The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
+                        else:
+                            info_for_yaml_dict['sample']['additional_collection_information'] = "The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
+                    elif len(GBQualifier_value_text.split('-')) == 3:
+                        GBQualifier_value_text_list = GBQualifier_value_text.split('-')
+
+                        if GBQualifier_value_text_list[1].isalpha():
+                            date_to_write = GBQualifier_value_text_list[1] + ' ' + GBQualifier_value_text_list[0] + ' ' + GBQualifier_value_text_list[2]
+
+                    info_for_yaml_dict['sample']['collection_date'] = date_to_write
                 elif GBQualifier_name_text in ['lat_lon', 'country']:
                     if GBQualifier_value_text == 'Hong Kong':
                         GBQualifier_value_text = 'China: Hong Kong'
@@ -237,7 +260,10 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
                     info_for_yaml_dict['sample']['collection_location'] = GBQualifier_value_text
                 elif GBQualifier_name_text == 'note':
-                    info_for_yaml_dict['sample']['additional_collection_information'] = GBQualifier_value_text
+                    if 'additional_collection_information' in info_for_yaml_dict['sample']:
+                        info_for_yaml_dict['sample']['additional_collection_information'] += '; ' + GBQualifier_value_text
+                    else:
+                        info_for_yaml_dict['sample']['additional_collection_information'] = GBQualifier_value_text
                 elif GBQualifier_name_text == 'isolate':
                     info_for_yaml_dict['virus']['virus_strain'] = GBQualifier_value_text
                 elif GBQualifier_name_text == 'db_xref':
@@ -254,7 +280,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
         with open(os.path.join(dir_fasta_and_yaml, '{}.yaml'.format(accession_version)), 'w') as fw:
             json.dump(info_for_yaml_dict, fw, indent=2)
 
-        
+
 if len(missing_value_list) > 0:
     with open('missing_terms.tsv', 'w') as fw:
         fw.write('\n'.join(missing_value_list))

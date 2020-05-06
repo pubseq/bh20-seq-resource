@@ -90,7 +90,6 @@ def run_workflow(api, parent_project, workflow_uuid, name, inputobj):
         cmd = ["arvados-cwl-runner",
                "--submit",
                "--no-wait",
-               "--debug",
                "--project-uuid=%s" % project["uuid"],
                "arvwf:%s" % workflow_uuid,
                tmp.name]
@@ -137,6 +136,7 @@ def start_pangenome_analysis(api,
             "location": schema_ref
         }
     }
+    validated.sort(key=lambda v: v["portable_data_hash"])
     for v in validated:
         inputobj["inputReads"].append({
             "class": "File",

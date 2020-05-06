@@ -32,10 +32,10 @@
           <div class="search">
               <input id="search-input" id="global-search" type="search" placeholder="FASTA uri" required>
               <button class="button search-button" type="submit" onclick="search()">
-		  <span class="icon ion-search">
-		      <span class="sr-only">Search</span>
-		  </span>
-	      </button>
+                  <span class="icon ion-search">
+                      <span class="sr-only">Search</span>
+                  </span>
+              </button>
           </div>
       </section>
 
@@ -87,21 +87,21 @@
                 <div class="metadata">
                     <label>Select metadata submission method:</label>
                     <br>
-                    <input type="radio" id="metadata_form" name="metadata_type" value="fill" checked  onchange="displayForm()" required>
+                    <input type="radio" id="metadata_form" name="metadata_type" value="fill" checked  onchange="setMode()" required>
                     <label for="metadata_form">Fill in metadata manually</label>
-                    <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="displayForm()" required>
+                    <input type="radio" id="metadata_upload" name="metadata_type" value="upload" onchange="setMode()" required>
                     <label for="metadata_upload">Upload metadata file</label>
                     <br>
                     <small>Make sure the metadata has submitter attribution details.</small>
 
                     <div id="metadata_upload_form_spot">
-                    <div id="metadata_upload_form">
-                      <br>
-                      <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> and <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/metadata.yaml" target="_blank">example</a> (max 50K):</label>
-                      <br>
-                      <input type="file" id="metadata" name="metadata" accept=".json,.yml,.yaml" required>
-                      <br>
-                    </div>
+                        <div id="metadata_upload_form">
+                          <br>
+                          <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> and <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/metadata.yaml" target="_blank">example</a> (max 50K):</label>
+                          <br>
+                          <input type="file" id="metadata" name="metadata" accept=".json,.yml,.yaml" required>
+                          <br>
+                        </div>
                     </div>
 
                 </div>
@@ -116,26 +116,34 @@
                     <div class="record">
                         <h4>{{ record['heading'] }}</h4>
                         {% else %}
-                        <label for="{{ record['id'] }}" title="{{ record.get('docstring', '') }}">
-                            {{ record['label'] }}
-                            {{ "*" if record['required'] else "" }}
-                            {% if 'docstring' in record %}
-                            <a href='javascript:alert({{ record['docstring'] | tojson }})'>❓</a>
+                        <div class="field-group" data-keypath="{{ record['id'] }}">
+                            <div class="field" data-number="0">
+                                <label for="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" title="{{ record.get('docstring', '') }}">
+                                    {{ record['label'] }}
+                                    {{ "*" if record['required'] else "" }}
+                                    {% if 'docstring' in record %}
+                                    <a href='javascript:alert({{ record['docstring'] | tojson }})'>❓</a>
+                                    {% endif %}
+                                    {% if 'ref_iri' in record %}
+                                    <a href="{{ record['ref_iri'] }}" target="_blank" title="Ontology Link">🔗</a>
+                                    {% endif %}
+                                </label>
+                                {% if record['type'] == 'select' %}
+                                <select class="control" id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" {{ "required" if record['required'] else "" }}>
+                                    <option value="" selected>Choose one...</option>
+                                    {% for option in record['options'] %}
+                                    <option value="{{ option[1] }}">{{ option[0] }}</option>
+                                    {% endfor %}
+                                </select>
+                                {% else %}
+                                <input class="control" type="{{ record['type'] }}" id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" {{ "required" if record['required'] else "" }} {{ ("step=" + record['step']) if 'step' in record else ""}}>
+                                {% endif %}
+                            </div>
+                            {% if record['list'] %}
+                            <button type="button" title="Remove field" class="remove-field invisible">➖</button>
+                            <button type="button" title="Add field" class="add-field">➕</button>
                             {% endif %}
-                            {% if 'ref_iri' in record %}
-                            <a href="{{ record['ref_iri'] }}" target="_blank" title="Ontology Link">🔗</a>
-                            {% endif %}
-                        </label>
-                        {% if record['type'] == 'select' %}
-                        <select id="{{ record['id'] }}" name="{{ record['id'] }}" {{ "required" if record['required'] else "" }}>
-                            <option value="" selected>Choose one...</option>
-                            {% for option in record['options'] %}
-                            <option value="{{ option[1] }}">{{ option[0] }}</option>
-                            {% endfor %}
-                        </select>
-                        {% else %}
-                        <input type="{{ record['type'] }}" id="{{ record['id'] }}" name="{{ record['id'] }}" {{ "required" if record['required'] else "" }} {{ ("step=" + record['step']) if 'step' in record else ""}}>
-                        {% endif %}
+                        </div>
                         {% endif %}
                         {% if loop.index == loop.length %}
                     </div>
@@ -145,8 +153,7 @@
 
                 </div>
 
-
-<input class="submit" type="submit" value="Add to Pangenome">
+                <input class="submit" type="submit" value="Add to Pangenome">
             </form>
         </section>
 <br>
@@ -190,7 +197,7 @@
 </div>
 
 <script type="text/javascript">
- let scriptRoot = {{ request.script_root|tojson|safe }};
+    let scriptRoot = {{ request.script_root|tojson|safe }};
 </script>
 
 <script type="text/javascript" src="/static/main.js"></script>

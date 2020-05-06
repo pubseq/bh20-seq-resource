@@ -167,16 +167,19 @@ pre code {
     border: solid 1px black;
 }
 
-.record {
+.record, .record .field-group, .record .field-group .field {
     display: flex;
     flex-direction: column;
+    -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+    page-break-inside: avoid; /* Firefox */
+    break-inside: avoid;
+}
+
+.record {
     border: solid 1px #808080;
     padding: 1em;
     background: #F8F8F8;
     margin-bottom: 1em;
-    -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
-    page-break-inside: avoid; /* Firefox */
-    break-inside: avoid;
 }
 
 .record label {
@@ -231,13 +234,6 @@ footer {
 }
 .sponsors img {
     width: 100%;
-}
-.metadata input#metadata_upload:checked ~ #metadata_upload_form_spot {
-    display: block;
-}
-
-.metadata input#metadata_upload ~ #metadata_upload_form_spot {
-    display: none;
 }
 
 .loader {

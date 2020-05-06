@@ -1,4 +1,5 @@
 import collections
+import itertools
 import tempfile
 import shutil
 import subprocess
@@ -153,11 +154,19 @@ def generate_form(schema, options):
 
             # Decide if the field is optional (type ends in ?)
             optional = False
-            if len(field_type) > 0 and field_type[-1] == '?':
+            if field_type.endswith('?'):
                 # It's optional
                 optional = True
                 # Drop the ?
                 field_type = field_type[:-1]
+                
+            # Decide if the field is a list (type ends in [])
+            is_list = False
+            if field_type.endswith('[]'):
+                # It's a list
+                is_list = True
+                # Reduce to the normal type
+                field_type = field_type[:-2]
 
             if field_type in by_name:
                 # This is a subrecord. We need to recurse
@@ -169,6 +178,7 @@ def generate_form(schema, options):
                 record['id'] = '.'.join(parent_keys + [field_name])
                 record['label'] = name_to_label(field_name)
                 record['required'] = not optional and not subtree_optional
+                record['list'] = is_list
                 if ref_iri:
                     record['ref_iri'] = ref_iri
                 if docstring:
@@ -193,18 +203,10 @@ def generate_form(schema, options):
                         record['type'] = 'text'
                 elif field_type == 'int':
                     record['type'] = 'number'
-                elif field_type == 'float':
+                elif field_type == 'float' or field_type == 'double':
                     record['type'] = 'number'
                     # Choose a reasonable precision for the control
                     record['step'] = '0.0001'
-
-                ### This is to fix the homepage for the moment ## needs more love though
-                # implementation of the [] stuff instead of just text fields
-                ## ToDo - implement lists
-                elif field_type == 'string[]':
-                    record['type'] = 'text'
-                elif field_type == 'float[]':
-                    record['type'] = 'text'
                 else:
                     raise NotImplementedError('Unimplemented field type {} in {} in metadata schema'.format(field_type, type_name))
                 yield record
@@ -248,9 +250,10 @@ def copy_with_limit(in_file, out_file, limit=1024*1024):
         buf = in_file.read(buf_size)
         bytes_used += len(buf)
 
-def parse_input(input_string, html_type):
+def parse_input(input_string, html_type, number_step=None):
     """
     Parse an input from the given HTML input type into a useful Python type.
+    Also needs the step we sent to distinguish int fields and float/double fields.
 
     Raise ValueError if something does not parse.
     Raise NotImplementedError if we forgot to implement a type.
@@ -259,7 +262,15 @@ def parse_input(input_string, html_type):
     if html_type == 'text':
         return input_string
     elif html_type == 'number':
-        return int(input_string)
+        # May be an int or a float.
+        if number_step is None:
+            # TODO: Assumes we only use the step for floats
+            return int(input_string)
+        else:
+            return float(input_string)
+    elif html_type == 'date':
+        # Don't do our own date validation; pass it on as a string
+        return input_string
     else:
         raise NotImplementedError('Unimplemented input type: {}'.format(html_type))
 
@@ -299,31 +310,84 @@ def receive_files():
         elif request.form.get('metadata_type', None) == 'fill':
             # Build a metadata dict
             metadata = {}
+            
+            # When we have metadata for an item, use this to set it.
+            # If it is an item in a list, set is_list=True
+            def set_metadata(item_id, value, is_list=False):
+                # We have this thing. Make a place in the dict tree for it.
+                parts = item_id.split('.')
+                key = parts[-1]
+                # Remove leading 'metadata'
+                path = parts[1:-1]
+                dest_dict = metadata
+                for parent in path:
+                    if parent not in dest_dict:
+                        dest_dict[parent] = {}
+                    dest_dict = dest_dict[parent]
+                    
+                if not is_list:
+                    dest_dict[key] = value
+                else:
+                    if key not in dest_dict:
+                        dest_dict[key] = []
+                    dest_dict[key].append(value)
 
             for item in FORM_ITEMS:
                 # Pull all the field values we wanted from the form
                 if 'heading' in item:
                     continue
+                    
+                if item['list']:
+                    # This is a list, serialized into form fields
+                    
+                    # We count how many values we got
+                    value_count = 0
+                    
+                    for index in itertools.count():
+                        # Get [0] through [n], until something isn't there.
+                        entry_id = '{}[{}]'.format(item['id'], index)
+                        
+                        if index == 1000:
+                            # Don't let them provide too much stuff.
+                            return (render_template('error.html',
+                                    error_message="You provided an extremely large number of values for the metadata item {}".format(item['id'])), 403)
+                        
+                        if entry_id in request.form:
+                            if len(request.form[entry_id]) > 0:
+                                # Put an entry in the list
+                                try:
+                                    # Parse the item
+                                    parsed = parse_input(request.form[entry_id], item['type'], item.get('step', None))
+                                except ValueError:
+                                    # We don't like that input
+                                    return (render_template('error.html',
+                                            error_message="You provided an unacceptable value for the metadata item {}".format(entry_id)), 403)
+                                # Save it
+                                set_metadata(item['id'], parsed, is_list=True)
+                                value_count += 1
+                            else:
+                                # Empty items are silently skipped.
+                                pass
+                        else:
+                            # We have run out of form fields for this list.
+                            break
+                            
+                        if item['required'] and value_count == 0:
+                            # They forgot a required item. Maybe all entries were empty.
+                            return (render_template('error.html',
+                                    error_message="You omitted any values for the required metadata item {}".format(item['id'])), 403)
 
-                if item['id'] in request.form and len(request.form[item['id']]) > 0:
-                    # We have this thing. Make a place in the dict tree for it.
-                    parts = item['id'].split('.')
-                    key = parts[-1]
-                    # Remove leading 'metadata'
-                    path = parts[1:-1]
-                    dest_dict = metadata
-                    for parent in path:
-                        if parent not in dest_dict:
-                            dest_dict[parent] = {}
-                        dest_dict = dest_dict[parent]
-
+                elif item['id'] in request.form and len(request.form[item['id']]) > 0:
+                    # Not a list, but a single item which is present.
                     try:
-                        # Now finally add the item
-                        dest_dict[key] = parse_input(request.form[item['id']], item['type'])
+                        # Parse the item
+                        parsed = parse_input(request.form[item['id']], item['type'], item.get('step', None))
                     except ValueError:
                         # We don't like that input
                         return (render_template('error.html',
                             error_message="You provided an unacceptable value for the metadata item {}".format(item['id'])), 403)
+                    # Save it
+                    set_metadata(item['id'], parsed)
                 elif item['required']:
                     return (render_template('error.html',
                             error_message="You omitted the required metadata item {}".format(item['id'])), 403)

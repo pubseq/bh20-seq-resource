@@ -1,0 +1,3 @@
+[submodule "workflows/tools"]
+	path = workflows/tools
+	url = https://github.com/common-workflow-library/bio-cwl-tools.git

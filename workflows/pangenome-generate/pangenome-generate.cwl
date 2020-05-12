@@ -15,7 +15,7 @@ inputs:
     doc: width of each bin in basepairs along the graph vector
   cells_per_file:
     type: int
-    default: 100
+    default: 50000
     doc: Cells per file on component_segmentation
 outputs:
   odgiGraph:

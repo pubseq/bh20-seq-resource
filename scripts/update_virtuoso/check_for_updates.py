@@ -9,20 +9,22 @@
 
 import requests
 import time
+import sys
+
+assert(len(sys.argv)==4)
+fn = sys.argv[1]
+user = sys.argv[2]
+pwd = sys.argv[3]
+
 
 def upload(fn):
     # Upload into Virtuoso using CURL
     # cmd = "curl -X PUT --digest -u dba:dba -H Content-Type:text/turtle -T metadata.ttl -G http://localhost:8890/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph".split(" ")
-    print("DELETE "+fn)
-    cmd = ("curl --digest --user dba:dba --verbose --url -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph -X DELETE" % pwd).split(" ")
-    print(cmd)
-    p = subprocess.Popen(cmd)
-    output = p.communicate()[0]
-    print(output)
-    assert(p.returncode == 0)
+    # print("DELETE "+fn)
+    # cmd = ("curl --digest --user dba:%s --verbose --url -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph -X DELETE" % pwd).split(" ")
 
     print("UPLOAD "+fn)
-    cmd = ("curl -X PUT --digest -u dba:%s -H Content-Type:text/turtle -T %s -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph" % pwd, fn ).split(" ")
+    cmd = ("curl -X PUT --digest -u dba:%s -H Content-Type:text/turtle -T %s -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph" % (pwd, fn) ).split(" ")
     print(cmd)
     p = subprocess.Popen(cmd)
     output = p.communicate()[0]
@@ -43,12 +45,6 @@ t_stamp = time.strptime(last_modified_str,"%a, %d %b %Y %H:%M:%S %Z" )
 print(t_stamp)
 
 # OK, it works, now check last stored value
-import sys
-assert(len(sys.argv)==4)
-fn = sys.argv[1]
-user = sys.argv[2]
-pwd = sys.argv[3]
-
 import os.path
 stamp = None
 if os.path.isfile(fn):

@@ -25,7 +25,7 @@ $graph:
         jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000115
     host_sex:
-        doc: Sex of the host as defined in PATO, expect male () or female ()
+        doc: Sex of the host as defined in PATO, expect Male (http://purl.obolibrary.org/obo/PATO_0000384) or Female (http://purl.obolibrary.org/obo/PATO_0000383) or in Intersex (http://purl.obolibrary.org/obo/PATO_0001340)
         type: string?
         jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/PATO_0000047

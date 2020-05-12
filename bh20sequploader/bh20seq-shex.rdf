@@ -20,7 +20,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
 :hostShape  {
   	efo:EFO_0000532 [ obo:NCBITaxon_~ ] ;
     sio:SIO_000115 xsd:string ?;
-    obo:PATO_0000047 [ obo:PATO_0000384 obo:PATO_0000383 ] ?;
+    obo:PATO_0000047 [ obo:PATO_0000384 obo:PATO_0000383 obo:PATO_0001340] ?;
     obo:PATO_0000011 xsd:integer ?;
     obo:NCIT_C42574 [ obo:UO_~ ] ?;
 	obo:NCIT_C25688 [obo:NCIT_C115935 obo:NCIT_C3833 obo:NCIT_C25269 obo:GENEPIO_0002020 obo:GENEPIO_0001849 obo:NCIT_C28554 obo:NCIT_C37987 ] ? ;

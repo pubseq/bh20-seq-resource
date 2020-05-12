@@ -10,6 +10,25 @@
 import requests
 import time
 
+def upload(fn):
+    # Upload into Virtuoso using CURL
+    # cmd = "curl -X PUT --digest -u dba:dba -H Content-Type:text/turtle -T metadata.ttl -G http://localhost:8890/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph".split(" ")
+    print("DELETE "+fn)
+    cmd = ("curl --digest --user dba:dba --verbose --url -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph -X DELETE" % pwd).split(" ")
+    print(cmd)
+    p = subprocess.Popen(cmd)
+    output = p.communicate()[0]
+    print(output)
+    assert(p.returncode == 0)
+
+    print("UPLOAD "+fn)
+    cmd = ("curl -X PUT --digest -u dba:%s -H Content-Type:text/turtle -T %s -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph" % pwd, fn ).split(" ")
+    print(cmd)
+    p = subprocess.Popen(cmd)
+    output = p.communicate()[0]
+    print(output)
+    assert(p.returncode == 0)
+
 url = 'https://download.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/_/mergedmetadata.ttl'
 # --- Fetch headers from TTL file on Arvados
 r = requests.head(url)
@@ -45,15 +64,9 @@ if stamp != last_modified_str:
     with open("metadata.ttl", "w") as f:
         f.write(r.text)
         f.close
-    # Now push into Virtuoso using CURL
-    # cmd = "curl -X PUT --digest -u dba:dba -H Content-Type:text/turtle -T metadata.ttl -G http://localhost:8890/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph".split(" ")
-    print("Push metadata TTL")
-    cmd = ("curl -X PUT --digest -u dba:%s -H Content-Type:text/turtle -T metadata.ttl -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph" % pwd ).split(" ")
-    print(cmd)
-    p = subprocess.Popen(cmd)
-    output = p.communicate()[0]
-    print(output)
-    assert(p.returncode == 0)
+    upload("metadata.ttl")
+    upload("semantic_enrichment/labels.ttl")
+    upload("semantic_enrichment/countries.ttl")
 
     with open(fn,"w") as f:
         f.write(last_modified_str)

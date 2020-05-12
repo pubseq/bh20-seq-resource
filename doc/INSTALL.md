@@ -29,8 +29,11 @@ arvados-python-client-2.0.1 ciso8601-2.1.3 future-0.18.2 google-api-python-clien
 3. Run the tool directly with
 
 ```sh
-guix environment guix --ad-hoc git python openssl python-pycurl python-magic nss-certs -- python3 bh20sequploader/main.py example/sequence.fasta example/metadata.yaml
+guix environment guix --ad-hoc git python openssl python-pycurl python-magic nss-certs python-pyshex -- python3 bh20sequploader/main.py example/sequence.fasta example/metadata.yaml
 ```
+
+Note that python-pyshex is packaged in
+http://git.genenetwork.org/guix-bioinformatics/guix-bioinformatics
 
 ### Using the Web Uploader
 

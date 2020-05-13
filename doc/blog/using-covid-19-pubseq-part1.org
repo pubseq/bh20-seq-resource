@@ -68,16 +68,72 @@ If you download the GFA or FASTA sequences you'll find sequences are
 named something like
 *keep:e17abc8a0269875ed4cfbff5d9897c6c+123/sequence.fasta* which
 refers to an internal Arvados Keep representation of the FASTA
-sequence.  Keep is content-addressable which means that
+sequence.  Keep is content-addressable which means that the value
 e17abc8a0269875ed4cfbff5d9897c6c uniquely identifies the file by its
-contents. If the contents change, the identifier would change! We use
+contents. If the contents change, the identifier changes! We use
 these identifiers throughout.
+
+* Predicates
+
+Lets look at all the predicates in the dataset by pasting
+the following in a SPARQL end point http://sparql.genenetwork.org/sparql/
+
+#+begin_src sql
+select distinct ?p
+{
+   ?o ?p ?s
+}
+#+end_src
+
+you can ignore the openlink and w3 ones. To reduce results to a named
+graph set the default graph to
+http://covid-19.genenetwork.org/graph/metadata.ttl in the top input
+box. There you can find a predicate for submitter that looks like
+http://biohackathon.org/bh20-seq-schema#MainSchema/submitter.
+
+To list all submitters, try
+
+#+begin_src sql
+select distinct ?s
+{
+   ?o <http://biohackathon.org/bh20-seq-schema#MainSchema/submitter> ?s
+}
+#+end_src
+
+Oh wait, it returns things like nodeID://b76150! That is not helpful,
+these are anonymous nodes in the graph. These point to another triple
+and by
+
+#+begin_src sql
+select distinct ?s
+{
+   ?o <http://biohackathon.org/bh20-seq-schema#MainSchema/submitter> ?id .
+   ?id ?p ?s
+}
+#+end_src
+
+you get a list of all submitters including "University of Washington,
+Seattle, WA 98109, USA".
+
+To lift the full URL out of the query you can use a header like
+
+#+begin_src sql
+PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+select distinct ?dataset ?submitter
+{
+   ?dataset pubseq:submitter ?id .
+   ?id ?p ?submitter
+}
+#+end_src
+
+which reads a bit better. We can also see the datasets. One of them submitted
+by University of Washington is
+is http://arvados.org/keep:00fede2c6f52b053a14edca01cfa02b7+126/sequence.fasta
+(note the ID may have changed so pick one with above query).
+
 
 * Fetch submitter info and other metadata
 
-We are interested in e17abc8a0269875ed4cfbff5d9897c6c and now we
-want to get some metadata. We can use a SPARQL end point hosted at
-http://sparql.genenetwork.org/sparql/. Paste in a query like
 
 #+begin_src sql
 select ?p ?s
@@ -138,7 +194,7 @@ half of the set coming out of GenBank.
 The overall effort was due to magnificent freely donated input by a
 great number of people. I particularly want to thank Thomas Liener for
 the great effort he made with the ontology group in getting ontology's
-and schema sorted! Peter Amstutz and Curii helped build the on-demand
-compute and back-ends. Thanks also to Michael Crusoe for supporting
-the CWL initiative. And without Erik Garrison this initiative would
-not have existed!
+and schema sorted! Peter Amstutz and [[https://arvados.org/][Arvados/Curii]] helped build the
+on-demand compute and back-ends. Thanks also to Michael Crusoe for
+supporting the [[https://www.commonwl.org/][Common Workflow Language]] initiative. And without Erik
+Garrison this initiative would not have existed!

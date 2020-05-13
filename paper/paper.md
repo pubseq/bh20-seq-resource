@@ -15,7 +15,7 @@ authors:
     orcid: 0000
     affiliation: 3
   - name: Thomas Liener
-    orcid: 0000
+    orcid: https://orcid.org/0000-0003-3257-9937
     affiliation: 4
   - name: Erik Garrison
     orcid: 0000
@@ -52,7 +52,9 @@ affiliations:
     index: 1
   - name: Curii, Boston, USA
     index: 2
-  - name: UC Santa Cruz Genomics Institute, University of California, Santa Cruz, CA 95064, USA.
+  - name: Thomas Liener Consultancy
+    index: 4
+  - name: UC Santa Cruz Genomics Institute, University of California, Santa Cruz, CA 95064, USA
     index: 5
   - name: Department of Computer Science, Faculty of Sciences, Vrije Universiteit Amsterdam, The Netherlands
     index: 6

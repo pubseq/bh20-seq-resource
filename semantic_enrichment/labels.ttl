@@ -13,6 +13,13 @@
 <http://purl.obolibrary.org/obo/OBI_0001895> <http://www.w3.org/2000/01/rdf-schema#label> "specimen collector" .
 <http://edamontology.org/data_2091> <http://www.w3.org/2000/01/rdf-schema#label> "Accession" .
 <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164> <http://www.w3.org/2000/01/rdf-schema#label> "collection date" .
+<http://purl.obolibrary.org/obo/PATO_0000047> <http://www.w3.org/2000/01/rdf-schema#label> "biological sex" .
+<http://purl.obolibrary.org/obo/PATO_0000011> <http://www.w3.org/2000/01/rdf-schema#label> "age" .
+<http://purl.obolibrary.org/obo/NCIT_C42574> <http://www.w3.org/2000/01/rdf-schema#label> "Unit of Time".
+<http://purl.obolibrary.org/obo/NCIT_C25688> <http://www.w3.org/2000/01/rdf-schema#label> "Status" .
+<http://www.ebi.ac.uk/efo/EFO_0000727> <http://www.w3.org/2000/01/rdf-schema#label> "treatment" .
+<http://purl.obolibrary.org/obo/VO_0000002> <http://www.w3.org/2000/01/rdf-schema#label> "vaccination" .
+<http://semanticscience.org/resource/SIO_001014> <http://www.w3.org/2000/01/rdf-schema#label> "ethnicity" .
 <http://purl.obolibrary.org/obo/NCIT_C3833> <http://www.w3.org/2000/01/rdf-schema#label> "Asymptomatic" .
 <http://purl.obolibrary.org/obo/NCIT_C25269> <http://www.w3.org/2000/01/rdf-schema#label> "Symptomatic" .
 <http://purl.obolibrary.org/obo/GENEPIO_0002020> <http://www.w3.org/2000/01/rdf-schema#label> "admitted to hospital" .
@@ -22,3 +29,19 @@
 <http://purl.obolibrary.org/obo/NCIT_C115935> <http://www.w3.org/2000/01/rdf-schema#label> "Healthy" .
 <http://purl.obolibrary.org/obo/PATO_0000384> <http://www.w3.org/2000/01/rdf-schema#label> "male".
 <http://purl.obolibrary.org/obo/PATO_0000383> <http://www.w3.org/2000/01/rdf-schema#label> "female" .
+<http://www.ebi.ac.uk/efo/EFO_0009173> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina NextSeq 500" .
+<http://www.ebi.ac.uk/efo/EFO_0008632> <http://www.w3.org/2000/01/rdf-schema#label> "ONT MinION" .
+<http://purl.obolibrary.org/obo/NCIT_C146818> <http://www.w3.org/2000/01/rdf-schema#label> " Oxford Nanopore Sequencing" .
+<http://www.ebi.ac.uk/efo/EFO_0004205> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina MiSeq" .
+<http://purl.obolibrary.org/obo/OBI_0000759> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina" .
+<http://purl.obolibrary.org/obo/NCIT_C125894> <http://www.w3.org/2000/01/rdf-schema#label> "Ion Semiconductor Sequencing".
+<http://purl.obolibrary.org/obo/NCIT_C19641> <http://www.w3.org/2000/01/rdf-schema#label> "Dideoxy Chain Termination DNA Sequencing" .
+<http://purl.obolibrary.org/obo/NCIT_C155831> <http://www.w3.org/2000/01/rdf-schema#label> "Nasopharyngeal Swab Specimen" .
+<http://purl.obolibrary.org/obo/NCIT_C155835> <http://www.w3.org/2000/01/rdf-schema#label> "Oropharyngeal Swab Specimen" .
+<http://purl.obolibrary.org/obo/NCIT_C13195> <http://www.w3.org/2000/01/rdf-schema#label> "Bronchoalveolar Lavage Fluid" .
+<http://purl.obolibrary.org/obo/NCIT_C13278> <http://www.w3.org/2000/01/rdf-schema#label> "Sputum" .
+<http://purl.obolibrary.org/obo/NCIT_C13347> <http://www.w3.org/2000/01/rdf-schema#label> "Aspirate" .
+<http://purl.obolibrary.org/obo/NCIT_C13234> <http://www.w3.org/2000/01/rdf-schema#label> "Feces" .
+<http://purl.obolibrary.org/obo/NCIT_C13325> <http://www.w3.org/2000/01/rdf-schema#label> "Serum" .
+<http://purl.obolibrary.org/obo/NCIT_C13275> <http://www.w3.org/2000/01/rdf-schema#label> "Saliva" .
+<http://purl.obolibrary.org/obo/NCIT_C132119> <http://www.w3.org/2000/01/rdf-schema#label> "Nasal Swab" .

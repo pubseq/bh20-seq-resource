@@ -1,3 +1,5 @@
+#+OPTIONS: ^:nil
+
 # INSTALLATION
 
 Other options for running this tool.
@@ -29,11 +31,14 @@ arvados-python-client-2.0.1 ciso8601-2.1.3 future-0.18.2 google-api-python-clien
 3. Run the tool directly with
 
 ```sh
-guix environment guix --ad-hoc git python openssl python-pycurl python-magic nss-certs python-pyshex -- python3 bh20sequploader/main.py example/sequence.fasta example/metadata.yaml
+guix environment guix --ad-hoc git python openssl python-pycurl python-magic nss-certs python-pyshex -- python3 bh20sequploader/main.py example/sequence.fasta example/maximum_metadata_example.yaml
 ```
 
 Note that python-pyshex is packaged in
 http://git.genenetwork.org/guix-bioinformatics/guix-bioinformatics
+
+so you'll need it to the GUIX_PACKAGE_PATH - see the README in that
+repository.
 
 ### Using the Web Uploader
 
@@ -50,3 +55,5 @@ guix environment guix --ad-hoc git python python-flask python-pyyaml python-pycu
 ```
 
 WIP: add gunicorn container
+
+Note: see above on GUIX_PACKAGE_PATH.

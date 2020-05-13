@@ -10,6 +10,8 @@
 import requests
 import time
 import sys
+import os.path
+import subprocess
 
 assert(len(sys.argv)==4)
 fn = sys.argv[1]
@@ -31,11 +33,14 @@ def upload(fn):
     print(output)
     assert(p.returncode == 0)
 
+# --- Always update these
+upload("semantic_enrichment/labels.ttl")
+upload("semantic_enrichment/countries.ttl")
+
 url = 'https://download.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/_/mergedmetadata.ttl'
 # --- Fetch headers from TTL file on Arvados
 r = requests.head(url)
 print(r.headers)
-
 print(r.headers['Last-Modified'])
 
 # --- Convert/validate time stamp
@@ -45,14 +50,12 @@ t_stamp = time.strptime(last_modified_str,"%a, %d %b %Y %H:%M:%S %Z" )
 print(t_stamp)
 
 # OK, it works, now check last stored value
-import os.path
 stamp = None
 if os.path.isfile(fn):
     file = open(fn,"r")
     stamp = file.read()
     file.close
 
-import subprocess
 if stamp != last_modified_str:
     print("Fetch metadata TTL")
     r = requests.get(url)
@@ -61,8 +64,5 @@ if stamp != last_modified_str:
         f.write(r.text)
         f.close
     upload("metadata.ttl")
-    upload("semantic_enrichment/labels.ttl")
-    upload("semantic_enrichment/countries.ttl")
-
     with open(fn,"w") as f:
         f.write(last_modified_str)

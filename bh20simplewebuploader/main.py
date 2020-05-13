@@ -451,8 +451,9 @@ def getDetailsForSeq():
 @app.route('/api/getSEQCountbytech', methods=['GET'])
 def getSEQCountbytech():
     query="""SELECT ?tech ?tech_label (count(?fasta) as ?fastaCount) WHERE 
-    {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047>  ?tech] 
-    BIND (concat(?tech,"_label") as ?tech_label)}
+    {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047>  ?tech] .
+     OPTIONAL {?tech <http://www.w3.org/2000/01/rdf-schema#label> ?tech_tmp_label } .
+     BIND(IF(BOUND(?tech_tmp_label), ?tech_tmp_label,?tech) as ?tech_label)}
     GROUP BY ?tech ?tech_label ORDER BY DESC (?fastaCount)
     """
     payload = {'query': query, 'format': 'json'}
@@ -505,8 +506,9 @@ def getSEQbyLocation():
 @app.route('/api/getSEQCountbyLocation', methods=['GET'])
 def getSEQCountbyLocation():
     query="""SELECT ?geoLocation ?geoLocation_label (count(?fasta) as ?fastaCount)  WHERE
-    {?fasta ?x [<http://purl.obolibrary.org/obo/GAZ_00000448> ?geoLocation]
-    BIND (concat(?geoLocation,"_label") as ?geoLocation_label)}
+    {?fasta ?x [<http://purl.obolibrary.org/obo/GAZ_00000448> ?geoLocation] .
+    Optional {?geoLocation <http://www.w3.org/2000/01/rdf-schema#label> ?geoLocation_tmp_label}
+    BIND(IF(BOUND(?geoLocation_tmp_label), ?geoLocation_tmp_label, ?geoLocation) as ?geoLocation_label)}
     GROUP BY ?geoLocation ?geoLocation_label ORDER BY DESC (?fastaCount)
     """
     payload = {'query': query, 'format': 'json'}
@@ -521,9 +523,10 @@ def getSEQCountbyLocation():
 def getSEQCountbySpecimenSource():
     query="""SELECT ?specimen_source ?specimen_source_label (count(?fasta) as ?fastaCount)  WHERE
     {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0001479>  ?specimen_source]
-    BIND (concat(?specimen_source,"_label") as ?specimen_source_label)}
-    GROUP BY ?specimen_source ?specimen_source_label
-    ORDER BY DESC (?fastaCount)
+     Optional { ?specimen_source <http://www.w3.org/2000/01/rdf-schema#label> ?specimen_source_tmp_label}
+     BIND(IF(BOUND(?specimen_source_tmp_label), ?specimen_source_tmp_label ,?specimen_source) as ?specimen_source_label)}
+     GROUP BY ?specimen_source ?specimen_source_label
+     ORDER BY DESC (?fastaCount)
     """
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)

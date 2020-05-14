@@ -259,7 +259,7 @@ def parse_input(input_string, html_type, number_step=None):
     Raise NotImplementedError if we forgot to implement a type.
     """
 
-    if html_type == 'text':
+    if html_type == 'text' or html_type == 'select':
         return input_string
     elif html_type == 'number':
         # May be an int or a float.

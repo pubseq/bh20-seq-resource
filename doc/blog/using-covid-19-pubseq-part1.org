@@ -134,43 +134,85 @@ is http://arvados.org/keep:00fede2c6f52b053a14edca01cfa02b7+126/sequence.fasta
 
 * Fetch submitter info and other metadata
 
+To get dataests with submitters we can do the above
 
 #+begin_src sql
-select ?p ?s
+PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+select distinct ?dataset ?p ?submitter
 {
-   <http://arvados.org/keep:e17abc8a0269875ed4cfbff5d9897c6c+123/sequence.fasta> ?p ?s
+   ?dataset pubseq:submitter ?id .
+   ?id ?p ?submitter
 }
 #+end_src
 
-which will tell you that original FASTA ID is "MT293175.1". It also
-says the submitter is nodeID://b31228.
+Tells you one submitter is "Roychoudhury,P.;Greninger,A.;Jerome,K."
+with a URL [[http://purl.obolibrary.org/obo/NCIT_C42781][predicate]] (http://purl.obolibrary.org/obo/NCIT_C42781)
+explaining "The individual who is responsible for the content of a
+document." Well formed URIs point to real information about the URI
+itself.  Welcome to the power of the semantic web.
+
+Let's focus on one sample with
 
 #+begin_src sql
-select distinct ?id ?p ?s
+PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+select distinct ?dataset ?submitter
 {
-   <http://arvados.org/keep:e17abc8a0269875ed4cfbff5d9897c6c+123/sequence.fasta> <http://biohackathon.org/bh20-seq-schema#MainSchema/submitter> ?id .
-   ?id ?p ?s
+   ?dataset pubseq:submitter ?id .
+   ?id ?p ?submitter .
+   FILTER(CONTAINS(?submitter,"Roychoudhury")) .
 }
 #+end_src
 
-Tells you the submitter is "Roychoudhury,P.;Greninger,A.;Jerome,K."
-with [[http://purl.obolibrary.org/obo/NCIT_C42781][predicate]] explaining "The individual who is responsible for the
-content of a document." Welcome to the power of the semantic web.
-
-To get more information about the relevant sample
+That is a lot of samples! We just want to pick one, so let's
+see if we can get a sample ID by listing sample predicates
 
 #+begin_src sql
-select ?sample ?p ?o
+PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+select distinct ?p
 {
-    <http://arvados.org/keep:e17abc8a0269875ed4cfbff5d9897c6c+123/sequence.fasta> <http://biohackathon.org/bh20-seq-schema#MainSchema/sample> ?sample .
-    ?sample ?p ?o
+   ?dataset ?p ?o .
+   ?dataset pubseq:submitter ?id .
 }
 #+end_src
 
-we find it originates from Washington state (object
-https://www.wikidata.org/wiki/Q1223) , dated "30-Mar-2020". The
-sequencing was executed with Illumina and pipeline "custom pipeline
-v. 2020-03" which is arguably not that descriptive.
+which lists a predicate named
+http://biohackathon.org/bh20-seq-schema#MainSchema/sample.
+Let's zoom in on those of Roychoudhury with
+
+
+#+begin_src sql
+PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+select distinct ?sid ?sample ?p1 ?dataset ?submitter
+{
+   ?dataset pubseq:submitter ?id .
+   ?id ?p ?submitter .
+   FILTER(CONTAINS(?submitter,"Roychoudhury")) .
+   ?dataset pubseq:sample ?sid .
+   ?sid ?p1 ?sample
+}
+#+end_src
+
+which shows pretty much [[http://sparql.genenetwork.org/sparql/?default-graph-uri=&query=PREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0Aselect+distinct+%3Fsid+%3Fsample+%3Fp1+%3Fdataset+%3Fsubmitter%0D%0A%7B%0D%0A+++%3Fdataset+pubseq%3Asubmitter+%3Fid+.%0D%0A+++%3Fid+%3Fp+%3Fsubmitter+.%0D%0A+++FILTER%28CONTAINS%28%3Fsubmitter%2C%22Roychoudhury%22%29%29+.%0D%0A+++%3Fdataset+pubseq%3Asample+%3Fsid+.%0D%0A+++%3Fsid+%3Fp1+%3Fsample%0D%0A%7D&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+][everything known]] about their submissions in
+this database. Let's focus on one sample "MT326090.1" with predicate
+http://semanticscience.org/resource/SIO_000115.
+
+#+begin_src sql
+PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+PREFIX sio: <http://semanticscience.org/resource/>
+select distinct ?sample ?p ?o
+{
+   ?sample sio:SIO_000115 "MT326090.1" .
+   ?sample ?p ?o .
+}
+#+end_src
+
+This [[http://sparql.genenetwork.org/sparql/?default-graph-uri=&query=PREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0APREFIX+sio%3A+%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2F%3E%0D%0Aselect+distinct+%3Fsample+%3Fp+%3Fo%0D%0A%7B%0D%0A+++%3Fsample+sio%3ASIO_000115+%22MT326090.1%22+.%0D%0A+++%3Fsample+%3Fp+%3Fo+.%0D%0A%7D&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+][query]] tells us the sample was submitted "2020-03-21" and
+originates from http://www.wikidata.org/entity/Q30, i.e., the USA and
+is a biospecimen collected from the back of the throat by swabbing.
+We can track it back to the original GenBank [[http://identifiers.org/insdc/MT326090.1#sequence][submission]].
+
+We have also added country and label data to make it a bit easier
+to view/query the database.
 
 * Fetch all sequences from Washington state
 
@@ -188,6 +230,13 @@ select ?seq ?sample
 
 which lists 300 sequences originating from Washington state! Which is almost
 half of the set coming out of GenBank.
+
+* Discussion
+
+The public sequence uploader collects sequences, raw data and
+(machine) queriable metadata. Not only that: data gets analyzed in the
+pangenome and results are presented immediately. The data can be
+referenced in publications and origins are citeable.
 
 * Acknowledgements
 

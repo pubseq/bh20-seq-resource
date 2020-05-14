@@ -57,8 +57,9 @@ steps:
     in:
       target: dedup/reads_dedup
       query: dedup/reads_dedup
-      outputCIGAR:
-        default: true
+      outputCIGAR: {default: true}
+      preset: {default: asm20}
+      miniWinSize: {default: 1}
     out: [alignments]
     run: ../tools/minimap2/minimap2_paf.cwl
   induceGraph:
@@ -106,7 +107,7 @@ steps:
     out: [ bins, pangenome_sequence ]
   index_paths:
     label: Create path index
-    run : ../tools/odgi/odgi_pathindex.cwl
+    run: ../tools/odgi/odgi_pathindex.cwl
     in:
       sparse_graph_index: buildGraph/odgiGraph
     out: [ indexed_paths ]

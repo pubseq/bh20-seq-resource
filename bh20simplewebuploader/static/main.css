@@ -10,7 +10,7 @@ body {
 
 h1, h2, h3, h4 {
     font-family: 'Inter', sans-serif;
-    color: #0ED1CD;
+    color: #008066;
 }
 
 h1 {
@@ -68,7 +68,7 @@ form h4 {
 
 .button {
     border-radius: 5px;
-    background: #0ED1CD;
+    background: #B2F8F8;
     margin: 0.3em auto;
     padding: 0.4em;
 }
@@ -125,7 +125,7 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
 }
 
 a {
-    color: #40DBD8;
+    color: #008066;
     font-weight: 700;
 }
 

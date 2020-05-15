@@ -139,7 +139,16 @@
                                     {% endfor %}
                                   </select>
                                 {% else %} <!-- input field -->
-                                  <input class="control" type="{{ record['type'] }}" id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" {{ "required" if record['required'] else "" }} {{ ("step=" + record['step']) if 'step' in record else ""}}>
+                                  <input class="control"
+                                         type="{{ record['type'] }}"
+                                         id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}"
+                                         {{ 'value=http://purl.obolibrary.org/obo/NCBITaxon_9606' if record['id']=='metadata.host.host_species'}}
+                                         {{ 'placeholder=http://www.wikidata.org/entity/Q30' if record['id']=='metadata.sample.collection_location'}}
+                                         {{ 'placeholder=MyUniqueSampleId.1' if record['id']=='metadata.sample.sample_id'}}
+                                         {{ 'value=http://purl.obolibrary.org/obo/NCBITaxon_2697049' if record['id']=='metadata.virus.virus_species'}}
+                                         {{ 'readonly=1 value=http://identifiers.org/insdc/MT334571.1#sequence' if record['id']=='metadata.id'}}
+                                         name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}"
+                                         {{ "required" if record['required'] else "" }} {{ ("step=" + record['step']) if 'step' in record else ""}}>
                                 {% endif %}
                             </div>
                             {% if record['list'] %}

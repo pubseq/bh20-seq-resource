@@ -48,10 +48,10 @@ def name_to_label(field_name):
     """
     Turn a filed name like "host_health_status" from the metadata schema into a human-readable label.
     """
-    
+
     # May end in a number, which should be set off by a space
     set_off_number = re.sub('([0-9]+)$', r' \1', field_name)
-    
+
     return string.capwords(set_off_number.replace('_', ' '))
 
 def is_iri(string):
@@ -72,13 +72,13 @@ def generate_form(schema, options):
     Each dict either has a 'heading' (in which case we put a heading for a
     form section in the template) or an 'id', 'label', 'type', and 'required'
     (in which case we make a form field in the template).
-    
+
     Non-heading dicts with type 'select' will have an 'options' field, with a
     list of (name, value) tuples, and represent a form dropdown element.
-    
+
     Non-heading dicts with type 'number' may have a 'step', which, if <1 or
     'any', allows the number to be a float.
-    
+
     Non-heading dicts may have a human-readable 'docstring' field describing
     them.
 
@@ -125,7 +125,7 @@ def generate_form(schema, options):
             docstring = None
             if not isinstance(field_type, str):
                 # If the type isn't a string
-                
+
                 # It may have documentation
                 docstring = field_type.get('doc', None)
 
@@ -159,7 +159,7 @@ def generate_form(schema, options):
                 optional = True
                 # Drop the ?
                 field_type = field_type[:-1]
-                
+
             # Decide if the field is a list (type ends in [])
             is_list = False
             if field_type.endswith('[]'):
@@ -280,6 +280,7 @@ def receive_files():
     Receive the uploaded files.
     """
 
+    return 0
     # We're going to work in one directory per request
     dest_dir = tempfile.mkdtemp()
     # The uploader will happily accept a FASTQ with this name
@@ -310,7 +311,7 @@ def receive_files():
         elif request.form.get('metadata_type', None) == 'fill':
             # Build a metadata dict
             metadata = {}
-            
+
             # When we have metadata for an item, use this to set it.
             # If it is an item in a list, set is_list=True
             def set_metadata(item_id, value, is_list=False):
@@ -324,7 +325,7 @@ def receive_files():
                     if parent not in dest_dict:
                         dest_dict[parent] = {}
                     dest_dict = dest_dict[parent]
-                    
+
                 if not is_list:
                     dest_dict[key] = value
                 else:
@@ -336,22 +337,22 @@ def receive_files():
                 # Pull all the field values we wanted from the form
                 if 'heading' in item:
                     continue
-                    
+
                 if item['list']:
                     # This is a list, serialized into form fields
-                    
+
                     # We count how many values we got
                     value_count = 0
-                    
+
                     for index in itertools.count():
                         # Get [0] through [n], until something isn't there.
                         entry_id = '{}[{}]'.format(item['id'], index)
-                        
+
                         if index == 1000:
                             # Don't let them provide too much stuff.
                             return (render_template('error.html',
                                     error_message="You provided an extremely large number of values for the metadata item {}".format(item['id'])), 403)
-                        
+
                         if entry_id in request.form:
                             if len(request.form[entry_id]) > 0:
                                 # Put an entry in the list
@@ -371,7 +372,7 @@ def receive_files():
                         else:
                             # We have run out of form fields for this list.
                             break
-                            
+
                         if item['required'] and value_count == 0:
                             # They forgot a required item. Maybe all entries were empty.
                             return (render_template('error.html',
@@ -450,7 +451,7 @@ def getDetailsForSeq():
 
 @app.route('/api/getSEQCountbytech', methods=['GET'])
 def getSEQCountbytech():
-    query="""SELECT ?tech ?tech_label (count(?fasta) as ?fastaCount) WHERE 
+    query="""SELECT ?tech ?tech_label (count(?fasta) as ?fastaCount) WHERE
     {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047>  ?tech] .
      OPTIONAL {?tech <http://www.w3.org/2000/01/rdf-schema#label> ?tech_tmp_label } .
      BIND(IF(BOUND(?tech_tmp_label), ?tech_tmp_label,?tech) as ?tech_label)}
@@ -466,8 +467,8 @@ def getSEQCountbytech():
 ## Is this one really necessary or should we just use getSEQCountbytech instead?
 @app.route('/api/getAvailableTech', methods=['GET'])
 def getAvailableTech():
-    query="""SELECT distinct ?tech ?tech_label WHERE 
-    {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047> ?tech] 
+    query="""SELECT distinct ?tech ?tech_label WHERE
+    {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047> ?tech]
      BIND (concat(?tech,"_label") as ?tech_label)
     } """
     payload = {'query': query, 'format': 'json'}
@@ -479,7 +480,7 @@ def getAvailableTech():
 ## Has to be encoded again so should be --> http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FOBI_0000759
 @app.route('/api/getSEQbytech', methods=['GET'])
 def getSEQbytech():
-    query="""SELECT ?fasta WHERE 
+    query="""SELECT ?fasta WHERE
     {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047>  <placeholder>] }
     """
     tech = request.args.get('tech')
@@ -565,7 +566,7 @@ def getSEQCountbyHostHealthStatus():
 
 @app.route('/api/getSEQbyLocationAndTech', methods=['GET'])
 def getSEQbyLocationAndTech():
-    query="""SELECT ?fasta WHERE { ?fasta ?x [ 
+    query="""SELECT ?fasta WHERE { ?fasta ?x [
         <http://purl.obolibrary.org/obo/GAZ_00000448> <placeholderLoc>; <http://purl.obolibrary.org/obo/OBI_0600047>  <placeholderTech> ]}"""
     location=request.args.get('location')
     tech=request.args.get('tech')
@@ -582,7 +583,7 @@ def getSEQbyLocationAndTech():
 # Example specimen http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C155831
 @app.route('/api/getSEQbyLocationAndSpecimenSource', methods=['GET'])
 def getSEQbyLocationAndSpecimenSource():
-    query="""SELECT ?fasta WHERE { ?fasta ?x [ 
+    query="""SELECT ?fasta WHERE { ?fasta ?x [
         <http://purl.obolibrary.org/obo/GAZ_00000448> <placeholderLoc>; <http://purl.obolibrary.org/obo/OBI_0001479>  <placeholderSpecimen> ]}
     """
     location = request.args.get('location')

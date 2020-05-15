@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <link href="/static/main.css" rel="stylesheet" type="text/css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Web uploader for Public SARS-CoV-2 Sequence Resource</title>
@@ -21,10 +21,10 @@
               <p>[Demo] Display content sequences by: </p>
 
               <div>
-                  <button class="button" onclick="fetchSEQBySpecimen()">Specimen Source</button>
+                  <button class="button" onclick="fetchSEQBySpecimen()">Specimen source</button>
                   <button class="button" onclick="fetchSEQByLocation()">Location</button>
-                  <button class="button" onclick="fetchSEQByTech()">Tech</button>
-                  <button class="button" onclick="fetchAllaccessions()">Allaccessions</button>
+                  <button class="button" onclick="fetchSEQByTech()">Sequencer</button>
+                  <button class="button" onclick="fetchAllaccessions()">All accessions</button>
               </div>
 
           </div>
@@ -66,7 +66,9 @@
                         A free command line version of the uploader can be
                         installed from <a href="https://github.com/arvados/bh20-seq-resource">source</a>.
                     </p>
-
+                    <p>
+                      Note that form fields contain web <a href="https://en.wikipedia.org/wiki/Web_Ontology_Language">onthology URI's</a> for <a href="https://en.wikipedia.org/wiki/Wikipedia:Disambiguation">disambiguation</a> and machine readable metadata. For examples of use, see the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part1.org">BLOG</a>.
+                    </p>
                 </div>
 
                 <div class="fasta-file-select">
@@ -75,8 +77,8 @@
                         <path fill-rule="evenodd" d="M5 8.854a.5.5 0 00.707 0L8 6.56l2.293 2.293A.5.5 0 1011 8.146L8.354 5.5a.5.5 0 00-.708 0L5 8.146a.5.5 0 000 .708z" clip-rule="evenodd"/>
                         <path fill-rule="evenodd" d="M8 6a.5.5 0 01.5.5v8a.5.5 0 01-1 0v-8A.5.5 0 018 6z" clip-rule="evenodd"/>
                     </svg> Upload SARS-CoV-2 Sequence</h2>
-                    
-                    <label for="fasta">Select FASTA file of assembled genome (max 50K), or FASTQ of reads (<span class="dropt" title="For a larger fastq file you'll need to use a CLI uploader">max 150MB<span style="width:500px;"></span></span>) : </label>
+
+                    <label for="fasta">Select FASTA file of assembled genome (form upload <span class="dropt" title="For larger files or bulk uploads you can use a CLI uploader">max 50K<span style="width:500px;"></span></span>; FASTQ and BAM is coming soon): </label>
                     <br>
                     <input type="file" id="fasta" name="fasta" accept=".fa,.fasta,.fna,.fq" required>
                     <br>
@@ -97,7 +99,7 @@
                     <div id="metadata_upload_form_spot">
                         <div id="metadata_upload_form">
                           <br>
-                          <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> and <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/metadata.yaml" target="_blank">example</a> (max 50K):</label>
+                          <label for="metadata">Select JSON or YAML metadata file following <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml" target="_blank">this schema</a> and <a href="https://github.com/arvados/bh20-seq-resource/blob/master/example/maximum_metadata_example.yaml" target="_blank">example</a> (max 50K):</label>
                           <br>
                           <input type="file" id="metadata" name="metadata" accept=".json,.yml,.yaml" required>
                           <br>
@@ -105,6 +107,7 @@
                     </div>
 
                 </div>
+
                 <div id="metadata_fill_form_spot">
                     <div id="metadata_fill_form">
                         {% for record in fields %}
@@ -113,35 +116,44 @@
                         {% if loop.index > 1 and 2 < 3  %}
                     </div>
                     {% endif %}
-                    <div class="record">
+                    <div class="record"> <!-- from block, e.g. host fields -->
                         <h4>{{ record['heading'] }}</h4>
-                        {% else %}
+                        {% else %} <!-- handles one field -->
                         <div class="field-group" data-keypath="{{ record['id'] }}">
                             <div class="field" data-number="0">
                                 <label for="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" title="{{ record.get('docstring', '') }}">
                                     {{ record['label'] }}
                                     {{ "*" if record['required'] else "" }}
                                     {% if 'docstring' in record %}
-                                    <a href='javascript:alert({{ record['docstring'] | tojson }})'>❓</a>
+                                      <a href='javascript:alert({{ record['docstring'] | tojson }})'>❓</a>
                                     {% endif %}
                                     {% if 'ref_iri' in record %}
-                                    <a href="{{ record['ref_iri'] }}" target="_blank" title="Ontology Link">🔗</a>
+                                      <a href="{{ record['ref_iri'] }}" target="_blank" title="Ontology Link">🔗</a>
                                     {% endif %}
                                 </label>
                                 {% if record['type'] == 'select' %}
-                                <select class="control" id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" {{ "required" if record['required'] else "" }}>
-                                    <option value="" selected>Choose one...</option>
+                                  <select class="control" id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" {{ "required" if record['required'] else "" }}>
+                                      <option value="" selected>Choose one...</option>
                                     {% for option in record['options'] %}
-                                    <option value="{{ option[1] }}">{{ option[0] }}</option>
+                                      <option value="{{ option[1] }}">{{ option[0] }}</option>
                                     {% endfor %}
-                                </select>
-                                {% else %}
-                                <input class="control" type="{{ record['type'] }}" id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" {{ "required" if record['required'] else "" }} {{ ("step=" + record['step']) if 'step' in record else ""}}>
+                                  </select>
+                                {% else %} <!-- input field -->
+                                  <input class="control"
+                                         type="{{ record['type'] }}"
+                                         id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}"
+                                         {{ 'value=http://purl.obolibrary.org/obo/NCBITaxon_9606' if record['id']=='metadata.host.host_species'}}
+                                         {{ 'placeholder=http://www.wikidata.org/entity/Q30' if record['id']=='metadata.sample.collection_location'}}
+                                         {{ 'placeholder=MyUniqueSampleId.1' if record['id']=='metadata.sample.sample_id'}}
+                                         {{ 'value=http://purl.obolibrary.org/obo/NCBITaxon_2697049' if record['id']=='metadata.virus.virus_species'}}
+                                         {{ 'readonly=1 value=http://identifiers.org/insdc/MT334571.1#sequence' if record['id']=='metadata.id'}}
+                                         name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}"
+                                         {{ "required" if record['required'] else "" }} {{ ("step=" + record['step']) if 'step' in record else ""}}>
                                 {% endif %}
                             </div>
                             {% if record['list'] %}
-                            <button type="button" title="Remove field" class="remove-field invisible">➖</button>
-                            <button type="button" title="Add field" class="add-field">➕</button>
+                              <button type="button" title="Remove field" class="remove-field invisible">➖</button>
+                              <button type="button" title="Add field" class="add-field">➕</button>
                             {% endif %}
                         </div>
                         {% endif %}
@@ -153,7 +165,7 @@
 
                 </div>
 
-                <input class="submit" type="submit" value="Add to Pangenome">
+                <input class="submit" id="submit" onclick="on_submit_button()" type="submit" value="Add to Pangenome">
             </form>
         </section>
 <br>

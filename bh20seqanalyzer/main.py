@@ -146,7 +146,7 @@ def start_pangenome_analysis(api,
             "class": "File",
             "location": "keep:%s/metadata.yaml" % v["portable_data_hash"]
         })
-        inputobj["subjects"].append("http://arvados.org/keep:%s/sequence.fasta" % v["portable_data_hash"])
+        inputobj["subjects"].append("http://collections.lugli.arvadosapi.com/c=%s/sequence.fasta" % v["portable_data_hash"])
     run_workflow(api, analysis_project, pangenome_workflow_uuid, "Pangenome analysis", inputobj)
 
 

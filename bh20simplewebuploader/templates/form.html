@@ -138,7 +138,7 @@
                                       <option value="{{ option[1] }}">{{ option[0] }}</option>
                                     {% endfor %}
                                   </select>
-                                {% else %} <!-- defaults to input field -->
+                                {% else %} <!-- input field -->
                                   <input class="control" type="{{ record['type'] }}" id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" {{ "required" if record['required'] else "" }} {{ ("step=" + record['step']) if 'step' in record else ""}}>
                                 {% endif %}
                             </div>

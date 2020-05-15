@@ -280,7 +280,6 @@ def receive_files():
     Receive the uploaded files.
     """
 
-    return 0
     # We're going to work in one directory per request
     dest_dir = tempfile.mkdtemp()
     # The uploader will happily accept a FASTQ with this name

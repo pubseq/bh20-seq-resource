@@ -439,12 +439,15 @@ def getAllaccessions():
 @app.route('/api/getDetailsForSeq', methods=['GET'])
 def getDetailsForSeq():
     seq_id = request.args.get('seq')
-    query="""SELECT DISTINCT ?key ?value WHERE {<placeholder> ?x [?key ?value]}"""
+    query="""SELECT DISTINCT ?key ?key_label ?value WHERE {
+    <http://arvados.org/keep:00a6af865453564f6a59b3d2c81cc7c1+123/sequence.fasta> ?x [?key ?value] .
+    OPTIONAL {?key <http://www.w3.org/2000/01/rdf-schema#label> ?key_tmp_label } .
+    BIND(IF(BOUND(?key_tmp_label),?key_tmp_label, ?key) as ?key_label)}"""
     query=query.replace("placeholder", seq_id)
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)
     result = r.json()['results']['bindings']
-    return jsonify([{'uri': x['key']['value'],
+    return jsonify([{'uri': x['key']['value'], 'key_label': x['key_label']['value'],
                      'value': x['value']['value']} for x in result])
 
 
@@ -462,18 +465,6 @@ def getSEQCountbytech():
     return jsonify([{'Fasta Count': x['fastaCount']['value'],
                      'tech': x['tech']['value'],
                      'Label': x['tech_label']['value']} for x in result])
-
-## Is this one really necessary or should we just use getSEQCountbytech instead?
-@app.route('/api/getAvailableTech', methods=['GET'])
-def getAvailableTech():
-    query="""SELECT distinct ?tech ?tech_label WHERE
-    {?fasta ?x [<http://purl.obolibrary.org/obo/OBI_0600047> ?tech]
-     BIND (concat(?tech,"_label") as ?tech_label)
-    } """
-    payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
-    result = r.json()['results']['bindings']
-    return str(result)
 
 ## List all Sequences/submissions by a given tech, as example e.g. http://purl.obolibrary.org/obo/OBI_0000759
 ## Has to be encoded again so should be --> http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FOBI_0000759

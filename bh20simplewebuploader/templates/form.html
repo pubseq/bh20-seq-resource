@@ -21,9 +21,9 @@
               <p>[Demo] Display content sequences by: </p>
 
               <div>
-                  <button class="button" onclick="fetchSEQBySpecimen()">Specimen Source</button>
+                  <button class="button" onclick="fetchSEQBySpecimen()">Specimen source</button>
                   <button class="button" onclick="fetchSEQByLocation()">Location</button>
-                  <button class="button" onclick="fetchSEQByTech()">Tech</button>
+                  <button class="button" onclick="fetchSEQByTech()">Sequencer</button>
                   <button class="button" onclick="fetchAllaccessions()">All accessions</button>
               </div>
 
@@ -116,35 +116,35 @@
                         {% if loop.index > 1 and 2 < 3  %}
                     </div>
                     {% endif %}
-                    <div class="record">
+                    <div class="record"> <!-- from block, e.g. host fields -->
                         <h4>{{ record['heading'] }}</h4>
-                        {% else %}
+                        {% else %} <!-- handles one field -->
                         <div class="field-group" data-keypath="{{ record['id'] }}">
                             <div class="field" data-number="0">
                                 <label for="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" title="{{ record.get('docstring', '') }}">
                                     {{ record['label'] }}
                                     {{ "*" if record['required'] else "" }}
                                     {% if 'docstring' in record %}
-                                    <a href='javascript:alert({{ record['docstring'] | tojson }})'>❓</a>
+                                      <a href='javascript:alert({{ record['docstring'] | tojson }})'>❓</a>
                                     {% endif %}
                                     {% if 'ref_iri' in record %}
-                                    <a href="{{ record['ref_iri'] }}" target="_blank" title="Ontology Link">🔗</a>
+                                      <a href="{{ record['ref_iri'] }}" target="_blank" title="Ontology Link">🔗</a>
                                     {% endif %}
                                 </label>
                                 {% if record['type'] == 'select' %}
-                                <select class="control" id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" {{ "required" if record['required'] else "" }}>
-                                    <option value="" selected>Choose one...</option>
+                                  <select class="control" id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" {{ "required" if record['required'] else "" }}>
+                                      <option value="" selected>Choose one...</option>
                                     {% for option in record['options'] %}
-                                    <option value="{{ option[1] }}">{{ option[0] }}</option>
+                                      <option value="{{ option[1] }}">{{ option[0] }}</option>
                                     {% endfor %}
-                                </select>
-                                {% else %}
-                                <input class="control" type="{{ record['type'] }}" id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" {{ "required" if record['required'] else "" }} {{ ("step=" + record['step']) if 'step' in record else ""}}>
+                                  </select>
+                                {% else %} <!-- defaults to input field -->
+                                  <input class="control" type="{{ record['type'] }}" id="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}" {{ "required" if record['required'] else "" }} {{ ("step=" + record['step']) if 'step' in record else ""}}>
                                 {% endif %}
                             </div>
                             {% if record['list'] %}
-                            <button type="button" title="Remove field" class="remove-field invisible">➖</button>
-                            <button type="button" title="Add field" class="add-field">➕</button>
+                              <button type="button" title="Remove field" class="remove-field invisible">➖</button>
+                              <button type="button" title="Add field" class="add-field">➕</button>
                             {% endif %}
                         </div>
                         {% endif %}

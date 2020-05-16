@@ -146,7 +146,7 @@
                                          {{ 'placeholder=http://www.wikidata.org/entity/Q30' if record['id']=='metadata.sample.collection_location'}}
                                          {{ 'placeholder=MyUniqueSampleId.1' if record['id']=='metadata.sample.sample_id'}}
                                          {{ 'value=http://purl.obolibrary.org/obo/NCBITaxon_2697049' if record['id']=='metadata.virus.virus_species'}}
-                                         {{ 'readonly=1 value=http://identifiers.org/insdc/MT334571.1#sequence' if record['id']=='metadata.id'}}
+                                         {{ 'readonly=1 value=http://genenetwork.org/submission' if record['id']=='metadata.id'}}
                                          name="{{ record['id'] }}{{ '[0]' if record['list'] else ''}}"
                                          {{ "required" if record['required'] else "" }} {{ ("step=" + record['step']) if 'step' in record else ""}}>
                                 {% endif %}

@@ -47,6 +47,9 @@ authors:
   - name: Andrea Guarracino
     orcid: https://orcid.org/0000-0001-9744-131X
     affiliation: 14
+  - name: Danielle Welter
+    orcid: https://orcid.org/0000-0003-1058-2668
+    affiliation: 15
 affiliations:
   - name: Department of Genetics, Genomics and Informatics, The University of Tennessee Health Science Center, Memphis, TN, USA.
     index: 1
@@ -62,6 +65,8 @@ affiliations:
     index: 8
   - name: Centre for Molecular Bioinformatics, Department of Biology, University Of Rome Tor Vergata, Rome, Italy
     index: 14
+  - name: Luxembourg Centre for Systems Biomedecine, University of Luxembourg, Luxembourg
+    index: 15
 date: 11 April 2020
 event: COVID2020
 group: Public Sequence Uploader

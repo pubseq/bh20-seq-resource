@@ -50,10 +50,6 @@ let fetchAllaccessions = () => {
  * may not expect.
  */
 
-let uploadForm = document.getElementById('metadata_upload_form')
-let uploadFormSpot = document.getElementById('metadata_upload_form_spot')
-let fillForm = document.getElementById('metadata_fill_form')
-let fillFormSpot = document.getElementById('metadata_fill_form_spot')
 
 function setUploadMode() {
   // Make the upload form the one in use.
@@ -87,7 +83,6 @@ function setMode() {
 // have set the radio button to whatever the state was on last page load,
 // instead of the default state, without raising an event, and we have to
 // handle that.
-setMode()
 
 /**
  * Add another form field to the group this button is part of.

@@ -114,7 +114,7 @@
                         {% for record in fields %}
 
                         {% if 'heading' in record %}
-                        {% if loop.index > 1 and 2 < 3  %}
+                        {% if loop.index > 1 and 2 < 3  %} <!-- for emacs matching elements -->
                     </div>
                     {% endif %}
                     <div class="record"> <!-- from block, e.g. host fields -->
@@ -211,6 +211,12 @@
 
 <script type="text/javascript">
   let scriptRoot = {{ request.script_root|tojson|safe }};
+  let uploadForm = document.getElementById('metadata_upload_form')
+  let uploadFormSpot = document.getElementById('metadata_upload_form_spot')
+  let fillForm = document.getElementById('metadata_fill_form')
+  let fillFormSpot = document.getElementById('metadata_fill_form_spot')
+
+  setMode()
 
   document.addEventListener("DOMContentLoaded", function(){
       var count = fetch("/api/getCount")

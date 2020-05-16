@@ -75,8 +75,10 @@ these identifiers throughout.
 
 * Predicates
 
-Lets look at all the predicates in the dataset by pasting
-the following in a SPARQL end point http://sparql.genenetwork.org/sparql/
+To explore an RDF dataset, the first query we can do is open and gets
+us a list.  Lets look at all the predicates in the dataset by pasting
+the following in a SPARQL end point
+http://sparql.genenetwork.org/sparql/
 
 #+begin_src sql
 select distinct ?p
@@ -86,9 +88,19 @@ select distinct ?p
 #+end_src
 
 you can ignore the openlink and w3 ones. To reduce results to a named
-graph set the default graph to
+graph set the default graph.
+To get a [[http://sparql.genenetwork.org/sparql/?default-graph-uri=&query=select+distinct+%3Fg%0D%0A%7B%0D%0A++++GRAPH+%3Fg+%7B%3Fs+%3Fp+%3Fo%7D%0D%0A%7D&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+][list of graphs]] in the dataset, first do
+
+#+begin_src sql
+select distinct ?g
+{
+    GRAPH ?g {?s ?p ?o}
+}
+#+end_src
+
+Limiting search to metadata add
 http://covid-19.genenetwork.org/graph/metadata.ttl in the top input
-box. There you can find a predicate for submitter that looks like
+box. Now you can find a [[http://sparql.genenetwork.org/sparql/?default-graph-uri=http%3A%2F%2Fcovid-19.genenetwork.org%2Fgraph%2Fmetadata.ttl&query=select+distinct+%3Fp%0D%0A%7B%0D%0A+++%3Fo+%3Fp+%3Fs%0D%0A%7D&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+][predicate]] for submitter that looks like
 http://biohackathon.org/bh20-seq-schema#MainSchema/submitter.
 
 To list all submitters, try
@@ -130,6 +142,17 @@ which reads a bit better. We can also see the datasets. One of them submitted
 by University of Washington is
 is http://arvados.org/keep:00fede2c6f52b053a14edca01cfa02b7+126/sequence.fasta
 (note the ID may have changed so pick one with above query).
+
+Now we got this far, lets [[http://sparql.genenetwork.org/sparql/?default-graph-uri=http%3A%2F%2Fcovid-19.genenetwork.org%2Fgraph%2Fmetadata.ttl&query=PREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0Aselect+%28COUNT%28distinct+%3Fdataset%29+as+%3Fnum%29%0D%0A%7B%0D%0A+++%3Fdataset+pubseq%3Asubmitter+%3Fid+.%0D%0A+++%3Fid+%3Fp+%3Fsubmitter%0D%0A%7D+&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+][count the datasets]] submitted with
+
+#+begin_src sql
+PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+select (COUNT(distinct ?dataset) as ?num)
+{
+   ?dataset pubseq:submitter ?id .
+   ?id ?p ?submitter
+}
+#+end_src
 
 
 * Fetch submitter info and other metadata

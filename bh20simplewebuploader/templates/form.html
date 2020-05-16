@@ -6,13 +6,14 @@
         <link href="/static/main.css" rel="stylesheet" type="text/css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Web uploader for Public SARS-CoV-2 Sequence Resource</title>
+        <script type="text/javascript" src="/static/main.js"></script>
     </head>
     <body>
       <section class="header">
       <div class="logo"><a href="http://covid-19.genenetwork.org/"><img src="static/image/coronasmallcomp.gif" width="150" title="COVID-19 image by Tyler Morgan-Wall"></a></div>
       <h1>Web uploader for Public SARS-CoV-2 Sequence Resource</h1>
 
-<small>Disabled until we got everything wired up</small>
+      <p>Database contains <span id="Counter"></span> public sequences!</p>
 
       </section>
 
@@ -209,9 +210,21 @@
 </div>
 
 <script type="text/javascript">
-    let scriptRoot = {{ request.script_root|tojson|safe }};
+  let scriptRoot = {{ request.script_root|tojson|safe }};
+
+  document.addEventListener("DOMContentLoaded", function(){
+      var count = fetch("/api/getCount")
+          .then((resp) => resp.json())
+          .then(function (data) {
+              count = data["sequences"];
+              console.log(count);
+              span = document.getElementById("Counter");
+              txt = document.createTextNode(count);
+              span.appendChild(txt);
+      });
+});
+
 </script>
 
-<script type="text/javascript" src="/static/main.js"></script>
-    </body>
+   </body>
 </html>

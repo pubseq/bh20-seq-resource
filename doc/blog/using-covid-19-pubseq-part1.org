@@ -138,10 +138,12 @@ select distinct ?dataset ?submitter
 }
 #+end_src
 
-which reads a bit better. We can also see the datasets. One of them submitted
-by University of Washington is
-is http://arvados.org/keep:00fede2c6f52b053a14edca01cfa02b7+126/sequence.fasta
+which reads a bit better. We can also see the [[http://sparql.genenetwork.org/sparql/?default-graph-uri=&query=PREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0Aselect+distinct+%3Fdataset+%3Fsubmitter%0D%0A%7B%0D%0A+++%3Fdataset+pubseq%3Asubmitter+%3Fid+.%0D%0A+++%3Fid+%3Fp+%3Fsubmitter%0D%0A%7D%0D%0A&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+][submitted sequences]]. One
+of them submitted by University of Washington is
+http://collections.lugli.arvadosapi.com/c=030bcb8fda7f19743157359f5855f7a6+126/sequence.fasta
 (note the ID may have changed so pick one with above query).
+To see the submitted metadata replace sequence.fasta with metadata.yaml
+http://collections.lugli.arvadosapi.com/c=030bcb8fda7f19743157359f5855f7a6+126/metadata.yaml
 
 Now we got this far, lets [[http://sparql.genenetwork.org/sparql/?default-graph-uri=http%3A%2F%2Fcovid-19.genenetwork.org%2Fgraph%2Fmetadata.ttl&query=PREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0Aselect+%28COUNT%28distinct+%3Fdataset%29+as+%3Fnum%29%0D%0A%7B%0D%0A+++%3Fdataset+pubseq%3Asubmitter+%3Fid+.%0D%0A+++%3Fid+%3Fp+%3Fsubmitter%0D%0A%7D+&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+][count the datasets]] submitted with
 

@@ -18,6 +18,10 @@ let search = () => {
   fetchAPI(scriptRoot + "/api/getDetailsForSeq?seq=" + encodeURIComponent(m));
 }
 
+let fetchCount = () => {
+  fetchAPI("/api/getCount");
+}
+
 let fetchSEQBySpecimen = () => {
   fetchAPI("/api/getSEQCountbySpecimenSource");
 }
@@ -160,7 +164,6 @@ for (let button of document.getElementsByClassName('remove-field')) {
 }
 
 // Change the submit button after hitting
-
 function on_submit_button() {
     var elem = document.getElementById("submit");
     elem.value = "Submitting...";

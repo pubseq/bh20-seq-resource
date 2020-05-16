@@ -224,16 +224,20 @@ footer {
 }
 
 .sponsors a {
-    flex-grow: 4;
-    height: 200px;
+    // flex-grow: 4;
+    // height: 200px;
     margin: 10px;
     background: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
+
+.sponsorimg {
+}
+
 .sponsors img {
-    width: 100%;
+    width: 150px;
 }
 
 .loader {

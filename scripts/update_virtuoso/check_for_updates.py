@@ -18,6 +18,9 @@ fn = sys.argv[1]
 user = sys.argv[2]
 pwd = sys.argv[3]
 
+scriptdir = os.path.dirname(os.path.realpath(__file__))
+print(scriptdir)
+basedir = os.path.dirname(os.path.dirname(scriptdir))
 
 def upload(fn):
     # Upload into Virtuoso using CURL
@@ -32,10 +35,6 @@ def upload(fn):
     output = p.communicate()[0]
     print(output)
     assert(p.returncode == 0)
-
-# --- Always update these
-upload("semantic_enrichment/labels.ttl")
-upload("semantic_enrichment/countries.ttl")
 
 url = 'https://download.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/_/mergedmetadata.ttl'
 # --- Fetch headers from TTL file on Arvados
@@ -57,6 +56,9 @@ if os.path.isfile(fn):
     file.close
 
 if stamp != last_modified_str:
+    upload(basedir+"/semantic_enrichment/labels.ttl")
+    upload(basedir+"/semantic_enrichment/countries.ttl")
+
     print("Fetch metadata TTL")
     r = requests.get(url)
     assert(r.status_code == 200)
@@ -66,3 +68,5 @@ if stamp != last_modified_str:
     upload("metadata.ttl")
     with open(fn,"w") as f:
         f.write(last_modified_str)
+else:
+    print("Metadata is up to date")

@@ -1,0 +1,68 @@
+#+TITLE: COVID-19 PubSeq (part 2)
+#+AUTHOR: Pjotr Prins
+# C-c C-e h h   publish
+# C-c !         insert date (use . for active agenda, C-u C-c ! for date, C-u C-c . for time)
+# C-c C-t       task rotate
+# RSS_IMAGE_URL: http://xxxx.xxxx.free.fr/rss_icon.png
+
+#+HTML_LINK_HOME: http://covid19.genenetwork.org
+#+HTML_HEAD: <link rel="Blog stylesheet" type="text/css" href="blog.css" />
+
+* Finding output of workflows
+
+As part of the COVID-19 Biohackathon 2020 we formed a working group to
+create a COVID-19 Public Sequence Resource (COVID-19 PubSeq) for
+Corona virus sequences. The general idea is to create a repository
+that has a low barrier to entry for uploading sequence data using best
+practices. I.e., data published with a creative commons 4.0 (CC-4.0)
+license with metadata using state-of-the art standards and, perhaps
+most importantly, providing standardised workflows that get triggered
+on upload, so that results are immediately available in standardised
+data formats.
+
+* Introduction
+
+We are using Arvados to run common workflow language (CWL) pipelines.
+The most recent output is on display on a [[https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca][web page]] (with time stamp)
+and a full list is generated [[https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/][here]]. It is nice to start up, but for
+most users we need a dedicated and themed results page.  People don't
+want to wade through thousands of output files!
+
+* The Arvados file interface
+
+Arvados has the web server, but it also has a REST API and associated
+command line tools. We are already using the [[https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/main.py#L27][API]] to upload data.  If
+you follow the pip or [[../INSTALL.md]] GNU Guix instructions for
+installing Arvados API you'll find the following command line tools
+(also documented [[https://doc.arvados.org/v2.0/sdk/cli/subcommands.html][here]]):
+
+| Command | Description                                                                                                                                                                                               |
+|---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| arv-ls  | list files in Arvados                                                                                                                                                                                     |
+| arv-put | upload a file to Arvados                                                                                                                                                                                  |
+| arv-get | get a textual representation of Arvados objects from the command line. The output can be limited to a subset of the object’s fields. This command can be used with only the knowledge of an object’s UUID |
+
+Now, this is a public instance so we can use the tokens from
+the [[https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/main.py#L16][uploader]].
+
+#+BEGIN_SOURCE sh
+export ARVADOS_API_HOST='lugli.arvadosapi.com'
+export ARVADOS_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
+arv-ls lugli-4zz18-z513nlpqm03hpca
+#+END_SOURCE
+
+will list all files (the UUID we got from the Arvados results page). To
+get the UUID of the files
+
+#+BEGIN_SOURCE sh
+curl https://lugli.arvadosapi.com/arvados/v1/config | jq .Users.AnonymousUserToken
+env ARVADOS_API_TOKEN=5o42qdxpxp5cj15jqjf7vnxx5xduhm4ret703suuoa3ivfglfh \
+  arv-get lugli-4zz18-z513nlpqm03hpca
+#+END_SOURCE
+
+and fetch one listed JSON file ~chunk001_bin4000.schematic.json~ with
+its listed UUID:
+
+: arv-get 2be6af7b4741f2a5c5f8ff2bc6152d73+1955623+Ab9ad65d7fe958a053b3a57d545839de18290843a@5ed7f3c5
+
+* Using the Arvados API

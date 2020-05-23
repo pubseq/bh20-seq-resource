@@ -418,6 +418,18 @@ def receive_files():
         shutil.rmtree(dest_dir)
 
 
+@app.route('/demo')
+def demo_page():
+    return render_template('demo.html')
+
+@app.route('/blog')
+def blog_page():
+    return render_template('blog.html')
+
+@app.route('/about')
+def about_page():
+    return render_template('about.html')
+
 ## Dynamic API functions starting here
 ## This is quick and dirty for now, just to get something out and demonstrate the queries
 ## Feel free to rename the functions/endpoints, feel free to process result so we get nicer JSON

@@ -1,30 +1,80 @@
 <!DOCTYPE html>
 <html>
   {% include 'header.html' %}
-    <body>
-      {% include 'banner.html' %}
-      {% include 'menu.html' %}
+  <body>
+    {% include 'banner.html' %}
+    {% include 'menu.html' %}
 
-      WIP
+    <h1>BLOG Entries</h1>
 
-      {% include 'footer.html' %}
+    <i>Note that this is work in progress (WIP)</i>
 
-      <script type="text/javascript">
-        let scriptRoot = {{ request.script_root|tojson|safe }}; // examples
+    <section class="blog-entries">
+      <div class="blog-table">
+        <div class="blog-table-body">
+          <div class="blog-table-row">
+            <div class="blog-table-cell">
+              <a href="https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part1.org">Query metadata with SPARQL</a>
+            </div>
+            <div class="blog-table-cell">
+              We fetch sequence data and metadata. We query
+              the metadata in multiple ways using SPARQL and onthologies
+            </div>
+          </div>
+          <div class="blog-table-row">
+            <div class="blog-table-cell">
+              <a href="https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part2.org">Interacting with Arvados</a>
+            </div>
+            <div class="blog-table-cell">
+              We explore the Arvados command line and API
+            </div>
+          </div>
+          <div class="blog-table-row">
+            <div class="blog-table-cell">
+              <a href="https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part3.org">Submitting a sequence</a>
+            </div>
+            <div class="blog-table-cell">
+              We submit a sequence to the database
+            </div>
+          </div>
+          <div class="blog-table-row">
+            <div class="blog-table-cell">
+              <a href="https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part4.org">Update workflow</a>
+            </div>
+            <div class="blog-table-cell">
+              We modify a workflow to get new output
+            </div>
+          </div>
+          <div class="blog-table-row">
+            <div class="blog-table-cell">
+              <a href="https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part5.org">Update metadata</a>
+            </div>
+            <div class="blog-table-cell">
+              We modify metadata for all to use!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        document.addEventListener("DOMContentLoaded", function(){
-            var count = fetch("/api/getCount")
-                .then((resp) => resp.json())
-                .then(function (data) {
-                    count = data["sequences"];
-              console.log(count);
-                    span = document.getElementById("Counter");
-                    txt = document.createTextNode(count);
-                    span.appendChild(txt);
-                });
-        });
+    {% include 'footer.html' %}
 
-      </script>
-    </body>
+    <script type="text/javascript">
+      let scriptRoot = {{ request.script_root|tojson|safe }}; // examples
+
+      document.addEventListener("DOMContentLoaded", function(){
+          var count = fetch("/api/getCount")
+              .then((resp) => resp.json())
+              .then(function (data) {
+                  count = data["sequences"];
+                  console.log(count);
+                  span = document.getElementById("Counter");
+                  txt = document.createTextNode(count);
+                  span.appendChild(txt);
+              });
+      });
+
+    </script>
+  </body>
 
 </html>

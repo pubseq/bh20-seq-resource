@@ -339,3 +339,28 @@ footer {
         flex-direction: column;
     }
 }
+
+.blog-table {
+    display: table;
+    width: 100%;
+}
+.blog-table-row {
+    display: table-row;
+}
+.blog-table-heading {
+    display: table-header-group;
+    background-color: #ddd;
+}
+.blog-table-cell, .blog-table-head {
+    display: table-cell;
+    padding: 3px 10px;
+    border: 1px solid #999999;
+}
+.blog-table-footer {
+    display: table-footer-group;
+    font-weight: bold;
+    background-color: #ddd;
+}
+.blog-table-body {
+    display: table-row-group;
+}

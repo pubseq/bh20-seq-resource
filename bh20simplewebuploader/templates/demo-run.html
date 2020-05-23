@@ -1,0 +1,17 @@
+      <section class="search-section">
+          <div class="filter-options" action="#">
+              <p>[Demo] Display content sequences by: </p>
+
+              <div>
+                  <button class="button" onclick="fetchSEQBySpecimen()">Specimen source</button>
+                  <button class="button" onclick="fetchSEQByLocation()">Location</button>
+                  <button class="button" onclick="fetchSEQByTech()">Sequencer</button>
+                  <button class="button" onclick="fetchAllaccessions()">All accessions</button>
+              </div>
+
+          </div>
+      <div id="loader" class="loader invisible"></div>
+
+      <section id="results" class="invisible">
+          <pre><code id="json"></code></pre>
+      </section>

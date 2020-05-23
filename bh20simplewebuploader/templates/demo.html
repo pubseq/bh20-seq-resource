@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  {% include 'header.html' %}
+    <body>
+      {% include 'banner.html' %}
+      {% include 'menu.html' %}
+      <!-- {% include 'search.html' %} -->
+      {% include 'demo-run.html' %}
+
+      <script type="text/javascript">
+        let scriptRoot = {{ request.script_root|tojson|safe }}; // examples
+
+        document.addEventListener("DOMContentLoaded", function(){
+            var count = fetch("/api/getCount")
+                .then((resp) => resp.json())
+                .then(function (data) {
+                    count = data["sequences"];
+              console.log(count);
+                    span = document.getElementById("Counter");
+                    txt = document.createTextNode(count);
+                    span.appendChild(txt);
+                });
+        });
+
+      </script>
+    </body>
+
+</html>

@@ -225,7 +225,7 @@ def send_form():
     Send the file upload form/front page.
     """
 
-    return render_template('form.html', fields=FORM_ITEMS)
+    return render_template('form.html', fields=FORM_ITEMS, menu='HOME')
 
 class FileTooBigError(RuntimeError):
     """
@@ -420,15 +420,15 @@ def receive_files():
 
 @app.route('/demo')
 def demo_page():
-    return render_template('demo.html')
+    return render_template('demo.html',menu='DEMO')
 
 @app.route('/blog')
 def blog_page():
-    return render_template('blog.html')
+    return render_template('blog.html',menu='BLOG')
 
 @app.route('/about')
 def about_page():
-    return render_template('about.html')
+    return render_template('about.html',menu='ABOUT')
 
 ## Dynamic API functions starting here
 ## This is quick and dirty for now, just to get something out and demonstrate the queries

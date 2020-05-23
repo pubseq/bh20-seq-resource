@@ -1,62 +1,9 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-        <link href="/static/main.css" rel="stylesheet" type="text/css">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Web uploader for Public SARS-CoV-2 Sequence Resource</title>
-        <script type="text/javascript" src="/static/main.js"></script>
-    </head>
+  {% include 'header.html' %}
     <body>
-      <section class="header">
-      <div class="logo"><a href="http://covid-19.genenetwork.org/"><img src="static/image/coronasmallcomp.gif" width="150" title="COVID-19 image by Tyler Morgan-Wall"></a></div>
-      <h1>Web uploader for Public SARS-CoV-2 Sequence Resource</h1>
-
-      <p>Database contains <span id="Counter"></span> public sequences!</p>
-
-      </section>
-
-      <section class="menu">
-        <div class="topnav" id="myTopnav">
-          <a href="/" class="active">COVID-19</a>
-          <a href="/demo">DEMO</a>
-          <a href="/blog">BLOG</a>
-          <a href="/about">ABOUT</a>
-          <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-            <i class="fa fa-bars"></i>
-          </a>
-        </div>
-      </section>
-
-      <section class="search-section">
-          <div class="filter-options" action="#">
-              <p>[Demo] Display content sequences by: </p>
-
-              <div>
-                  <button class="button" onclick="fetchSEQBySpecimen()">Specimen source</button>
-                  <button class="button" onclick="fetchSEQByLocation()">Location</button>
-                  <button class="button" onclick="fetchSEQByTech()">Sequencer</button>
-                  <button class="button" onclick="fetchAllaccessions()">All accessions</button>
-              </div>
-
-          </div>
-
-          <div class="search">
-              <input id="search-input" id="global-search" type="search" placeholder="FASTA uri" required>
-              <button class="button search-button" type="submit" onclick="search()">
-                  <span class="icon ion-search">
-                      <span class="sr-only">Search</span>
-                  </span>
-              </button>
-          </div>
-      </section>
-
-      <div id="loader" class="loader invisible"></div>
-
-      <section id="results" class="invisible">
-          <pre><code id="json"></code></pre>
-      </section>
+      {% include 'banner.html' %}
+      {% include 'menu.html' %}
 
         <section>
             <form action="/submit" method="POST" enctype="multipart/form-data" id="main_form" class="grid-container">
@@ -215,7 +162,7 @@
       <div class="sponsorimg">
         <a href="https://uthsc.edu/"><img src="static/image/UTHSC-primary-stacked-logo-4c.png"></a>
       </div>
-  </div>
+    </div>
 </div>
 <div class="footer">
     <!-- Sponsors -->
@@ -230,7 +177,7 @@
 </div>
 
 <script type="text/javascript">
-  let scriptRoot = {{ request.script_root|tojson|safe }};
+  // let scriptRoot = {{ request.script_root|tojson|safe }};
   let uploadForm = document.getElementById('metadata_upload_form')
   let uploadFormSpot = document.getElementById('metadata_upload_form_spot')
   let fillForm = document.getElementById('metadata_fill_form')

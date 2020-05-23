@@ -146,6 +146,7 @@ form h4 {
 .footer {
     background: #058280;;
     margin: 0 auto;
+    float: left;
     color: #fff;
 }
 

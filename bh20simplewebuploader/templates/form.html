@@ -128,53 +128,8 @@
                 <input class="submit" id="submit" onclick="on_submit_button()" type="submit" value="Add to Pangenome">
             </form>
         </section>
-<br>
-<div class="about">
-    <div>
-        <h1>ABOUT</h1>
-        <p>
-            This a public repository created at the COVID-19 BioHackathon
-            that has a low barrier to entry for uploading sequence data using
-            best practices. I.e., data is published with a creative commons
-            4.0 (CC-4.0) license with metadata using state-of-the art
-            standards and, perhaps most importantly, providing standardized
-            workflows that get triggered on upload, so that results are
-            immediately available in standardized data formats. The repository
-            will be maintained and expanded for the duration of the
-            pandemic. To contribute data simply upload it! To contribute code
-            and/or workflows see
-            the <a href="https://github.com/arvados/bh20-seq-resource">project
-            repository</a>. For more information see the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/paper/paper.md">paper</a> (WIP).
-        </p>
 
-    </div>
-    <div class="sponsors">
-      <div class="sponsorimg">
-        <a href="https://github.com/virtual-biohackathons/covid-19-bh20">
-          <img src="static/image/covid19biohackathon.png"></a>
-      </div>
-      <div class="sponsorimg">
-        <a href="https://www.commonwl.org/"><img src="static/image/CWL-Logo-Header.png"></a>
-      </div>
-      <div class="sponsorimg">
-        <a href="https://arvados.org/"><img src="static/image/arvados-logo.png"></a>
-      </div>
-      <div class="sponsorimg">
-        <a href="https://uthsc.edu/"><img src="static/image/UTHSC-primary-stacked-logo-4c.png"></a>
-      </div>
-    </div>
-</div>
-<div class="footer">
-    <!-- Sponsors -->
-
-
-        <center>
-        <small><a href="https://github.com/arvados/bh20-seq-resource">Source code</a> &middot; Powered by <a href="https://www.commonwl.org/">Common Workflow Language</a> &amp; <a href="https://arvados.org/">Arvados</a>; Made for <a href="https://github.com/virtual-biohackathons/covid-19-bh20">COVID-19-BH20</a>
-        </small>
-        </center>
-
-
-</div>
+{% include 'footer.html' %}
 
 <script type="text/javascript">
   // let scriptRoot = {{ request.script_root|tojson|safe }};

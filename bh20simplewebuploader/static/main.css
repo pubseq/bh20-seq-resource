@@ -31,6 +31,13 @@ h1 {
     height: 150px;
 }
 
+#Counter {
+    color: lightgrey;
+    background-color: black;
+    font-size: large;
+    padding: 3px;
+}
+
 h2 > svg {
     position: relative;
     top: 8px;

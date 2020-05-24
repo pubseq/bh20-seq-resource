@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-24 Sun 11:11 -->
+<!-- 2020-05-24 Sun 11:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Download</title>
@@ -247,24 +247,32 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge184013">1. FASTA files</a></li>
-<li><a href="#orgc0ce14b">2. Metadata</a></li>
-<li><a href="#org52c7997">3. Pangenome</a>
+<li><a href="#org42addaa">1. FASTA files</a></li>
+<li><a href="#org04bd8c7">2. Metadata</a></li>
+<li><a href="#orgead2f03">3. Pangenome</a>
 <ul>
-<li><a href="#orgba61745">3.1. Pangenome GFA format</a></li>
-<li><a href="#org6474dfc">3.2. Pangenome in ODGI format</a></li>
-<li><a href="#orge3a3726">3.3. Pangenome RDF format</a></li>
-<li><a href="#org359cc22">3.4. Pangenome Browser format</a></li>
+<li><a href="#org8ea7d40">3.1. Pangenome GFA format</a></li>
+<li><a href="#orge7808d6">3.2. Pangenome in ODGI format</a></li>
+<li><a href="#orgaadcde8">3.3. Pangenome RDF format</a></li>
+<li><a href="#orga3a0408">3.4. Pangenome Browser format</a></li>
 </ul>
 </li>
-<li><a href="#org488e901">4. Log of workflow output</a></li>
-<li><a href="#orga53b821">5. All files</a></li>
+<li><a href="#org1bbb7e6">4. Log of workflow output</a></li>
+<li><a href="#orgd16b2c8">5. All files</a></li>
+<li><a href="#org9d40ed2">6. Planned</a>
+<ul>
+<li><a href="#org70cb9d5">6.1. Raw sequence data</a></li>
+<li><a href="#org38cfa2e">6.2. Multiple Sequence Alignment (MSA)</a></li>
+<li><a href="#org507c7dd">6.3. Phylogenetic tree</a></li>
+<li><a href="#orgca26edf">6.4. Protein prediction</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge184013" class="outline-2">
-<h2 id="orge184013"><span class="section-number-2">1</span> FASTA files</h2>
+<div id="outline-container-org42addaa" class="outline-2">
+<h2 id="org42addaa"><span class="section-number-2">1</span> FASTA files</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The <b>public sequence resource</b> provides all uploaded sequences as
@@ -274,8 +282,8 @@ also provide a single file <a href="https://collections.lugli.arvadosapi.com/c=l
 </div>
 </div>
 
-<div id="outline-container-orgc0ce14b" class="outline-2">
-<h2 id="orgc0ce14b"><span class="section-number-2">2</span> Metadata</h2>
+<div id="outline-container-org04bd8c7" class="outline-2">
+<h2 id="org04bd8c7"><span class="section-number-2">2</span> Metadata</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Metadata can be downloaded as <a href="https://www.w3.org/TR/turtle/">Turtle RDF</a> as a <a href="https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/mergedmetadata.ttl">mergedmetadat.ttl</a> which
@@ -297,8 +305,8 @@ graph can be downloaded from below Pangenome RDF format.
 </div>
 </div>
 
-<div id="outline-container-org52c7997" class="outline-2">
-<h2 id="org52c7997"><span class="section-number-2">3</span> Pangenome</h2>
+<div id="outline-container-orgead2f03" class="outline-2">
+<h2 id="orgead2f03"><span class="section-number-2">3</span> Pangenome</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Pangenome data is made available in multiple guises. Variation graphs
@@ -306,8 +314,8 @@ Pangenome data is made available in multiple guises. Variation graphs
 </p>
 </div>
 
-<div id="outline-container-orgba61745" class="outline-3">
-<h3 id="orgba61745"><span class="section-number-3">3.1</span> Pangenome GFA format</h3>
+<div id="outline-container-org8ea7d40" class="outline-3">
+<h3 id="org8ea7d40"><span class="section-number-3">3.1</span> Pangenome GFA format</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <a href="https://github.com/GFA-spec/GFA-spec">GFA</a> is a standard for graphical fragment assembly and consumed
@@ -316,18 +324,18 @@ by tools such as <a href="https://github.com/vgteam/vg">vgtools</a>.
 </div>
 </div>
 
-<div id="outline-container-org6474dfc" class="outline-3">
-<h3 id="org6474dfc"><span class="section-number-3">3.2</span> Pangenome in ODGI format</h3>
+<div id="outline-container-orge7808d6" class="outline-3">
+<h3 id="orge7808d6"><span class="section-number-3">3.2</span> Pangenome in ODGI format</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
-<a href="https://github.com/vgteam/odgi">ODGI</a> is a format that supports an optimized dynamic genome/graph
+<a href="https://github.com/vgteam/odgi">ODGI</a> is a format that supports an optimised dynamic genome/graph
 implementation.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orge3a3726" class="outline-3">
-<h3 id="orge3a3726"><span class="section-number-3">3.3</span> Pangenome RDF format</h3>
+<div id="outline-container-orgaadcde8" class="outline-3">
+<h3 id="orgaadcde8"><span class="section-number-3">3.3</span> Pangenome RDF format</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 An RDF file that includes the sequences themselves in a variation
@@ -338,8 +346,8 @@ graph can be downloaded from
 </div>
 
 
-<div id="outline-container-org359cc22" class="outline-3">
-<h3 id="org359cc22"><span class="section-number-3">3.4</span> Pangenome Browser format</h3>
+<div id="outline-container-orga3a0408" class="outline-3">
+<h3 id="orga3a0408"><span class="section-number-3">3.4</span> Pangenome Browser format</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 The many JSON files that are named as
@@ -350,8 +358,8 @@ Pangenome browser.
 </div>
 </div>
 
-<div id="outline-container-org488e901" class="outline-2">
-<h2 id="org488e901"><span class="section-number-2">4</span> Log of workflow output</h2>
+<div id="outline-container-org1bbb7e6" class="outline-2">
+<h2 id="org1bbb7e6"><span class="section-number-2">4</span> Log of workflow output</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Including in below link is a log file of the last workflow runs.
@@ -359,17 +367,62 @@ Including in below link is a log file of the last workflow runs.
 </div>
 </div>
 
-<div id="outline-container-orga53b821" class="outline-2">
-<h2 id="orga53b821"><span class="section-number-2">5</span> All files</h2>
+<div id="outline-container-orgd16b2c8" class="outline-2">
+<h2 id="orgd16b2c8"><span class="section-number-2">5</span> All files</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <a href="https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/">https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/</a>
 </p>
 </div>
 </div>
+
+<div id="outline-container-org9d40ed2" class="outline-2">
+<h2 id="org9d40ed2"><span class="section-number-2">6</span> Planned</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+We are planning the add the following output (see also
+</p>
+</div>
+
+<div id="outline-container-org70cb9d5" class="outline-3">
+<h3 id="org70cb9d5"><span class="section-number-3">6.1</span> Raw sequence data</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+See <a href="https://github.com/arvados/bh20-seq-resource/issues/16">fastq tracker</a> and <a href="https://github.com/arvados/bh20-seq-resource/issues/63">BAM tracker</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org38cfa2e" class="outline-3">
+<h3 id="org38cfa2e"><span class="section-number-3">6.2</span> Multiple Sequence Alignment (MSA)</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+See <a href="https://github.com/arvados/bh20-seq-resource/issues/11">MSA tracker</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org507c7dd" class="outline-3">
+<h3 id="org507c7dd"><span class="section-number-3">6.3</span> Phylogenetic tree</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+See <a href="https://github.com/arvados/bh20-seq-resource/issues/43">Phylo tracker</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgca26edf" class="outline-3">
+<h3 id="orgca26edf"><span class="section-number-3">6.4</span> Protein prediction</h3>
+<div class="outline-text-3" id="text-6-4">
+<p>
+We aim to make protein predictions available.
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-24 Sun 11:11</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-24 Sun 11:29</small>.
 </div>
 </body>
 </html>

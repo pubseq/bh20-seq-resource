@@ -417,6 +417,25 @@ def receive_files():
     finally:
         shutil.rmtree(dest_dir)
 
+def get_html_body(fn):
+    buf = ""
+    in_body = False
+    begin_body = re.compile(r"<body>",re.IGNORECASE)
+    end_body = re.compile(r"(</body>|.*=\"postamble\")",re.IGNORECASE)
+    with open(fn) as f:
+        for line in f:
+            if end_body.match(line):
+                break
+            if in_body:
+                buf += line
+            elif begin_body.match(line):
+                in_body = True
+    return buf
+
+@app.route('/download')
+def download_page():
+    buf = get_html_body('doc/web/download.html')
+    return render_template('about.html',menu='DOWNLOAD',embed=buf)
 
 @app.route('/demo')
 def demo_page():
@@ -428,18 +447,7 @@ def blog_page():
 
 @app.route('/about')
 def about_page():
-    buf = ""
-    in_body = False
-    begin_body = re.compile(r"<body>",re.IGNORECASE)
-    end_body = re.compile(r"(</body>|.*=\"postamble\")",re.IGNORECASE)
-    with open('doc/web/about.html') as f:
-        for line in f:
-            if end_body.match(line):
-                break
-            if in_body:
-                buf += line
-            elif begin_body.match(line):
-                in_body = True
+    buf = get_html_body('doc/web/about.html')
     return render_template('about.html',menu='ABOUT',embed=buf)
 
 ## Dynamic API functions starting here

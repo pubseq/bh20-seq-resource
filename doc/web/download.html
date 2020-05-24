@@ -1,12 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link href="/static/main.css" rel="stylesheet" type="text/css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Web uploader for Public SARS-CoV-2 Sequence Resource</title>
-  <script type="text/javascript" src="/static/main.js"></script>
-<!-- 2020-05-24 Sun 08:10 -->
+<!-- 2020-05-24 Sun 11:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Download</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Pjotr Prins" />
 <style type="text/css">
@@ -30,7 +30,6 @@
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
-  p { margin: 10px; }
   pre {
     border: 1px solid #ccc;
     box-shadow: 3px 3px 3px #eee;
@@ -193,57 +192,6 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
   /*]]>*/-->
-
-.title   { font-family: Lucida Sans Typewriter,Lucida Console,monaco,Bitstream Vera Sans Mono,monospace }
-.table-of-contents { font-family: monospace; color: red; }
-/* .text-table-of-contents { font-family: monospace; color: black; font-size:80%; } */
-.timestamp { font-family: monospace; color: darkgreen; }
-
-h1,h2 { font-family: Lucida Sans Typewriter,Lucida Console,monaco,Bitstream Vera Sans Mono,monospace; color
-:black;background-color:#F0F8FF; }
-h2,h3,h4 { color: darkblue; }
-code { color: darkblue; }
-body {font-family: Palatino, 'Palatino Linotype', serif; color:black; font-size: l
-arge }
-
-div.verbatim { color: black; background-color: white; border-style:outset; font-family: palatino font, mono
-space; font-size:80%;  font-weight:bold; }
-div.quote { font-family: palatino font, monospace; font-size:80%; }
-div.quotation { font-family: palatino font, monospace; font-size:80%; }
-pre.example { font-family: prestige, monospace; color:black; font-size:70%; background-color: lightyellow;
- }
-pre.src { font-family: prestige, monospace; font-weight: bold; color:white; font-size:80%; background-color
-: black;  }
-
-div[id="text-table-of-contents"]{
-    font-family: palatino font, monospace; background-color:white;
-    border-style: dotted;
-    border-color: #98bf21;
-    border-width: 1px;
-}
-div[class^="outline-text"] {
-    background-color:#ebe6f0;
-    border-style: dotted;
-    border-color: #98bf21;
-    border-width: 1px;
-    font-family: Palatino, 'Palatino Linotype', serif; color:black; font-size: large
-}
-span[class="todo TESTING"] {
-    color:purple;
-}
-span[class="todo IN_PROGRESS"] {
-    color:brown;
-}
-span[class^="section-number"] {
-    color:grey;
-}
-span[class="journal"] {
-    color:darkblue;
-}
-span[class="year"] {
-    color:darkred;
-}
-
 </style>
 <script type="text/javascript">
 /*
@@ -292,3 +240,136 @@ for the JavaScript code in this tag.
 /*]]>*///-->
 </script>
 </head>
+<body>
+<div id="content">
+<h1 class="title">Download</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge184013">1. FASTA files</a></li>
+<li><a href="#orgc0ce14b">2. Metadata</a></li>
+<li><a href="#org52c7997">3. Pangenome</a>
+<ul>
+<li><a href="#orgba61745">3.1. Pangenome GFA format</a></li>
+<li><a href="#org6474dfc">3.2. Pangenome in ODGI format</a></li>
+<li><a href="#orge3a3726">3.3. Pangenome RDF format</a></li>
+<li><a href="#org359cc22">3.4. Pangenome Browser format</a></li>
+</ul>
+</li>
+<li><a href="#org488e901">4. Log of workflow output</a></li>
+<li><a href="#orga53b821">5. All files</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge184013" class="outline-2">
+<h2 id="orge184013"><span class="section-number-2">1</span> FASTA files</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The <b>public sequence resource</b> provides all uploaded sequences as
+FASTA files.  They can be referred to from metadata individually. We
+also provide a single file <a href="https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/relabeledSeqs_dedup.fasta">FASTA download</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc0ce14b" class="outline-2">
+<h2 id="orgc0ce14b"><span class="section-number-2">2</span> Metadata</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Metadata can be downloaded as <a href="https://www.w3.org/TR/turtle/">Turtle RDF</a> as a <a href="https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/mergedmetadata.ttl">mergedmetadat.ttl</a> which
+can be loaded into any RDF triple-store. We provide a Virtuoso SPARQL
+endpoint ourselves which can be queried from
+<a href="http://sparql.genenetwork.org/sparql/">http://sparql.genenetwork.org/sparql/</a>. Query examples can be found in
+our <a href="https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part1.org">BLOG</a>.
+</p>
+
+<p>
+The Swiss Institute of Bioinformatics has included this data in
+<a href="https://covid-19-sparql.expasy.org/">https://covid-19-sparql.expasy.org/</a> and made it part of <a href="https://www.uniprot.org/">Uniprot</a>.
+</p>
+
+<p>
+An RDF file that includes the sequences themselves in a variation
+graph can be downloaded from below Pangenome RDF format.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org52c7997" class="outline-2">
+<h2 id="org52c7997"><span class="section-number-2">3</span> Pangenome</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Pangenome data is made available in multiple guises. Variation graphs
+(VG) provide a succinct encoding of the sequences of many genomes.
+</p>
+</div>
+
+<div id="outline-container-orgba61745" class="outline-3">
+<h3 id="orgba61745"><span class="section-number-3">3.1</span> Pangenome GFA format</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<a href="https://github.com/GFA-spec/GFA-spec">GFA</a> is a standard for graphical fragment assembly and consumed
+by tools such as <a href="https://github.com/vgteam/vg">vgtools</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6474dfc" class="outline-3">
+<h3 id="org6474dfc"><span class="section-number-3">3.2</span> Pangenome in ODGI format</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<a href="https://github.com/vgteam/odgi">ODGI</a> is a format that supports an optimized dynamic genome/graph
+implementation.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge3a3726" class="outline-3">
+<h3 id="orge3a3726"><span class="section-number-3">3.3</span> Pangenome RDF format</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+An RDF file that includes the sequences themselves in a variation
+graph can be downloaded from
+<a href="https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/">relabeledSeqs-dedup-relabeledSeqs-dedup.ttl.xz</a>.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org359cc22" class="outline-3">
+<h3 id="org359cc22"><span class="section-number-3">3.4</span> Pangenome Browser format</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+The many JSON files that are named as
+<a href="https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/">results/1/chunk001200.bin1.schematic.json</a> are consumed by the
+Pangenome browser.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org488e901" class="outline-2">
+<h2 id="org488e901"><span class="section-number-2">4</span> Log of workflow output</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Including in below link is a log file of the last workflow runs.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga53b821" class="outline-2">
+<h2 id="orga53b821"><span class="section-number-2">5</span> All files</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<a href="https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/">https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/</a>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-24 Sun 11:11</small>.
+</div>
+</body>
+</html>

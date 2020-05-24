@@ -1,0 +1,69 @@
+#+TITLE: Download
+#+AUTHOR: Pjotr Prins
+
+* Table of Contents                                                     :TOC:noexport:
+ - [[#fasta-files][FASTA files]]
+ - [[#metadata][Metadata]]
+ - [[#pangenome][Pangenome]]
+   - [[#pangenome-gfa-format][Pangenome GFA format]]
+   - [[#pangenome-in-odgi-format][Pangenome in ODGI format]]
+   - [[#pangenome-rdf-format][Pangenome RDF format]]
+   - [[#pangenome-browser-format][Pangenome Browser format]]
+ - [[#log-of-workflow-output][Log of workflow output]]
+ - [[#all-files][All files]]
+
+* FASTA files
+
+The *public sequence resource* provides all uploaded sequences as
+FASTA files.  They can be referred to from metadata individually. We
+also provide a single file [[https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/relabeledSeqs_dedup.fasta][FASTA download]].
+
+* Metadata
+
+Metadata can be downloaded as [[https://www.w3.org/TR/turtle/][Turtle RDF]] as a [[https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/mergedmetadata.ttl][mergedmetadat.ttl]] which
+can be loaded into any RDF triple-store. We provide a Virtuoso SPARQL
+endpoint ourselves which can be queried from
+http://sparql.genenetwork.org/sparql/. Query examples can be found in
+our [[https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part1.org][BLOG]].
+
+The Swiss Institute of Bioinformatics has included this data in
+https://covid-19-sparql.expasy.org/ and made it part of [[https://www.uniprot.org/][Uniprot]].
+
+An RDF file that includes the sequences themselves in a variation
+graph can be downloaded from below Pangenome RDF format.
+
+* Pangenome
+
+Pangenome data is made available in multiple guises. Variation graphs
+(VG) provide a succinct encoding of the sequences of many genomes.
+
+** Pangenome GFA format
+
+[[https://github.com/GFA-spec/GFA-spec][GFA]] is a standard for graphical fragment assembly and consumed
+by tools such as [[https://github.com/vgteam/vg][vgtools]].
+
+** Pangenome in ODGI format
+
+[[https://github.com/vgteam/odgi][ODGI]] is a format that supports an optimised dynamic genome/graph
+implementation.
+
+** Pangenome RDF format
+
+An RDF file that includes the sequences themselves in a variation
+graph can be downloaded from
+[[https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/][relabeledSeqs-dedup-relabeledSeqs-dedup.ttl.xz]].
+
+
+** Pangenome Browser format
+
+The many JSON files that are named as
+[[https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/][results/1/chunk001200.bin1.schematic.json]] are consumed by the
+Pangenome browser.
+
+* Log of workflow output
+
+Including in below link is a log file of the last workflow runs.
+
+* All files
+
+https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/

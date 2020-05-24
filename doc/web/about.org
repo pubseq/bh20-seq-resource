@@ -75,12 +75,17 @@ multiple resources.
 
 * Why should I not upload by data here?
 
-Funny question.  There is no good reason not to upload your data here!
+Funny question.  There are only good reasons to upload your data here
+and make it available to the widest audience possible.
+
 In fact, you can upload your data here as well as to other
 resources. It is your data after all. No one can prevent you from
-uploading your data to multiple resources. We recommend uploading to
-EBI and NCBI resources. Use our data conversion tools to only enter
-data once and make the process smooth.
+uploading your data to multiple resources.
+
+We recommend uploading to EBI and NCBI resources using our data
+conversion tools. It means you only enter data once and make the
+process smooth. You can also use our command line data uploader
+for bulk uploads!
 
 * How does the public sequence resource work?
 

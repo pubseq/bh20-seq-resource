@@ -1,0 +1,134 @@
+#+TITLE: About/FAQ
+#+AUTHOR: Pjotr Prins
+
+* Table of Contents                                                     :TOC:noexport:
+ - [[#what-is-the-public-sequence-resource-about][What is the 'public sequence resource' about?]]
+ - [[#who-created-the-public-sequence-resource][Who created the public sequence resource?]]
+ - [[#how-does-the-public-sequence-resource-compare-to-other-data-resources][How does the public sequence resource compare to other data resources?]]
+ - [[#why-should-i-upload-my-data-here][Why should I upload my data here?]]
+ - [[#why-should-i-not-upload-by-data-here][Why should I not upload by data here?]]
+ - [[#how-does-the-public-sequence-resource-work][How does the public sequence resource work?]]
+ - [[#is-this-about-open-data][Is this about open data?]]
+ - [[#is-this-about-free-software][Is this about free software?]]
+ - [[#how-do-i-upload-raw-data][How do I upload raw data?]]
+ - [[#how-do-i-change-metadata][How do I change metadata?]]
+ - [[#how-do-i-change-the-work-flows][How do I change the work flows?]]
+ - [[#how-do-i-change-the-source-code][How do I change the source code?]]
+ - [[#how-do-i-deal-with-private-data-and-privacy][How do I deal with private data and privacy?]]
+ - [[#who-are-the-sponsors][Who are the sponsors?]]
+
+* What is the 'public sequence resource' about?
+
+The *public sequence resource* aims to provide a generic and useful
+resource for COVID-19 research.  The focus is on providing the best
+possible sequence data with associated metadata that can be used for
+sequence comparison and protein prediction.
+
+* Who created the public sequence resource?
+
+The *public sequence resource* is an initiative by [[https://github.com/arvados/bh20-seq-resource/graphs/contributors][bioinformatics]] and
+ontology experts who want to create something agile and useful for
+the wider research community. The initiative started at the COVID-19
+biohackathon in April 2020 and is ongoing. The main project drivers
+are Pjotr Prins (UTHSC), Peter Amstutz (Curii), Michael Crusoe (Common
+Workflow Language) and Thomas Liener (consultant, formerly EBI). But
+as this is a free software initiative the project represents major
+work by hundreds of software developers and ontology and data
+wrangling experts. Thank you everyone!
+
+* How does the public sequence resource compare to other data resources?
+
+The short version is that we use state-of-the-art practices in
+bioinformatics using agile methods. Unlike the resources from large
+institutes we can improve things on a dime and anyone can contribute
+to building out this resource!
+
+Importantly: all data is published under the [[https://creativecommons.org/licenses/by/4.0/][Creative Commons 4.0
+attribution license]] which means it data can be published and workflows
+can run in public environments allowing for improved access for
+research and reproducible results. This contrasts with some other
+public resources, including GISAID.
+
+* Why should I upload my data here?
+
+1. We champion truly shareable data without licensing restrictions - with proper
+   attribution
+2. We provide full metadata support using state-of-the-art ontology's
+2. We provide a web-based sequence uploader and a command-line version
+   for bulk uploads
+3. We provide a live SPARQL end-point for all metadata
+2. We provide free data analysis and sequence comparison triggered on data upload
+4. We provide free downloads of all computed output
+3. There is no need to set up pipelines and/or compute clusters
+4. All workflows get triggered on uploading a new sequence
+4. When someone (you?) improves the software/workflows and everyone benefits
+
+Finally, if you upload your data here we have workflows that output
+formatted data suitable for uploading to EBI resources (and soon
+others). Uploading your data here get your data ready for upload to
+multiple resources.
+
+* Why should I not upload by data here?
+
+Funny question.  There is no good reason not to upload your data here!
+In fact, you can upload your data here as well as to other
+resources. It is your data after all. No one can prevent you from
+uploading your data to multiple resources. We recommend uploading to
+EBI and NCBI resources. Use our data conversion tools to only enter
+data once and make the process smooth.
+
+* How does the public sequence resource work?
+
+On uploading a sequence with metadata it will automatically be
+processed and incorporated into the public pangenome with metadata
+using workflows from the High Performance Open Biology Lab defined
+[[https://github.com/hpobio-lab/viral-analysis/tree/master/cwl/pangenome-generate][here]].
+
+* Is this about open data?
+
+All data is published under a [[https://creativecommons.org/licenses/by/4.0/][Creative Commons 4.0 attribution license]]
+(CC-BY-4.0). You can download the raw and published (GFA/RDF/FASTA)
+data and store it for further processing.
+
+* Is this about free software?
+
+Absolutely. Free software allows for fully reproducible pipelines. You
+can take our workflows and data and run it elsewhere!
+
+* How do I upload raw data?
+
+We are preparing raw sequence data pipelines (fastq and BAM). The
+reason is that we want the best data possible for downstream analysis
+(including protein prediction and test development). The current
+approach where people publish final sequences of SARS-CoV-2 is lacking
+because it hides how this sequence was created. For reasons of
+reproducible and improved results we want/need to work with the raw
+sequence reads (both short reads and long reads) and take alternative
+assembly variations into consideration. This is all work in progress.
+
+* How do I change metadata?
+
+See the [[http://covid19.genenetwork.org/blog]]!
+
+* How do I change the work flows?
+
+See the [[http://covid19.genenetwork.org/blog]]!
+
+* How do I change the source code?
+
+Go to our [[https://github.com/arvados/bh20-seq-resource][source code repositories]], fork/clone the repository, change
+something and submit a [[https://github.com/arvados/bh20-seq-resource/pulls][pull request]] (PR). That easy! Check out how
+many PRs we already merged.
+
+* How do I deal with private data and privacy?
+
+A public sequence resource is about public data. Metadata can refer to
+private data. You can use your own (anonymous) identifiers.  We also
+plan to combine identifiers with clinical data stored securely at
+[[https://redcap-covid19.elixir-luxembourg.org/redcap/][REDCap]]. Contact Pjotr Prins if you want to work on this.
+
+* Who are the sponsors?
+
+The main sponsors are listed in the footer. In addition to the time
+generously donated by many contributors we also acknowledge Amazon AWS
+for donating COVID-19 related compute time.

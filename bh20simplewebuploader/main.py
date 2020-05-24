@@ -428,7 +428,19 @@ def blog_page():
 
 @app.route('/about')
 def about_page():
-    return render_template('about.html',menu='ABOUT')
+    buf = ""
+    in_body = False
+    begin_body = re.compile(r"<body>",re.IGNORECASE)
+    end_body = re.compile(r"(</body>|.*=\"postamble\")",re.IGNORECASE)
+    with open('doc/web/about.html') as f:
+        for line in f:
+            if end_body.match(line):
+                break
+            if in_body:
+                buf += line
+            elif begin_body.match(line):
+                in_body = True
+    return render_template('about.html',menu='ABOUT',embed=buf)
 
 ## Dynamic API functions starting here
 ## This is quick and dirty for now, just to get something out and demonstrate the queries

@@ -11,7 +11,7 @@ most importantly, providing standardised workflows that get triggered
 on upload, so that results are immediately available in standardised
 data formats.
 
-* Table of Contents                                                     :TOC:
+* Table of Contents                                                     :TOC:noexport:
  - [[#what-does-this-mean][What does this mean?]]
  - [[#fetch-sequence-data][Fetch sequence data]]
  - [[#predicates][Predicates]]

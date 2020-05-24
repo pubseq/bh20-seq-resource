@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-05-24 Sun 10:27 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About/FAQ</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Pjotr Prins" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">About/FAQ</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org4fc5d3e">1. What is the 'public sequence resource' about?</a></li>
+<li><a href="#orga424b3d">2. Who created the public sequence resource?</a></li>
+<li><a href="#org250dbae">3. How does the public sequence resource compare to other data resources?</a></li>
+<li><a href="#orgd065057">4. Why should I upload my data here?</a></li>
+<li><a href="#org5f94b02">5. Why should I not upload by data here?</a></li>
+<li><a href="#orgbaaaeaf">6. How does the public sequence resource work?</a></li>
+<li><a href="#org68363cb">7. Is this about open data?</a></li>
+<li><a href="#orgb6aaf34">8. Is this about free software?</a></li>
+<li><a href="#orga01eab2">9. How do I upload raw data?</a></li>
+<li><a href="#org57f1ee0">10. How do I change metadata?</a></li>
+<li><a href="#org5585441">11. How do I change the work flows?</a></li>
+<li><a href="#orgc51ee58">12. How do I change the source code?</a></li>
+<li><a href="#org79c6c9b">13. How do I deal with private data and privacy?</a></li>
+<li><a href="#org8ed8b69">14. Who are the sponsors?</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4fc5d3e" class="outline-2">
+<h2 id="org4fc5d3e"><span class="section-number-2">1</span> What is the 'public sequence resource' about?</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The <b>public sequence resource</b> aims to provide a generic and useful
+resource for COVID-19 research.  The focus is on providing the best
+possible sequence data with associated metadata that can be used for
+sequence comparison and protein prediction.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga424b3d" class="outline-2">
+<h2 id="orga424b3d"><span class="section-number-2">2</span> Who created the public sequence resource?</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The <b>public sequence resource</b> is an initiative by <a href="https://github.com/arvados/bh20-seq-resource/graphs/contributors">bioinformatics</a> and
+ontology experts who want to create something agile and useful for
+the wider research community. The initiative started at the COVID-19
+biohackathon in April 2020 and is ongoing. The main project drivers
+are Pjotr Prins (UTHSC), Peter Amstutz (Curii), Michael Crusoe (Common
+Workflow Language) and Thomas Liener (consultant, formerly EBI). But
+as this is a free software initiative the project represents major
+work by hundreds of software developers and ontology and data
+wrangling experts. Thank you everyone!
+</p>
+</div>
+</div>
+
+<div id="outline-container-org250dbae" class="outline-2">
+<h2 id="org250dbae"><span class="section-number-2">3</span> How does the public sequence resource compare to other data resources?</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+The short version is that we use state-of-the-art practices in
+bioinformatics using agile methods. Unlike the resources from large
+institutes we can improve things on a dime and anyone can contribute
+to building out this resource!
+</p>
+
+<p>
+Importantly: all data is published under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons 4.0
+attribution license</a> which means it data can be published and workflows
+can run in public environments allowing for improved access for
+research and reproducible results. This contrasts with some other
+public resources, including GISAID.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd065057" class="outline-2">
+<h2 id="orgd065057"><span class="section-number-2">4</span> Why should I upload my data here?</h2>
+<div class="outline-text-2" id="text-4">
+<ol class="org-ol">
+<li>We champion truly shareable data without licensing restrictions - with proper
+attribution</li>
+<li>We provide full metadata support using state-of-the-art ontology's</li>
+<li>We provide a web-based sequence uploader and a command-line version
+for bulk uploads</li>
+<li>We provide a live SPARQL end-point for all metadata</li>
+<li>We provide free data analysis and sequence comparison triggered on data upload</li>
+<li>We provide free downloads of all computed output</li>
+<li>There is no need to set up pipelines and/or compute clusters</li>
+<li>All workflows get triggered on uploading a new sequence</li>
+<li>When someone (you?) improves the software/workflows and everyone benefits</li>
+</ol>
+
+<p>
+Finally, if you upload your data here we have workflows that output
+formatted data suitable for uploading to EBI resources (and soon
+others). Uploading your data here get your data ready for upload to
+multiple resources.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5f94b02" class="outline-2">
+<h2 id="org5f94b02"><span class="section-number-2">5</span> Why should I not upload by data here?</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Funny question.  There is no good reason not to upload your data here!
+In fact, you can upload your data here as well as to other
+resources. It is your data after all. No one can prevent you from
+uploading your data to multiple resources. We recommend uploading to
+EBI and NCBI resources. Use our data conversion tools to only enter
+data once and make the process smooth.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbaaaeaf" class="outline-2">
+<h2 id="orgbaaaeaf"><span class="section-number-2">6</span> How does the public sequence resource work?</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+On uploading a sequence with metadata it will automatically be
+processed and incorporated into the public pangenome with metadata
+using workflows from the High Performance Open Biology Lab defined
+<a href="https://github.com/hpobio-lab/viral-analysis/tree/master/cwl/pangenome-generate">here</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org68363cb" class="outline-2">
+<h2 id="org68363cb"><span class="section-number-2">7</span> Is this about open data?</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+All data is published under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons 4.0 attribution license</a>
+(CC-BY-4.0). You can download the raw and published (GFA/RDF/FASTA)
+data and store it for further processing.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb6aaf34" class="outline-2">
+<h2 id="orgb6aaf34"><span class="section-number-2">8</span> Is this about free software?</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Absolutely. Free software allows for fully reproducible pipelines. You
+can take our workflows and data and run it elsewhere!
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga01eab2" class="outline-2">
+<h2 id="orga01eab2"><span class="section-number-2">9</span> How do I upload raw data?</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+We are preparing raw sequence data pipelines (fastq and BAM). The
+reason is that we want the best data possible for downstream analysis
+(including protein prediction and test development). The current
+approach where people publish final sequences of SARS-CoV-2 is lacking
+because it hides how this sequence was created. For reasons of
+reproducible and improved results we want/need to work with the raw
+sequence reads (both short reads and long reads) and take alternative
+assembly variations into consideration. This is all work in progress.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org57f1ee0" class="outline-2">
+<h2 id="org57f1ee0"><span class="section-number-2">10</span> How do I change metadata?</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+See the <a href="http://covid19.genenetwork.org/blog">http://covid19.genenetwork.org/blog</a>!
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5585441" class="outline-2">
+<h2 id="org5585441"><span class="section-number-2">11</span> How do I change the work flows?</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+See the <a href="http://covid19.genenetwork.org/blog">http://covid19.genenetwork.org/blog</a>!
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc51ee58" class="outline-2">
+<h2 id="orgc51ee58"><span class="section-number-2">12</span> How do I change the source code?</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+Go to our <a href="https://github.com/arvados/bh20-seq-resource">source code repositories</a>, fork/clone the repository, change
+something and submit a <a href="https://github.com/arvados/bh20-seq-resource/pulls">pull request</a> (PR). That easy! Check out how
+many PRs we already merged.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org79c6c9b" class="outline-2">
+<h2 id="org79c6c9b"><span class="section-number-2">13</span> How do I deal with private data and privacy?</h2>
+<div class="outline-text-2" id="text-13">
+<p>
+A public sequence resource is about public data. Metadata can refer to
+private data. You can use your own (anonymous) identifiers.  We also
+plan to combine identifiers with clinical data stored securely at
+<a href="https://redcap-covid19.elixir-luxembourg.org/redcap/">REDCap</a>. Contact Pjotr Prins if you want to work on this.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8ed8b69" class="outline-2">
+<h2 id="org8ed8b69"><span class="section-number-2">14</span> Who are the sponsors?</h2>
+<div class="outline-text-2" id="text-14">
+<p>
+The main sponsors are listed in the footer. In addition to the time
+generously donated by many contributors we also acknowledge Amazon AWS
+for donating COVID-19 related compute time.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-24 Sun 10:26</small>.
+</div>
+</body>
+</html>

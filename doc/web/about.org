@@ -130,7 +130,7 @@ many PRs we already merged.
 A public sequence resource is about public data. Metadata can refer to
 private data. You can use your own (anonymous) identifiers.  We also
 plan to combine identifiers with clinical data stored securely at
-[[https://redcap-covid19.elixir-luxembourg.org/redcap/][REDCap]]. Contact Pjotr Prins if you want to work on this.
+[[https://redcap-covid19.elixir-luxembourg.org/redcap/][REDCap]]. See the relevant [[https://github.com/arvados/bh20-seq-resource/issues/21][tracker]] for more information and contributing.
 
 * Who are the sponsors?
 

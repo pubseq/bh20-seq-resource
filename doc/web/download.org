@@ -11,6 +11,10 @@
    - [[#pangenome-browser-format][Pangenome Browser format]]
  - [[#log-of-workflow-output][Log of workflow output]]
  - [[#all-files][All files]]
+ - [[#planned][Planned]]
+   - [[#raw-sequence-data][Raw sequence data]]
+   - [[#multiple-sequence-alignment-msa][Multiple Sequence Alignment (MSA)]]
+   - [[#phylogenetic-tree][Phylogenetic tree]]
 
 * FASTA files
 
@@ -67,3 +71,19 @@ Including in below link is a log file of the last workflow runs.
 * All files
 
 https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/
+
+* Planned
+
+We are planning the add the following output (see also
+
+** Raw sequence data
+
+See [[https://github.com/arvados/bh20-seq-resource/issues/16][fastq tracker]] and [[https://github.com/arvados/bh20-seq-resource/issues/63][BAM tracker]].
+
+** Multiple Sequence Alignment (MSA)
+
+See [[https://github.com/arvados/bh20-seq-resource/issues/11][MSA tracker]].
+
+** Phylogenetic tree
+
+See [[https://github.com/arvados/bh20-seq-resource/issues/43][Phylo tracker]].

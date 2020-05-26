@@ -125,7 +125,8 @@ def start_pangenome_analysis(api,
                              analysis_project,
                              pangenome_workflow_uuid,
                              validated_project,
-                             schema_ref):
+                             schema_ref,
+                             exclude_list):
     validated = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", validated_project]])
     inputobj = {
         "inputReads": [],
@@ -134,6 +135,10 @@ def start_pangenome_analysis(api,
         "metadataSchema": {
             "class": "File",
             "location": schema_ref
+        },
+        "exclude": {
+            "class": "File",
+            "location": exclude_list
         }
     }
     validated.sort(key=lambda v: v["portable_data_hash"])
@@ -213,6 +218,8 @@ def main():
     parser.add_argument('--pangenome-workflow-uuid', type=str, default='lugli-7fd4e-mqfu9y3ofnpnho1', help='')
     parser.add_argument('--fastq-workflow-uuid', type=str, default='lugli-7fd4e-2zp9q4jo5xpif9y', help='')
 
+    parser.add_argument('--exclude-list', type=str, default='keep:lugli-4zz18-tzzhcm6hrf8ci8d/exclude.txt', help='')
+
     parser.add_argument('--latest-result-collection', type=str, default='lugli-4zz18-z513nlpqm03hpca', help='')
     parser.add_argument('--kickoff', action="store_true")
     args = parser.parse_args()
@@ -229,7 +236,8 @@ def main():
                                  args.pangenome_analysis_project,
                                  args.pangenome_workflow_uuid,
                                  args.validated_project,
-                                 schema_ref)
+                                 schema_ref,
+                                 args.exclude_list)
         return
 
     logging.info("Starting up, monitoring %s for uploads" % (args.uploader_project))
@@ -250,7 +258,8 @@ def main():
                                      args.pangenome_analysis_project,
                                      args.pangenome_workflow_uuid,
                                      args.validated_project,
-                                     schema_ref)
+                                     schema_ref,
+                                     args.exclude_list)
 
         copy_most_recent_result(api,
                                 args.pangenome_analysis_project,

@@ -3,10 +3,13 @@ class: CommandLineTool
 inputs:
   readsFA: File[]
   subjects: string[]
+  exclude:
+    type: File?
+    inputBinding: {position: 2}
   script:
     type: File
     default: {class: File, location: relabel-seqs.py}
-    inputBinding: {}
+    inputBinding: {position: 1}
 outputs:
   relabeledSeqs:
     type: File

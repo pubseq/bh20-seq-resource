@@ -9,6 +9,7 @@ inputs:
   metadata: File[]
   metadataSchema: File
   subjects: string[]
+  exclude: File?
   bin_widths:
     type: int[]
     default: [ 1, 4, 16, 64, 256, 1000, 4000, 16000]
@@ -47,6 +48,7 @@ steps:
     in:
       readsFA: inputReads
       subjects: subjects
+      exclude: exclude
     out: [relabeledSeqs, originalLabels]
     run: relabel-seqs.cwl
   dedup:

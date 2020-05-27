@@ -1,5 +1,7 @@
 # COVID-19 PubSeq: Public Sequence uploader
 
+[![Join the chat at https://gitter.im/arvados/pubseq](https://badges.gitter.im/arvados/pubseq.svg)](https://gitter.im/arvados/pubseq?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This repository provides a sequence uploader for the COVID-19 Virtual
 Biohackathon's Public Sequence Resource project. There are two
 versions, one that runs on the command line and another that acts as

@@ -14,7 +14,9 @@
  - [[#how-do-i-change-metadata][How do I change metadata?]]
  - [[#how-do-i-change-the-work-flows][How do I change the work flows?]]
  - [[#how-do-i-change-the-source-code][How do I change the source code?]]
+ - [[#should-i-choose-cc-by-or-cc0][Should I choose CC-BY or CC0?]]
  - [[#how-do-i-deal-with-private-data-and-privacy][How do I deal with private data and privacy?]]
+ - [[#how-do-i-communicate-with-you][How do I communicate with you?]]
  - [[#who-are-the-sponsors][Who are the sponsors?]]
 
 * What is the 'public sequence resource' about?
@@ -130,12 +132,26 @@ Go to our [[https://github.com/arvados/bh20-seq-resource][source code repositori
 something and submit a [[https://github.com/arvados/bh20-seq-resource/pulls][pull request]] (PR). That easy! Check out how
 many PRs we already merged.
 
+* Should I choose CC-BY or CC0?
+
+Restrictive data licenses are hampering data sharing and reproducible
+research. CC0 is the preferred license because it gives researchers
+the most freedom. Since we provide metadata there is no reason for
+others not to honour your work. We also provide CC-BY as an option
+because we know people like the attribution clause.
+
+In all honesty: we prefer both data and software to be free.
+
 * How do I deal with private data and privacy?
 
 A public sequence resource is about public data. Metadata can refer to
 private data. You can use your own (anonymous) identifiers.  We also
 plan to combine identifiers with clinical data stored securely at
 [[https://redcap-covid19.elixir-luxembourg.org/redcap/][REDCap]]. See the relevant [[https://github.com/arvados/bh20-seq-resource/issues/21][tracker]] for more information and contributing.
+
+* How do I communicate with you?
+
+We use a [[https://gitter.im/arvados/pubseq?utm_source=share-link&utm_medium=link&utm_campaign=share-link][gitter channel]] you can join.
 
 * Who are the sponsors?
 

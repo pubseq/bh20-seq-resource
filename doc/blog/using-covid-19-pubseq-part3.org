@@ -11,16 +11,6 @@
 
 /Work in progress!/
 
-As part of the COVID-19 Biohackathon 2020 we formed a working group to
-create a COVID-19 Public Sequence Resource (COVID-19 PubSeq) for
-Corona virus sequences. The general idea is to create a repository
-that has a low barrier to entry for uploading sequence data using best
-practices. I.e., data published with a creative commons 4.0 (CC-4.0)
-license with metadata using state-of-the art standards and, perhaps
-most importantly, providing standardised workflows that get triggered
-on upload, so that results are immediately available in standardised
-data formats.
-
 * Table of Contents                                                     :TOC:noexport:
  - [[#uploading-data][Uploading Data]]
  - [[#table-of-contents][Table of Contents]]

@@ -1,2 +1,32 @@
+#+TITLE: COVID-19 PubSeq Uploading Data (part 3)
+#+AUTHOR: Pjotr Prins
+# C-c C-e h h   publish
+# C-c !         insert date (use . for active agenda, C-u C-c ! for date, C-u C-c . for time)
+# C-c C-t       task rotate
+# RSS_IMAGE_URL: http://xxxx.xxxx.free.fr/rss_icon.png
+
+#+HTML_HEAD: <link rel="Blog stylesheet" type="text/css" href="blog.css" />
+
+* Uploading Data
+
 /Work in progress!/
 
+As part of the COVID-19 Biohackathon 2020 we formed a working group to
+create a COVID-19 Public Sequence Resource (COVID-19 PubSeq) for
+Corona virus sequences. The general idea is to create a repository
+that has a low barrier to entry for uploading sequence data using best
+practices. I.e., data published with a creative commons 4.0 (CC-4.0)
+license with metadata using state-of-the art standards and, perhaps
+most importantly, providing standardised workflows that get triggered
+on upload, so that results are immediately available in standardised
+data formats.
+
+* Table of Contents                                                     :TOC:noexport:
+ - [[#uploading-data][Uploading Data]]
+ - [[#table-of-contents][Table of Contents]]
+ - [[#what-does-this-mean][What does this mean?]]
+
+* Table of Contents                                                     :TOC:noexport:
+ - [[#what-does-this-mean][What does this mean?]]
+
+* What does this mean?

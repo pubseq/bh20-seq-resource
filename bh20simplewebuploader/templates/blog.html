@@ -5,9 +5,17 @@
     {% include 'banner.html' %}
     {% include 'menu.html' %}
 
-    <h1>BLOG Entries</h1>
+    {% if embed %}
+    {{ embed|safe }}
+    <hr>
 
-    <i>Note that this is work in progress (WIP)</i>
+    <p>
+      Other blog entries:
+    </p>
+
+    {% else %}
+    <h2>BLOG Entries:</h2>
+    {% endif %}
 
     <section class="blog-entries">
       <div class="blog-table">
@@ -31,7 +39,7 @@
           </div>
           <div class="blog-table-row">
             <div class="blog-table-cell">
-              <a href="https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part3.org">Submitting a sequence</a>
+              <a href="/blog?id=using-covid-19-pubseq-part3">Submitting a sequence</a>
             </div>
             <div class="blog-table-cell">
               We submit a sequence to the database

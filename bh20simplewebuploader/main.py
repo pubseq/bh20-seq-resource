@@ -441,9 +441,14 @@ def download_page():
 def demo_page():
     return render_template('demo.html',menu='DEMO')
 
-@app.route('/blog')
+@app.route('/blog',methods=['GET'])
 def blog_page():
-    return render_template('blog.html',menu='BLOG')
+    blog_content = request.args.get('id') # e.g. using-covid-19-pubseq-part3
+    buf = None;
+    if blog_content:
+        buf = get_html_body('doc/blog/'+blog_content+'.html')
+    return render_template('blog.html',menu='BLOG',embed=buf)
+
 
 @app.route('/about')
 def about_page():

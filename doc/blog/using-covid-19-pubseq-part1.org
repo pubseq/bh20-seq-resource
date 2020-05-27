@@ -1,5 +1,12 @@
 #+TITLE: COVID-19 PubSeq (part 1)
 #+AUTHOR: Pjotr Prins
+# C-c C-e h h   publish
+# C-c !         insert date (use . for active agenda, C-u C-c ! for date, C-u C-c . for time)
+# C-c C-t       task rotate
+# RSS_IMAGE_URL: http://xxxx.xxxx.free.fr/rss_icon.png
+
+#+HTML_LINK_HOME: http://covid19.genenetwork.org
+#+HTML_HEAD: <link rel="Blog stylesheet" type="text/css" href="blog.css" />
 
 As part of the COVID-19 Biohackathon 2020 we formed a working group
 to create a COVID-19 Public Sequence Resource (COVID-19 PubSeq) for

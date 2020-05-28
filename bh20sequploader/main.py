@@ -26,14 +26,14 @@ def main():
 
     api = arvados.api(host=ARVADOS_API_HOST, token=ARVADOS_API_TOKEN, insecure=True)
 
+    if not qc_metadata(args.metadata.name):
+        print("Failed metadata qc")
+        exit(1)
+
     try:
         target = qc_fasta(args.sequence)
     except ValueError as e:
         print(e)
-        exit(1)
-
-    if not qc_metadata(args.metadata.name):
-        print("Failed metadata qc")
         exit(1)
 
     if args.validate:

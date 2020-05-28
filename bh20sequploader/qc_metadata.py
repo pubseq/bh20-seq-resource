@@ -8,7 +8,9 @@ import traceback
 from rdflib import Graph, Namespace
 from pyshex.evaluate import evaluate
 
+
 def qc_metadata(metadatafile):
+    log = logging.getLogger(__name__ )
     schema_resource = pkg_resources.resource_stream(__name__, "bh20seq-schema.yml")
     cache = {"https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-schema.yml": schema_resource.read().decode("utf-8")}
     (document_loader,
@@ -28,10 +30,11 @@ def qc_metadata(metadatafile):
         rslt, reason = evaluate(g, shex, doc["id"], "https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-shex.rdf#submissionShape")
 
         if not rslt:
+            log.debug(reason)
             print(reason)
 
         return rslt
     except Exception as e:
         traceback.print_exc()
-        logging.warn(e)
+        log.warn(e)
     return False

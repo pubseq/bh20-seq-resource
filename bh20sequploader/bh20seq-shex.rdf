@@ -32,8 +32,8 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
 
 :sampleShape  {
     sio:SIO_000115 xsd:string;
-	evs:C25164 xsd:string;
-	obo:GAZ_00000448 [wikidata:~] ;
+	  evs:C25164 xsd:string;
+	  obo:GAZ_00000448 [wikidata:~] ;
     obo:OBI_0001895 xsd:string ?;
     obo:NCIT_C41206 xsd:string ?;
     obo:OBI_0001479 IRI {0,2};

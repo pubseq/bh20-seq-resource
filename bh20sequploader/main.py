@@ -3,6 +3,7 @@ import time
 import arvados
 import arvados.collection
 import json
+import logging
 import magic
 from pathlib import Path
 import urllib.request
@@ -12,6 +13,10 @@ import sys
 sys.path.insert(0,'.')
 from bh20sequploader.qc_metadata import qc_metadata
 from bh20sequploader.qc_fasta import qc_fasta
+
+logging.basicConfig(level=logging.DEBUG)
+log = logging.getLogger(__name__ )
+log.debug("Entering sequence uploader")
 
 ARVADOS_API_HOST='lugli.arvadosapi.com'
 ARVADOS_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
@@ -26,13 +31,16 @@ def main():
 
     api = arvados.api(host=ARVADOS_API_HOST, token=ARVADOS_API_TOKEN, insecure=True)
 
+    log.debug("Checking metadata")
     if not qc_metadata(args.metadata.name):
-        print("Failed metadata qc")
+        log.warning("Failed metadata qc")
         exit(1)
 
     try:
+        log.debug("Checking FASTA QC")
         target = qc_fasta(args.sequence)
     except ValueError as e:
+        log.warning("Failed FASTA qc")
         print(e)
         exit(1)
 

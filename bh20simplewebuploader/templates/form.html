@@ -9,25 +9,38 @@
             <form action="/submit" method="POST" enctype="multipart/form-data" id="main_form" class="grid-container">
                 <div class="intro">
                     <p>
-                        Upload your SARS-CoV-2 sequence (FASTA or FASTQ formats) with metadata (JSONLD) to the <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">public sequence resource</a>. The upload will trigger a
-                        recompute with all available sequences into a Pangenome
-                        available for
-                        <a href="https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/">download</a>!
+                        Make your sequence
+                        data <a href="https://en.wikipedia.org/wiki/FAIR_data">FAIR</a>. Upload
+                        your SARS-CoV-2 sequence (FASTA or FASTQ
+                        formats) with metadata (JSONLD) to
+                        the <a href="/about">public sequence
+                        resource</a>. The upload will trigger a
+                        recompute with all available sequences into a
+                        Pangenome available for
+                        <a href="/download">download</a>!
                     </p>
                     <p>
-                        Your uploaded sequence will automatically be processed
-                        and incorporated into the public pangenome with
-                        metadata using worklows from the High Performance Open Biology Lab defined <a href="https://github.com/hpobio-lab/viral-analysis/tree/master/cwl/pangenome-generate">here</a>. All data is published under
+                        Your uploaded sequence will automatically be
+                        processed and incorporated into the public
+                        pangenome with metadata using worklows from
+                        the High Performance Open Biology Lab
+                        defined <a href="https://github.com/hpobio-lab/viral-analysis/tree/master/cwl/pangenome-generate">here</a>. All
+                        data is published under
                         a <a href="https://creativecommons.org/licenses/by/4.0/">Creative
-                        Commons 4.0 attribution license</a> (CC-BY-4.0). You
-                        can take the published (GFA/RDF/FASTA) data and store it in
-                        a triple store for further processing. We also plan to
-                        combine identifiers with clinical data stored securely at <a href="https://redcap-covid19.elixir-luxembourg.org/redcap/">REDCap</a>.
-                        A free command line version of the uploader can be
-                        installed from <a href="https://github.com/arvados/bh20-seq-resource">source</a>.
+                        Commons license</a> You can take the published
+                        (GFA/RDF/FASTA) data and store it in a triple
+                        store for further processing.  Clinical
+                        data can be stored
+                        securely
+                        at <a href="https://redcap-covid19.elixir-luxembourg.org/redcap/">REDCap</a>.
                     </p>
                     <p>
-                      Note that form fields contain web <a href="https://en.wikipedia.org/wiki/Web_Ontology_Language">onthology URI's</a> for <a href="https://en.wikipedia.org/wiki/Wikipedia:Disambiguation">disambiguation</a> and machine readable metadata. For examples of use, see the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part1.org">BLOG</a>.
+                      Note that form fields contain
+                      web <a href="https://en.wikipedia.org/wiki/Web_Ontology_Language">onthology
+                      URI's</a>
+                      for <a href="https://en.wikipedia.org/wiki/Wikipedia:Disambiguation">disambiguation</a>
+                      and machine readable metadata. For examples of
+                      use, see the <a href="/blog">BLOG</a>.
                     </p>
                 </div>
 

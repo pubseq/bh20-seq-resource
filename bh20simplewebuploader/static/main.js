@@ -175,7 +175,14 @@ for (let button of document.getElementsByClassName('remove-field')) {
 
 // Change the submit button after hitting
 function on_submit_button() {
-    var elem = document.getElementById("submit");
-    elem.value = "Submitting...";
-    elem.disabled = true;
+    var f = document.getElementsByTagName('form')[0];
+    if(f.checkValidity()) {
+        var elem = document.getElementById("submit");
+        elem.value = "Submitting...";
+        elem.disabled = true;
+        f.submit();
+    } else {
+        alert(document.getElementById('example').validationMessage);
+        return false;
+    }
 }

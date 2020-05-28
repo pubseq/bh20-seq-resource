@@ -8,6 +8,7 @@
  - [[#why-should-i-upload-my-data-here][Why should I upload my data here?]]
  - [[#why-should-i-not-upload-by-data-here][Why should I not upload by data here?]]
  - [[#how-does-the-public-sequence-resource-work][How does the public sequence resource work?]]
+ - [[#who-uses-the-public-sequence-resource][Who uses the public sequence resource?]]
  - [[#is-this-about-open-data][Is this about open data?]]
  - [[#is-this-about-free-software][Is this about free software?]]
  - [[#how-do-i-upload-raw-data][How do I upload raw data?]]
@@ -69,6 +70,7 @@ public resources, including GISAID.
 4. Your data gets automatically integrated with the Swiss Institure of
    Bioinformatics COVID-19 knowledge base
    https://covid-19-sparql.expasy.org/ (Elixir Switzerland)
+4. Your data will be used to develop drug targets
 
 Finally, if you upload your data here we have workflows that output
 formatted data suitable for uploading to EBI resources (and soon
@@ -95,6 +97,14 @@ On uploading a sequence with metadata it will automatically be
 processed and incorporated into the public pangenome with metadata
 using workflows from the High Performance Open Biology Lab defined
 [[https://github.com/hpobio-lab/viral-analysis/tree/master/cwl/pangenome-generate][here]].
+
+* Who uses the public sequence resource?
+
+The Swiss Institute of Bioinformatics has included this data in
+https://covid-19-sparql.expasy.org/ and made it part of [[https://www.uniprot.org/][Uniprot]].
+
+[[https://uthsc.edu][UTHSC]] and [[https://www.ornl.gov/news/ornl-fight-against-covid-19][ORNL]] use COVID-19 PubSeq data for protein prediction and
+drug development.
 
 * Is this about open data?
 

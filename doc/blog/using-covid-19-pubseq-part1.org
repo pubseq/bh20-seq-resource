@@ -5,18 +5,8 @@
 # C-c C-t       task rotate
 # RSS_IMAGE_URL: http://xxxx.xxxx.free.fr/rss_icon.png
 
-#+HTML_LINK_HOME: http://covid19.genenetwork.org
 #+HTML_HEAD: <link rel="Blog stylesheet" type="text/css" href="blog.css" />
 
-As part of the COVID-19 Biohackathon 2020 we formed a working group
-to create a COVID-19 Public Sequence Resource (COVID-19 PubSeq) for
-Corona virus sequences. The general idea is to create a repository
-that has a low barrier to entry for uploading sequence data using best
-practices. I.e., data published with a creative commons 4.0 (CC-4.0)
-license with metadata using state-of-the art standards and, perhaps
-most importantly, providing standardised workflows that get triggered
-on upload, so that results are immediately available in standardised
-data formats.
 
 * Table of Contents                                                     :TOC:noexport:
  - [[#what-does-this-mean][What does this mean?]]
@@ -261,7 +251,6 @@ Now we know how to get at the origin we can do it the other way round
 and fetch all sequences referring to Washington state
 
 #+begin_src sql
-
 select ?seq ?sample
 {
     ?seq <http://biohackathon.org/bh20-seq-schema#MainSchema/sample> ?sample .
@@ -271,6 +260,18 @@ select ?seq ?sample
 
 which lists 300 sequences originating from Washington state! Which is almost
 half of the set coming out of GenBank.
+
+Likewise to list all sequences from Turkey we can find the wikidata
+entity is [[https://www.wikidata.org/wiki/Q43][Q43]]:
+
+#+begin_src sql
+select ?seq ?sample
+{
+    ?seq <http://biohackathon.org/bh20-seq-schema#MainSchema/sample> ?sample .
+    ?sample <http://purl.obolibrary.org/obo/GAZ_00000448> <http://www.wikidata.org/entity/Q43>
+}
+#+end_src
+
 
 * Discussion
 

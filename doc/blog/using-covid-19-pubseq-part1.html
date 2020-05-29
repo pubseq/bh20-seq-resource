@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-29 Fri 10:12 -->
+<!-- 2020-05-29 Fri 12:06 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq (part 1)</title>
@@ -242,40 +242,26 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href=""> UP </a>
- |
- <a accesskey="H" href="http://covid19.genenetwork.org"> HOME </a>
-</div><div id="content">
+<div id="content">
 <h1 class="title">COVID-19 PubSeq (part 1)</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org5e85b09">1. What does this mean?</a></li>
-<li><a href="#org038e367">2. Fetch sequence data</a></li>
-<li><a href="#org3ad046c">3. Predicates</a></li>
-<li><a href="#orga4e7054">4. Fetch submitter info and other metadata</a></li>
-<li><a href="#orgc50badd">5. Fetch all sequences from Washington state</a></li>
-<li><a href="#orgbc80874">6. Discussion</a></li>
-<li><a href="#orgce8eaf6">7. Acknowledgements</a></li>
+<li><a href="#org9afe6ab">1. What does this mean?</a></li>
+<li><a href="#orgf4bc3d4">2. Fetch sequence data</a></li>
+<li><a href="#org9d7d482">3. Predicates</a></li>
+<li><a href="#orgc6046bb">4. Fetch submitter info and other metadata</a></li>
+<li><a href="#orgdcb216b">5. Fetch all sequences from Washington state</a></li>
+<li><a href="#org7060f51">6. Discussion</a></li>
+<li><a href="#orgdc51ccc">7. Acknowledgements</a></li>
 </ul>
 </div>
 </div>
-<p>
-As part of the COVID-19 Biohackathon 2020 we formed a working group
-to create a COVID-19 Public Sequence Resource (COVID-19 PubSeq) for
-Corona virus sequences. The general idea is to create a repository
-that has a low barrier to entry for uploading sequence data using best
-practices. I.e., data published with a creative commons 4.0 (CC-4.0)
-license with metadata using state-of-the art standards and, perhaps
-most importantly, providing standardised workflows that get triggered
-on upload, so that results are immediately available in standardised
-data formats.
-</p>
 
-<div id="outline-container-org5e85b09" class="outline-2">
-<h2 id="org5e85b09"><span class="section-number-2">1</span> What does this mean?</h2>
+
+<div id="outline-container-org9afe6ab" class="outline-2">
+<h2 id="org9afe6ab"><span class="section-number-2">1</span> What does this mean?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This means that when someone uploads a SARS-CoV-2 sequence using one
@@ -328,8 +314,8 @@ initiative!
 </div>
 
 
-<div id="outline-container-org038e367" class="outline-2">
-<h2 id="org038e367"><span class="section-number-2">2</span> Fetch sequence data</h2>
+<div id="outline-container-orgf4bc3d4" class="outline-2">
+<h2 id="orgf4bc3d4"><span class="section-number-2">2</span> Fetch sequence data</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The latest run of the pipeline can be viewed <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">here</a>. Each of these
@@ -353,8 +339,8 @@ these identifiers throughout.
 </div>
 </div>
 
-<div id="outline-container-org3ad046c" class="outline-2">
-<h2 id="org3ad046c"><span class="section-number-2">3</span> Predicates</h2>
+<div id="outline-container-org9d7d482" class="outline-2">
+<h2 id="org9d7d482"><span class="section-number-2">3</span> Predicates</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 To explore an RDF dataset, the first query we can do is open and gets
@@ -464,8 +450,8 @@ Now we got this far, lets <a href="http://sparql.genenetwork.org/sparql/?default
 </div>
 
 
-<div id="outline-container-orga4e7054" class="outline-2">
-<h2 id="orga4e7054"><span class="section-number-2">4</span> Fetch submitter info and other metadata</h2>
+<div id="outline-container-orgc6046bb" class="outline-2">
+<h2 id="orgc6046bb"><span class="section-number-2">4</span> Fetch submitter info and other metadata</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 To get dataests with submitters we can do the above
@@ -575,8 +561,8 @@ to view/query the database.
 </div>
 </div>
 
-<div id="outline-container-orgc50badd" class="outline-2">
-<h2 id="orgc50badd"><span class="section-number-2">5</span> Fetch all sequences from Washington state</h2>
+<div id="outline-container-orgdcb216b" class="outline-2">
+<h2 id="orgdcb216b"><span class="section-number-2">5</span> Fetch all sequences from Washington state</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Now we know how to get at the origin we can do it the other way round
@@ -603,8 +589,8 @@ half of the set coming out of GenBank.
 </div>
 </div>
 
-<div id="outline-container-orgbc80874" class="outline-2">
-<h2 id="orgbc80874"><span class="section-number-2">6</span> Discussion</h2>
+<div id="outline-container-org7060f51" class="outline-2">
+<h2 id="org7060f51"><span class="section-number-2">6</span> Discussion</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 The public sequence uploader collects sequences, raw data and
@@ -615,8 +601,8 @@ referenced in publications and origins are citeable.
 </div>
 </div>
 
-<div id="outline-container-orgce8eaf6" class="outline-2">
-<h2 id="orgce8eaf6"><span class="section-number-2">7</span> Acknowledgements</h2>
+<div id="outline-container-orgdc51ccc" class="outline-2">
+<h2 id="orgdc51ccc"><span class="section-number-2">7</span> Acknowledgements</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 The overall effort was due to magnificent freely donated input by a
@@ -631,7 +617,7 @@ Garrison this initiative would not have existed!
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-29 Fri 10:12</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-29 Fri 12:06</small>.
 </div>
 </body>
 </html>

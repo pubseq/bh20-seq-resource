@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-29 Fri 10:00 -->
+<!-- 2020-05-29 Fri 14:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq Uploading Data (part 3)</title>
@@ -248,16 +248,42 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbfd8594">1. Uploading Data</a></li>
-<li><a href="#org3243122">2. Introduction</a></li>
-<li><a href="#orgc7011c9">3. Step 1: Sequence</a></li>
-<li><a href="#org83d22ff">4. Step 2: Metadata</a></li>
+<li><a href="#orgb5456df">1. Uploading Data</a></li>
+<li><a href="#org5b96fa9">2. Introduction</a></li>
+<li><a href="#orga21edf3">3. Step 1: Upload sequence</a></li>
+<li><a href="#orga03c092">4. Step 2: Add metadata</a>
+<ul>
+<li><a href="#org2ab94ef">4.1. Obligatory fields</a>
+<ul>
+<li><a href="#org9972a05">4.1.1. Sample ID (sample<sub>id</sub>)</a></li>
+<li><a href="#orgf4992bb">4.1.2. Collection date</a></li>
+<li><a href="#org2f55ae7">4.1.3. Collection location</a></li>
+<li><a href="#orgb10db8a">4.1.4. Sequencing technology</a></li>
+<li><a href="#orgf846ffe">4.1.5. Authors</a></li>
+</ul>
+</li>
+<li><a href="#org2056637">4.2. Optional fields</a>
+<ul>
+<li><a href="#orgb2348b1">4.2.1. Host information</a></li>
+<li><a href="#orgd963089">4.2.2. Collecting institution</a></li>
+<li><a href="#org3257813">4.2.3. Specimen source</a></li>
+<li><a href="#org8a596c8">4.2.4. Source database accession</a></li>
+<li><a href="#orgd1f5c90">4.2.5. Strain name</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb9edfdf">5. Step 3: Submit to COVID-19 PubSeq</a>
+<ul>
+<li><a href="#orgc929675">5.1. Trouble shooting</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgbfd8594" class="outline-2">
-<h2 id="orgbfd8594"><span class="section-number-2">1</span> Uploading Data</h2>
+<div id="outline-container-orgb5456df" class="outline-2">
+<h2 id="orgb5456df"><span class="section-number-2">1</span> Uploading Data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <i>Work in progress!</i>
@@ -265,8 +291,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3243122" class="outline-2">
-<h2 id="org3243122"><span class="section-number-2">2</span> Introduction</h2>
+<div id="outline-container-org5b96fa9" class="outline-2">
+<h2 id="org5b96fa9"><span class="section-number-2">2</span> Introduction</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The COVID-19 PubSeq allows you to upload your SARS-Cov-2 strains to a
@@ -276,27 +302,214 @@ upload. Read the <a href="./about">ABOUT</a> page for more information.
 </div>
 </div>
 
-<div id="outline-container-orgc7011c9" class="outline-2">
-<h2 id="orgc7011c9"><span class="section-number-2">3</span> Step 1: Sequence</h2>
+<div id="outline-container-orga21edf3" class="outline-2">
+<h2 id="orga21edf3"><span class="section-number-2">3</span> Step 1: Upload sequence</h2>
 <div class="outline-text-2" id="text-3">
+<p>
+To upload a sequence in the <a href="http://covid19.genenetwork.org/">web upload page</a> hit the browse button and
+select the FASTA file on your local hard disk.
+</p>
+
 <p>
 We start with an assembled or mapped sequence in FASTA format. The
 PubSeq uploader contains a <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/qc_fasta.py">QC step</a> which checks whether it is a likely
 SARS-CoV-2 sequence. While PubSeq deduplicates sequences and never
-overwrites metadata it probably pays to check whether your data
+overwrites metadata, you may still want to check whether your data
 already is in the system by querying some metadata as described in
-<a href="./blog?id=using-covid-19-pubseq-part1">Query metadata with SPARQL</a>.
+<a href="./blog?id=using-covid-19-pubseq-part1">Query metadata with SPARQL</a> or by simply downloading and checking one
+of the files on the <a href="./download">download</a> page. We find GenBank <a href="https://www.ncbi.nlm.nih.gov/nuccore/MT536190">MT536190.1</a> has not
+been included yet. A FASTA text file can be <a href="https://www.ncbi.nlm.nih.gov/nuccore/MT536190.1?report=fasta&amp;log$=seqview&amp;format=text">downloaded</a> to your local
+disk and uploaded through our <a href="./">web upload page</a>. Make sure the file does
+not include any HTML!
+</p>
+
+<p>
+Note: we currently only allow FASTA uploads. In the near future we'll
+allow for uploading raw sequence files. This is important for creating
+an improved pangenome.
 </p>
 </div>
 </div>
 
+<div id="outline-container-orga03c092" class="outline-2">
+<h2 id="orga03c092"><span class="section-number-2">4</span> Step 2: Add metadata</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+The <a href="./">web upload page</a> contains fields for adding metadata. Metadata is
+not only important for attribution, is also important for
+analysis. The metadata is available for queries, see <a href="./blog?id=using-covid-19-pubseq-part1">Query metadata
+with SPARQL</a>, and can be used to annotate variations of the virus in
+different ways.
+</p>
 
-<div id="outline-container-org83d22ff" class="outline-2">
-<h2 id="org83d22ff"><span class="section-number-2">4</span> Step 2: Metadata</h2>
+<p>
+A number of fields are obligatory: sample id, date, location,
+technology and authors. The others are optional, but it is valuable to
+enter them when information is available. Metadata is defined in this
+<a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml">schema</a>. From this schema we generate the input form. Note that
+opitional fields have a question mark in the <code>type</code>. You can add
+metadata yourself, btw, because this is a public resource! See also
+<a href="./blog?id=using-covid-19-pubseq-part5">Modify metadata</a> for more information.
+</p>
+
+<p>
+To get more information about a field click on the question mark on
+the web form. Here we add some extra information.
+</p>
+</div>
+
+<div id="outline-container-org2ab94ef" class="outline-3">
+<h3 id="org2ab94ef"><span class="section-number-3">4.1</span> Obligatory fields</h3>
+<div class="outline-text-3" id="text-4-1">
+</div>
+<div id="outline-container-org9972a05" class="outline-4">
+<h4 id="org9972a05"><span class="section-number-4">4.1.1</span> Sample ID (sample<sub>id</sub>)</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<p>
+This is a string field that defines a unique sample identifier by the
+submitter. In addition to sample<sub>id</sub> we also have host<sub>id</sub>,
+provider<sub>sample</sub><sub>id</sub> and submitter<sub>sample</sub><sub>id</sub> where host is the host the
+sample came from, provider sample is the institution sample id and
+submitter is the submitting individual id. host<sub>id</sub> is important when
+multiple sequences come from the same host. Make sure not to have
+spaces in the sample<sub>id</sub>.
+</p>
+
+<p>
+Here we add the GenBank ID MT536190.1.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf4992bb" class="outline-4">
+<h4 id="orgf4992bb"><span class="section-number-4">4.1.2</span> Collection date</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<p>
+Estimated collection date. The GenBank page says April 6, 2020.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2f55ae7" class="outline-4">
+<h4 id="org2f55ae7"><span class="section-number-4">4.1.3</span> Collection location</h4>
+<div class="outline-text-4" id="text-4-1-3">
+<p>
+A search on wikidata says Los Angelos is
+<a href="https://www.wikidata.org/entity/Q65">https://www.wikidata.org/entity/Q65</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb10db8a" class="outline-4">
+<h4 id="orgb10db8a"><span class="section-number-4">4.1.4</span> Sequencing technology</h4>
+<div class="outline-text-4" id="text-4-1-4">
+<p>
+GenBank entry says Illumina, so we can fill that in
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf846ffe" class="outline-4">
+<h4 id="orgf846ffe"><span class="section-number-4">4.1.5</span> Authors</h4>
+<div class="outline-text-4" id="text-4-1-5">
+<p>
+GenBank entry says 'Lamers,S., Nolan,D.J., Rose,R., Cross,S., Moraga
+Amador,D., Yang,T., Caruso,L., Navia,W., Von Borstel,L., Hui Zhou,X.,
+Freehan,A. and Garcia-Diaz,J.', so we can fill that in.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2056637" class="outline-3">
+<h3 id="org2056637"><span class="section-number-3">4.2</span> Optional fields</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+All other fields are optional. But let's see what we can add.
+</p>
+</div>
+
+<div id="outline-container-orgb2348b1" class="outline-4">
+<h4 id="orgb2348b1"><span class="section-number-4">4.2.1</span> Host information</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+Sadly, not much is known about the host from GenBank. A little
+sleuthing renders an interesting paper by some of the authors titled
+<a href="https://www.medrxiv.org/content/10.1101/2020.04.24.20078691v1">SARS-CoV-2 is consistent across multiple samples and methodologies</a>
+which dates after the sample, but has no reference other than that the
+raw data came from the SRA database, so it probably does not describe
+this particular sample. We don't know what this strain of SARS-Cov-2
+did to the person and what the person was like (say age group).
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd963089" class="outline-4">
+<h4 id="orgd963089"><span class="section-number-4">4.2.2</span> Collecting institution</h4>
+<div class="outline-text-4" id="text-4-2-2">
+<p>
+We can fill that in.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3257813" class="outline-4">
+<h4 id="org3257813"><span class="section-number-4">4.2.3</span> Specimen source</h4>
+<div class="outline-text-4" id="text-4-2-3">
+<p>
+We have that: nasopharyngeal swab
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8a596c8" class="outline-4">
+<h4 id="org8a596c8"><span class="section-number-4">4.2.4</span> Source database accession</h4>
+<div class="outline-text-4" id="text-4-2-4">
+<p>
+Genbank which is <a href="http://identifiers.org/insdc/MT536190.1#sequence">http://identifiers.org/insdc/MT536190.1#sequence</a>.
+Note we plug in our own identifier MT536190.1.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd1f5c90" class="outline-4">
+<h4 id="orgd1f5c90"><span class="section-number-4">4.2.5</span> Strain name</h4>
+<div class="outline-text-4" id="text-4-2-5">
+<p>
+SARS-CoV-2/human/USA/LA-BIE-070/2020
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb9edfdf" class="outline-2">
+<h2 id="orgb9edfdf"><span class="section-number-2">5</span> Step 3: Submit to COVID-19 PubSeq</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Once you have the sequence and the metadata together, hit
+the 'Add to Pangenome' button. The data will be checked,
+submitted and the workflows should kick in!
+</p>
+</div>
+
+<div id="outline-container-orgc929675" class="outline-3">
+<h3 id="orgc929675"><span class="section-number-3">5.1</span> Trouble shooting</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+We got an error saying: {"stem": "<a href="http://www.wikidata.org/entity/">http://www.wikidata.org/entity/</a>",&#x2026;
+which means that our location field was not formed correctly!  After
+fixing it to look like <a href="http://www.wikidata.org/entity/Q65">http://www.wikidata.org/entity/Q65</a> (note http
+instead on https and entity instead of wiki) the submission went
+through. Reload the page (it won't empty the fields) to re-enable the
+submit button.
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-29 Fri 10:00</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-29 Fri 14:22</small>.
 </div>
 </body>
 </html>

@@ -3,7 +3,6 @@
 # C-c C-e h h   publish
 # C-c !         insert date (use . for active agenda, C-u C-c ! for date, C-u C-c . for time)
 # C-c C-t       task rotate
-# RSS_IMAGE_URL: http://xxxx.xxxx.free.fr/rss_icon.png
 
 #+HTML_HEAD: <link rel="Blog stylesheet" type="text/css" href="blog.css" />
 
@@ -14,8 +13,12 @@
 * Table of Contents                                                     :TOC:noexport:
  - [[#uploading-data][Uploading Data]]
  - [[#introduction][Introduction]]
- - [[#step-1-sequence][Step 1: Sequence]]
- - [[#step-2-metadata][Step 2: Metadata]]
+ - [[#step-1-upload-sequence][Step 1: Upload sequence]]
+ - [[#step-2-add-metadata][Step 2: Add metadata]]
+   - [[#obligatory-fields][Obligatory fields]]
+   - [[#optional-fields][Optional fields]]
+ - [[#step-3-submit-to-covid-19-pubseq][Step 3: Submit to COVID-19 PubSeq]]
+   - [[#trouble-shooting][Trouble shooting]]
 
 * Introduction
 
@@ -23,14 +26,120 @@ The COVID-19 PubSeq allows you to upload your SARS-Cov-2 strains to a
 public resource for global comparisons. Compute it triggered on
 upload. Read the [[./about][ABOUT]] page for more information.
 
-* Step 1: Sequence
+* Step 1: Upload sequence
+
+To upload a sequence in the [[http://covid19.genenetwork.org/][web upload page]] hit the browse button and
+select the FASTA file on your local hard disk.
 
 We start with an assembled or mapped sequence in FASTA format. The
 PubSeq uploader contains a [[https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/qc_fasta.py][QC step]] which checks whether it is a likely
 SARS-CoV-2 sequence. While PubSeq deduplicates sequences and never
-overwrites metadata it probably pays to check whether your data
+overwrites metadata, you may still want to check whether your data
 already is in the system by querying some metadata as described in
-[[./blog?id=using-covid-19-pubseq-part1][Query metadata with SPARQL]].
+[[./blog?id=using-covid-19-pubseq-part1][Query metadata with SPARQL]] or by simply downloading and checking one
+of the files on the [[./download][download]] page. We find GenBank [[https://www.ncbi.nlm.nih.gov/nuccore/MT536190][MT536190.1]] has not
+been included yet. A FASTA text file can be [[https://www.ncbi.nlm.nih.gov/nuccore/MT536190.1?report=fasta&log$=seqview&format=text][downloaded]] to your local
+disk and uploaded through our [[./][web upload page]]. Make sure the file does
+not include any HTML!
 
+Note: we currently only allow FASTA uploads. In the near future we'll
+allow for uploading raw sequence files. This is important for creating
+an improved pangenome.
 
-* Step 2: Metadata
+* Step 2: Add metadata
+
+The [[./][web upload page]] contains fields for adding metadata. Metadata is
+not only important for attribution, is also important for
+analysis. The metadata is available for queries, see [[./blog?id=using-covid-19-pubseq-part1][Query metadata
+with SPARQL]], and can be used to annotate variations of the virus in
+different ways.
+
+A number of fields are obligatory: sample id, date, location,
+technology and authors. The others are optional, but it is valuable to
+enter them when information is available. Metadata is defined in this
+[[https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml][schema]]. From this schema we generate the input form. Note that
+opitional fields have a question mark in the ~type~. You can add
+metadata yourself, btw, because this is a public resource! See also
+[[./blog?id=using-covid-19-pubseq-part5][Modify metadata]] for more information.
+
+To get more information about a field click on the question mark on
+the web form. Here we add some extra information.
+
+** Obligatory fields
+
+*** Sample ID (sample_id)
+
+This is a string field that defines a unique sample identifier by the
+submitter. In addition to sample_id we also have host_id,
+provider_sample_id and submitter_sample_id where host is the host the
+sample came from, provider sample is the institution sample id and
+submitter is the submitting individual id. host_id is important when
+multiple sequences come from the same host. Make sure not to have
+spaces in the sample_id.
+
+Here we add the GenBank ID MT536190.1.
+
+*** Collection date
+
+Estimated collection date. The GenBank page says April 6, 2020.
+
+*** Collection location
+
+A search on wikidata says Los Angelos is
+https://www.wikidata.org/entity/Q65
+
+*** Sequencing technology
+
+GenBank entry says Illumina, so we can fill that in
+
+*** Authors
+
+GenBank entry says 'Lamers,S., Nolan,D.J., Rose,R., Cross,S., Moraga
+Amador,D., Yang,T., Caruso,L., Navia,W., Von Borstel,L., Hui Zhou,X.,
+Freehan,A. and Garcia-Diaz,J.', so we can fill that in.
+
+** Optional fields
+
+All other fields are optional. But let's see what we can add.
+
+*** Host information
+
+Sadly, not much is known about the host from GenBank. A little
+sleuthing renders an interesting paper by some of the authors titled
+[[https://www.medrxiv.org/content/10.1101/2020.04.24.20078691v1][SARS-CoV-2 is consistent across multiple samples and methodologies]]
+which dates after the sample, but has no reference other than that the
+raw data came from the SRA database, so it probably does not describe
+this particular sample. We don't know what this strain of SARS-Cov-2
+did to the person and what the person was like (say age group).
+
+*** Collecting institution
+
+We can fill that in.
+
+*** Specimen source
+
+We have that: nasopharyngeal swab
+
+*** Source database accession
+
+Genbank which is http://identifiers.org/insdc/MT536190.1#sequence.
+Note we plug in our own identifier MT536190.1.
+
+*** Strain name
+
+SARS-CoV-2/human/USA/LA-BIE-070/2020
+
+* Step 3: Submit to COVID-19 PubSeq
+
+Once you have the sequence and the metadata together, hit
+the 'Add to Pangenome' button. The data will be checked,
+submitted and the workflows should kick in!
+
+** Trouble shooting
+
+We got an error saying: {"stem": "http://www.wikidata.org/entity/",...
+which means that our location field was not formed correctly!  After
+fixing it to look like http://www.wikidata.org/entity/Q65 (note http
+instead on https and entity instead of wiki) the submission went
+through. Reload the page (it won't empty the fields) to re-enable the
+submit button.

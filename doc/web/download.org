@@ -2,6 +2,7 @@
 #+AUTHOR: Pjotr Prins
 
 * Table of Contents                                                     :TOC:noexport:
+ - [[#workflow-runs][Workflow runs]]
  - [[#fasta-files][FASTA files]]
  - [[#metadata][Metadata]]
  - [[#pangenome][Pangenome]]
@@ -16,6 +17,10 @@
    - [[#multiple-sequence-alignment-msa][Multiple Sequence Alignment (MSA)]]
    - [[#phylogenetic-tree][Phylogenetic tree]]
    - [[#protein-prediction][Protein prediction]]
+
+* Workflow runs
+
+The last runs can be viewed [[https://workbench.lugli.arvadosapi.com/container_requests/lugli-xvhdp-bhhk4nxx1lch5od][here]].
 
 * FASTA files
 

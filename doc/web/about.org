@@ -63,6 +63,8 @@ public resources, including GISAID.
    for bulk uploads
 3. We provide a live SPARQL end-point for all metadata
 2. We provide free data analysis and sequence comparison triggered on data upload
+3. We do real work for you, with this [[https://workbench.lugli.arvadosapi.com/container_requests/lugli-xvhdp-bhhk4nxx1lch5od][link]] you can see the last
+   run took 5.5 hours!
 4. We provide free downloads of all computed output
 3. There is no need to set up pipelines and/or compute clusters
 4. All workflows get triggered on uploading a new sequence

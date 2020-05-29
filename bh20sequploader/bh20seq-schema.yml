@@ -77,7 +77,7 @@ $graph:
   type: record
   fields:
     sample_id:
-      doc: Id of the sample as defined by the submitter
+      doc: Unique sample identifier as defined by the submitter
       type: string
       jsonldPredicate:
         _id: http://semanticscience.org/resource/SIO_000115

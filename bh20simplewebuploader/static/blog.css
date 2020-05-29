@@ -1,0 +1,44 @@
+.title   { font-family: Lucida Sans Typewriter,Lucida Console,monaco,Bitstream Vera Sans Mono,monospace }
+.table-of-contents { font-family: monospace; color: red; }
+/* .text-table-of-contents { font-family: monospace; color: black; font-size:80%; } */
+.timestamp { font-family: monospace; color: darkgreen; }
+
+h1,h2 { font-family: Lucida Sans Typewriter,Lucida Console,monaco,Bitstream Vera Sans Mono,monospace; color:black;background-color:#F0F8FF; }
+h2,h3,h4 { color: darkblue; }
+code { color: darkblue; }
+body {font-family: Palatino, 'Palatino Linotype', serif; color:black;background-color:#e5d8f0; font-size: large }
+
+div.verbatim { margin: 30px; color: black; background-color: white; border-style:outset; font-family: palatino font, monospace; font-size:80%;  font-weight:bold; }
+div.quote { font-family: palatino font, monospace; font-size:80%; }
+div.quotation { font-family: palatino font, monospace; font-size:80%; }
+pre.example { font-family: prestige, monospace; color:black; font-size:70%; background-color: lightyellow;  }
+pre.src { margin: 30px; font-family: prestige, monospace; font-weight: bold; color:white; font-size:80%; background-color: black;  }
+
+div[id="text-table-of-contents"]{
+    font-family: palatino font, monospace; background-color:white;
+    border-style: dotted;
+    border-color: #98bf21;
+    border-width: 1px;
+}
+div[class^="outline-text"] {
+    background-color:#ebe6f0;
+    border-style: dotted;
+    border-color: #98bf21;
+    border-width: 1px;
+    font-family: Palatino, 'Palatino Linotype', serif; color:black; font-size: large
+}
+span[class="todo TESTING"] {
+    color:purple;
+}
+span[class="todo IN_PROGRESS"] {
+    color:brown;
+}
+span[class^="section-number"] {
+    color:grey;
+}
+span[class="journal"] {
+    color:darkblue;
+}
+span[class="year"] {
+    color:darkred;
+}

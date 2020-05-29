@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-05-29 Fri 10:12 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>COVID-19 PubSeq (part 1)</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Pjotr Prins" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="Blog stylesheet" type="text/css" href="blog.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href=""> UP </a>
+ |
+ <a accesskey="H" href="http://covid19.genenetwork.org"> HOME </a>
+</div><div id="content">
+<h1 class="title">COVID-19 PubSeq (part 1)</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org5e85b09">1. What does this mean?</a></li>
+<li><a href="#org038e367">2. Fetch sequence data</a></li>
+<li><a href="#org3ad046c">3. Predicates</a></li>
+<li><a href="#orga4e7054">4. Fetch submitter info and other metadata</a></li>
+<li><a href="#orgc50badd">5. Fetch all sequences from Washington state</a></li>
+<li><a href="#orgbc80874">6. Discussion</a></li>
+<li><a href="#orgce8eaf6">7. Acknowledgements</a></li>
+</ul>
+</div>
+</div>
+<p>
+As part of the COVID-19 Biohackathon 2020 we formed a working group
+to create a COVID-19 Public Sequence Resource (COVID-19 PubSeq) for
+Corona virus sequences. The general idea is to create a repository
+that has a low barrier to entry for uploading sequence data using best
+practices. I.e., data published with a creative commons 4.0 (CC-4.0)
+license with metadata using state-of-the art standards and, perhaps
+most importantly, providing standardised workflows that get triggered
+on upload, so that results are immediately available in standardised
+data formats.
+</p>
+
+<div id="outline-container-org5e85b09" class="outline-2">
+<h2 id="org5e85b09"><span class="section-number-2">1</span> What does this mean?</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This means that when someone uploads a SARS-CoV-2 sequence using one
+of our tools (CLI or web-based) they add some metadata which is
+expressed in a <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml">schema</a> that looks like
+</p>
+
+<div class="org-src-container">
+<pre class="src src-json">- name: hostSchema
+  type: record
+  fields:
+    host_species:
+        doc: Host species as defined in NCBITaxon, e.g. http://purl.obolibrary.org/obo/NCBITaxon_<span style="color: #8bc34a;">9606</span> for Homo sapiens
+        type: string
+        jsonldPredicate:
+          _id: http://www.ebi.ac.uk/efo/EFO_<span style="color: #8bc34a;">0000532</span>
+          _type: <span style="color: #9ccc65;">"@id"</span>
+          noLinkCheck: <span style="color: #8bc34a;">true</span>
+    host_sex:
+        doc: Sex of the host as defined in PATO, expect male <span style="color: #e91e63;">()</span> or female <span style="color: #e91e63;">()</span>
+        type: string?
+        jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/PATO_<span style="color: #8bc34a;">0000047</span>
+          _type: <span style="color: #9ccc65;">"@id"</span>
+          noLinkCheck: <span style="color: #8bc34a;">true</span>
+    host_age:
+        doc: Age of the host as number <span style="color: #e91e63;">(</span>e.g. <span style="color: #8bc34a;">50</span><span style="color: #e91e63;">)</span>
+        type: int?
+        jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/PATO_<span style="color: #8bc34a;">0000011</span>
+</pre>
+</div>
+
+<p>
+this metadata gets transformed into an RDF database which means
+information can easily be fetched related to uploaded sequences.
+We'll show an example below where we query a live database.
+</p>
+
+<p>
+There is more: when a new sequence gets uploaded COVID-19 PubSeq kicks
+in with a number of workflows running in the cloud. These workflows
+generate a fresh variation graph (GFA) containing all sequences, an
+RDF file containing metadata, and an RDF file containing the variation
+graph in triples. Soon we will at multi sequence alignments (MSA) and
+more. Anyone can contribute data, tools and workflows to this
+initiative!
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org038e367" class="outline-2">
+<h2 id="org038e367"><span class="section-number-2">2</span> Fetch sequence data</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The latest run of the pipeline can be viewed <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">here</a>. Each of these
+generated files can just be downloaded for your own use and sharing!
+Data is published under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons 4.0 attribution license</a>
+(CC-BY-4.0). This means that, unlike some other 'public' resources,
+you can use this data in any way you want, provided the submitter gets
+attributed.
+</p>
+
+<p>
+If you download the GFA or FASTA sequences you'll find sequences are
+named something like
+<b>keep:e17abc8a0269875ed4cfbff5d9897c6c+123/sequence.fasta</b> which
+refers to an internal Arvados Keep representation of the FASTA
+sequence.  Keep is content-addressable which means that the value
+e17abc8a0269875ed4cfbff5d9897c6c uniquely identifies the file by its
+contents. If the contents change, the identifier changes! We use
+these identifiers throughout.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3ad046c" class="outline-2">
+<h2 id="org3ad046c"><span class="section-number-2">3</span> Predicates</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+To explore an RDF dataset, the first query we can do is open and gets
+us a list.  Lets look at all the predicates in the dataset by pasting
+the following in a SPARQL end point
+<a href="http://sparql.genenetwork.org/sparql/">http://sparql.genenetwork.org/sparql/</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?p
+<span style="color: #e91e63;">{</span>
+   ?o ?p ?s
+<span style="color: #e91e63;">}</span>
+</pre>
+</div>
+
+<p>
+you can ignore the openlink and w3 ones. To reduce results to a named
+graph set the default graph.
+To get a <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=&amp;query=select+distinct+%3Fg%0D%0A%7B%0D%0A++++GRAPH+%3Fg+%7B%3Fs+%3Fp+%3Fo%7D%0D%0A%7D&amp;format=text%2Fhtml&amp;timeout=0&amp;debug=on&amp;run=+Run+Query+">list of graphs</a> in the dataset, first do
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?g
+<span style="color: #e91e63;">{</span>
+    GRAPH ?g <span style="color: #2196F3;">{</span>?s ?p ?o<span style="color: #2196F3;">}</span>
+<span style="color: #e91e63;">}</span>
+</pre>
+</div>
+
+<p>
+Limiting search to metadata add
+<a href="http://covid-19.genenetwork.org/graph/metadata.ttl">http://covid-19.genenetwork.org/graph/metadata.ttl</a> in the top input
+box. Now you can find a <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=http%3A%2F%2Fcovid-19.genenetwork.org%2Fgraph%2Fmetadata.ttl&amp;query=select+distinct+%3Fp%0D%0A%7B%0D%0A+++%3Fo+%3Fp+%3Fs%0D%0A%7D&amp;format=text%2Fhtml&amp;timeout=0&amp;debug=on&amp;run=+Run+Query+">predicate</a> for submitter that looks like
+<a href="http://biohackathon.org/bh20-seq-schema#MainSchema/submitter">http://biohackathon.org/bh20-seq-schema#MainSchema/submitter</a>.
+</p>
+
+<p>
+To list all submitters, try
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?s
+<span style="color: #e91e63;">{</span>
+   ?o <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/submitter">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/submitter">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/submitter">#MainSchema/submitter&gt;</a> ?s
+<span style="color: #e91e63;">}</span>
+</pre>
+</div>
+
+<p>
+Oh wait, it returns things like nodeID://b76150! That is not helpful,
+these are anonymous nodes in the graph. These point to another triple
+and by
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?s
+<span style="color: #e91e63;">{</span>
+   ?o <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/submitter">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/submitter">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/submitter">#MainSchema/submitter&gt;</a> ?id .
+   ?id ?p ?s
+<span style="color: #e91e63;">}</span>
+</pre>
+</div>
+
+<p>
+you get a list of all submitters including "University of Washington,
+Seattle, WA 98109, USA".
+</p>
+
+<p>
+To lift the full URL out of the query you can use a header like
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">#MainSchema/&gt;</a>
+<span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?dataset ?submitter
+<span style="color: #e91e63;">{</span>
+   ?dataset pubseq:submitter ?id .
+   ?id ?p ?submitter
+<span style="color: #e91e63;">}</span>
+</pre>
+</div>
+
+<p>
+which reads a bit better. We can also see the <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=&amp;query=PREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0Aselect+distinct+%3Fdataset+%3Fsubmitter%0D%0A%7B%0D%0A+++%3Fdataset+pubseq%3Asubmitter+%3Fid+.%0D%0A+++%3Fid+%3Fp+%3Fsubmitter%0D%0A%7D%0D%0A&amp;format=text%2Fhtml&amp;timeout=0&amp;debug=on&amp;run=+Run+Query+">submitted sequences</a>. One
+of them submitted by University of Washington is
+<a href="http://collections.lugli.arvadosapi.com/c=030bcb8fda7f19743157359f5855f7a6+126/sequence.fasta">http://collections.lugli.arvadosapi.com/c=030bcb8fda7f19743157359f5855f7a6+126/sequence.fasta</a>
+(note the ID may have changed so pick one with above query).
+To see the submitted metadata replace sequence.fasta with metadata.yaml
+<a href="http://collections.lugli.arvadosapi.com/c=030bcb8fda7f19743157359f5855f7a6+126/metadata.yaml">http://collections.lugli.arvadosapi.com/c=030bcb8fda7f19743157359f5855f7a6+126/metadata.yaml</a>
+</p>
+
+<p>
+Now we got this far, lets <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=http%3A%2F%2Fcovid-19.genenetwork.org%2Fgraph%2Fmetadata.ttl&amp;query=PREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0Aselect+%28COUNT%28distinct+%3Fdataset%29+as+%3Fnum%29%0D%0A%7B%0D%0A+++%3Fdataset+pubseq%3Asubmitter+%3Fid+.%0D%0A+++%3Fid+%3Fp+%3Fsubmitter%0D%0A%7D+&amp;format=text%2Fhtml&amp;timeout=0&amp;debug=on&amp;run=+Run+Query+">count the datasets</a> submitted with
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">#MainSchema/&gt;</a>
+<span style="color: #fff59d;">select</span> <span style="color: #e91e63;">(</span><span style="color: #ff8A65;">COUNT</span><span style="color: #2196F3;">(</span><span style="color: #fff59d;">distinct</span> ?dataset<span style="color: #2196F3;">)</span> <span style="color: #fff59d;">as</span> ?num<span style="color: #e91e63;">)</span>
+<span style="color: #e91e63;">{</span>
+   ?dataset pubseq:submitter ?id .
+   ?id ?p ?submitter
+<span style="color: #e91e63;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orga4e7054" class="outline-2">
+<h2 id="orga4e7054"><span class="section-number-2">4</span> Fetch submitter info and other metadata</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+To get dataests with submitters we can do the above
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">#MainSchema/&gt;</a>
+<span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?dataset ?p ?submitter
+<span style="color: #e91e63;">{</span>
+   ?dataset pubseq:submitter ?id .
+   ?id ?p ?submitter
+<span style="color: #e91e63;">}</span>
+</pre>
+</div>
+
+<p>
+Tells you one submitter is "Roychoudhury,P.;Greninger,A.;Jerome,K."
+with a URL <a href="http://purl.obolibrary.org/obo/NCIT_C42781">predicate</a> (<a href="http://purl.obolibrary.org/obo/NCIT_C42781">http://purl.obolibrary.org/obo/NCIT_C42781</a>)
+explaining "The individual who is responsible for the content of a
+document." Well formed URIs point to real information about the URI
+itself.  Welcome to the power of the semantic web.
+</p>
+
+<p>
+Let's focus on one sample with
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">#MainSchema/&gt;</a>
+<span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?dataset ?submitter
+<span style="color: #e91e63;">{</span>
+   ?dataset pubseq:submitter ?id .
+   ?id ?p ?submitter .
+   FILTER<span style="color: #2196F3;">(</span><span style="color: #fff59d;">CONTAINS</span><span style="color: #EF6C00;">(</span>?submitter,"Roychoudhury"<span style="color: #EF6C00;">)</span><span style="color: #2196F3;">)</span> .
+<span style="color: #e91e63;">}</span>
+</pre>
+</div>
+
+<p>
+That is a lot of samples! We just want to pick one, so let's
+see if we can get a sample ID by listing sample predicates
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">#MainSchema/&gt;</a>
+<span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?p
+<span style="color: #e91e63;">{</span>
+   ?dataset ?p ?o .
+   ?dataset pubseq:submitter ?id .
+<span style="color: #e91e63;">}</span>
+</pre>
+</div>
+
+<p>
+which lists a predicate named
+<a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample">http://biohackathon.org/bh20-seq-schema#MainSchema/sample</a>.
+Let's zoom in on those of Roychoudhury with
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">#MainSchema/&gt;</a>
+<span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?sid ?sample ?p1 ?dataset ?submitter
+<span style="color: #e91e63;">{</span>
+   ?dataset pubseq:submitter ?id .
+   ?id ?p ?submitter .
+   FILTER<span style="color: #2196F3;">(</span><span style="color: #fff59d;">CONTAINS</span><span style="color: #EF6C00;">(</span>?submitter,"Roychoudhury"<span style="color: #EF6C00;">)</span><span style="color: #2196F3;">)</span> .
+   ?dataset pubseq:sample ?sid .
+   ?sid ?p1 ?sample
+<span style="color: #e91e63;">}</span>
+</pre>
+</div>
+
+<p>
+which shows pretty much <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=&amp;query=PREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0Aselect+distinct+%3Fsid+%3Fsample+%3Fp1+%3Fdataset+%3Fsubmitter%0D%0A%7B%0D%0A+++%3Fdataset+pubseq%3Asubmitter+%3Fid+.%0D%0A+++%3Fid+%3Fp+%3Fsubmitter+.%0D%0A+++FILTER%28CONTAINS%28%3Fsubmitter%2C%22Roychoudhury%22%29%29+.%0D%0A+++%3Fdataset+pubseq%3Asample+%3Fsid+.%0D%0A+++%3Fsid+%3Fp1+%3Fsample%0D%0A%7D&amp;format=text%2Fhtml&amp;timeout=0&amp;debug=on&amp;run=+Run+Query+">everything known</a> about their submissions in
+this database. Let's focus on one sample "MT326090.1" with predicate
+<a href="http://semanticscience.org/resource/SIO_000115">http://semanticscience.org/resource/SIO_000115</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/">#MainSchema/&gt;
+</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/">PREFIX</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/"> sio: &lt;http://semanticscience.org/resource/&gt;</a>
+<span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?sample ?p ?o
+<span style="color: #e91e63;">{</span>
+   ?sample sio:SIO_000115 "MT326090.1" .
+   ?sample ?p ?o .
+<span style="color: #e91e63;">}</span>
+</pre>
+</div>
+
+<p>
+This <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=&amp;query=PREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0APREFIX+sio%3A+%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2F%3E%0D%0Aselect+distinct+%3Fsample+%3Fp+%3Fo%0D%0A%7B%0D%0A+++%3Fsample+sio%3ASIO_000115+%22MT326090.1%22+.%0D%0A+++%3Fsample+%3Fp+%3Fo+.%0D%0A%7D&amp;format=text%2Fhtml&amp;timeout=0&amp;debug=on&amp;run=+Run+Query+">query</a> tells us the sample was submitted "2020-03-21" and
+originates from <a href="http://www.wikidata.org/entity/Q30">http://www.wikidata.org/entity/Q30</a>, i.e., the USA and
+is a biospecimen collected from the back of the throat by swabbing.
+We can track it back to the original GenBank <a href="http://identifiers.org/insdc/MT326090.1#sequence">submission</a>.
+</p>
+
+<p>
+We have also added country and label data to make it a bit easier
+to view/query the database.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc50badd" class="outline-2">
+<h2 id="orgc50badd"><span class="section-number-2">5</span> Fetch all sequences from Washington state</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Now we know how to get at the origin we can do it the other way round
+and fetch all sequences referring to Washington state
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql">
+<span style="color: #fff59d;">select</span> ?seq ?sample
+<span style="color: #e91e63;">{</span>
+    ?seq <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223">#MainSchema/sample&gt; ?sample .
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223&gt;</a>
+<span style="color: #e91e63;">}</span>
+</pre>
+</div>
+
+<p>
+which lists 300 sequences originating from Washington state! Which is almost
+half of the set coming out of GenBank.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbc80874" class="outline-2">
+<h2 id="orgbc80874"><span class="section-number-2">6</span> Discussion</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+The public sequence uploader collects sequences, raw data and
+(machine) queriable metadata. Not only that: data gets analyzed in the
+pangenome and results are presented immediately. The data can be
+referenced in publications and origins are citeable.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgce8eaf6" class="outline-2">
+<h2 id="orgce8eaf6"><span class="section-number-2">7</span> Acknowledgements</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+The overall effort was due to magnificent freely donated input by a
+great number of people. I particularly want to thank Thomas Liener for
+the great effort he made with the ontology group in getting ontology's
+and schema sorted! Peter Amstutz and <a href="https://arvados.org/">Arvados/Curii</a> helped build the
+on-demand compute and back-ends. Thanks also to Michael Crusoe for
+supporting the <a href="https://www.commonwl.org/">Common Workflow Language</a> initiative. And without Erik
+Garrison this initiative would not have existed!
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-29 Fri 10:12</small>.
+</div>
+</body>
+</html>

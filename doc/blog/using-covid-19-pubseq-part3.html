@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-27 Wed 07:41 -->
+<!-- 2020-05-29 Fri 10:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq Uploading Data (part 3)</title>
@@ -248,14 +248,16 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org074cf76">1. Uploading Data</a></li>
-<li><a href="#org00e6dd5">2. What does this mean?</a></li>
+<li><a href="#orgbfd8594">1. Uploading Data</a></li>
+<li><a href="#org3243122">2. Introduction</a></li>
+<li><a href="#orgc7011c9">3. Step 1: Sequence</a></li>
+<li><a href="#org83d22ff">4. Step 2: Metadata</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org074cf76" class="outline-2">
-<h2 id="org074cf76"><span class="section-number-2">1</span> Uploading Data</h2>
+<div id="outline-container-orgbfd8594" class="outline-2">
+<h2 id="orgbfd8594"><span class="section-number-2">1</span> Uploading Data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <i>Work in progress!</i>
@@ -263,12 +265,38 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org00e6dd5" class="outline-2">
-<h2 id="org00e6dd5"><span class="section-number-2">2</span> What does this mean?</h2>
+<div id="outline-container-org3243122" class="outline-2">
+<h2 id="org3243122"><span class="section-number-2">2</span> Introduction</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The COVID-19 PubSeq allows you to upload your SARS-Cov-2 strains to a
+public resource for global comparisons. Compute it triggered on
+upload. Read the <a href="./about">ABOUT</a> page for more information.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc7011c9" class="outline-2">
+<h2 id="orgc7011c9"><span class="section-number-2">3</span> Step 1: Sequence</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+We start with an assembled or mapped sequence in FASTA format. The
+PubSeq uploader contains a <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/qc_fasta.py">QC step</a> which checks whether it is a likely
+SARS-CoV-2 sequence. While PubSeq deduplicates sequences and never
+overwrites metadata it probably pays to check whether your data
+already is in the system by querying some metadata as described in
+<a href="./blog?id=using-covid-19-pubseq-part1">Query metadata with SPARQL</a>.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org83d22ff" class="outline-2">
+<h2 id="org83d22ff"><span class="section-number-2">4</span> Step 2: Metadata</h2>
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-27 Wed 07:41</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-29 Fri 10:00</small>.
 </div>
 </body>
 </html>

@@ -451,7 +451,7 @@ def blog_page():
     buf = None;
     if blog_content:
         buf = get_html_body('doc/blog/'+blog_content+'.html')
-    return render_template('blog.html',menu='BLOG',embed=buf)
+    return render_template('blog.html',menu='BLOG',embed=buf,blog=blog_content)
 
 
 @app.route('/about')

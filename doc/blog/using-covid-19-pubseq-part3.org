@@ -13,10 +13,24 @@
 
 * Table of Contents                                                     :TOC:noexport:
  - [[#uploading-data][Uploading Data]]
- - [[#table-of-contents][Table of Contents]]
- - [[#what-does-this-mean][What does this mean?]]
+ - [[#introduction][Introduction]]
+ - [[#step-1-sequence][Step 1: Sequence]]
+ - [[#step-2-metadata][Step 2: Metadata]]
 
-* Table of Contents                                                     :TOC:noexport:
- - [[#what-does-this-mean][What does this mean?]]
+* Introduction
 
-* What does this mean?
+The COVID-19 PubSeq allows you to upload your SARS-Cov-2 strains to a
+public resource for global comparisons. Compute it triggered on
+upload. Read the [[./about][ABOUT]] page for more information.
+
+* Step 1: Sequence
+
+We start with an assembled or mapped sequence in FASTA format. The
+PubSeq uploader contains a [[https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/qc_fasta.py][QC step]] which checks whether it is a likely
+SARS-CoV-2 sequence. While PubSeq deduplicates sequences and never
+overwrites metadata it probably pays to check whether your data
+already is in the system by querying some metadata as described in
+[[./blog?id=using-covid-19-pubseq-part1][Query metadata with SPARQL]].
+
+
+* Step 2: Metadata

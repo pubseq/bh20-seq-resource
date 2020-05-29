@@ -31,16 +31,23 @@ def main():
 
     api = arvados.api(host=ARVADOS_API_HOST, token=ARVADOS_API_TOKEN, insecure=True)
 
-    log.debug("Checking metadata")
-    if not qc_metadata(args.metadata.name):
-        log.warning("Failed metadata qc")
+    try:
+        log.debug("Checking metadata")
+        if not qc_metadata(args.metadata.name):
+            log.warning("Failed metadata qc")
+            exit(1)
+    except ValueError as e:
+        log.debug(e)
+        log.debug("Failed metadata qc")
+        print(e)
         exit(1)
 
     try:
         log.debug("Checking FASTA QC")
         target = qc_fasta(args.sequence)
     except ValueError as e:
-        log.warning("Failed FASTA qc")
+        log.debug(e)
+        log.debug("Failed FASTA qc")
         print(e)
         exit(1)
 

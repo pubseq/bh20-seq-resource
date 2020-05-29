@@ -6,6 +6,8 @@ import tempfile
 import logging
 import re
 
+log = logging.getLogger(__name__ )
+
 def read_fasta(sequence):
     entries = 0
     bases = []
@@ -17,11 +19,12 @@ def read_fasta(sequence):
         else:
             bases.append(line)
         if entries > 1:
+            log.debug("FASTA file contains multiple entries")
             raise ValueError("FASTA file contains multiple entries")
-            break
     return label, bases
 
 def qc_fasta(sequence):
+    log.debug("Starting qc_fasta")
     schema_resource = pkg_resources.resource_stream(__name__, "validation/formats")
     with tempfile.NamedTemporaryFile() as tmp:
         tmp.write(schema_resource.read())

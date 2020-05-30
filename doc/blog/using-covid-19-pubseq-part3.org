@@ -18,6 +18,7 @@
    - [[#obligatory-fields][Obligatory fields]]
    - [[#optional-fields][Optional fields]]
  - [[#step-3-submit-to-covid-19-pubseq][Step 3: Submit to COVID-19 PubSeq]]
+ - [[#step-4-check-output][Step 4: Check output]]
    - [[#trouble-shooting][Trouble shooting]]
 
 * Introduction
@@ -134,6 +135,13 @@ SARS-CoV-2/human/USA/LA-BIE-070/2020
 Once you have the sequence and the metadata together, hit
 the 'Add to Pangenome' button. The data will be checked,
 submitted and the workflows should kick in!
+
+* Step 4: Check output
+
+The current pipeline takes 5.5 hours to complete! Once it completes
+the updated data can be checked on the [[./download][DOWNLOAD]] page. After completion
+of above output this [[http://sparql.genenetwork.org/sparql/?default-graph-uri=&query=PREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0APREFIX+sio%3A+%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2F%3E%0D%0Aselect+distinct+%3Fsample+%3Fp+%3Fo%0D%0A%7B%0D%0A+++%3Fsample+sio%3ASIO_000115+%22MT536190.1%22+.%0D%0A+++%3Fsample+%3Fp+%3Fo+.%0D%0A%7D&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+][SPARQL query]] shows some of the metadata we put
+in.
 
 ** Trouble shooting
 

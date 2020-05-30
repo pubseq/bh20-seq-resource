@@ -20,7 +20,10 @@
 
 * Workflow runs
 
-The last runs can be viewed [[https://workbench.lugli.arvadosapi.com/container_requests/lugli-xvhdp-bhhk4nxx1lch5od][here]].
+The last runs can be viewed [[https://workbench.lugli.arvadosapi.com/projects/lugli-j7d0g-y4k4uswcqi3ku56#Subprojects][here]]. If you click on a run you can see
+the workflows that ran under ~Processes~. Output (also intermediate)
+is listed under ~Data collections~. All current data is listed
+[[https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/][here]]. Note that it takes time for a run to complete and show.
 
 * FASTA files
 

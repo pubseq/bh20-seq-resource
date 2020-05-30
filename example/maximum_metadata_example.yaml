@@ -10,7 +10,7 @@ host:
     host_treatment: Process in which the act is intended to modify or alter host status (Compounds)
     host_vaccination: [vaccines1,vaccine2]
     ethnicity: http://purl.obolibrary.org/obo/HANCESTRO_0010
-    additional_host_information: Optional free text field for addtional information
+    additional_host_information: Optional free text field for additional information
 
 sample:
     sample_id: Id of the sample as defined by the submitter 
@@ -21,7 +21,7 @@ sample:
     collection_location: http://www.wikidata.org/entity/Q148
     sample_storage_conditions: frozen specimen
     source_database_accession: [http://identifiers.org/insdc/LC522350.1#sequence]
-    additional_collection_information: Optional free text field for addtional information
+    additional_collection_information: Optional free text field for additional information
 
 virus:
     virus_species: http://purl.obolibrary.org/obo/NCBITaxon_2697049
@@ -31,16 +31,16 @@ technology:
     sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0009173,http://www.ebi.ac.uk/efo/EFO_0009173]
     sequence_assembly_method: Protocol used for assembly
     sequencing_coverage: [70.0, 100.0]
-    additional_technology_information: Optional free text field for addtional information
+    additional_technology_information: Optional free text field for additional information
 
 submitter:
     authors: [John Doe, Joe Boe, Jonny Oe]
     submitter_name: [John Doe]
-    submitter_address: John Doe's adress
+    submitter_address: John Doe's address
     originating_lab: John Doe kitchen
     lab_address: John Doe's address
     provider_sample_id: XXX1
     submitter_sample_id: XXX2
     publication: PMID00001113
     submitter_orcid: [https://orcid.org/0000-0000-0000-0000,https://orcid.org/0000-0000-0000-0001]
-    additional_submitter_information: Optional free text field for addtional information
+    additional_submitter_information: Optional free text field for additional information

@@ -6,15 +6,19 @@ Entrez.email = 'another_email@gmail.com'
 import xml.etree.ElementTree as ET
 import json
 import os
+import requests
 
 from dateutil import parser
+from datetime import date
 
 num_ids_for_request = 100
 
 dir_metadata = 'metadata_from_nuccore'
 dir_fasta_and_yaml = 'fasta_and_yaml'
 dir_dict_ontology_standardization = 'dict_ontology_standardization/'
-path_ncbi_virus_accession = 'sequences.acc'
+
+today_date = date.today().strftime("%Y.%m.%d")
+path_ncbi_virus_accession = 'sequences.{}.acc'.format(today_date)
 
 def chunks(lst, n):
     for i in range(0, len(lst), n):
@@ -26,6 +30,7 @@ if not os.path.exists(dir_metadata):
     # Take all the ids
     id_set = set()
 
+    # Try to search several strings
     term_list = ['SARS-CoV-2', 'SARS-CoV2', 'SARS CoV2', 'SARSCoV2', 'txid2697049[Organism]']
     for term in term_list:
         tmp_list = Entrez.read(
@@ -38,20 +43,25 @@ if not os.path.exists(dir_metadata):
         # Remove the version in the id
         tmp_list = [x.split('.')[0] for x in tmp_list]
 
-        print(term, len(tmp_list))
         #tmp_list = tmp_list[0:2] # restricting to small run
+        new_ids_set = set([x.split('.')[0] for x in tmp_list])
+        new_ids = len(new_ids_set.difference(id_set))
+        id_set.update(new_ids_set)
 
-        id_set.update([x.split('.')[0] for x in tmp_list])
+        print('Term:', term, '-->', new_ids, 'new IDs from', len(tmp_list), '---> Total unique IDs:', len(id_set))
 
-    print(term_list, len(id_set))
+    if not os.path.exists(path_ncbi_virus_accession):
+        r = requests.get('https://www.ncbi.nlm.nih.gov/genomes/VirusVariation/vvsearch2/?q=*:*&fq=%7B!tag=SeqType_s%7DSeqType_s:(%22Nucleotide%22)&fq=VirusLineageId_ss:(2697049)&cmd=download&sort=SourceDB_s%20desc,CreateDate_dt%20desc,id%20asc&dlfmt=acc&fl=id')
+        with open(path_ncbi_virus_accession, 'w') as fw:
+            fw.write(r.text)
 
-    if os.path.exists(path_ncbi_virus_accession):
-        with open(path_ncbi_virus_accession) as f:
-            tmp_list = [line.strip('\n') for line in f]
-        print('NCBI Virus', len(tmp_list))
-        id_set.update(tmp_list)
-        term_list.append('NCBI Virus')
-        print(term_list, len(id_set))
+    with open(path_ncbi_virus_accession) as f:
+        tmp_list = [line.strip('\n') for line in f]
+
+    new_ids = len(set(tmp_list).difference(id_set))
+    id_set.update(tmp_list)
+
+    print('DB: NCBI Virus', today_date, '-->', new_ids, 'new IDs from', len(tmp_list), '---> Total unique IDs:', len(id_set))
 
     for i, id_x_list in enumerate(chunks(list(id_set), num_ids_for_request)):
         path_metadata_xxx_xml = os.path.join(dir_metadata, 'metadata_{}.xml'.format(i))
@@ -61,7 +71,6 @@ if not os.path.exists(dir_metadata):
             fw.write(
                 Entrez.efetch(db='nuccore', id=id_x_list, retmode='xml').read()
             )
-
 
 term_to_uri_dict = {}
 

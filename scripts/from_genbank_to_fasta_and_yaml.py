@@ -96,12 +96,20 @@ for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_x
             term_to_uri_dict[term] = uri
 
 species_to_taxid_dict = {
-    'Homo sapiens': 'http://purl.obolibrary.org/obo/NCBITaxon_9606'
+    'Homo sapiens': 'http://purl.obolibrary.org/obo/NCBITaxon_9606',
+    'Mustela lutreola': 'http://purl.obolibrary.org/obo/NCBITaxon_9666',
+    'Manis javanica': 'http://purl.obolibrary.org/obo/NCBITaxon_9974',
+    'Felis catus': 'http://purl.obolibrary.org/obo/NCBITaxon_9685',
+ 	'Panthera tigris jacksoni': 'http://purl.obolibrary.org/obo/NCBITaxon_419130',
+ 	'Canis lupus familiaris': 'http://purl.obolibrary.org/obo/NCBITaxon_9615'
 }
 
 
 if not os.path.exists(dir_fasta_and_yaml):
     os.makedirs(dir_fasta_and_yaml)
+
+min_len_to_count = 27500
+num_seq_with_len_ge_X_bp = 0
 
 missing_value_list = []
 
@@ -117,7 +125,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
             print(accession_version, ' - sequence not found')
             continue
 
-        print(path_metadata_xxx_xml, accession_version)
+        #print(path_metadata_xxx_xml, accession_version)
 
         # A general default-empty yaml could be read from the definitive one
         info_for_yaml_dict = {
@@ -204,6 +212,9 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
                     if GBQualifier_value_text_list[0] in species_to_taxid_dict:
                         info_for_yaml_dict['host']['host_species'] = species_to_taxid_dict[GBQualifier_value_text_list[0]]
+                    elif GBQualifier_value_text_list[0] and ('MT215193' in accession_version or 'MT270814' in accession_version):
+                    	# Information checked manually from NCBI Virus
+                    	info_for_yaml_dict['host']['host_species'] = species_to_taxid_dict['Canis lupus familiaris']
                     else:
                         missing_value_list.append('\t'.join([accession_version, 'host_species', GBQualifier_value_text_list[0]]))
 
@@ -220,7 +231,6 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                     # - Homo sapiens; male; age 29			--> ['Homo sapiens', 'male', 'age 29']
                     # - Homo sapiens; symptomatic			--> ['Homo sapiens', 'symptomatic']
                     if len(GBQualifier_value_text_list) > 1:
-                        print(GBQualifier_value_text_list)
                         host_sex = ''
                         if 'female' in GBQualifier_value_text_list[1]:
                             host_sex = 'female'
@@ -250,8 +260,6 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                             info_for_yaml_dict['host']['host_age_unit'] = 'http://purl.obolibrary.org/obo/UO_0000036'
                         elif len(GBQualifier_value_text_list) > 2:
                             missing_value_list.append('\t'.join([accession_version, 'host_age', GBQualifier_value_text_list[2]]))
-
-                        print('host_sex {} - host_age {}'.format(host_sex, host_age), '<--', GBQualifier_value_text_list)
                 elif GBQualifier_name_text == 'collected_by':
                     if any([x in GBQualifier_value_text.lower() for x in ['institute', 'hospital', 'city', 'center']]):
                         info_for_yaml_dict['sample']['collecting_institution'] = GBQualifier_value_text
@@ -261,12 +269,15 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                     if GBQualifier_value_text.upper() in term_to_uri_dict:
                         GBQualifier_value_text = GBQualifier_value_text.upper() # For example, in case of 'usa: wa'
 
+                    # Little cleaning
+                    GBQualifier_value_text = GBQualifier_value_text.strip("/'")
+
                     if GBQualifier_value_text in term_to_uri_dict:
                         info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict[GBQualifier_value_text]]
                     else:
-                        if GBQualifier_value_text in ['NP/OP swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab', 'np/np swab', 'np/op']:
+                        if GBQualifier_value_text.lower() in ['np/op', 'np/op swab', 'np/np swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab']:
                             info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal swab'], term_to_uri_dict['oropharyngeal swab']]
-                        elif GBQualifier_value_text in ['nasopharyngeal swab/throat swab', 'nasopharyngeal/throat swab']:
+                        elif GBQualifier_value_text in ['nasopharyngeal swab/throat swab', 'nasopharyngeal/throat swab', 'nasopharyngeal swab and throat swab', 'nasal swab and throat swab']:
                             info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal swab'], term_to_uri_dict['throat swab']]
                         elif GBQualifier_value_text in ['nasopharyngeal aspirate/throat swab']:
                             info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal aspirate'], term_to_uri_dict['throat swab']]
@@ -332,6 +343,12 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
             json.dump(info_for_yaml_dict, fw, indent=2)
 
 
+        if(len(GBSeq_sequence.text) >= min_len_to_count):
+        	num_seq_with_len_ge_X_bp += 1
+
+
 if len(missing_value_list) > 0:
     with open('missing_terms.tsv', 'w') as fw:
         fw.write('\n'.join(missing_value_list))
+
+print('Num. sequences with length >= {} bp: {}'.format(min_len_to_count, num_seq_with_len_ge_X_bp))

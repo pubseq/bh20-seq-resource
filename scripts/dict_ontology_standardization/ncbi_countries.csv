@@ -111,9 +111,11 @@ France,http://www.wikidata.org/entity/Q142
 Gabon,http://www.wikidata.org/entity/Q1000
 Georgia,http://www.wikidata.org/entity/Q230
 Germany,http://www.wikidata.org/entity/Q183
+Germany: Bavaria,https://www.wikidata.org/wiki/Q980
 Germany: Dusseldorf,https://www.wikidata.org/wiki/Q1718
 Ghana,http://www.wikidata.org/entity/Q117
 Greece,http://www.wikidata.org/entity/Q41
+Greece: Athens,https://www.wikidata.org/wiki/Q1524
 Grenada,http://www.wikidata.org/entity/Q769
 Guatemala,http://www.wikidata.org/entity/Q774
 Guinea,http://www.wikidata.org/entity/Q1006
@@ -136,6 +138,8 @@ Ireland,http://www.wikidata.org/entity/Q27
 Israel,http://www.wikidata.org/entity/Q801
 Italy,http://www.wikidata.org/entity/Q38
 Italy: Cagliari,http://www.wikidata.org/entity/Q1897
+Italy: Lazio,https://www.wikidata.org/wiki/Q1282
+Italy: Palermo,https://www.wikidata.org/wiki/Q2656
 Italy: Rome,http://www.wikidata.org/entity/Q220
 Ivory Coast,http://www.wikidata.org/entity/Q1008
 Jamaica,http://www.wikidata.org/entity/Q766
@@ -272,6 +276,7 @@ USA: DC,http://www.wikidata.org/entity/Q3551781
 USA: DE,http://www.wikidata.org/entity/Q1393
 USA: FL,http://www.wikidata.org/entity/Q812
 USA: GA,http://www.wikidata.org/entity/Q1428
+USA: Georgia,http://www.wikidata.org/entity/Q1428
 USA: HI,http://www.wikidata.org/entity/Q782
 USA: IA,http://www.wikidata.org/entity/Q1546
 USA: ID,http://www.wikidata.org/entity/Q1221
@@ -286,6 +291,7 @@ USA: MA,http://www.wikidata.org/entity/Q771
 USA: MD,http://www.wikidata.org/entity/Q1391
 USA: ME,http://www.wikidata.org/entity/Q724
 USA: MI,http://www.wikidata.org/entity/Q1166
+USA: Michigan,http://www.wikidata.org/entity/Q1166
 USA: MN,http://www.wikidata.org/entity/Q1527
 USA: MO,http://www.wikidata.org/entity/Q1581
 USA: MS,http://www.wikidata.org/entity/Q1494
@@ -301,6 +307,7 @@ USA: NV,http://www.wikidata.org/entity/Q1227
 USA: NY,http://www.wikidata.org/entity/Q1384
 USA: New York,http://www.wikidata.org/entity/Q1384
 USA: OH,http://www.wikidata.org/entity/Q1397
+USA: Ohio,http://www.wikidata.org/entity/Q1397
 USA: OK,http://www.wikidata.org/entity/Q1649
 USA: OR,http://www.wikidata.org/entity/Q824
 USA: PA,http://www.wikidata.org/entity/Q1400
@@ -316,6 +323,7 @@ USA: VA,http://www.wikidata.org/entity/Q1370
 USA: VT,http://www.wikidata.org/entity/Q16551
 USA: WA,http://www.wikidata.org/entity/Q1223
 USA: WI,http://www.wikidata.org/entity/Q1537
+USA: Wisconsin,http://www.wikidata.org/entity/Q1537
 USA: WV,http://www.wikidata.org/entity/Q1371
 USA: WY,http://www.wikidata.org/entity/Q1214
 Uzbekistan,http://www.wikidata.org/entity/Q265

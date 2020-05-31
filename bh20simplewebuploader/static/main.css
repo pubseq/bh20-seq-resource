@@ -20,7 +20,7 @@ h1 {
 
 .intro {
     color: #505050;
-    font-weight: 300;
+    // font-weight: 300;
 }
 
 .header {
@@ -182,7 +182,7 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
 }
 
 .about p {
-    font-weight: 300;
+    // font-weight: 300;
     color: #505050;
 }
 

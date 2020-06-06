@@ -8,8 +8,8 @@ import json
 import os
 import requests
 
-from dateutil import parser
 from datetime import date
+from dateutil.parser import parse
 
 num_ids_for_request = 100
 
@@ -312,7 +312,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                         GBQualifier_value_text_list = GBQualifier_value_text.split('-')
 
                         if GBQualifier_value_text_list[1].isalpha():
-                            date_to_write = GBQualifier_value_text_list[1] + '-' + GBQualifier_value_text_list[0] + '-' + GBQualifier_value_text_list[2]
+                            date_to_write = parse(GBQualifier_value_text).strftime('%Y-%m-%d')
 
                     info_for_yaml_dict['sample']['collection_date'] = date_to_write
                 elif GBQualifier_name_text in ['lat_lon', 'country']:

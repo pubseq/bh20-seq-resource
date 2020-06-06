@@ -161,7 +161,11 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
         GBSeq_comment = GBSeq.find('GBSeq_comment')
         if GBSeq_comment is not None and 'Assembly-Data' in GBSeq_comment.text:
-            GBSeq_comment_text = GBSeq_comment.text.split('##Assembly-Data-START## ; ')[1].split(' ; ##Assembly-Data-END##')[0]
+            prefix_split_string = '##Genome-Assembly' if GBSeq_comment.text.startswith('##Genome-') else '##Assembly'
+
+            GBSeq_comment_text = GBSeq_comment.text.split(
+                '{}-Data-START## ; '.format(prefix_split_string)
+            )[1].split(' ; {}-Data-END##'.format(prefix_split_string))[0]
 
             for info_to_check, field_in_yaml in zip(
                 ['Assembly Method', 'Coverage', 'Sequencing Technology'],
@@ -289,9 +293,9 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                     
                     if len(GBQualifier_value_text.split('-')) == 1:
                         if int(GBQualifier_value_text) < 2020:
-                            date_to_write = "15 12 {}".format(GBQualifier_value_text)
+                            date_to_write = "{}-12-15".format(GBQualifier_value_text)
                         else:
-                            date_to_write = "15 01 {}".format(GBQualifier_value_text)
+                            date_to_write = "{}-01-15".format(GBQualifier_value_text)
 
                         if 'additional_collection_information' in info_for_yaml_dict['sample']:
                             info_for_yaml_dict['sample']['additional_collection_information'] += "; The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
@@ -308,7 +312,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                         GBQualifier_value_text_list = GBQualifier_value_text.split('-')
 
                         if GBQualifier_value_text_list[1].isalpha():
-                            date_to_write = GBQualifier_value_text_list[1] + ' ' + GBQualifier_value_text_list[0] + ' ' + GBQualifier_value_text_list[2]
+                            date_to_write = GBQualifier_value_text_list[1] + '-' + GBQualifier_value_text_list[0] + '-' + GBQualifier_value_text_list[2]
 
                     info_for_yaml_dict['sample']['collection_date'] = date_to_write
                 elif GBQualifier_name_text in ['lat_lon', 'country']:

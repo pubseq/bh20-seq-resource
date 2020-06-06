@@ -320,11 +320,9 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                         GBQualifier_value_text = 'China: Hong Kong'
 
                     if GBQualifier_value_text in term_to_uri_dict:
-                        GBQualifier_value_text = term_to_uri_dict[GBQualifier_value_text]
+                        info_for_yaml_dict['sample']['collection_location'] = term_to_uri_dict[GBQualifier_value_text]
                     else:
                         missing_value_list.append('\t'.join([accession_version, GBQualifier_name_text, GBQualifier_value_text]))
-
-                    info_for_yaml_dict['sample']['collection_location'] = GBQualifier_value_text
                 elif GBQualifier_name_text == 'note':
                     if 'additional_collection_information' in info_for_yaml_dict['sample']:
                         info_for_yaml_dict['sample']['additional_collection_information'] += '; ' + GBQualifier_value_text

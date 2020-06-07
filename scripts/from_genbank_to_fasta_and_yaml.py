@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('--skip-request', action='store_true', help='skip metadata and sequence request', required=False)
+parser.add_argument('--only-missing-id', action='store_true', help='download only missing id', required=False)
+args = parser.parse_args()
+
 from Bio import Entrez
 Entrez.email = 'another_email@gmail.com'
 
@@ -7,6 +13,7 @@ import xml.etree.ElementTree as ET
 import json
 import os
 import requests
+import sys
 
 from datetime import date
 from dateutil.parser import parse
@@ -31,9 +38,27 @@ def chunks(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
 
-if not os.path.exists(dir_metadata):
-    os.makedirs(dir_metadata)
+if os.path.exists(dir_metadata):
+    print("The directory '{}' already exists.".format(dir_metadata))
 
+    if not args.skip_request:
+        print("\tTo start the request, delete the directory '{}' or specify --skip-request.".format(dir_metadata))
+        sys.exit(-1)
+
+
+accession_already_downloaded_set = []
+
+if os.path.exists(dir_fasta_and_yaml):
+    print("The directory '{}' already exists.".format(dir_fasta_and_yaml))
+    if not args.only_missing_id:
+        print("To start the download, delete the directory '{}' or specify --only-missing-id.".format(dir_fasta_and_yaml))
+        sys.exit(-1)
+
+    accession_already_downloaded_set = set([x.split('.yaml')[0].split('.')[0] for x in os.listdir(dir_fasta_and_yaml) if x.endswith('.yaml')])
+    print('There are {} accession already downloaded.'.format(len(accession_already_downloaded_set)))
+
+
+if not os.path.exists(dir_metadata):
     # Take all the ids
     id_set = set()
 
@@ -70,6 +95,11 @@ if not os.path.exists(dir_metadata):
 
     print('DB: NCBI Virus', today_date, '-->', new_ids, 'new IDs from', len(tmp_list), '---> Total unique IDs:', len(id_set))
 
+    if len(accession_already_downloaded_set) > 0:
+        id_set = id_set.difference(accession_already_downloaded_set)
+        print('There are {} missing IDs to download.'.format(len(id_set)))
+
+    os.makedirs(dir_metadata)
     for i, id_x_list in enumerate(chunks(list(id_set), num_ids_for_request)):
         path_metadata_xxx_xml = os.path.join(dir_metadata, 'metadata_{}.xml'.format(i))
         print('Requesting {} ids --> {}'.format(len(id_x_list), path_metadata_xxx_xml))
@@ -353,4 +383,4 @@ if len(missing_value_list) > 0:
     with open('missing_terms.tsv', 'w') as fw:
         fw.write('\n'.join(missing_value_list))
 
-print('Num. sequences with length >= {} bp: {}'.format(min_len_to_count, num_seq_with_len_ge_X_bp))
+print('Num. new sequences with length >= {} bp: {}'.format(min_len_to_count, num_seq_with_len_ge_X_bp))

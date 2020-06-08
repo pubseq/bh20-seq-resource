@@ -1,4 +1,5 @@
 nasopharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155831
+nasopharyngeal swabs,http://purl.obolibrary.org/obo/NCIT_C155831
 nasopharyngeal exudate,http://purl.obolibrary.org/obo/NCIT_C155831
 nasopharyngeal,http://purl.obolibrary.org/obo/NCIT_C155831
 respiratory swab,http://purl.obolibrary.org/obo/NCIT_C155831
@@ -12,10 +13,16 @@ nasopharyngeal (throat) washings,http://purl.obolibrary.org/obo/NCIT_C155831
 oropharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155835
 throat swab,http://purl.obolibrary.org/obo/NCIT_C155835
 oro-pharyngeal,http://purl.obolibrary.org/obo/NCIT_C155835
+Oropharyngal,http://purl.obolibrary.org/obo/NCIT_C155835
+Oral-pharyngeal,http://purl.obolibrary.org/obo/NCIT_C155835
+Oro-pharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155835
+Oropharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155835
+oro pharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155835
 buccal swab,http://purl.obolibrary.org/obo/NCIT_C155835
 throat washing,http://purl.obolibrary.org/obo/NCIT_C155835
 Throat Swab,http://purl.obolibrary.org/obo/NCIT_C155835
 throat (oropharyngeal) swab,http://purl.obolibrary.org/obo/NCIT_C155835
+Throat (Oropharyngeal) swab,http://purl.obolibrary.org/obo/NCIT_C155835
 bronchoalveolar lavage fluid,http://purl.obolibrary.org/obo/NCIT_C13195
 swab,http://purl.obolibrary.org/obo/NCIT_C13195
 oral swab,http://purl.obolibrary.org/obo/NCIT_C13195

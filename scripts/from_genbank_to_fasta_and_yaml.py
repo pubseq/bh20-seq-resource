@@ -1,31 +1,68 @@
 #!/usr/bin/env python3
 
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('--skip-request', action='store_true', help='skip metadata and sequence request', required=False)
+parser.add_argument('--only-missing-id', action='store_true', help='download only missing id', required=False)
+args = parser.parse_args()
+
 from Bio import Entrez
 Entrez.email = 'another_email@gmail.com'
 
 import xml.etree.ElementTree as ET
 import json
 import os
+import requests
+import sys
 
-from dateutil import parser
+from datetime import date
+from dateutil.parser import parse
 
 num_ids_for_request = 100
 
 dir_metadata = 'metadata_from_nuccore'
 dir_fasta_and_yaml = 'fasta_and_yaml'
 dir_dict_ontology_standardization = 'dict_ontology_standardization/'
-path_ncbi_virus_accession = 'sequences.acc'
+
+today_date = date.today().strftime("%Y.%m.%d")
+path_ncbi_virus_accession = 'sequences.{}.acc'.format(today_date)
+
+def is_integer(string_to_check):
+    try:
+        int(string_to_check)
+        return True
+    except ValueError:
+        return False
 
 def chunks(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
 
-if not os.path.exists(dir_metadata):
-    os.makedirs(dir_metadata)
+if os.path.exists(dir_metadata):
+    print("The directory '{}' already exists.".format(dir_metadata))
 
+    if not args.skip_request:
+        print("\tTo start the request, delete the directory '{}' or specify --skip-request.".format(dir_metadata))
+        sys.exit(-1)
+
+
+accession_already_downloaded_set = []
+
+if os.path.exists(dir_fasta_and_yaml):
+    print("The directory '{}' already exists.".format(dir_fasta_and_yaml))
+    if not args.only_missing_id:
+        print("To start the download, delete the directory '{}' or specify --only-missing-id.".format(dir_fasta_and_yaml))
+        sys.exit(-1)
+
+    accession_already_downloaded_set = set([x.split('.yaml')[0].split('.')[0] for x in os.listdir(dir_fasta_and_yaml) if x.endswith('.yaml')])
+    print('There are {} accession already downloaded.'.format(len(accession_already_downloaded_set)))
+
+
+if not os.path.exists(dir_metadata):
     # Take all the ids
     id_set = set()
 
+    # Try to search several strings
     term_list = ['SARS-CoV-2', 'SARS-CoV2', 'SARS CoV2', 'SARSCoV2', 'txid2697049[Organism]']
     for term in term_list:
         tmp_list = Entrez.read(
@@ -38,21 +75,31 @@ if not os.path.exists(dir_metadata):
         # Remove the version in the id
         tmp_list = [x.split('.')[0] for x in tmp_list]
 
-        print(term, len(tmp_list))
         #tmp_list = tmp_list[0:2] # restricting to small run
+        new_ids_set = set([x.split('.')[0] for x in tmp_list])
+        new_ids = len(new_ids_set.difference(id_set))
+        id_set.update(new_ids_set)
 
-        id_set.update([x.split('.')[0] for x in tmp_list])
+        print('Term:', term, '-->', new_ids, 'new IDs from', len(tmp_list), '---> Total unique IDs:', len(id_set))
 
-    print(term_list, len(id_set))
+    if not os.path.exists(path_ncbi_virus_accession):
+        r = requests.get('https://www.ncbi.nlm.nih.gov/genomes/VirusVariation/vvsearch2/?q=*:*&fq=%7B!tag=SeqType_s%7DSeqType_s:(%22Nucleotide%22)&fq=VirusLineageId_ss:(2697049)&cmd=download&sort=SourceDB_s%20desc,CreateDate_dt%20desc,id%20asc&dlfmt=acc&fl=id')
+        with open(path_ncbi_virus_accession, 'w') as fw:
+            fw.write(r.text)
 
-    if os.path.exists(path_ncbi_virus_accession):
-        with open(path_ncbi_virus_accession) as f:
-            tmp_list = [line.strip('\n') for line in f]
-        print('NCBI Virus', len(tmp_list))
-        id_set.update(tmp_list)
-        term_list.append('NCBI Virus')
-        print(term_list, len(id_set))
+    with open(path_ncbi_virus_accession) as f:
+        tmp_list = [line.strip('\n') for line in f]
 
+    new_ids = len(set(tmp_list).difference(id_set))
+    id_set.update(tmp_list)
+
+    print('DB: NCBI Virus', today_date, '-->', new_ids, 'new IDs from', len(tmp_list), '---> Total unique IDs:', len(id_set))
+
+    if len(accession_already_downloaded_set) > 0:
+        id_set = id_set.difference(accession_already_downloaded_set)
+        print('There are {} missing IDs to download.'.format(len(id_set)))
+
+    os.makedirs(dir_metadata)
     for i, id_x_list in enumerate(chunks(list(id_set), num_ids_for_request)):
         path_metadata_xxx_xml = os.path.join(dir_metadata, 'metadata_{}.xml'.format(i))
         print('Requesting {} ids --> {}'.format(len(id_x_list), path_metadata_xxx_xml))
@@ -79,12 +126,20 @@ for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_x
             term_to_uri_dict[term] = uri
 
 species_to_taxid_dict = {
-    'Homo sapiens': 'http://purl.obolibrary.org/obo/NCBITaxon_9606'
+    'Homo sapiens': 'http://purl.obolibrary.org/obo/NCBITaxon_9606',
+    'Mustela lutreola': 'http://purl.obolibrary.org/obo/NCBITaxon_9666',
+    'Manis javanica': 'http://purl.obolibrary.org/obo/NCBITaxon_9974',
+    'Felis catus': 'http://purl.obolibrary.org/obo/NCBITaxon_9685',
+ 	'Panthera tigris jacksoni': 'http://purl.obolibrary.org/obo/NCBITaxon_419130',
+ 	'Canis lupus familiaris': 'http://purl.obolibrary.org/obo/NCBITaxon_9615'
 }
 
 
 if not os.path.exists(dir_fasta_and_yaml):
     os.makedirs(dir_fasta_and_yaml)
+
+min_len_to_count = 27500
+num_seq_with_len_ge_X_bp = 0
 
 missing_value_list = []
 
@@ -100,6 +155,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
             print(accession_version, ' - sequence not found')
             continue
 
+        #print(path_metadata_xxx_xml, accession_version)
 
         # A general default-empty yaml could be read from the definitive one
         info_for_yaml_dict = {
@@ -135,7 +191,11 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
         GBSeq_comment = GBSeq.find('GBSeq_comment')
         if GBSeq_comment is not None and 'Assembly-Data' in GBSeq_comment.text:
-            GBSeq_comment_text = GBSeq_comment.text.split('##Assembly-Data-START## ; ')[1].split(' ; ##Assembly-Data-END##')[0]
+            prefix_split_string = '##Genome-Assembly' if GBSeq_comment.text.startswith('##Genome-') else '##Assembly'
+
+            GBSeq_comment_text = GBSeq_comment.text.split(
+                '{}-Data-START## ; '.format(prefix_split_string)
+            )[1].split(' ; {}-Data-END##'.format(prefix_split_string))[0]
 
             for info_to_check, field_in_yaml in zip(
                 ['Assembly Method', 'Coverage', 'Sequencing Technology'],
@@ -186,21 +246,54 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
                     if GBQualifier_value_text_list[0] in species_to_taxid_dict:
                         info_for_yaml_dict['host']['host_species'] = species_to_taxid_dict[GBQualifier_value_text_list[0]]
+                    elif GBQualifier_value_text_list[0] and ('MT215193' in accession_version or 'MT270814' in accession_version):
+                    	# Information checked manually from NCBI Virus
+                    	info_for_yaml_dict['host']['host_species'] = species_to_taxid_dict['Canis lupus familiaris']
+                    else:
+                        missing_value_list.append('\t'.join([accession_version, 'host_species', GBQualifier_value_text_list[0]]))
 
+                    # Possible cases:
+                    # - Homo sapiens						--> ['Homo sapiens']
+                    # - Homo sapiens; female				--> ['Homo sapiens', 'female']
+                    # - Homo sapiens; female 63				--> ['Homo sapiens', 'female 63']
+                    # - Homo sapiens; female; age 40		--> ['Homo sapiens', 'female', 'age 40']
+                    # - Homo sapiens; gender: F; age: 61	--> ['Homo sapiens', 'gender: F', 'age: 61']
+                    # - Homo sapiens; gender: M; age: 68	--> ['Homo sapiens', 'gender: M', 'age: 68']
+                    # - Homo sapiens; hospitalized patient	--> ['Homo sapiens', 'hospitalized patient']
+                    # - Homo sapiens; male					--> ['Homo sapiens', 'male']
+                    # - Homo sapiens; male; 63				--> ['Homo sapiens', 'male', '63']
+                    # - Homo sapiens; male; age 29			--> ['Homo sapiens', 'male', 'age 29']
+                    # - Homo sapiens; symptomatic			--> ['Homo sapiens', 'symptomatic']
                     if len(GBQualifier_value_text_list) > 1:
-                        if GBQualifier_value_text_list[1] in ['male', 'female']:
-                            if GBQualifier_value_text_list[1]=='male':
-                                info_for_yaml_dict['host']['host_sex'] = "http://purl.obolibrary.org/obo/PATO_0000384"
-                            elif GBQualifier_value_text_list[1]=='female':
-                                info_for_yaml_dict['host']['host_sex'] = "http://purl.obolibrary.org/obo/PATO_0000383"
-                        elif GBQualifier_value_text_list[1] in term_to_uri_dict:
-                            info_for_yaml_dict['host']['host_health_status'] = term_to_uri_dict[GBQualifier_value_text_list[1]]
-                        else:
-                            missing_value_list.append('\t'.join([accession_version, GBQualifier_name_text, GBQualifier_value_text_list[1]]))
+                        host_sex = ''
+                        if 'female' in GBQualifier_value_text_list[1]:
+                            host_sex = 'female'
+                        elif 'male' in GBQualifier_value_text_list[1]:
+                            host_sex = 'male'
+                        elif 'gender' in GBQualifier_value_text_list[1]:
+                            host_sex_one_lecter = GBQualifier_value_text_list[1].split(':')[-1].strip()
+                            if host_sex_one_lecter in ['F', 'M']:
+                                host_sex = 'female' if host_sex_one_lecter == 'F' else 'male'
 
-                        if 'age' in GBQualifier_value_text:
-                            info_for_yaml_dict['host']['host_age'] = int(GBQualifier_value_text_list[2].split('age ')[1])
+                        if host_sex in ['male', 'female']:
+                            info_for_yaml_dict['host']['host_sex'] = "http://purl.obolibrary.org/obo/PATO_0000384" if host_sex == 'male' else "http://purl.obolibrary.org/obo/PATO_0000383"
+                        elif GBQualifier_value_text_list[1] in term_to_uri_dict:
+                            info_for_yaml_dict['host']['host_health_status'] = term_to_uri_dict[GBQualifier_value_text_list[1]]                            
+                        else:
+                            missing_value_list.append('\t'.join([accession_version, 'host_sex or host_health_status', GBQualifier_value_text_list[1]]))
+
+                        # Host age
+                        host_age = -1
+                        if len(GBQualifier_value_text_list[1].split(' ')) > 1 and is_integer(GBQualifier_value_text_list[1].split(' ')[-1]):
+                            host_age = int(GBQualifier_value_text_list[1].split(' ')[-1])
+                        elif len(GBQualifier_value_text_list) > 2 and is_integer(GBQualifier_value_text_list[2].split(' ')[-1]):
+                            host_age = int(GBQualifier_value_text_list[2].split(' ')[-1])
+
+                        if host_age > -1:
+                            info_for_yaml_dict['host']['host_age'] = host_age
                             info_for_yaml_dict['host']['host_age_unit'] = 'http://purl.obolibrary.org/obo/UO_0000036'
+                        elif len(GBQualifier_value_text_list) > 2:
+                            missing_value_list.append('\t'.join([accession_version, 'host_age', GBQualifier_value_text_list[2]]))
                 elif GBQualifier_name_text == 'collected_by':
                     if any([x in GBQualifier_value_text.lower() for x in ['institute', 'hospital', 'city', 'center']]):
                         info_for_yaml_dict['sample']['collecting_institution'] = GBQualifier_value_text
@@ -210,12 +303,15 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                     if GBQualifier_value_text.upper() in term_to_uri_dict:
                         GBQualifier_value_text = GBQualifier_value_text.upper() # For example, in case of 'usa: wa'
 
+                    # Little cleaning
+                    GBQualifier_value_text = GBQualifier_value_text.strip("/'")
+
                     if GBQualifier_value_text in term_to_uri_dict:
                         info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict[GBQualifier_value_text]]
                     else:
-                        if GBQualifier_value_text in ['NP/OP swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab', 'np/np swab', 'np/op']:
+                        if GBQualifier_value_text.lower() in ['np/op', 'np/op swab', 'np/np swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab']:
                             info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal swab'], term_to_uri_dict['oropharyngeal swab']]
-                        elif GBQualifier_value_text in ['nasopharyngeal swab/throat swab', 'nasopharyngeal/throat swab']:
+                        elif GBQualifier_value_text in ['nasopharyngeal swab/throat swab', 'nasopharyngeal/throat swab', 'nasopharyngeal swab and throat swab', 'nasal swab and throat swab']:
                             info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal swab'], term_to_uri_dict['throat swab']]
                         elif GBQualifier_value_text in ['nasopharyngeal aspirate/throat swab']:
                             info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal aspirate'], term_to_uri_dict['throat swab']]
@@ -227,9 +323,9 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                     
                     if len(GBQualifier_value_text.split('-')) == 1:
                         if int(GBQualifier_value_text) < 2020:
-                            date_to_write = "15 12 {}".format(GBQualifier_value_text)
+                            date_to_write = "{}-12-15".format(GBQualifier_value_text)
                         else:
-                            date_to_write = "15 01 {}".format(GBQualifier_value_text)
+                            date_to_write = "{}-01-15".format(GBQualifier_value_text)
 
                         if 'additional_collection_information' in info_for_yaml_dict['sample']:
                             info_for_yaml_dict['sample']['additional_collection_information'] += "; The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
@@ -246,7 +342,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                         GBQualifier_value_text_list = GBQualifier_value_text.split('-')
 
                         if GBQualifier_value_text_list[1].isalpha():
-                            date_to_write = GBQualifier_value_text_list[1] + ' ' + GBQualifier_value_text_list[0] + ' ' + GBQualifier_value_text_list[2]
+                            date_to_write = parse(GBQualifier_value_text).strftime('%Y-%m-%d')
 
                     info_for_yaml_dict['sample']['collection_date'] = date_to_write
                 elif GBQualifier_name_text in ['lat_lon', 'country']:
@@ -254,11 +350,9 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                         GBQualifier_value_text = 'China: Hong Kong'
 
                     if GBQualifier_value_text in term_to_uri_dict:
-                        GBQualifier_value_text = term_to_uri_dict[GBQualifier_value_text]
+                        info_for_yaml_dict['sample']['collection_location'] = term_to_uri_dict[GBQualifier_value_text]
                     else:
                         missing_value_list.append('\t'.join([accession_version, GBQualifier_name_text, GBQualifier_value_text]))
-
-                    info_for_yaml_dict['sample']['collection_location'] = GBQualifier_value_text
                 elif GBQualifier_name_text == 'note':
                     if 'additional_collection_information' in info_for_yaml_dict['sample']:
                         info_for_yaml_dict['sample']['additional_collection_information'] += '; ' + GBQualifier_value_text
@@ -281,6 +375,12 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
             json.dump(info_for_yaml_dict, fw, indent=2)
 
 
+        if(len(GBSeq_sequence.text) >= min_len_to_count):
+        	num_seq_with_len_ge_X_bp += 1
+
+
 if len(missing_value_list) > 0:
     with open('missing_terms.tsv', 'w') as fw:
         fw.write('\n'.join(missing_value_list))
+
+print('Num. new sequences with length >= {} bp: {}'.format(min_len_to_count, num_seq_with_len_ge_X_bp))

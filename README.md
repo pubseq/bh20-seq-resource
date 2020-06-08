@@ -1,5 +1,5 @@
 # COVID-19 PubSeq: Public Sequence uploader
-
+[![Run on Repl.it](https://repl.it/badge/github/arvados/bh20-seq-resource)](https://repl.it/github/arvados/bh20-seq-resource)
 [![Join the chat at https://gitter.im/arvados/pubseq](https://badges.gitter.im/arvados/pubseq.svg)](https://gitter.im/arvados/pubseq?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This repository provides a sequence uploader for the COVID-19 Virtual

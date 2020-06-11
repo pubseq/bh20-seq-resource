@@ -112,10 +112,6 @@
     ns1:P17 <http://www.wikidata.org/entity/Q30> ;
     ns1:P625 "Point(-100.0 41.5)" .
 
-<http://www.wikidata.org/entity/Q1558> rdfs:label "Kansas" ;
-    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
-    ns1:P625 "Point(-98.0 38.5)" .
-
 <http://www.wikidata.org/entity/Q1581> rdfs:label "Missouri" ;
     ns1:P17 <http://www.wikidata.org/entity/Q30> ;
     ns1:P625 "Point(-92.5 38.5)" .
@@ -128,14 +124,21 @@
     ns1:P17 <http://www.wikidata.org/entity/Q148> ;
     ns1:P625 "Point(113.258976 23.128795)" .
 
+<http://www.wikidata.org/entity/Q183314> rdfs:label "Khyber Pakhtunkhwa" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q843> ;
+    ns1:P625 "Point(71.32 34.0)" .
+
 <http://www.wikidata.org/entity/Q1854> rdfs:label "Ho Chi Minh City" ;
     ns1:P17 <http://www.wikidata.org/entity/Q881> ;
-    ns1:P625 "Point(106.62965 10.82302)",
-        "Point(106.633333333 10.816666666)" .
+    ns1:P625 "Point(106.633333333 10.816666666)" .
 
 <http://www.wikidata.org/entity/Q198244> rdfs:label "Zhuozhou" ;
     ns1:P17 <http://www.wikidata.org/entity/Q148> ;
     ns1:P625 "Point(115.99176 39.48873)" .
+
+<http://www.wikidata.org/entity/Q3551781> rdfs:label "District of Columbia" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-77.008611111 38.916944444)" .
 
 <http://www.wikidata.org/entity/Q36687> rdfs:label "Victoria" ;
     ns1:P17 <http://www.wikidata.org/entity/Q408> ;
@@ -149,9 +152,17 @@
     ns1:P17 <http://www.wikidata.org/entity/Q148> ;
     ns1:P625 "Point(120.1675 30.25)" .
 
+<http://www.wikidata.org/entity/Q609024> rdfs:label "Gilgit" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q843> ;
+    ns1:P625 "Point(74.289166666 35.921944444)" .
+
 <http://www.wikidata.org/entity/Q62> rdfs:label "San Francisco" ;
     ns1:P17 <http://www.wikidata.org/entity/Q30> ;
     ns1:P625 "Point(-122.416388888 37.7775)" .
+
+<http://www.wikidata.org/entity/Q65> rdfs:label "Los Angeles" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-118.24368 34.05223)" .
 
 <http://www.wikidata.org/entity/Q759> rdfs:label "New Hampshire" ;
     ns1:P17 <http://www.wikidata.org/entity/Q30> ;
@@ -189,6 +200,10 @@
     ns1:P17 <http://www.wikidata.org/entity/Q30> ;
     ns1:P625 "Point(-111.5 39.5)" .
 
+<http://www.wikidata.org/entity/Q8646> rdfs:label "Hong Kong" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q148> ;
+    ns1:P625 "Point(114.158611111 22.278333333)" .
+
 <http://www.wikidata.org/entity/Q8686> rdfs:label "Shanghai" ;
     ns1:P17 <http://www.wikidata.org/entity/Q148> ;
     ns1:P625 "Point(121.466666666 31.166666666)" .
@@ -205,75 +220,125 @@
     ns1:P17 <http://www.wikidata.org/entity/Q30> ;
     ns1:P625 "Point(-120.0 37.0)" .
 
-<http://www.wikidata.org/entity/Q142> rdfs:label "France" ;
-    ns1:P17 <http://www.wikidata.org/entity/Q142> ;
-    ns1:P625 "Point(2.0 47.0)" .
+<http://www.wikidata.org/entity/Q15> rdfs:label "Africa" .
 
 <http://www.wikidata.org/entity/Q155> rdfs:label "Brazil" ;
     ns1:P17 <http://www.wikidata.org/entity/Q155> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q18> ;
     ns1:P625 "Point(-53.0 -14.0)" .
 
-<http://www.wikidata.org/entity/Q258> rdfs:label "South Africa" .
+<http://www.wikidata.org/entity/Q213> rdfs:label "Czech Republic" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q213> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> ;
+    ns1:P625 "Point(16.0 50.0)" .
 
-<http://www.wikidata.org/entity/Q29> rdfs:label "Spain" .
+<http://www.wikidata.org/entity/Q258> rdfs:label "South Africa" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q15> .
 
 <http://www.wikidata.org/entity/Q33> rdfs:label "Finland" ;
     ns1:P17 <http://www.wikidata.org/entity/Q33> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> ;
     ns1:P625 "Point(27.0 65.0)" .
 
 <http://www.wikidata.org/entity/Q34> rdfs:label "Sweden" ;
     ns1:P17 <http://www.wikidata.org/entity/Q34> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> ;
     ns1:P625 "Point(15.0 61.0)" .
 
 <http://www.wikidata.org/entity/Q38> rdfs:label "Italy" ;
     ns1:P17 <http://www.wikidata.org/entity/Q38> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> ;
     ns1:P625 "Point(12.5 42.5)" .
 
-<http://www.wikidata.org/entity/Q408> rdfs:label "Australia" .
+<http://www.wikidata.org/entity/Q408> rdfs:label "Australia" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q538> .
 
 <http://www.wikidata.org/entity/Q41> rdfs:label "Greece" ;
     ns1:P17 <http://www.wikidata.org/entity/Q41> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> ;
     ns1:P625 "Point(23.0 38.5)" .
 
 <http://www.wikidata.org/entity/Q419> rdfs:label "Peru" ;
     ns1:P17 <http://www.wikidata.org/entity/Q419> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q18> ;
     ns1:P625 "Point(-76.0 -9.4)" .
 
 <http://www.wikidata.org/entity/Q43> rdfs:label "Turkey" ;
     ns1:P17 <http://www.wikidata.org/entity/Q43> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46>,
+        <http://www.wikidata.org/entity/Q48> ;
     ns1:P625 "Point(36.0 39.0)" .
 
-<http://www.wikidata.org/entity/Q668> rdfs:label "India" .
+<http://www.wikidata.org/entity/Q49> rdfs:label "North America" .
 
-<http://www.wikidata.org/entity/Q739> rdfs:label "Colombia" .
+<http://www.wikidata.org/entity/Q668> rdfs:label "India" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> .
+
+<http://www.wikidata.org/entity/Q739> rdfs:label "Colombia" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q18> .
 
 <http://www.wikidata.org/entity/Q794> rdfs:label "Iran" ;
     ns1:P17 <http://www.wikidata.org/entity/Q794> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
     ns1:P625 "Point(53.0 32.0)" .
 
 <http://www.wikidata.org/entity/Q801> rdfs:label "Israel" ;
     ns1:P17 <http://www.wikidata.org/entity/Q801> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
     ns1:P625 "Point(35.0 31.0)" .
+
+<http://www.wikidata.org/entity/Q833> rdfs:label "Malaysia" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q833> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(108.0 3.0)" .
 
 <http://www.wikidata.org/entity/Q837> rdfs:label "Nepal" ;
     ns1:P17 <http://www.wikidata.org/entity/Q837> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
     ns1:P625 "Point(84.0 28.0)" .
+
+<http://www.wikidata.org/entity/Q854> rdfs:label "Sri Lanka" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q854> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(81.0 7.0)" .
 
 <http://www.wikidata.org/entity/Q865> rdfs:label "Taiwan" ;
     ns1:P17 <http://www.wikidata.org/entity/Q865> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
     ns1:P625 "Point(121.0 24.0)" .
 
-<http://www.wikidata.org/entity/Q881> rdfs:label "Vietnam" .
+<http://www.wikidata.org/entity/Q881> rdfs:label "Vietnam" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> .
 
 <http://www.wikidata.org/entity/Q884> rdfs:label "South Korea" ;
     ns1:P17 <http://www.wikidata.org/entity/Q884> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
     ns1:P625 "Point(128.0 36.0)" .
+
+<http://www.wikidata.org/entity/Q29> rdfs:label "Spain" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q29> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> ;
+    ns1:P625 "Point(-3.0 40.0)" .
+
+<http://www.wikidata.org/entity/Q538> rdfs:label "Oceania" .
+
+<http://www.wikidata.org/entity/Q843> rdfs:label "Pakistan" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> .
+
+<http://www.wikidata.org/entity/Q18> rdfs:label "South America" .
+
+<http://www.wikidata.org/entity/Q46> rdfs:label "Europe" .
 
 <http://www.wikidata.org/entity/Q148> rdfs:label "People's Republic of China" ;
     ns1:P17 <http://www.wikidata.org/entity/Q148> ;
-    ns1:P625 "Point(103.0 35.0)" .
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(103.451944444 35.844722222)" .
+
+<http://www.wikidata.org/entity/Q48> rdfs:label "Asia" .
 
 <http://www.wikidata.org/entity/Q30> rdfs:label "United States of America" ;
     ns1:P17 <http://www.wikidata.org/entity/Q30> ;
-    ns1:P625 "Point(-77.036666666 38.895)" .
+    ns1:P30 <http://www.wikidata.org/entity/Q49>,
+        <http://www.wikidata.org/entity/Q538> ;
+    ns1:P625 "Point(-98.5795 39.828175)" .
 

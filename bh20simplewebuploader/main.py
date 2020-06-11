@@ -493,12 +493,12 @@ def getAllaccessions():
 
 
 # parameter must be encoded e.g. http://arvados.org/keep:6e6276698ed8b0e6cd21f523e4f91179+123/sequence.fasta must become
-# http%3A%2F%2Farvados.org%2Fkeep%3A6e6276698ed8b0e6cd21f523e4f91179%2B123%2Fsequence.fasta
+# http%3A%2F%2Fcollections.lugli.arvadosapi.com%2Fc%3D00a6af865453564f6a59b3d2c81cc7c1%2B123%2Fsequence.fasta
 @app.route('/api/getDetailsForSeq', methods=['GET'])
 def getDetailsForSeq():
     seq_id = request.args.get('seq')
     query="""SELECT DISTINCT ?key ?key_label ?value WHERE {
-    <http://arvados.org/keep:00a6af865453564f6a59b3d2c81cc7c1+123/sequence.fasta> ?x [?key ?value] .
+    <placeholder> ?x [?key ?value] .
     OPTIONAL {?key <http://www.w3.org/2000/01/rdf-schema#label> ?key_tmp_label } .
     BIND(IF(BOUND(?key_tmp_label),?key_tmp_label, ?key) as ?key_label)}"""
     query=query.replace("placeholder", seq_id)

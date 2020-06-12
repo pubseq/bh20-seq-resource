@@ -17,6 +17,7 @@
    - [[#multiple-sequence-alignment-msa][Multiple Sequence Alignment (MSA)]]
    - [[#phylogenetic-tree][Phylogenetic tree]]
    - [[#protein-prediction][Protein prediction]]
+ - [[#source-code][Source code]]
 
 * Workflow runs
 
@@ -100,3 +101,9 @@ See [[https://github.com/arvados/bh20-seq-resource/issues/43][Phylo tracker]].
 ** Protein prediction
 
 We aim to make protein predictions available.
+
+* Source code
+
+All source code for this website and tooling is available
+from
+https://github.com/arvados/bh20-seq-resource

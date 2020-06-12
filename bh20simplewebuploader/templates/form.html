@@ -145,6 +145,13 @@
 {% include 'footer.html' %}
 
 <script type="text/javascript">
+  // Find all the add and remove field buttons and hook up the listeners.
+  for (let button of document.getElementsByClassName('add-field')) {
+      button.addEventListener('click', addField)
+  }
+  for (let button of document.getElementsByClassName('remove-field')) {
+      button.addEventListener('click', removeField)
+  }
   // let scriptRoot = {{ request.script_root|tojson|safe }};
   let uploadForm = document.getElementById('metadata_upload_form')
   let uploadFormSpot = document.getElementById('metadata_upload_form_spot')

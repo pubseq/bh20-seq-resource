@@ -165,13 +165,6 @@ function removeField(e) {
   }
 }
 
-// Find all the add and remove field buttons and hook up the listeners.
-for (let button of document.getElementsByClassName('add-field')) {
-  button.addEventListener('click', addField)
-}
-for (let button of document.getElementsByClassName('remove-field')) {
-  button.addEventListener('click', removeField)
-}
 
 // Change the submit button after hitting
 function on_submit_button() {

@@ -508,6 +508,25 @@ def getDetailsForSeq():
     return jsonify([{'uri': x['key']['value'], 'key_label': x['key_label']['value'],
                      'value': x['value']['value']} for x in result])
 
+# Endpoint should provide all necessary information to draw a map (!)
+@app.route('/api/getCountByGPS', methods=['GET'])
+def getCountByGPS():
+    query="""SELECT DISTINCT ?location ?location_label ?GPS (count(?fasta) as ?fastaCount) WHERE {
+    ?fasta ?x[ <http://purl.obolibrary.org/obo/GAZ_00000448> ?location] .
+    ?location <http://www.wikidata.org/prop/direct/P625> ?GPS .
+    OPTIONAL { ?location rdfs:label ?key_tmp_label }
+    BIND(IF(BOUND(?key_tmp_label),?key_tmp_label, ?location) as ?location_label)
+    }
+    GROUP BY ?location ?location_label ?GPS
+    """
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'Fasta Count': x['fastaCount']['value'],
+                     'Location': x['location']['value'],
+                     'LocationLabel': x['location_label']['value'],
+                     'GPS' :x['GPS']['value']} for x in result])
+
 
 @app.route('/api/getSEQCountbytech', methods=['GET'])
 def getSEQCountbytech():

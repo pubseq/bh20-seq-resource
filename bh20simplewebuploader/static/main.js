@@ -28,6 +28,28 @@ function fetchAPI(apiEndPoint) {
 
 }
 
+function fetchAPIV2(apiEndPoint) {
+  fetch(scriptRoot + apiEndPoint)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      console.log(data)
+       htmlString="<table>"
+
+       // Depending on what we want to explore we'd have to call a different function ....? But how to Include that?
+       for (var i=0; i<data.length;i++) {
+            htmlString=htmlString+"<tr><td><a href='#' onclick='fetchSEQByLocation(\""+data[i]["key"]+"\");'>"+data[i]["label"]+"</a></td><td>"+data[i]["count"]+"<td></tr>"
+       }
+       htmlString=htmlString+"</table>"
+
+      document.getElementById("table").innerHTML = htmlString
+    });
+
+  document.getElementById("results").classList.add("invisible");
+}
+
+
 let search = () => {
   let m =  document.getElementById('search-input').value;
   fetchAPI(scriptRoot + "/api/getDetailsForSeq?seq=" + encodeURIComponent(m));
@@ -37,21 +59,35 @@ let fetchCount = () => {
   fetchAPI("/api/getCount");
 }
 
-let fetchSEQBySpecimen = () => {
-  fetchAPI("/api/getSEQCountbySpecimenSource");
+let fetchSEQCountBySpecimen = () => {
+  fetchAPIV2("/api/getSEQCountbySpecimenSource");
 }
 
-let fetchSEQByLocation = () => {
-  fetchAPI("/api/getSEQCountbyLocation");
+let fetchSEQCountByLocation = () => {
+  fetchAPIV2("/api/getSEQCountbyLocation");
 }
 
-let fetchSEQByTech = () => {
-  fetchAPI("/api/getSEQCountbytech");
+let fetchSEQCountByTech = () => {
+  fetchAPIV2("/api/getSEQCountbytech");
 }
 
 let fetchAllaccessions = () => {
   fetchAPI("/api/getAllaccessions");
 };
+
+let fetchCountByGPS = () => {
+  fetchAPI("/api/getCountByGPS");
+};
+
+let fetchSEQCountbyLocation = () => {
+  fetchAPIV2("/api/getSEQCountbyLocation");
+};
+
+let fetchSEQByLocation = () => {
+  console.log("Missing - set parameter for request, retrieve data")
+};
+
+
 
 /*
  * Make sure that only one of the manual metadata entry and metadata upload

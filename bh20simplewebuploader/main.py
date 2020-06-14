@@ -539,9 +539,9 @@ def getSEQCountbytech():
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)
     result = r.json()['results']['bindings']
-    return jsonify([{'Fasta Count': x['fastaCount']['value'],
-                     'tech': x['tech']['value'],
-                     'Label': x['tech_label']['value']} for x in result])
+    return jsonify([{'count': x['fastaCount']['value'],
+                     'key': x['tech']['value'],
+                     'label': x['tech_label']['value']} for x in result])
 
 ## List all Sequences/submissions by a given tech, as example e.g. http://purl.obolibrary.org/obo/OBI_0000759
 ## Has to be encoded again so should be --> http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FOBI_0000759
@@ -582,9 +582,9 @@ def getSEQCountbyLocation():
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)
     result = r.json()['results']['bindings']
-    return jsonify([{'Fasta Count': x['fastaCount']['value'],
-                     'GeoLocation': x['geoLocation']['value'],
-                     'GeoLocation Label': x['geoLocation_label']['value']} for x in result])
+    return jsonify([{'count': x['fastaCount']['value'],
+                     'key': x['geoLocation']['value'],
+                     'label': x['geoLocation_label']['value']} for x in result])
 
 
 @app.route('/api/getSEQCountbySpecimenSource', methods=['GET'])
@@ -599,9 +599,9 @@ def getSEQCountbySpecimenSource():
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)
     result = r.json()['results']['bindings']
-    return jsonify([{'Fasta Count': x['fastaCount']['value'],
-                     'Specimen Source': x['specimen_source']['value'],
-                     'Label': x['specimen_source_label']['value']} for x in result])
+    return jsonify([{'count': x['fastaCount']['value'],
+                     'key': x['specimen_source']['value'],
+                     'label': x['specimen_source_label']['value']} for x in result])
 
 # Example specimen http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C155831
 @app.route('/api/getSEQbySpecimenSource', methods=['GET'])

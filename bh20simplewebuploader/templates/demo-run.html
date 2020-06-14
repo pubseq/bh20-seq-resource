@@ -1,12 +1,13 @@
 <section class="search-section">
   <div class="filter-options" action="#">
     <p>[Demo] Display content sequences by: </p>
-
     <div>
-      <button class="button" onclick="fetchSEQBySpecimen()">Specimen source</button>
-      <button class="button" onclick="fetchSEQByLocation()">Location</button>
-      <button class="button" onclick="fetchSEQByTech()">Sequencer</button>
-      <button class="button" onclick="fetchAllaccessions()">All accessions</button>
+      <button class="button" onclick="fetchSEQCountBySpecimen()">Count by Specimen source</button>
+      <button class="button" onclick="fetchSEQCountByLocation()">Count by Location</button>
+      <button class="button" onclick="fetchSEQCountByTech()">Count by Sequencer</button>
+      <button class="button" onclick="fetchAllaccessions()">Show All accessions</button>
+      <button class="button" onclick="fetchCountByGPS()">Map</button>
+
     </div>
 
   </div>
@@ -18,4 +19,8 @@
     <pre><code id="json"></code></pre>
   </section>
 
+
 </section>
+ <section>
+    <div id="table"></div>
+  </section>

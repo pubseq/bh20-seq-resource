@@ -29,7 +29,7 @@ def upload(fn):
     # cmd = ("curl --digest --user dba:%s --verbose --url -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph -X DELETE" % pwd).split(" ")
 
     print("UPLOAD "+fn)
-    cmd = ("curl -X PUT --digest -u dba:%s -H Content-Type:text/turtle -T %s -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph/%s" % (pwd, fn, fn) ).split(" ")
+    cmd = ("curl -X PUT --digest -u dba:%s -H Content-Type:text/turtle -T %s -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph/%s" % (pwd, fn, os.path.basename(fn)) ).split(" ")
     print(cmd)
     p = subprocess.Popen(cmd)
     output = p.communicate()[0]
@@ -56,6 +56,15 @@ if os.path.isfile(fn):
     file.close
 
 if stamp != last_modified_str:
+    print("Delete graphs")
+    for graph in ["labels.ttl", "metadata.ttl", "countries.ttl" ""]:
+        cmd = ("curl --digest -u dba:%s --verbose --url http://127.0.0.1:8890/sparql-graph-crud-auth?graph=http://covid-19.genenetwork.org/graph/%s -X DELETE" % (pwd, graph))
+        print(cmd)
+        p = subprocess.Popen(cmd.split(" "))
+        output = p.communicate()[0]
+        print(output)
+        # assert(p.returncode == 0) -> may prevent update
+
     upload(basedir+"/semantic_enrichment/labels.ttl")
     upload(basedir+"/semantic_enrichment/countries.ttl")
 

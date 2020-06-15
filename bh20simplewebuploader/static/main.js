@@ -87,6 +87,9 @@ let fetchSEQByLocation = () => {
   console.log("Missing - set parameter for request, retrieve data")
 };
 
+let fetchSEQCountbyContinent = () => {
+  fetchAPIV2("/api/getSEQCountbyContinent");
+}
 
 
 /*

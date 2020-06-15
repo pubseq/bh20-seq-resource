@@ -587,6 +587,46 @@ def getSEQCountbyLocation():
                      'label': x['geoLocation_label']['value']} for x in result])
 
 
+@app.route('/api/getSEQCountbyContinent', methods=['GET'])
+def getSEQCountbyContinent():
+    query="""SELECT DISTINCT ?continent ?continent_label (count(?fasta) as ?fastaCount) WHERE {
+    ?fasta ?x[ <http://purl.obolibrary.org/obo/GAZ_00000448> ?location] .
+    ?location <http://www.wikidata.org/prop/direct/P30> ?continent .
+    OPTIONAL { ?continent rdfs:label ?key_tmp_label }
+    BIND(IF(BOUND(?key_tmp_label),?key_tmp_label, ?location) as ?continent_label)
+    }
+    GROUP BY ?continent ?continent_label
+    """
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'count': x['fastaCount']['value'],
+                     'key': x['continent']['value'],
+                     'label': x['continent_label']['value']} for x in result])
+
+
+
+@app.route('/api/getSEQCountbyCountryContinent', methods=['GET'])
+def getSEQCountbyCountryContinent():
+    query="""SELECT DISTINCT ?location ?location_label (count(?fasta) as ?fastaCount) WHERE {
+    ?fasta ?x[ <http://purl.obolibrary.org/obo/GAZ_00000448> ?location] .
+    ?location <http://www.wikidata.org/prop/direct/P30> <placeholder> .
+    OPTIONAL { ?location rdfs:label ?key_tmp_label }
+    BIND(IF(BOUND(?key_tmp_label),?key_tmp_label, ?location) as ?location_label)
+    }
+    GROUP BY ?location ?location_label
+    """
+    continent = request.args.get('continent')
+    query = query.replace("placeholder", continent)
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'count': x['fastaCount']['value'],
+                     'key': x['location']['value'],
+                     'label': x['location_label']['value']} for x in result])
+
+
+
 @app.route('/api/getSEQCountbySpecimenSource', methods=['GET'])
 def getSEQCountbySpecimenSource():
     query="""SELECT ?specimen_source ?specimen_source_label (count(?fasta) as ?fastaCount)  WHERE

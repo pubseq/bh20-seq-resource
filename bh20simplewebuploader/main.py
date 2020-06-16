@@ -459,6 +459,13 @@ def about_page():
     buf = get_html_body('doc/web/about.html')
     return render_template('about.html',menu='ABOUT',embed=buf)
 
+##
+@app.route('/map')
+def map_page():
+    return render_template('map.html',menu='DEMO')
+
+
+
 ## Dynamic API functions starting here
 ## This is quick and dirty for now, just to get something out and demonstrate the queries
 ## Feel free to rename the functions/endpoints, feel free to process result so we get nicer JSON
@@ -522,10 +529,10 @@ def getCountByGPS():
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)
     result = r.json()['results']['bindings']
-    return jsonify([{'Fasta Count': x['fastaCount']['value'],
+    return jsonify([{'count': x['fastaCount']['value'],
                      'Location': x['location']['value'],
                      'LocationLabel': x['location_label']['value'],
-                     'GPS' :x['GPS']['value']} for x in result])
+                     'GPS' :x['GPS']['value'][6:-1]} for x in result])
 
 
 @app.route('/api/getSEQCountbytech', methods=['GET'])

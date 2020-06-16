@@ -28,6 +28,7 @@ function fetchAPI(apiEndPoint) {
 
 }
 
+// Copy from function above but now added as table instead of plain json
 function fetchAPIV2(apiEndPoint) {
   fetch(scriptRoot + apiEndPoint)
     .then(response => {
@@ -217,4 +218,37 @@ function on_submit_button() {
         alert(document.getElementById('example').validationMessage);
         return false;
     }
+}
+
+
+
+//
+
+function drawMap(){
+
+// initialize the map on the "map" div with a given center and zoom
+var mymap = L.map('mapid').setView([51.505, -0.09], 1);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(mymap);
+
+fetch(scriptRoot + "api/getCountByGPS")
+    .then(response => {
+    console.log(response)
+      return response.json();
+    })
+    .then(data => {
+
+   for (var i=0; i<data.length;i++) {
+   gps=data[i]["GPS"].split(" ")
+    var circle = L.circle([gps[1], gps[0]], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: parseInt(data[i]["count"])  //not working for whatever reason
+        }).addTo(mymap);
+      }
+
+      });
 }

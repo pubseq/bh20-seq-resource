@@ -598,7 +598,8 @@ def getSEQCountbyLocation():
 def getSEQCountbyContinent():
     query="""SELECT DISTINCT ?continent ?continent_label (count(?fasta) as ?fastaCount) WHERE {
     ?fasta ?x[ <http://purl.obolibrary.org/obo/GAZ_00000448> ?location] .
-    ?location <http://www.wikidata.org/prop/direct/P30> ?continent .
+   ?location <http://www.wikidata.org/prop/direct/P17> ?country .
+    ?country <http://www.wikidata.org/prop/direct/P30> ?continent .
     OPTIONAL { ?continent rdfs:label ?key_tmp_label }
     BIND(IF(BOUND(?key_tmp_label),?key_tmp_label, ?location) as ?continent_label)
     }

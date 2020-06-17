@@ -338,7 +338,6 @@
 
 <http://www.wikidata.org/entity/Q30> rdfs:label "United States of America" ;
     ns1:P17 <http://www.wikidata.org/entity/Q30> ;
-    ns1:P30 <http://www.wikidata.org/entity/Q49>,
-        <http://www.wikidata.org/entity/Q538> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q49> ;
     ns1:P625 "Point(-98.5795 39.828175)" .
 

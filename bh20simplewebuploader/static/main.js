@@ -13,14 +13,27 @@ function myFunction() {
     }
 }
 
+let map = L.map( 'map', {
+  center: [37.0902, -95.7129],  // Default to U.S.A
+  minZoom: 3,
+  zoom: 0
+});
+L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  subdomains: ['a','b','c']
+}).addTo( map );
+
 function fetchAPI(apiEndPoint) {
   fetch(scriptRoot + apiEndPoint)
     .then(response => {
       return response.json();
     })
     .then(data => {
+      console.log(data);
       document.getElementById("results").classList.remove("invisible");
       document.getElementById("loader").classList.add("invisible");
+      // Reload the map
+      map.invalidateSize();
     });
   document.getElementById("results").classList.add("invisible");
   document.getElementById("loader").classList.remove("invisible");

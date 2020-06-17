@@ -13,15 +13,43 @@ function myFunction() {
     }
 }
 
+let map = L.map( 'map', {
+  center: [37.0902, -95.7129],  // Default to U.S.A
+  minZoom: 3,
+  zoom: 0
+});
+L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  subdomains: ['a','b','c']
+}).addTo( map );
+
+let markers = L.markerClusterGroup().addTo(map)
+
+
 function fetchAPI(apiEndPoint) {
   fetch(scriptRoot + apiEndPoint)
     .then(response => {
       return response.json();
     })
     .then(data => {
-      document.getElementById("json").textContent = JSON.stringify(data, undefined, 2);
+      markers.clearLayers();
       document.getElementById("results").classList.remove("invisible");
       document.getElementById("loader").classList.add("invisible");
+      if (!(apiEndPoint === "/api/getAllaccessions")) {
+        for (let i = 0; i < data.length; i++) {
+          let {"Fasta Count": fastaCount, GPS, LocationLabel: label } = data[i];
+          let coordinates = GPS.match(/Point\((-?[0-9]+(?:.(?:[0-9]+)?)?) (-?[0-9]+(?:.(?:[0-9]+)?)?)\)/);
+          if (!(coordinates == null)) {
+            let lat, lon;
+            [lon, lat] = coordinates.slice(1, 3).map(parseFloat);
+            let point = L.point()
+            let marker = L.marker([lat, lon]);
+            marker.bindPopup("<b>" + label + "</b><br/>" + "FastaCount: " +fastaCount);
+            markers.addLayer(marker)
+          }}
+      }
+      // Reload the map
+      map.invalidateSize();
     });
   document.getElementById("results").classList.add("invisible");
   document.getElementById("loader").classList.remove("invisible");

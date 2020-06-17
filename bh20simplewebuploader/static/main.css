@@ -47,6 +47,11 @@ h2 > svg {
     float: right;
 }
 
+#map {
+    width: 800px;
+    height: 440px;
+    border: 1px solid #AAA;
+}
 /* ---- start menu ---- */
 
 /* Add a black background color to the top navigation */
@@ -227,17 +232,6 @@ a {
     column-width: 250px;
 }
 
-pre code {
-    background-color: #eee;
-    display: flex;
-    width: max-content;
-    margin: 0 auto;
-    overflow-y: scroll;
-    max-height: 300px;
-    padding: 10px;
-    border: solid 1px black;
-}
-
 .record, .record .field-group, .record .field-group .field {
     display: flex;
     flex-direction: column;
@@ -261,12 +255,15 @@ pre code {
 .search-section {
     display: flex;
     justify-content: space-between;
+    width: max-content;
 }
 
+.filter-options {
+    width: 100%;
+}
 .search-section .filter-options {
     display: flex;
     flex-direction: column;
-    width: max-content;
     padding: 20px;
 }
 

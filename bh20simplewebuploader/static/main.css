@@ -47,6 +47,9 @@ h2 > svg {
     float: right;
 }
 
+#mapid {
+    height: 200px;
+}
 /* ---- start menu ---- */
 
 /* Add a black background color to the top navigation */
@@ -250,12 +253,15 @@ a {
 .search-section {
     display: flex;
     justify-content: space-between;
+    width: max-content;
 }
 
+.filter-options {
+    width: 100%;
+}
 .search-section .filter-options {
     display: flex;
     flex-direction: column;
-    width: max-content;
     padding: 20px;
 }
 

@@ -227,17 +227,6 @@ a {
     column-width: 250px;
 }
 
-pre code {
-    background-color: #eee;
-    display: flex;
-    width: max-content;
-    margin: 0 auto;
-    overflow-y: scroll;
-    max-height: 300px;
-    padding: 10px;
-    border: solid 1px black;
-}
-
 .record, .record .field-group, .record .field-group .field {
     display: flex;
     flex-direction: column;

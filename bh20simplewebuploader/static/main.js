@@ -19,7 +19,6 @@ function fetchAPI(apiEndPoint) {
       return response.json();
     })
     .then(data => {
-      document.getElementById("json").textContent = JSON.stringify(data, undefined, 2);
       document.getElementById("results").classList.remove("invisible");
       document.getElementById("loader").classList.add("invisible");
     });

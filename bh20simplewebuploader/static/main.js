@@ -32,12 +32,13 @@ function fetchAPI(apiEndPoint) {
       return response.json();
     })
     .then(data => {
+        console.log(data);
       markers.clearLayers();
       document.getElementById("results").classList.remove("invisible");
       document.getElementById("loader").classList.add("invisible");
       if (!(apiEndPoint === "/api/getAllaccessions")) {
         for (let i = 0; i < data.length; i++) {
-          let {"Fasta Count": fastaCount, GPS, LocationLabel: label } = data[i];
+          let {"count": fastaCount, GPS, LocationLabel: label } = data[i];
           let coordinates = GPS.split(" ");
           if (!(coordinates == null)) {
             let lat, lon;

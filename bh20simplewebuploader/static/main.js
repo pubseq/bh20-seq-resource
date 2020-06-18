@@ -32,16 +32,17 @@ function fetchAPI(apiEndPoint) {
       return response.json();
     })
     .then(data => {
+        console.log(data);
       markers.clearLayers();
       document.getElementById("results").classList.remove("invisible");
       document.getElementById("loader").classList.add("invisible");
       if (!(apiEndPoint === "/api/getAllaccessions")) {
         for (let i = 0; i < data.length; i++) {
-          let {"Fasta Count": fastaCount, GPS, LocationLabel: label } = data[i];
-          let coordinates = GPS.match(/Point\((-?[0-9]+(?:.(?:[0-9]+)?)?) (-?[0-9]+(?:.(?:[0-9]+)?)?)\)/);
+          let {"count": fastaCount, GPS, LocationLabel: label } = data[i];
+          let coordinates = GPS.split(" ");
           if (!(coordinates == null)) {
             let lat, lon;
-            [lon, lat] = coordinates.slice(1, 3).map(parseFloat);
+            [lon, lat] = coordinates.map(parseFloat);
             let point = L.point()
             let marker = L.marker([lat, lon]);
             marker.bindPopup("<b>" + label + "</b><br/>" + "FastaCount: " +fastaCount);

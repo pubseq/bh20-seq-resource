@@ -58,6 +58,9 @@ def qc_fasta(arg_sequence):
             tmp1.write(submitlabel.encode("utf8"))
             tmp1.write(("".join(submitseq)).encode("utf8"))
             tmp1.flush()
+            subbp = 0
+            refbp = 0
+            similarity = 0
             try:
                 cmd = ["clustalw", "-infile="+tmp1.name,
                        "-quicktree", "-iteration=none", "-type=DNA"]
@@ -78,12 +81,14 @@ def qc_fasta(arg_sequence):
             except Exception as e:
                 logging.warn("Error trying to QC against reference sequence using 'clustalw': %s", e)
 
-            if (subbp/refbp) < .7:
+            if refbp and (subbp/refbp) < .7:
                 raise ValueError("QC fail: submit sequence length is shorter than 70% reference")
-            if (subbp/refbp) > 1.3:
+            if refbp and (subbp/refbp) > 1.3:
                 raise ValueError("QC fail: submit sequence length is greater than 130% reference")
-            if similarity < 70.0:
+            if similarity and similarity < 70.0:
                 raise ValueError("QC fail: submit similarity is less than 70%")
+            if refbp == 0 or similarity == 0:
+                raise ValueError("QC fail")
 
         return ("sequence.fasta"+gz, seqlabel)
     elif seq_type == "text/fastq":

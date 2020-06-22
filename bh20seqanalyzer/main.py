@@ -39,22 +39,25 @@ def validate_upload(api, collection, validated_project,
             logging.warn("Failed metadata qc")
 
     if valid:
-        tgt = None
-        paired = {"reads_1.fastq": "reads.fastq", "reads_1.fastq.gz": "reads.fastq.gz"}
-        for n in ("sequence.fasta", "reads.fastq", "reads.fastq.gz", "reads_1.fastq", "reads_1.fastq.gz"):
-            if n not in col:
-                continue
-            with col.open(n, 'rb') as qf:
-                tgt = qc_fasta(qf)[0]
-                if tgt != n and tgt != paired.get(n):
-                    logging.info("Expected %s but magic says it should be %s", n, tgt)
-                    valid = False
-                elif tgt in ("reads.fastq", "reads.fastq.gz", "reads_1.fastq", "reads_1.fastq.gz"):
-                    start_fastq_to_fasta(api, collection, fastq_project, fastq_workflow_uuid, n)
-                    return False
-        if tgt is None:
+        try:
+            tgt = None
+            paired = {"reads_1.fastq": "reads.fastq", "reads_1.fastq.gz": "reads.fastq.gz"}
+            for n in ("sequence.fasta", "reads.fastq", "reads.fastq.gz", "reads_1.fastq", "reads_1.fastq.gz"):
+                if n not in col:
+                    continue
+                with col.open(n, 'rb') as qf:
+                    tgt = qc_fasta(qf)[0]
+                    if tgt != n and tgt != paired.get(n):
+                        logging.info("Expected %s but magic says it should be %s", n, tgt)
+                        valid = False
+                    elif tgt in ("reads.fastq", "reads.fastq.gz", "reads_1.fastq", "reads_1.fastq.gz"):
+                        start_fastq_to_fasta(api, collection, fastq_project, fastq_workflow_uuid, n)
+                        return False
+            if tgt is None:
+                valid = False
+                logging.warn("Upload '%s' does not contain sequence.fasta, reads.fastq or reads_1.fastq", collection["name"])
+        except ValueError as v:
             valid = False
-            logging.warn("Upload '%s' does not contain sequence.fasta, reads.fastq or reads_1.fastq", collection["name"])
 
     dup = api.collections().list(filters=[["owner_uuid", "=", validated_project],
                                           ["portable_data_hash", "=", col.portable_data_hash()]]).execute()
@@ -70,9 +73,8 @@ def validate_upload(api, collection, validated_project,
             "owner_uuid": validated_project,
             "name": "%s (%s)" % (collection["name"], time.asctime(time.gmtime()))}).execute()
     else:
-        pass
         # It is invalid, delete it.
-        #logging.warn("Deleting '%s'" % collection["name"])
+        logging.warn("Suggest deleting '%s'" % collection["name"])
         #api.collections().delete(uuid=collection["uuid"]).execute()
 
     return valid

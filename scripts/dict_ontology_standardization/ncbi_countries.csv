@@ -12,6 +12,9 @@ Armenia,http://www.wikidata.org/entity/Q399
 Australia,http://www.wikidata.org/entity/Q408
 Australia: Queensland,http://www.wikidata.org/entity/Q36074
 Australia: Victoria,http://www.wikidata.org/entity/Q36687
+"Australia: Melbourne, Victoria",http://www.wikidata.org/entity/Q3141
+Australia: Northern Territory,http://www.wikidata.org/entity/Q3235
+Australia: NSW,http://www.wikidata.org/entity/Q3224
 Austria,http://www.wikidata.org/entity/Q40
 Azerbaijan,http://www.wikidata.org/entity/Q227
 Bahrain,http://www.wikidata.org/entity/Q398
@@ -31,8 +34,10 @@ Bulgaria,http://www.wikidata.org/entity/Q219
 Burkina Faso,http://www.wikidata.org/entity/Q965
 Burundi,http://www.wikidata.org/entity/Q967
 Cambodia,http://www.wikidata.org/entity/Q424
+Cambodia:Sihanoukville,http://www.wikidata.org/entity/Q18207676
 Cameroon,http://www.wikidata.org/entity/Q1009
 Canada,http://www.wikidata.org/entity/Q16
+Canada: Toronto,http://www.wikidata.org/entity/Q172
 Cape Verde,http://www.wikidata.org/entity/Q1011
 Central African Republic,http://www.wikidata.org/entity/Q929
 Chad,http://www.wikidata.org/entity/Q657
@@ -71,6 +76,7 @@ China: Qinghai,http://www.wikidata.org/entity/Q45833
 China: Shaanxi,http://www.wikidata.org/entity/Q47974
 China: Shandong,http://www.wikidata.org/entity/Q43407
 China: Shanghai,http://www.wikidata.org/entity/Q8686
+China:Shanghai,http://www.wikidata.org/entity/Q8686
 China: Shanxi,http://www.wikidata.org/entity/Q46913
 China: Shenzhen,http://www.wikidata.org/entity/Q15174
 China: Sichuan,http://www.wikidata.org/entity/Q19770
@@ -113,6 +119,8 @@ Georgia,http://www.wikidata.org/entity/Q230
 Germany,http://www.wikidata.org/entity/Q183
 Germany: Bavaria,http://www.wikidata.org/entity/Q980
 Germany: Dusseldorf,http://www.wikidata.org/entity/Q1718
+Germany: Heinsberg,http://www.wikidata.org/entity/Q14833
+Germany: Starnberg,http://www.wikidata.org/entity/Q61936
 Ghana,http://www.wikidata.org/entity/Q117
 Greece,http://www.wikidata.org/entity/Q41
 Greece: Athens,http://www.wikidata.org/entity/Q1524
@@ -269,10 +277,14 @@ USA: AK,http://www.wikidata.org/entity/Q797
 USA: AL,http://www.wikidata.org/entity/Q173
 USA: AR,http://www.wikidata.org/entity/Q1612
 USA: AZ,http://www.wikidata.org/entity/Q816
+USA: Arizona,http://www.wikidata.org/entity/Q816
 USA: CA,http://www.wikidata.org/entity/Q99
+USA: California,http://www.wikidata.org/entity/Q99
+USA:California,http://www.wikidata.org/entity/Q99
 "USA: CA, San Diego County",http://www.wikidata.org/entity/Q108143
 USA: CO,http://www.wikidata.org/entity/Q1261
 USA: CT,http://www.wikidata.org/entity/Q779
+USA: Connecticut,http://www.wikidata.org/entity/Q779
 USA: DC,http://www.wikidata.org/entity/Q3551781
 USA: DE,http://www.wikidata.org/entity/Q1393
 USA: FL,http://www.wikidata.org/entity/Q812
@@ -295,6 +307,8 @@ USA: ME,http://www.wikidata.org/entity/Q724
 USA: MI,http://www.wikidata.org/entity/Q1166
 USA: Michigan,http://www.wikidata.org/entity/Q1166
 USA: MN,http://www.wikidata.org/entity/Q1527
+USA:Minnesota,http://www.wikidata.org/entity/Q1527
+USA: Minnesota,http://www.wikidata.org/entity/Q1527
 USA: MO,http://www.wikidata.org/entity/Q1581
 USA: MS,http://www.wikidata.org/entity/Q1494
 USA: MT,http://www.wikidata.org/entity/Q1212
@@ -323,8 +337,10 @@ USA: TX,http://www.wikidata.org/entity/Q1439
 USA: UT,http://www.wikidata.org/entity/Q829
 USA: VA,http://www.wikidata.org/entity/Q1370
 USA: Virginia,http://www.wikidata.org/entity/Q1370
+USA:Virginia,http://www.wikidata.org/entity/Q1370
 USA: VT,http://www.wikidata.org/entity/Q16551
 USA: WA,http://www.wikidata.org/entity/Q1223
+USA: Washington,http://www.wikidata.org/entity/Q1223
 USA: WI,http://www.wikidata.org/entity/Q1537
 USA: Wisconsin,http://www.wikidata.org/entity/Q1537
 USA: WV,http://www.wikidata.org/entity/Q1371

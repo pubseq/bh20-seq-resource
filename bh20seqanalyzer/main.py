@@ -40,20 +40,21 @@ def validate_upload(api, collection, validated_project,
 
     if valid:
         tgt = None
-        for n in ("sequence.fasta", "reads.fastq"):
+        paired = {"reads_1.fastq": "reads.fastq", "reads_1.fastq.gz": "reads.fastq.gz"}
+        for n in ("sequence.fasta", "reads.fastq", "reads.fastq.gz", "reads_1.fastq", "reads_1.fastq.gz"):
             if n not in col:
                 continue
-            with col.open(n) as qf:
-                tgt = qc_fasta(qf)
-                if tgt != n:
+            with col.open(n, 'rb') as qf:
+                tgt = qc_fasta(qf)[0]
+                if tgt != n and tgt != paired.get(n):
                     logging.info("Expected %s but magic says it should be %s", n, tgt)
                     valid = False
-                elif tgt == "reads.fastq":
-                    start_fastq_to_fasta(api, collection, fastq_project, fastq_workflow_uuid)
+                elif tgt in ("reads.fastq", "reads.fastq.gz", "reads_1.fastq", "reads_1.fastq.gz"):
+                    start_fastq_to_fasta(api, collection, fastq_project, fastq_workflow_uuid, n)
                     return False
         if tgt is None:
             valid = False
-            logging.warn("Upload '%s' does not contain sequence.fasta or reads.fastq", collection["name"])
+            logging.warn("Upload '%s' does not contain sequence.fasta, reads.fastq or reads_1.fastq", collection["name"])
 
     dup = api.collections().list(filters=[["owner_uuid", "=", validated_project],
                                           ["portable_data_hash", "=", col.portable_data_hash()]]).execute()
@@ -95,6 +96,7 @@ def run_workflow(api, parent_project, workflow_uuid, name, inputobj):
                tmp.name]
         logging.info("Running %s" % ' '.join(cmd))
         comp = subprocess.run(cmd, capture_output=True)
+    logging.info("Submitted %s", comp.stdout)
     if comp.returncode != 0:
         logging.error(comp.stderr.decode('utf-8'))
 
@@ -103,12 +105,10 @@ def run_workflow(api, parent_project, workflow_uuid, name, inputobj):
 
 def start_fastq_to_fasta(api, collection,
                          analysis_project,
-                         fastq_workflow_uuid):
-    newproject = run_workflow(api, analysis_project, fastq_workflow_uuid, "FASTQ to FASTA", {
-        "fastq_forward": {
-            "class": "File",
-            "location": "keep:%s/reads.fastq" % collection["portable_data_hash"]
-        },
+                         fastq_workflow_uuid,
+                         tgt):
+
+    params = {
         "metadata": {
             "class": "File",
             "location": "keep:%s/metadata.yaml" % collection["portable_data_hash"]
@@ -117,7 +117,24 @@ def start_fastq_to_fasta(api, collection,
             "class": "File",
             "location": "keep:ffef6a3b77e5e04f8f62a7b6f67264d1+556/SARS-CoV2-NC_045512.2.fasta"
         }
-    })
+    }
+
+    if tgt.startswith("reads.fastq"):
+        params["fastq_forward"] = {
+            "class": "File",
+            "location": "keep:%s/%s" % (collection["portable_data_hash"], tgt)
+        }
+    elif tgt.startswith("reads_1.fastq"):
+        params["fastq_forward"] = {
+            "class": "File",
+            "location": "keep:%s/reads_1.%s" % (collection["portable_data_hash"], tgt[8:])
+        }
+        params["fastq_reverse"] = {
+            "class": "File",
+            "location": "keep:%s/reads_2.%s" % (collection["portable_data_hash"], tgt[8:])
+        }
+
+    newproject = run_workflow(api, analysis_project, fastq_workflow_uuid, "FASTQ to FASTA", params)
     api.collections().update(uuid=collection["uuid"],
                              body={"owner_uuid": newproject["uuid"]}).execute()
 
@@ -222,6 +239,7 @@ def main():
 
     parser.add_argument('--latest-result-collection', type=str, default='lugli-4zz18-z513nlpqm03hpca', help='')
     parser.add_argument('--kickoff', action="store_true")
+    parser.add_argument('--once', action="store_true")
     args = parser.parse_args()
 
     api = arvados.api()
@@ -265,4 +283,6 @@ def main():
                                 args.pangenome_analysis_project,
                                 args.latest_result_collection)
 
+        if args.once:
+            break
         time.sleep(15)

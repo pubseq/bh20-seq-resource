@@ -5,6 +5,8 @@ import subprocess
 import tempfile
 import logging
 import re
+import io
+import gzip
 
 log = logging.getLogger(__name__ )
 
@@ -23,7 +25,7 @@ def read_fasta(sequence):
             raise ValueError("FASTA file contains multiple entries")
     return label, bases
 
-def qc_fasta(sequence):
+def qc_fasta(arg_sequence):
     log.debug("Starting qc_fasta")
     schema_resource = pkg_resources.resource_stream(__name__, "validation/formats")
     with tempfile.NamedTemporaryFile() as tmp:
@@ -31,12 +33,24 @@ def qc_fasta(sequence):
         tmp.flush()
         val = magic.Magic(magic_file=tmp.name,
                           uncompress=False, mime=True)
-    seq_type = val.from_buffer(sequence.read(4096)).lower()
+
+    gz = ""
+    if arg_sequence.name.endswith(".gz"):
+        sequence = gzip.GzipFile(fileobj=arg_sequence, mode='rb')
+        gz = ".gz"
+    else:
+        sequence = arg_sequence
+
+    sequence = io.TextIOWrapper(sequence)
+    r = sequence.read(4096)
     sequence.seek(0)
+
+    seqlabel = r[1:r.index("\n")]
+    seq_type = val.from_buffer(r).lower()
+
     if seq_type == "text/fasta":
         # ensure that contains only one entry
         submitlabel, submitseq = read_fasta(sequence)
-        sequence.seek(0)
 
         with tempfile.NamedTemporaryFile() as tmp1:
             refstring = pkg_resources.resource_string(__name__, "SARS-CoV-2-reference.fasta")
@@ -71,8 +85,8 @@ def qc_fasta(sequence):
             if similarity < 70.0:
                 raise ValueError("QC fail: submit similarity is less than 70%")
 
-        return "sequence.fasta"
+        return ("sequence.fasta"+gz, seqlabel)
     elif seq_type == "text/fastq":
-        return "reads.fastq"
+        return ("reads.fastq"+gz, seqlabel)
     else:
         raise ValueError("Sequence file does not look like a DNA FASTA or FASTQ")

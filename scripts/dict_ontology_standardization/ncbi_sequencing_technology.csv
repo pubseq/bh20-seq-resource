@@ -1,6 +1,13 @@
 Illumian NextSeq 500,http://www.ebi.ac.uk/efo/EFO_0009173
 Illumina NextSeq 500,http://www.ebi.ac.uk/efo/EFO_0009173
 NextSeq500,http://www.ebi.ac.uk/efo/EFO_0009173
+NextSeq 500,http://www.ebi.ac.uk/efo/EFO_0009173
+Illumian NextSeq 550,http://www.ebi.ac.uk/efo/EFO_0008566
+Illumina NextSeq 550,http://www.ebi.ac.uk/efo/EFO_0008566
+NextSeq550,http://www.ebi.ac.uk/efo/EFO_0008566
+NextSeq 550,http://www.ebi.ac.uk/efo/EFO_0008566
+Illumina MiniSeq,http://www.ebi.ac.uk/efo/EFO_0008636
+Illumina NovaSeq 6000,http://www.ebi.ac.uk/efo/EFO_0008637
 Nanopore MinION,http://www.ebi.ac.uk/efo/EFO_0008632
 Oxford Nanopore MinION,http://www.ebi.ac.uk/efo/EFO_0008632
 ONT (Oxford Nanopore Technologies),http://purl.obolibrary.org/obo/NCIT_C146818

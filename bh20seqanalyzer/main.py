@@ -30,6 +30,7 @@ def validate_upload(api, collection, validated_project,
         try:
             metadata_content = ruamel.yaml.round_trip_load(col.open("metadata.yaml"))
             metadata_content["id"] = "http://arvados.org/keep:%s/metadata.yaml" % collection["portable_data_hash"]
+            sample_id = metadata_content["sample"]["sample_id"]
             add_lc_filename(metadata_content, metadata_content["id"])
             valid = qc_metadata(metadata_content) and valid
         except Exception as e:
@@ -51,7 +52,7 @@ def validate_upload(api, collection, validated_project,
                         logging.info("Expected %s but magic says it should be %s", n, tgt)
                         valid = False
                     elif tgt in ("reads.fastq", "reads.fastq.gz", "reads_1.fastq", "reads_1.fastq.gz"):
-                        start_fastq_to_fasta(api, collection, fastq_project, fastq_workflow_uuid, n)
+                        start_fastq_to_fasta(api, collection, fastq_project, fastq_workflow_uuid, n, sample_id)
                         return False
             if tgt is None:
                 valid = False
@@ -108,7 +109,8 @@ def run_workflow(api, parent_project, workflow_uuid, name, inputobj):
 def start_fastq_to_fasta(api, collection,
                          analysis_project,
                          fastq_workflow_uuid,
-                         tgt):
+                         tgt,
+                         sample_id):
 
     params = {
         "metadata": {
@@ -118,7 +120,8 @@ def start_fastq_to_fasta(api, collection,
         "ref_fasta": {
             "class": "File",
             "location": "keep:ffef6a3b77e5e04f8f62a7b6f67264d1+556/SARS-CoV2-NC_045512.2.fasta"
-        }
+        },
+        "sample_id": sample_id
     }
 
     if tgt.startswith("reads.fastq"):

@@ -22,6 +22,7 @@ inputs:
     type: int
     default: 4
   metadata: File?
+  sample_id: string
 
 outputs:
   out_fasta:
@@ -57,5 +58,6 @@ steps:
       bam: samtools-sort/sorted_bam
       fasta: ref_fasta
       threads: threads
+      sample_id: sample_id
     out: [out_fasta]
     run: bam2fasta.cwl

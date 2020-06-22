@@ -15,6 +15,7 @@ inputs:
   threads:
     type: int
     default: 4
+  sample_id: string
 
 outputs:
   out_fasta:
@@ -61,5 +62,6 @@ steps:
     in:
       ref_fasta: fasta
       vcf: bcftools_index_after_qc/indexed
+      sample_id: sample_id
     out: [out_fasta]
     run: bcftools-consensus.cwl

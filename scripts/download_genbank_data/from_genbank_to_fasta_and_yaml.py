@@ -22,7 +22,7 @@ num_ids_for_request = 100
 
 dir_metadata = 'metadata_from_nuccore'
 dir_fasta_and_yaml = 'fasta_and_yaml'
-dir_dict_ontology_standardization = 'dict_ontology_standardization/'
+dir_dict_ontology_standardization = '../dict_ontology_standardization/'
 
 today_date = date.today().strftime("%Y.%m.%d")
 path_ncbi_virus_accession = 'sequences.{}.acc'.format(today_date)

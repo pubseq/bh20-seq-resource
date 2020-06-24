@@ -21,6 +21,6 @@ hints:
     listing:
       - entry: $(inputs.inputGFA)
         writable: true
-arguments: [odgi, build, -g, $(inputs.inputGFA), -s, -o, -,
+arguments: [odgi, build, -g, $(inputs.inputGFA), -o, -,
             {shellQuote: false, valueFrom: "|"},
             odgi, sort, -i, -, -p, s, -o, $(inputs.inputGFA.nameroot).odgi]

@@ -239,6 +239,7 @@ Solomon Islands,http://www.wikidata.org/entity/Q685
 Somalia,http://www.wikidata.org/entity/Q1045
 South Africa,http://www.wikidata.org/entity/Q258
 South Africa: KwaZulu-Natal,http://www.wikidata.org/entity/Q81725
+South Africa: KZN,http://www.wikidata.org/entity/Q81725
 South African Republic,http://www.wikidata.org/entity/Q550374
 South Korea,http://www.wikidata.org/entity/Q884
 South Sudan,http://www.wikidata.org/entity/Q958
@@ -279,6 +280,7 @@ USA: AR,http://www.wikidata.org/entity/Q1612
 USA: AZ,http://www.wikidata.org/entity/Q816
 USA: Arizona,http://www.wikidata.org/entity/Q816
 USA: CA,http://www.wikidata.org/entity/Q99
+USA:CA,http://www.wikidata.org/entity/Q99
 USA: California,http://www.wikidata.org/entity/Q99
 USA:California,http://www.wikidata.org/entity/Q99
 "USA: CA, San Diego County",http://www.wikidata.org/entity/Q108143
@@ -299,6 +301,7 @@ USA: IN,http://www.wikidata.org/entity/Q1415
 USA: KS,http://www.wikidata.org/entity/Q1558
 USA: KY,http://www.wikidata.org/entity/Q1603
 USA: LA,http://www.wikidata.org/entity/Q1588
+USA:Los Angeles,http://www.wikidata.org/entity/Q65
 "USA: New Orleans, LA",http://www.wikidata.org/entity/Q34404
 USA: MA,http://www.wikidata.org/entity/Q771
 USA: Massachusetts,http://www.wikidata.org/entity/Q771
@@ -330,6 +333,7 @@ USA: PA,http://www.wikidata.org/entity/Q1400
 USA: RI,http://www.wikidata.org/entity/Q1387
 "USA: San Francisco, CA",http://www.wikidata.org/entity/Q62
 USA: SC,http://www.wikidata.org/entity/Q1456
+USA: South Carolina,http://www.wikidata.org/entity/Q1456
 USA: SD,http://www.wikidata.org/entity/Q1211
 "USA: Snohomish County, WA",http://www.wikidata.org/entity/Q110403
 USA: TN,http://www.wikidata.org/entity/Q1509

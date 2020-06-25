@@ -36,6 +36,7 @@
 <http://purl.obolibrary.org/obo/OBI_0000759> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina" .
 <http://purl.obolibrary.org/obo/NCIT_C125894> <http://www.w3.org/2000/01/rdf-schema#label> "Ion Semiconductor Sequencing".
 <http://purl.obolibrary.org/obo/NCIT_C19641> <http://www.w3.org/2000/01/rdf-schema#label> "Dideoxy Chain Termination DNA Sequencing" .
+<http://www.ebi.ac.uk/efo/EFO_0008567> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina HiSeq X" .
 <http://purl.obolibrary.org/obo/NCIT_C155831> <http://www.w3.org/2000/01/rdf-schema#label> "Nasopharyngeal Swab Specimen" .
 <http://purl.obolibrary.org/obo/NCIT_C155835> <http://www.w3.org/2000/01/rdf-schema#label> "Oropharyngeal Swab Specimen" .
 <http://purl.obolibrary.org/obo/NCIT_C13195> <http://www.w3.org/2000/01/rdf-schema#label> "Bronchoalveolar Lavage Fluid" .

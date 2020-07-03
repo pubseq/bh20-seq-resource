@@ -23,6 +23,8 @@ def validate_upload(api, collection, validated_project,
     # validate the collection here.  Check metadata, etc.
     valid = True
 
+    logging.info("Validating upload '%s' (%s)" % (collection["name"], collection["uuid"]))
+
     if "metadata.yaml" not in col:
         logging.warn("Upload '%s' missing metadata.yaml", collection["name"])
         valid = False
@@ -75,7 +77,7 @@ def validate_upload(api, collection, validated_project,
             "name": "%s (%s)" % (collection["name"], time.asctime(time.gmtime()))}).execute()
     else:
         # It is invalid, delete it.
-        logging.warn("Suggest deleting '%s'" % collection["name"])
+        logging.warn("Suggest deleting '%s' (%s)" % (collection["name"], collection["uuid"]))
         #api.collections().delete(uuid=collection["uuid"]).execute()
 
     return valid

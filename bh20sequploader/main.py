@@ -24,7 +24,7 @@ UPLOAD_PROJECT='lugli-j7d0g-n5clictpuvwk8aa'
 
 def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
     try:
-        log.debug("Checking metadata")
+        log.debug("Checking metadata" if do_qc else "Skipping metadata check")
         if do_qc and not qc_metadata(metadata.name):
             log.warning("Failed metadata qc")
             exit(1)
@@ -36,7 +36,7 @@ def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
 
     target = []
     try:
-        log.debug("Checking FASTA/FASTQ QC")
+        log.debug("FASTA/FASTQ QC" if do_qc else "Limited FASTA/FASTQ QC")
         target.append(qc_fasta(sequence_p1, check_with_clustalw=do_qc))
         if sequence_p2:
             target.append(qc_fasta(sequence_p2))

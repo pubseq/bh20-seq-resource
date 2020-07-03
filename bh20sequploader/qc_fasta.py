@@ -54,6 +54,9 @@ def qc_fasta(arg_sequence, check_with_clustalw=True):
         sequence.seek(0)
         sequence.detach()
 
+        if not check_with_clustalw:
+            return ("sequence.fasta"+gz, seqlabel)
+
         with tempfile.NamedTemporaryFile() as tmp1:
             refstring = pkg_resources.resource_string(__name__, "SARS-CoV-2-reference.fasta")
             tmp1.write(refstring)
@@ -64,9 +67,6 @@ def qc_fasta(arg_sequence, check_with_clustalw=True):
             refbp = 0
             similarity = 0
             try:
-                if not check_with_clustalw:
-                    raise Exception("skipping QC")
-
                 cmd = ["clustalw", "-infile="+tmp1.name,
                        "-quicktree", "-iteration=none", "-type=DNA"]
                 print("QC checking similarity to reference")

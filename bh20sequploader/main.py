@@ -62,7 +62,7 @@ def main():
     parser = argparse.ArgumentParser(description='Upload SARS-CoV-19 sequences for analysis')
     parser.add_argument('metadata', type=argparse.FileType('r'), help='sequence metadata json')
     parser.add_argument('sequence_p1', type=argparse.FileType('rb'), help='sequence FASTA/FASTQ')
-    parser.add_argument('sequence_p2', type=argparse.FileType('rb'), default=None, help='sequence FASTQ pair')
+    parser.add_argument('sequence_p2', type=argparse.FileType('rb'), default=None, nargs='?', help='sequence FASTQ pair')
     parser.add_argument("--validate", action="store_true", help="Dry run, validate only")
     args = parser.parse_args()
 

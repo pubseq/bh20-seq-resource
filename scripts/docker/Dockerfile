@@ -7,4 +7,4 @@ RUN apt-get update && \
     libssl-dev libmagic-dev python3-magic && \
     apt-get clean
 
-RUN pip3 install bh20-seq-uploader
+RUN pip3 install bh20-seq-uploader py-dateutil

@@ -4,6 +4,8 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--skip-request', action='store_true', help='skip metadata and sequence request', required=False)
 parser.add_argument('--only-missing-id', action='store_true', help='download only missing id', required=False)
+parser.add_argument('--dict-ontology', type=str, help='where is the ontology',
+                    default='../dict_ontology_standardization/',required=False)
 args = parser.parse_args()
 
 from Bio import Entrez
@@ -22,7 +24,7 @@ num_ids_for_request = 100
 
 dir_metadata = 'metadata_from_nuccore'
 dir_fasta_and_yaml = 'fasta_and_yaml'
-dir_dict_ontology_standardization = '../dict_ontology_standardization/'
+dir_dict_ontology_standardization = args.dict_ontology
 
 today_date = date.today().strftime("%Y.%m.%d")
 path_ncbi_virus_accession = 'sequences.{}.acc'.format(today_date)
@@ -126,7 +128,7 @@ for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_x
             if term in term_to_uri_dict:
                 print('Warning: in the dictionaries there are more entries for the same term ({}).'.format(term))
                 continue
-                
+
             term_to_uri_dict[term] = uri
 
 if not os.path.exists(dir_fasta_and_yaml):
@@ -274,7 +276,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                             if host_sex in ['male', 'female']:
                                 info_for_yaml_dict['host']['host_sex'] = "http://purl.obolibrary.org/obo/PATO_0000384" if host_sex == 'male' else "http://purl.obolibrary.org/obo/PATO_0000383"
                             elif GBQualifier_value_text_list[1] in term_to_uri_dict:
-                                info_for_yaml_dict['host']['host_health_status'] = term_to_uri_dict[GBQualifier_value_text_list[1]]                            
+                                info_for_yaml_dict['host']['host_health_status'] = term_to_uri_dict[GBQualifier_value_text_list[1]]
                             else:
                                 missing_value_list.append('\t'.join([accession_version, 'host_sex or host_health_status', GBQualifier_value_text_list[1]]))
 
@@ -391,5 +393,5 @@ if len(accession_with_errors_list) > 0:
     print('Written the accession with errors in {}'.format(path_accession_with_errors_tsv))
     with open(path_accession_with_errors_tsv, 'w') as fw:
         fw.write('\n'.join(accession_with_errors_list))
-        
+
 print('Num. new sequences with length >= {} bp: {}'.format(min_len_to_count, num_seq_with_len_ge_X_bp))

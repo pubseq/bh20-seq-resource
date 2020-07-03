@@ -244,6 +244,7 @@ def main():
 
     parser.add_argument('--latest-result-collection', type=str, default='lugli-4zz18-z513nlpqm03hpca', help='')
     parser.add_argument('--kickoff', action="store_true")
+    parser.add_argument('--no-start-analysis', action="store_true")
     parser.add_argument('--once', action="store_true")
     args = parser.parse_args()
 
@@ -276,7 +277,7 @@ def main():
                                                          args.fastq_project,
                                                          args.fastq_workflow_uuid) or at_least_one_new_valid_seq
 
-        if at_least_one_new_valid_seq:
+        if at_least_one_new_valid_seq and not args.no_start_analysis:
             start_pangenome_analysis(api,
                                      args.pangenome_analysis_project,
                                      args.pangenome_workflow_uuid,

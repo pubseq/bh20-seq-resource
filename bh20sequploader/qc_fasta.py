@@ -25,7 +25,7 @@ def read_fasta(sequence):
             raise ValueError("FASTA file contains multiple entries")
     return label, bases
 
-def qc_fasta(arg_sequence):
+def qc_fasta(arg_sequence, check_with_clustalw=True):
     log.debug("Starting qc_fasta")
     schema_resource = pkg_resources.resource_stream(__name__, "validation/formats")
     with tempfile.NamedTemporaryFile() as tmp:
@@ -64,6 +64,9 @@ def qc_fasta(arg_sequence):
             refbp = 0
             similarity = 0
             try:
+                if not check_with_clustalw:
+                    raise Exception("skipping QC")
+
                 cmd = ["clustalw", "-infile="+tmp1.name,
                        "-quicktree", "-iteration=none", "-type=DNA"]
                 print("QC checking similarity to reference")
@@ -81,7 +84,7 @@ def qc_fasta(arg_sequence):
                 print(g2.group(0))
                 print(g3.group(0))
             except Exception as e:
-                logging.warn("Error trying to QC against reference sequence using 'clustalw': %s", e)
+                logging.warn("QC against reference sequence using 'clustalw': %s", e)
 
             if refbp and (subbp/refbp) < .7:
                 raise ValueError("QC fail: submit sequence length is shorter than 70% reference")

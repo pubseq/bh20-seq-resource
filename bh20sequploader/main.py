@@ -22,10 +22,10 @@ ARVADOS_API_HOST='lugli.arvadosapi.com'
 ARVADOS_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
 UPLOAD_PROJECT='lugli-j7d0g-n5clictpuvwk8aa'
 
-def qa_stuff(metadata, sequence_p1, sequence_p2):
+def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
     try:
         log.debug("Checking metadata")
-        if not qc_metadata(metadata.name):
+        if do_qc and not qc_metadata(metadata.name):
             log.warning("Failed metadata qc")
             exit(1)
     except ValueError as e:
@@ -37,7 +37,7 @@ def qa_stuff(metadata, sequence_p1, sequence_p2):
     target = []
     try:
         log.debug("Checking FASTA/FASTQ QC")
-        target.append(qc_fasta(sequence_p1))
+        target.append(qc_fasta(sequence_p1, check_with_clustalw=do_qc))
         if sequence_p2:
             target.append(qc_fasta(sequence_p2))
             target[0] = ("reads_1."+target[0][0][6:], target[0][1])
@@ -64,11 +64,12 @@ def main():
     parser.add_argument('sequence_p1', type=argparse.FileType('rb'), help='sequence FASTA/FASTQ')
     parser.add_argument('sequence_p2', type=argparse.FileType('rb'), default=None, nargs='?', help='sequence FASTQ pair')
     parser.add_argument("--validate", action="store_true", help="Dry run, validate only")
+    parser.add_argument("--skip-qc", action="store_true", help="Skip local qc check")
     args = parser.parse_args()
 
     api = arvados.api(host=ARVADOS_API_HOST, token=ARVADOS_API_TOKEN, insecure=True)
 
-    target = qa_stuff(args.metadata, args.sequence_p1, args.sequence_p2)
+    target = qc_stuff(args.metadata, args.sequence_p1, args.sequence_p2, not args.skip_qc)
     seqlabel = target[0][1]
 
     if args.validate:

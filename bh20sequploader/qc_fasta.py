@@ -51,6 +51,8 @@ def qc_fasta(arg_sequence):
     if seq_type == "text/fasta":
         # ensure that contains only one entry
         submitlabel, submitseq = read_fasta(sequence)
+        sequence.seek(0)
+        sequence.detach()
 
         with tempfile.NamedTemporaryFile() as tmp1:
             refstring = pkg_resources.resource_string(__name__, "SARS-CoV-2-reference.fasta")
@@ -92,6 +94,8 @@ def qc_fasta(arg_sequence):
 
         return ("sequence.fasta"+gz, seqlabel)
     elif seq_type == "text/fastq":
+        sequence.seek(0)
+        sequence.detach()
         return ("reads.fastq"+gz, seqlabel)
     else:
         raise ValueError("Sequence file does not look like a DNA FASTA or FASTQ")

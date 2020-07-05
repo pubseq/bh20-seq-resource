@@ -21,20 +21,13 @@ def qc_metadata(metadatafile):
     shex = pkg_resources.resource_stream(__name__, "bh20seq-shex.rdf").read().decode("utf-8")
 
     if not isinstance(avsc_names, schema_salad.avro.schema.Names):
-        print(avsc_names)
-        return False
+        raise Exception(avsc_names)
 
-    try:
-        doc, metadata = schema_salad.schema.load_and_validate(document_loader, avsc_names, metadatafile, True)
-        g = schema_salad.jsonld_context.makerdf("workflow", doc, document_loader.ctx)
-        rslt, reason = evaluate(g, shex, doc["id"], "https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-shex.rdf#submissionShape")
+    doc, metadata = schema_salad.schema.load_and_validate(document_loader, avsc_names, metadatafile, True)
+    g = schema_salad.jsonld_context.makerdf("workflow", doc, document_loader.ctx)
+    rslt, reason = evaluate(g, shex, doc["id"], "https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-shex.rdf#submissionShape")
 
-        if not rslt:
-            log.debug(reason)
-            print(reason)
+    if not rslt:
+        raise Exception(reason)
 
-        return rslt
-    except Exception as e:
-        traceback.print_exc()
-        log.warn(e)
-    return False
+    return True

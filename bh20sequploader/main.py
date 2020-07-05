@@ -26,11 +26,9 @@ def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
     try:
         log.debug("Checking metadata" if do_qc else "Skipping metadata check")
         if do_qc and not qc_metadata(metadata.name):
-            log.warning("Failed metadata qc")
-            exit(1)
-    except ValueError as e:
+            raise Exception("Failed metadata qc")
+    except Exception as e:
         log.debug(e)
-        log.debug("Failed metadata qc")
         print(e)
         exit(1)
 
@@ -42,9 +40,8 @@ def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
             target.append(qc_fasta(sequence_p2))
             target[0] = ("reads_1."+target[0][0][6:], target[0][1])
             target[1] = ("reads_2."+target[1][0][6:], target[0][1])
-    except ValueError as e:
+    except Exception as e:
         log.debug(e)
-        log.debug("Failed FASTA qc")
         print(e)
         exit(1)
 

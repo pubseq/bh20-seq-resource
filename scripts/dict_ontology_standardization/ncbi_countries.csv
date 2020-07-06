@@ -302,14 +302,9 @@ USA: IN,http://www.wikidata.org/entity/Q1415
 USA: KS,http://www.wikidata.org/entity/Q1558
 USA: KY,http://www.wikidata.org/entity/Q1603
 USA: LA,http://www.wikidata.org/entity/Q1588
-<<<<<<< HEAD
-USA:Los Angeles,http://www.wikidata.org/entity/Q65
-"USA: New Orleans, LA",http://www.wikidata.org/entity/Q34404
-=======
 "USA: SLIDELL, LA, LA",https://www.wikidata.org/wiki/Q988156
 "USA: Slidell, LA, LA",https://www.wikidata.org/wiki/Q988156
 "USA: New Orleans, LA",https://www.wikidata.org/wiki/Q34404
->>>>>>> 67e5976... new terms in the ncbi_countries dictionary
 USA: MA,http://www.wikidata.org/entity/Q771
 USA: Massachusetts,http://www.wikidata.org/entity/Q771
 USA: MD,http://www.wikidata.org/entity/Q1391
@@ -378,17 +373,13 @@ USA: Virginia,http://www.wikidata.org/entity/Q1370
 USA:Virginia,http://www.wikidata.org/entity/Q1370
 USA: VT,http://www.wikidata.org/entity/Q16551
 USA: WA,http://www.wikidata.org/entity/Q1223
-<<<<<<< HEAD
 USA: Washington,http://www.wikidata.org/entity/Q1223
 USA: WI,http://www.wikidata.org/entity/Q1537
 USA: Wisconsin,http://www.wikidata.org/entity/Q1537
-=======
 "USA: Washington,Yakima County",http://www.wikidata.org/entity/Q156629
 "USA: Washington, Yakima County",http://www.wikidata.org/entity/Q156629
 "USA: Washington,Whatcom County",http://www.wikidata.org/entity/Q156623
-USA: WI,http://www.wikidata.org/entity/Q1537
 "USA: Dane County, Wisconsin",http://www.wikidata.org/entity/Q502200
->>>>>>> 67e5976... new terms in the ncbi_countries dictionary
 USA: WV,http://www.wikidata.org/entity/Q1371
 USA: WY,http://www.wikidata.org/entity/Q1214
 Uzbekistan,http://www.wikidata.org/entity/Q265

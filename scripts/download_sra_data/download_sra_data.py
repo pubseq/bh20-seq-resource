@@ -8,9 +8,11 @@ import gzip
 
 dir_yaml = 'yaml'
 
-date = '2020.06.08'
+date = '2020.07.05'
 
-# Query on SRA: 'txid2697049[Organism]' (https://www.ncbi.nlm.nih.gov/sra/?term=txid2697049%5BOrganism%5D) -> Send to -> File -> Full XML -> Create File
+# Query on SRA: 'txid2697049[Organism]' (https://www.ncbi.nlm.nih.gov/sra/?term=txid2697049%5BOrganism%5D)
+# Query on SRA: 'txid2697049[Organism:noexp] NOT 0[Mbases ' (https://www.ncbi.nlm.nih.gov/sra/?term=txid2697049%5BOrganism:noexp%5D%20NOT%200[Mbases)
+#         -> Send to -> File -> Full XML -> Create File
 path_sra_metadata_xml = 'SraExperimentPackage.{}.xml.gz'.format(date)
 
 dir_dict_ontology_standardization = '../dict_ontology_standardization/'
@@ -70,14 +72,14 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     accession = RUN.attrib['accession']
     run_accession_set.add(accession)
     #print(accession)
-    
+
     info_for_yaml_dict['sample']['sample_id'] = accession
     
-    SRAFiles = RUN.find('SRAFiles')
-    if SRAFiles is not None:
-        url = SRAFiles.find('SRAFile').attrib['url']
-        if 'sra-download.ncbi.nlm.nih.gov' in url:
-            run_accession_to_downloadble_file_url_dict[accession] = url
+    #SRAFiles = RUN.find('SRAFiles')
+    #if SRAFiles is not None:
+    #    url = SRAFiles.find('SRAFile').attrib['url']
+    #    if 'sra-download.ncbi.nlm.nih.gov' in url:
+    #        run_accession_to_downloadble_file_url_dict[accession] = url
   
 
     SAMPLE = EXPERIMENT_PACKAGE.find('SAMPLE')
@@ -100,11 +102,19 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                 elif VALUE_text.strip("'") not in ['missing', 'not collected', 'not provided']:
                     missing_value_list.append('\t'.join([accession, 'host_health_status', VALUE_text]))
             elif TAG_text in ['strain', 'isolate']:
-                if VALUE_text.lower() not in ['not applicable', 'missing', 'na', 'unknown']:
-                    if 'virus_strain' not in info_for_yaml_dict:
-                        info_for_yaml_dict['virus']['virus_strain'] = VALUE_text
+                if VALUE_text.lower() not in ['not applicable', 'missing', 'na', 'unknown', 'not provided']:
+                    value_to_insert = VALUE_text
+
+                    if value_to_insert.lower() in ['homo sapien']:
+                        value_to_insert = 'Homo sapiens'
+
+                    if value_to_insert in term_to_uri_dict:
+                        value_to_insert = term_to_uri_dict[value_to_insert]
+                        
+                    if 'virus_strain' not in info_for_yaml_dict:                        
+                        info_for_yaml_dict['virus']['virus_strain'] = value_to_insert
                     else:
-                        info_for_yaml_dict['virus']['virus_strain'] += '; ' + VALUE_text
+                        info_for_yaml_dict['virus']['virus_strain'] += '; ' + value_to_insert
             elif TAG_text in ['isolation_source', 'isolation source host-associated']:                    
                 if VALUE_text in term_to_uri_dict:
                     info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict[VALUE_text]]
@@ -179,17 +189,18 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     
     EXPERIMENT = EXPERIMENT_PACKAGE.find('EXPERIMENT')
     INSTRUMENT_MODEL = [x.text for x in EXPERIMENT.find('PLATFORM').iter('INSTRUMENT_MODEL')][0]
+
     if INSTRUMENT_MODEL.lower() != 'unspecified':
         if INSTRUMENT_MODEL in term_to_uri_dict:
             info_for_yaml_dict['technology']['sample_sequencing_technology'] = [term_to_uri_dict[INSTRUMENT_MODEL]]
         else:
             missing_value_list.append('\t'.join([accession, 'sample_sequencing_technology', INSTRUMENT_MODEL]))
-    
+    #else:
+    #    print(accession, 'Missing INSTRUMENT_MODEL', info_for_yaml_dict)
     LIBRARY_DESCRIPTOR = EXPERIMENT.find('DESIGN').find('LIBRARY_DESCRIPTOR')
     if LIBRARY_DESCRIPTOR.text not in ['OTHER']:
         info_for_yaml_dict['technology']['additional_technology_information'] = 'LIBRARY_STRATEGY: {};'.format(LIBRARY_DESCRIPTOR.find('LIBRARY_STRATEGY').text)
-           
-            
+
     SUBMISSION = EXPERIMENT_PACKAGE.find('SUBMISSION')
     info_for_yaml_dict['submitter']['submitter_sample_id'] = SUBMISSION.attrib['accession']
     
@@ -197,7 +208,7 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
         info_for_yaml_dict['submitter']['originating_lab'] = SUBMISSION.attrib['lab_name']
 
     STUDY = EXPERIMENT_PACKAGE.find('STUDY')     
-    info_for_yaml_dict['submitter']['publication'] = SUBMISSION.attrib['lab_name']
+    info_for_yaml_dict['submitter']['publication'] = STUDY.attrib['alias']
     
     
     Organization = EXPERIMENT_PACKAGE.find('Organization')

@@ -92,6 +92,9 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
             VALUE_text = VALUE.text
 
             if TAG_text in ['host', 'host scientific name']:
+                if VALUE_text.lower() in ['homo sapien', 'homosapiens']:
+                    VALUE_text = 'Homo sapiens'
+
                 if VALUE_text in term_to_uri_dict:
                     info_for_yaml_dict['host']['host_species'] = term_to_uri_dict[VALUE_text]
                 else:
@@ -105,7 +108,7 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                 if VALUE_text.lower() not in ['not applicable', 'missing', 'na', 'unknown', 'not provided']:
                     value_to_insert = VALUE_text
 
-                    if value_to_insert.lower() in ['homo sapien']:
+                    if value_to_insert.lower() in ['homo sapien', 'homosapiens']:
                         value_to_insert = 'Homo sapiens'
 
                     if value_to_insert in term_to_uri_dict:
@@ -194,6 +197,7 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
         if INSTRUMENT_MODEL in term_to_uri_dict:
             info_for_yaml_dict['technology']['sample_sequencing_technology'] = [term_to_uri_dict[INSTRUMENT_MODEL]]
         else:
+            info_for_yaml_dict['technology']['additional_technology_information'] = INSTRUMENT_MODEL
             missing_value_list.append('\t'.join([accession, 'sample_sequencing_technology', INSTRUMENT_MODEL]))
     #else:
     #    print(accession, 'Missing INSTRUMENT_MODEL', info_for_yaml_dict)

@@ -197,7 +197,6 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
         if INSTRUMENT_MODEL in term_to_uri_dict:
             info_for_yaml_dict['technology']['sample_sequencing_technology'] = [term_to_uri_dict[INSTRUMENT_MODEL]]
         else:
-            info_for_yaml_dict['technology']['additional_technology_information'] = INSTRUMENT_MODEL
             missing_value_list.append('\t'.join([accession, 'sample_sequencing_technology', INSTRUMENT_MODEL]))
     #else:
     #    print(accession, 'Missing INSTRUMENT_MODEL', info_for_yaml_dict)
@@ -236,6 +235,10 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     if 'collection_date' not in info_for_yaml_dict['sample']:
         info_for_yaml_dict['sample']['collection_date'] = '1970-01-01'
         info_for_yaml_dict['sample']['additional_collection_information'] = "The real 'collection_date' is missing"
+
+    if 'sample_sequencing_technology' not in info_for_yaml_dict['technology']:
+        print(accession, ' - technology not found')
+        continue
 
     with open(os.path.join(dir_yaml, '{}.yaml'.format(accession)), 'w') as fw:
         json.dump(info_for_yaml_dict, fw, indent=2)

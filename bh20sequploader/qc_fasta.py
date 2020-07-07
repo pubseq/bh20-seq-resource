@@ -58,42 +58,33 @@ def qc_fasta(arg_sequence, check_with_clustalw=True):
             return ("sequence.fasta"+gz, seqlabel)
 
         with tempfile.NamedTemporaryFile() as tmp1:
-            refstring = pkg_resources.resource_string(__name__, "SARS-CoV-2-reference.fasta")
-            tmp1.write(refstring)
-            tmp1.write(submitlabel.encode("utf8"))
-            tmp1.write(("".join(submitseq)).encode("utf8"))
-            tmp1.flush()
-            subbp = 0
-            refbp = 0
-            similarity = 0
-            try:
-                cmd = ["clustalw", "-infile="+tmp1.name,
-                       "-quicktree", "-iteration=none", "-type=DNA"]
-                print("QC checking similarity to reference")
-                print(" ".join(cmd))
-                result = subprocess.run(cmd, stdout=subprocess.PIPE)
-                res = result.stdout.decode("utf-8")
-                g1 = re.search(r"^Sequence 1: [^ ]+ +(\d+) bp$", res, flags=re.MULTILINE)
-                refbp = float(g1.group(1))
-                g2 = re.search(r"^Sequence 2: [^ ]+ +(\d+) bp$", res, flags=re.MULTILINE)
-                subbp = float(g2.group(1))
-                g3 = re.search(r"^Sequences \(1:2\) Aligned\. Score: (\d+(\.\d+)?)$", res, flags=re.MULTILINE)
-                similarity = float(g3.group(1))
+            with tempfile.NamedTemporaryFile() as tmp2:
+                refstring = pkg_resources.resource_string(__name__, "SARS-CoV-2-reference.fasta")
+                tmp1.write(refstring)
+                tmp1.flush()
+                tmp2.write(submitlabel.encode("utf8"))
+                tmp2.write(("".join(submitseq)).encode("utf8"))
+                tmp2.flush()
+                subbp = 0
+                refbp = 0
+                similarity = 0
+                try:
+                    cmd = ["minimap2", "-c", tmp1.name, tmp2.name]
+                    print("QC checking similarity to reference")
+                    print(" ".join(cmd))
+                    result = subprocess.run(cmd, stdout=subprocess.PIPE)
+                    res = result.stdout.decode("utf-8")
+                    mm = res.split("\t")
+                    print(mm)
+                    # divide Number of matching bases in the mapping / Target sequence length
+                    similarity = (float(mm[9]) / float(mm[6])) * 100.0
+                except Exception as e:
+                    logging.warn("QC against reference sequence using 'minimap2': %s", e)
 
-                print(g1.group(0))
-                print(g2.group(0))
-                print(g3.group(0))
-            except Exception as e:
-                logging.warn("QC against reference sequence using 'clustalw': %s", e)
-
-            if refbp and (subbp/refbp) < .7:
-                raise ValueError("QC fail: submit sequence length is shorter than 70% reference")
-            if refbp and (subbp/refbp) > 1.3:
-                raise ValueError("QC fail: submit sequence length is greater than 130% reference")
-            if similarity and similarity < 70.0:
-                raise ValueError("QC fail: submit similarity is less than 70%")
-            if refbp == 0 or similarity == 0:
-                raise ValueError("QC fail")
+                if similarity and similarity < 70.0:
+                    raise ValueError("QC fail: alignment to reference was less than 70%% (was %2.2f%%)" % (similarity))
+                if similarity == 0:
+                    raise ValueError("QC fail")
 
         return ("sequence.fasta"+gz, seqlabel)
     elif seq_type == "text/fastq":

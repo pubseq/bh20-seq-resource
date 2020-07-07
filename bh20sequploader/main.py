@@ -23,14 +23,16 @@ ARVADOS_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
 UPLOAD_PROJECT='lugli-j7d0g-n5clictpuvwk8aa'
 
 def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
+    failed = False
     try:
         log.debug("Checking metadata" if do_qc else "Skipping metadata check")
         if do_qc and not qc_metadata(metadata.name):
-            raise Exception("Failed metadata qc")
+            log.warning("Failed metadata qc")
+            failed = True
     except Exception as e:
         log.debug(e)
         print(e)
-        exit(1)
+        failed = True
 
     target = []
     try:
@@ -43,6 +45,9 @@ def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
     except Exception as e:
         log.debug(e)
         print(e)
+        failed = True
+
+    if failed:
         exit(1)
 
     return target

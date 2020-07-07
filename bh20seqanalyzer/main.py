@@ -235,9 +235,10 @@ def upload_schema(api, workflow_def_project):
     return "keep:%s/schema.yml" % pdh
 
 
-def print_status(api, uploader_project):
+def print_status(api, uploader_project, fmt):
     pending = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", uploader_project]])
     out = []
+    status = {}
     for p in pending:
         prop = p["properties"]
         out.append(prop)
@@ -245,7 +246,38 @@ def print_status(api, uploader_project):
             prop["status"] = "pending"
         prop["created_at"] = p["created_at"]
         prop["uuid"] = p["uuid"]
-    print(json.dumps(out, indent=2))
+        status[prop["status"]] = status.get(prop["status"], 0) + 1
+    if fmt == "html":
+        print(
+"""
+<html>
+<body>
+""")
+        print("<p>Total collections in upload project %s</p>" % len(out))
+        print("<p>Status %s</p>" % status)
+        print(
+"""
+<table>
+<tr><th>Collection</th>
+<th>Sequence label</th>
+<th>Status</th>
+<th>Errors</th></tr>
+""")
+        for r in out:
+            print("<tr valign='top'>")
+            print("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+            print("<td>%s</td>" % r["sequence_label"])
+            print("<td>%s</td>" % r["status"])
+            print("<td><pre>%s</pre></td>" % "\n".join(r.get("errors", [])))
+            print("</tr>")
+        print(
+"""
+</table>
+</body>
+</html>
+""")
+    else:
+        print(json.dumps(out, indent=2))
 
 def main():
     parser = argparse.ArgumentParser(description='Analyze collections uploaded to a project')
@@ -264,7 +296,7 @@ def main():
     parser.add_argument('--kickoff', action="store_true")
     parser.add_argument('--no-start-analysis', action="store_true")
     parser.add_argument('--once', action="store_true")
-    parser.add_argument('--print-status', action="store_true")
+    parser.add_argument('--print-status', type=str, default=None)
     args = parser.parse_args()
 
     api = arvados.api()
@@ -284,7 +316,7 @@ def main():
         return
 
     if args.print_status:
-        print_status(api, args.uploader_project)
+        print_status(api, args.uploader_project, args.print_status)
         exit(0)
 
     logging.info("Starting up, monitoring %s for uploads" % (args.uploader_project))

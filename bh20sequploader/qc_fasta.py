@@ -70,16 +70,19 @@ def qc_fasta(arg_sequence, check_with_clustalw=True):
                 similarity = 0
                 try:
                     cmd = ["minimap2", "-c", tmp1.name, tmp2.name]
-                    print("QC checking similarity to reference")
-                    print(" ".join(cmd))
+                    logging.info("QC checking similarity to reference")
+                    logging.info(" ".join(cmd))
                     result = subprocess.run(cmd, stdout=subprocess.PIPE)
+                    result.check_returncode()
                     res = result.stdout.decode("utf-8")
                     mm = res.split("\t")
-                    print(mm)
-                    # divide Number of matching bases in the mapping / Target sequence length
-                    similarity = (float(mm[9]) / float(mm[6])) * 100.0
+                    if len(mm) >= 10:
+                        # divide Number of matching bases in the mapping / Target sequence length
+                        similarity = (float(mm[9]) / float(mm[6])) * 100.0
+                    else:
+                        similarity = 0
                 except Exception as e:
-                    logging.warn("QC against reference sequence using 'minimap2': %s", e)
+                    logging.warn("QC against reference sequence using 'minimap2': %s", e, exc_info=e)
 
                 if similarity and similarity < 70.0:
                     raise ValueError("QC fail: alignment to reference was less than 70%% (was %2.2f%%)" % (similarity))

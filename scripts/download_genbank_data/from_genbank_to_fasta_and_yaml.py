@@ -173,7 +173,9 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
             # submitter info
             GBSeq_references = GBSeq.find('GBSeq_references')
             if GBSeq_references is not None:
-                info_for_yaml_dict['submitter']['authors'] = ["{}".format(x.text) for x in GBSeq_references.iter('GBAuthor')]
+                author_list = ["{}".format(x.text) for x in GBSeq_references.iter('GBAuthor')]
+                if len(author_list) > 0:
+                    info_for_yaml_dict['submitter']['authors'] = author_list
 
                 GBReference = GBSeq_references.find('GBReference')
                 if GBReference is not None:

@@ -11,4 +11,4 @@ os.chdir("fasta_and_yaml")
 fasta_files = glob.glob("*.fasta")
 
 for f in fasta_files:
-    subprocess.run(["bh20-seq-uploader", f, "%s.yaml" %f[:-6]])
+    subprocess.run(["bh20-seq-uploader", "%s.yaml" %f[:-6], f])

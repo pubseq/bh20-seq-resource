@@ -13,12 +13,14 @@ Illumina NextSeq 550,http://www.ebi.ac.uk/efo/EFO_0008566
 NextSeq550,http://www.ebi.ac.uk/efo/EFO_0008566
 NextSeq 550,http://www.ebi.ac.uk/efo/EFO_0008566
 Illumina MiniSeq,http://www.ebi.ac.uk/efo/EFO_0008636
+Illumina NovaSeq,http://www.ebi.ac.uk/efo/EFO_0008637
 Illumina NovaSeq 6000,http://www.ebi.ac.uk/efo/EFO_0008637
 Nanopore MinION,http://www.ebi.ac.uk/efo/EFO_0008632
 Oxford Nanopore MinION,http://www.ebi.ac.uk/efo/EFO_0008632
 ONT (Oxford Nanopore Technologies),http://purl.obolibrary.org/obo/NCIT_C146818
 Oxford Nanopore Technology,http://purl.obolibrary.org/obo/NCIT_C146818
 Oxford Nanopore technologies MinION,http://www.ebi.ac.uk/efo/EFO_0008632
+Oxford Nanopore Sequencing,http://purl.obolibrary.org/obo/NCIT_C146818
 MinION Oxford Nanopore,http://www.ebi.ac.uk/efo/EFO_0008632
 MinION,http://www.ebi.ac.uk/efo/EFO_0008632
 Nanopore,http://purl.obolibrary.org/obo/NCIT_C146818
@@ -33,3 +35,24 @@ ThermoFisher S5Plus,http://purl.obolibrary.org/obo/NCIT_C125894
 Sanger dideoxy sequencing,http://purl.obolibrary.org/obo/NCIT_C19641
 MGISEQ 2000,http://virtual-bh/MGISEQ2000
 MGISEQ2000,http://virtual-bh/MGISEQ2000
+Illumina HiSeq X,http://www.ebi.ac.uk/efo/EFO_0008567
+ONT GridION X5,http://www.ebi.ac.uk/efo/EFO_0008633
+ONT PremethION,http://www.ebi.ac.uk/efo/EFO_0008634
+PacBio RS II,http://www.ebi.ac.uk/efo/EFO_0008631
+PacBio Sequel System,http://www.ebi.ac.uk/efo/EFO_0008630
+Illumina Genome Analyzer,http://www.ebi.ac.uk/efo/EFO_0004200
+Illumina Genome Analyzer II,http://www.ebi.ac.uk/efo/EFO_0004201
+Illumina Genome Analyzer IIx,http://www.ebi.ac.uk/efo/EFO_0004202
+454 GS 20 sequencer,http://www.ebi.ac.uk/efo/EFO_0004206
+454 GS FLX Titanium sequencer,http://www.ebi.ac.uk/efo/EFO_0004433
+454 GS FLX sequencer,http://www.ebi.ac.uk/efo/EFO_0004432
+454 GS Junior sequencer,http://www.ebi.ac.uk/efo/EFO_0004434
+454 GS sequencer,http://www.ebi.ac.uk/efo/EFO_0004431
+AB SOLiD 4 System,http://www.ebi.ac.uk/efo/EFO_0004438
+AB SOLiD 4hq System,http://www.ebi.ac.uk/efo/EFO_0004441
+AB SOLiD 5500,http://www.ebi.ac.uk/efo/EFO_0004440
+AB SOLiD 5500xl,http://www.ebi.ac.uk/efo/EFO_0004436
+AB SOLiD PI System,http://www.ebi.ac.uk/efo/EFO_0004437
+AB SOLiD System,http://www.ebi.ac.uk/efo/EFO_0004435
+AB SOLiD System 2.0,http://www.ebi.ac.uk/efo/EFO_0004442
+AB SOLiD System 3.0,http://www.ebi.ac.uk/efo/EFO_0004439

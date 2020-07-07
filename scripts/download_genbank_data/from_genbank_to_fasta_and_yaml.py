@@ -4,6 +4,8 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--skip-request', action='store_true', help='skip metadata and sequence request', required=False)
 parser.add_argument('--only-missing-id', action='store_true', help='download only missing id', required=False)
+parser.add_argument('--dict-ontology', type=str, help='where is the ontology',
+                    default='../dict_ontology_standardization/',required=False)
 args = parser.parse_args()
 
 from Bio import Entrez
@@ -22,7 +24,7 @@ num_ids_for_request = 100
 
 dir_metadata = 'metadata_from_nuccore'
 dir_fasta_and_yaml = 'fasta_and_yaml'
-dir_dict_ontology_standardization = '../dict_ontology_standardization/'
+dir_dict_ontology_standardization = args.dict_ontology
 
 today_date = date.today().strftime("%Y.%m.%d")
 path_ncbi_virus_accession = 'sequences.{}.acc'.format(today_date)
@@ -126,7 +128,7 @@ for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_x
             if term in term_to_uri_dict:
                 print('Warning: in the dictionaries there are more entries for the same term ({}).'.format(term))
                 continue
-                
+
             term_to_uri_dict[term] = uri
 
 if not os.path.exists(dir_fasta_and_yaml):
@@ -171,7 +173,9 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
             # submitter info
             GBSeq_references = GBSeq.find('GBSeq_references')
             if GBSeq_references is not None:
-                info_for_yaml_dict['submitter']['authors'] = ["{}".format(x.text) for x in GBSeq_references.iter('GBAuthor')]
+                author_list = ["{}".format(x.text) for x in GBSeq_references.iter('GBAuthor')]
+                if len(author_list) > 0:
+                    info_for_yaml_dict['submitter']['authors'] = author_list
 
                 GBReference = GBSeq_references.find('GBReference')
                 if GBReference is not None:
@@ -220,7 +224,8 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
                                 new_seq_tec_list.append(seq_tec)
 
-                            info_for_yaml_dict['technology']['sample_sequencing_technology'] = [x for x in new_seq_tec_list]
+                            if len(new_seq_tec_list) > 0:
+                                info_for_yaml_dict['technology']['sample_sequencing_technology'] = [x for x in new_seq_tec_list]
                         else:
                             info_for_yaml_dict['technology'][field_in_yaml] = tech_info_to_parse
 
@@ -238,58 +243,62 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                     GBQualifier_name_text = GBQualifier.find('GBQualifier_name').text
 
                     if GBQualifier_name_text == 'host':
-                        GBQualifier_value_text_list = GBQualifier_value_text.split('; ')
-
-                        if GBQualifier_value_text_list[0] in term_to_uri_dict:
-                            info_for_yaml_dict['host']['host_species'] = term_to_uri_dict[GBQualifier_value_text_list[0]]
-                        elif GBQualifier_value_text_list[0] and ('MT215193' in accession_version or 'MT270814' in accession_version):
-                            # Information checked manually from NCBI Virus
-                            info_for_yaml_dict['host']['host_species'] = term_to_uri_dict['Canis lupus familiaris']
+                        if GBQualifier_value_text in term_to_uri_dict:
+                            # Cases like 'Felis catus; Domestic Shorthair'
+                            info_for_yaml_dict['host']['host_species'] = term_to_uri_dict[GBQualifier_value_text]
                         else:
-                            missing_value_list.append('\t'.join([accession_version, 'host_species', GBQualifier_value_text_list[0]]))
+                            GBQualifier_value_text_list = GBQualifier_value_text.split('; ')
 
-                        # Possible cases:
-                        # - Homo sapiens						--> ['Homo sapiens']
-                        # - Homo sapiens; female				--> ['Homo sapiens', 'female']
-                        # - Homo sapiens; female 63				--> ['Homo sapiens', 'female 63']
-                        # - Homo sapiens; female; age 40		--> ['Homo sapiens', 'female', 'age 40']
-                        # - Homo sapiens; gender: F; age: 61	--> ['Homo sapiens', 'gender: F', 'age: 61']
-                        # - Homo sapiens; gender: M; age: 68	--> ['Homo sapiens', 'gender: M', 'age: 68']
-                        # - Homo sapiens; hospitalized patient	--> ['Homo sapiens', 'hospitalized patient']
-                        # - Homo sapiens; male					--> ['Homo sapiens', 'male']
-                        # - Homo sapiens; male; 63				--> ['Homo sapiens', 'male', '63']
-                        # - Homo sapiens; male; age 29			--> ['Homo sapiens', 'male', 'age 29']
-                        # - Homo sapiens; symptomatic			--> ['Homo sapiens', 'symptomatic']
-                        if len(GBQualifier_value_text_list) > 1:
-                            host_sex = ''
-                            if 'female' in GBQualifier_value_text_list[1]:
-                                host_sex = 'female'
-                            elif 'male' in GBQualifier_value_text_list[1]:
-                                host_sex = 'male'
-                            elif 'gender' in GBQualifier_value_text_list[1]:
-                                host_sex_one_lecter = GBQualifier_value_text_list[1].split(':')[-1].strip()
-                                if host_sex_one_lecter in ['F', 'M']:
-                                    host_sex = 'female' if host_sex_one_lecter == 'F' else 'male'
-
-                            if host_sex in ['male', 'female']:
-                                info_for_yaml_dict['host']['host_sex'] = "http://purl.obolibrary.org/obo/PATO_0000384" if host_sex == 'male' else "http://purl.obolibrary.org/obo/PATO_0000383"
-                            elif GBQualifier_value_text_list[1] in term_to_uri_dict:
-                                info_for_yaml_dict['host']['host_health_status'] = term_to_uri_dict[GBQualifier_value_text_list[1]]                            
+                            if GBQualifier_value_text_list[0] in term_to_uri_dict:
+                                info_for_yaml_dict['host']['host_species'] = term_to_uri_dict[GBQualifier_value_text_list[0]]
+                            elif GBQualifier_value_text_list[0] and ('MT215193' in accession_version or 'MT270814' in accession_version):
+                                # Information checked manually from NCBI Virus
+                                info_for_yaml_dict['host']['host_species'] = term_to_uri_dict['Canis lupus familiaris']
                             else:
-                                missing_value_list.append('\t'.join([accession_version, 'host_sex or host_health_status', GBQualifier_value_text_list[1]]))
+                                missing_value_list.append('\t'.join([accession_version, 'host_species', GBQualifier_value_text_list[0]]))
 
-                            # Host age
-                            host_age = -1
-                            if len(GBQualifier_value_text_list[1].split(' ')) > 1 and is_integer(GBQualifier_value_text_list[1].split(' ')[-1]):
-                                host_age = int(GBQualifier_value_text_list[1].split(' ')[-1])
-                            elif len(GBQualifier_value_text_list) > 2 and is_integer(GBQualifier_value_text_list[2].split(' ')[-1]):
-                                host_age = int(GBQualifier_value_text_list[2].split(' ')[-1])
+                            # Possible cases:
+                            # - Homo sapiens						--> ['Homo sapiens']
+                            # - Homo sapiens; female				--> ['Homo sapiens', 'female']
+                            # - Homo sapiens; female 63				--> ['Homo sapiens', 'female 63']
+                            # - Homo sapiens; female; age 40		--> ['Homo sapiens', 'female', 'age 40']
+                            # - Homo sapiens; gender: F; age: 61	--> ['Homo sapiens', 'gender: F', 'age: 61']
+                            # - Homo sapiens; gender: M; age: 68	--> ['Homo sapiens', 'gender: M', 'age: 68']
+                            # - Homo sapiens; hospitalized patient	--> ['Homo sapiens', 'hospitalized patient']
+                            # - Homo sapiens; male					--> ['Homo sapiens', 'male']
+                            # - Homo sapiens; male; 63				--> ['Homo sapiens', 'male', '63']
+                            # - Homo sapiens; male; age 29			--> ['Homo sapiens', 'male', 'age 29']
+                            # - Homo sapiens; symptomatic			--> ['Homo sapiens', 'symptomatic']
+                            if len(GBQualifier_value_text_list) > 1:
+                                host_sex = ''
+                                if 'female' in GBQualifier_value_text_list[1]:
+                                    host_sex = 'female'
+                                elif 'male' in GBQualifier_value_text_list[1]:
+                                    host_sex = 'male'
+                                elif 'gender' in GBQualifier_value_text_list[1]:
+                                    host_sex_one_lecter = GBQualifier_value_text_list[1].split(':')[-1].strip()
+                                    if host_sex_one_lecter in ['F', 'M']:
+                                        host_sex = 'female' if host_sex_one_lecter == 'F' else 'male'
 
-                            if host_age > -1:
-                                info_for_yaml_dict['host']['host_age'] = host_age
-                                info_for_yaml_dict['host']['host_age_unit'] = 'http://purl.obolibrary.org/obo/UO_0000036'
-                            elif len(GBQualifier_value_text_list) > 2:
-                                missing_value_list.append('\t'.join([accession_version, 'host_age', GBQualifier_value_text_list[2]]))
+                                if host_sex in ['male', 'female']:
+                                    info_for_yaml_dict['host']['host_sex'] = "http://purl.obolibrary.org/obo/PATO_0000384" if host_sex == 'male' else "http://purl.obolibrary.org/obo/PATO_0000383"
+                                elif GBQualifier_value_text_list[1] in term_to_uri_dict:
+                                    info_for_yaml_dict['host']['host_health_status'] = term_to_uri_dict[GBQualifier_value_text_list[1]]
+                                else:
+                                    missing_value_list.append('\t'.join([accession_version, 'host_sex or host_health_status', GBQualifier_value_text_list[1]]))
+
+                                # Host age
+                                host_age = -1
+                                if len(GBQualifier_value_text_list[1].split(' ')) > 1 and is_integer(GBQualifier_value_text_list[1].split(' ')[-1]):
+                                    host_age = int(GBQualifier_value_text_list[1].split(' ')[-1])
+                                elif len(GBQualifier_value_text_list) > 2 and is_integer(GBQualifier_value_text_list[2].split(' ')[-1]):
+                                    host_age = int(GBQualifier_value_text_list[2].split(' ')[-1])
+
+                                if host_age > -1:
+                                    info_for_yaml_dict['host']['host_age'] = host_age
+                                    info_for_yaml_dict['host']['host_age_unit'] = 'http://purl.obolibrary.org/obo/UO_0000036'
+                                elif len(GBQualifier_value_text_list) > 2:
+                                    missing_value_list.append('\t'.join([accession_version, 'host_age', GBQualifier_value_text_list[2]]))
                     elif GBQualifier_name_text == 'collected_by':
                         if any([x in GBQualifier_value_text.lower() for x in ['institute', 'hospital', 'city', 'center']]):
                             info_for_yaml_dict['sample']['collecting_institution'] = GBQualifier_value_text
@@ -362,9 +371,9 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                         info_for_yaml_dict['virus']['virus_species'] = "http://purl.obolibrary.org/obo/NCBITaxon_"+GBQualifier_value_text.split('taxon:')[1]
 
 
-            # Remove technology key if empty!
-            if (info_for_yaml_dict['technology']=={}):
-                del info_for_yaml_dict['technology']
+            if 'sample_sequencing_technology' not in info_for_yaml_dict['technology']:
+                print(accession_version, ' - technology not found')
+                continue
 
             with open(os.path.join(dir_fasta_and_yaml, '{}.fasta'.format(accession_version)), 'w') as fw:
                 fw.write('>{}\n{}'.format(accession_version, GBSeq_sequence.text.upper()))
@@ -391,5 +400,5 @@ if len(accession_with_errors_list) > 0:
     print('Written the accession with errors in {}'.format(path_accession_with_errors_tsv))
     with open(path_accession_with_errors_tsv, 'w') as fw:
         fw.write('\n'.join(accession_with_errors_list))
-        
+
 print('Num. new sequences with length >= {} bp: {}'.format(min_len_to_count, num_seq_with_len_ge_X_bp))

@@ -33,6 +33,8 @@
 <http://www.ebi.ac.uk/efo/EFO_0008632> <http://www.w3.org/2000/01/rdf-schema#label> "ONT MinION" .
 <http://purl.obolibrary.org/obo/NCIT_C146818> <http://www.w3.org/2000/01/rdf-schema#label> " Oxford Nanopore Sequencing" .
 <http://www.ebi.ac.uk/efo/EFO_0004205> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina MiSeq" .
+<http://www.ebi.ac.uk/efo/EFO_0008567> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina HiSeq X" .
+<http://www.ebi.ac.uk/efo/EFO_0008637> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina NovaSeq 6000" .
 <http://purl.obolibrary.org/obo/OBI_0000759> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina" .
 <http://purl.obolibrary.org/obo/NCIT_C125894> <http://www.w3.org/2000/01/rdf-schema#label> "Ion Semiconductor Sequencing".
 <http://purl.obolibrary.org/obo/NCIT_C19641> <http://www.w3.org/2000/01/rdf-schema#label> "Dideoxy Chain Termination DNA Sequencing" .

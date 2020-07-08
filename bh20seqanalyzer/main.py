@@ -17,10 +17,11 @@ logging.basicConfig(format="[%(asctime)s] %(levelname)s %(message)s", datefmt="%
 logging.getLogger("googleapiclient.discovery").setLevel(logging.WARN)
 
 def validate_upload(api, collection, validated_project,
-                    fastq_project, fastq_workflow_uuid):
+                    fastq_project, fastq_workflow_uuid,
+                    revalidate):
     col = arvados.collection.Collection(collection["uuid"])
 
-    if collection.get("status") in ("validated", "rejected"):
+    if not revalidate and collection["properties"].get("status") in ("validated", "rejected"):
         return False
 
     # validate the collection here.  Check metadata, etc.
@@ -28,11 +29,12 @@ def validate_upload(api, collection, validated_project,
 
     errors = []
 
-    dup = api.collections().list(filters=[["owner_uuid", "=", validated_project],
-                                          ["portable_data_hash", "=", col.portable_data_hash()]]).execute()
-    if dup["items"]:
-        # This exact collection has been uploaded before.
-        errors.append("Duplicate of %s" % ([d["uuid"] for d in dup["items"]]))
+    if collection["owner_uuid"] != validated_project:
+        dup = api.collections().list(filters=[["owner_uuid", "=", validated_project],
+                                              ["portable_data_hash", "=", col.portable_data_hash()]]).execute()
+        if dup["items"]:
+            # This exact collection has been uploaded before.
+            errors.append("Duplicate of %s" % ([d["uuid"] for d in dup["items"]]))
 
     if not errors:
         if "metadata.yaml" not in col:
@@ -70,12 +72,15 @@ def validate_upload(api, collection, validated_project,
 
 
     if not errors:
-        logging.info("Added '%s' to validated sequences" % collection["name"])
         # Move it to the "validated" project to be included in the next analysis
+        if "errors" in collection["properties"]:
+            del collection["properties"]["errors"]
         collection["properties"]["status"] = "validated"
         api.collections().update(uuid=collection["uuid"], body={
             "owner_uuid": validated_project,
-            "name": "%s (%s)" % (collection["name"], time.asctime(time.gmtime()))}).execute()
+            "name": "%s (%s)" % (collection["name"], time.asctime(time.gmtime())),
+            "properties": collection["properties"]}).execute()
+        logging.info("Added '%s' to validated sequences" % collection["name"])
         return True
     else:
         # It is invalid
@@ -155,7 +160,9 @@ def start_pangenome_analysis(api,
                              validated_project,
                              schema_ref,
                              exclude_list):
-    validated = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", validated_project]])
+    validated = arvados.util.list_all(api.collections().list, filters=[
+        ["owner_uuid", "=", validated_project],
+        ["properties.status", "=", "validated"]])
     inputobj = {
         "inputReads": [],
         "metadata": [],
@@ -299,6 +306,7 @@ def main():
     parser.add_argument('--no-start-analysis', action="store_true")
     parser.add_argument('--once', action="store_true")
     parser.add_argument('--print-status', type=str, default=None)
+    parser.add_argument('--revalidate', action="store_true", default=None)
     args = parser.parse_args()
 
     api = arvados.api()
@@ -332,7 +340,8 @@ def main():
             at_least_one_new_valid_seq = validate_upload(api, c,
                                                          args.validated_project,
                                                          args.fastq_project,
-                                                         args.fastq_workflow_uuid) or at_least_one_new_valid_seq
+                                                         args.fastq_workflow_uuid,
+                                                         args.revalidate) or at_least_one_new_valid_seq
 
         if at_least_one_new_valid_seq and not args.no_start_analysis:
             start_pangenome_analysis(api,

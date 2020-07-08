@@ -422,7 +422,7 @@ def receive_files():
 
         # Try and upload files to Arvados using the sequence uploader CLI
 
-        cmd = ['python3','bh20sequploader/main.py', fasta_dest, metadata_dest]
+        cmd = ['python3','bh20sequploader/main.py', metadata_dest, fasta_dest]
         print(" ".join(cmd),file=sys.stderr)
         result = subprocess.run(cmd,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)

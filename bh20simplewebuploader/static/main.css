@@ -168,11 +168,11 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
     grid-template-rows: auto;
     row-gap:5px;
     grid-template-areas:
-        "a a b b"
-            "a a c c"
-            "a a d d"
-            "e e e e"
-            "f f f f";
+        "b b a a"
+	"b b c c"
+        "b b d d"
+        "e e e e"
+        "f f f f";
     grid-auto-flow: column;
 }
 
@@ -360,4 +360,20 @@ footer {
 }
 .blog-table-body {
     display: table-row-group;
+}
+
+div.status {
+    margin: 1em;
+}
+
+.status table {
+    display: table;
+    width: 100%;
+}
+
+.status td, th {
+    padding-left: 1em;
+    padding-right: 1em;
+    vertical-align: top;
+    border-bottom: 1px solid #ddd;
 }

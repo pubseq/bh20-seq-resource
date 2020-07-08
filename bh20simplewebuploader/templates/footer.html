@@ -41,3 +41,17 @@
   </div>
 </section>
 <script type="text/javascript" src="/static/main.js"></script>
+
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function(){
+      var count = fetch("/api/getCount")
+          .then((resp) => resp.json())
+          .then(function (data) {
+              count = data["sequences"];
+              console.log(count);
+              span = document.getElementById("Counter");
+              txt = document.createTextNode(count);
+              span.appendChild(txt);
+      });
+  });
+</script>

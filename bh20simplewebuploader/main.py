@@ -13,12 +13,20 @@ import pkg_resources
 from flask import Flask, request, redirect, send_file, send_from_directory, render_template, jsonify
 import os.path
 import requests
+import io
+import arvados
+from markupsafe import Markup
+
+ARVADOS_API = 'lugli.arvadosapi.com'
+ANONYMOUS_TOKEN = '5o42qdxpxp5cj15jqjf7vnxx5xduhm4ret703suuoa3ivfglfh'
+UPLOADER_PROJECT = 'lugli-j7d0g-n5clictpuvwk8aa'
+VALIDATED_PROJECT = 'lugli-j7d0g-5ct8p1i1wrgyjvp'
 
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__ )
 log.debug("Entering web uploader")
 
-if not os.path.isfile('bh20sequploader/mainx.py'):
+if not os.path.isfile('bh20sequploader/main.py'):
     print("WARNING: run FLASK from the root of the source repository!", file=sys.stderr)
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
@@ -224,12 +232,21 @@ METADATA_OPTION_DEFINITIONS = yaml.safe_load(pkg_resources.resource_stream("bh20
 FORM_ITEMS = generate_form(METADATA_SCHEMA, METADATA_OPTION_DEFINITIONS)
 
 @app.route('/')
+def send_home():
+    """
+    Send the front page.
+    """
+
+    return render_template('home.html', menu='HOME')
+
+
+@app.route('/upload')
 def send_form():
     """
     Send the file upload form/front page.
     """
 
-    return render_template('form.html', fields=FORM_ITEMS, menu='HOME')
+    return render_template('form.html', fields=FORM_ITEMS, menu='UPLOAD')
 
 class FileTooBigError(RuntimeError):
     """
@@ -405,7 +422,7 @@ def receive_files():
 
         # Try and upload files to Arvados using the sequence uploader CLI
 
-        cmd = ['python3','bh20sequploader/main.py', fasta_dest, metadata_dest]
+        cmd = ['python3','bh20sequploader/main.py', metadata_dest, fasta_dest]
         print(" ".join(cmd),file=sys.stderr)
         result = subprocess.run(cmd,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -439,7 +456,83 @@ def get_html_body(fn):
 @app.route('/download')
 def download_page():
     buf = get_html_body('doc/web/download.html')
-    return render_template('about.html',menu='DOWNLOAD',embed=buf)
+    return render_template('resource.html',menu='DOWNLOAD',embed=buf)
+
+def pending_table(output, items):
+    output.write(
+"""
+<table>
+<tr><th>Collection</th>
+<th>Sequence label</th></tr>
+""")
+    for r in items:
+        if r["status"] != "pending":
+            continue
+        output.write("<tr>")
+        output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+        output.write("<td>%s</td>" % Markup.escape(r["sequence_label"]))
+        output.write("</tr>")
+    output.write(
+"""
+</table>
+""")
+
+def rejected_table(output, items):
+    output.write(
+"""
+<table>
+<tr><th>Collection</th>
+<th>Sequence label</th>
+<th>Errors</th></tr>
+""")
+    for r in items:
+        if r["status"] != "rejected":
+            continue
+        output.write("<tr>")
+        output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+        output.write("<td>%s</td>" % Markup.escape(r["sequence_label"]))
+        output.write("<td><pre>%s</pre></td>" % Markup.escape("\n".join(r.get("errors", []))))
+        output.write("</tr>")
+    output.write(
+"""
+</table>
+""")
+
+
+@app.route('/status')
+def status_page():
+    """
+    Processing status
+    """
+
+    api = arvados.api(host=ARVADOS_API, token=ANONYMOUS_TOKEN)
+    pending = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", UPLOADER_PROJECT]])
+    out = []
+    status = {}
+    for p in pending:
+        prop = p["properties"]
+        out.append(prop)
+        if "status" not in prop:
+            prop["status"] = "pending"
+        prop["created_at"] = p["created_at"]
+        prop["uuid"] = p["uuid"]
+        status[prop["status"]] = status.get(prop["status"], 0) + 1
+
+    output = io.StringIO()
+
+    validated = api.collections().list(filters=[["owner_uuid", "=", VALIDATED_PROJECT]], limit=1).execute()
+    status["passed"] = validated["items_available"]
+
+    for s in (("passed", "/download"), ("pending", "#pending"), ("rejected", "#rejected")):
+        output.write("<p><a href='%s'>%s sequences QC %s</a></p>" % (s[1], status.get(s[0], 0), s[0]))
+
+    output.write("<a id='pending'><h1>Pending</h1>")
+    pending_table(output, out)
+
+    output.write("<a id='rejected'><h1>Rejected</h1>")
+    rejected_table(output, out)
+
+    return render_template('status.html', table=Markup(output.getvalue()), menu='STATUS')
 
 @app.route('/demo')
 def demo_page():
@@ -474,20 +567,10 @@ baseURL='http://sparql.genenetwork.org/sparql/'
 
 @app.route('/api/getCount', methods=['GET'])
 def getCount():
-    query="""
-PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
-select (COUNT(distinct ?dataset) as ?num)
-{
-   ?dataset pubseq:submitter ?id .
-   ?id ?p ?submitter
-}
-"""
-    payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
-    result = r.json()['results']['bindings']
-    # [{'num': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '1352'}}]
-    # print(result, file=sys.stderr)
-    return jsonify({'sequences': int(result[0]["num"]["value"])})
+    api = arvados.api(host=ARVADOS_API, token=ANONYMOUS_TOKEN)
+    c = api.collections().list(filters=[["owner_uuid", "=", VALIDATED_PROJECT]], limit=1).execute()
+
+    return jsonify({'sequences': c["items_available"]})
 
 @app.route('/api/getAllaccessions', methods=['GET'])
 def getAllaccessions():

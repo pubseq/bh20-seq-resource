@@ -13,7 +13,7 @@ ADD bh20seqanalyzer /app/bh20simplewebuploader
 ADD bh20sequploader /app/bh20sequploader
 ADD bh20simplewebuploader /app/bh20simplewebuploader
 
-RUN pip3 install -e .
+RUN pip3 install -e .[web]
 
 ENV PORT 8080
 CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8080", "bh20simplewebuploader.main:app"]

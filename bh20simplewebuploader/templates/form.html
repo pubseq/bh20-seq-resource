@@ -7,43 +7,6 @@
 
         <section>
             <form action="/submit" method="POST" enctype="multipart/form-data" id="main_form" class="grid-container">
-                <div class="intro">
-                    <p>
-                        Make your sequence
-                        data <a href="https://en.wikipedia.org/wiki/FAIR_data">FAIR</a>. Upload
-                        your SARS-CoV-2 sequence (FASTA or FASTQ
-                        formats) with metadata (JSONLD) to
-                        the <a href="/about">public sequence
-                        resource</a>. The upload will trigger a
-                        recompute with all available sequences into a
-                        Pangenome available for
-                        <a href="/download">download</a>!
-                    </p>
-                    <p>
-                        Your uploaded sequence will automatically be
-                        processed and incorporated into the public
-                        pangenome with metadata using worklows from
-                        the High Performance Open Biology Lab
-                        defined <a href="https://github.com/hpobio-lab/viral-analysis/tree/master/cwl/pangenome-generate">here</a>. All
-                        data is published under
-                        a <a href="https://creativecommons.org/licenses/by/4.0/">Creative
-                        Commons license</a> You can take the published
-                        (GFA/RDF/FASTA) data and store it in a triple
-                        store for further processing.  Clinical
-                        data can be stored
-                        securely
-                        at <a href="https://redcap-covid19.elixir-luxembourg.org/redcap/">REDCap</a>.
-                    </p>
-                    <p>
-                      Note that form fields contain
-                      web <a href="https://en.wikipedia.org/wiki/Web_Ontology_Language">ontology
-                      URI's</a>
-                      for <a href="https://en.wikipedia.org/wiki/Wikipedia:Disambiguation">disambiguation</a>
-                      and machine readable metadata. For examples of
-                      use, see the <a href="/blog">BLOG</a>.
-                    </p>
-                </div>
-
                 <div class="fasta-file-select">
                     <h2><svg class="bi bi-cloud-upload" width="1.2em" height="1.2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4.887 6.2l-.964-.165A2.5 2.5 0 103.5 11H6v1H3.5a3.5 3.5 0 11.59-6.95 5.002 5.002 0 119.804 1.98A2.501 2.501 0 0113.5 12H10v-1h3.5a1.5 1.5 0 00.237-2.981L12.7 7.854l.216-1.028a4 4 0 10-7.843-1.587l-.185.96z"/>
@@ -159,18 +122,6 @@
   let fillFormSpot = document.getElementById('metadata_fill_form_spot')
 
   setMode()
-
-  document.addEventListener("DOMContentLoaded", function(){
-      var count = fetch("/api/getCount")
-          .then((resp) => resp.json())
-          .then(function (data) {
-              count = data["sequences"];
-              console.log(count);
-              span = document.getElementById("Counter");
-              txt = document.createTextNode(count);
-              span.appendChild(txt);
-      });
-});
 
 </script>
 

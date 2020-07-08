@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  {% include 'header.html' %}
+    <body>
+      {% include 'banner.html' %}
+      {% include 'menu.html' %}
+
+      <div class="status">
+	<p><img src="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca/relabeledSeqs_dedup_relabeledSeqs_dedup.png" height="300px"></p>
+	<p><a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca/relabeledSeqs_dedup.fasta">All sequences (FASTA) relabled and deduplicated</a></p>
+	<p><a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca/mergedmetadata.ttl">Metadata (RDF) for all sequences</a></p>
+	<p><a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca/relabeledSeqs_dedup_relabeledSeqs_dedup.gfa">All sequences in Graphical Fragment Assembly (GFA)</a> - <a href="https://github.com/GFA-spec/GFA-spec">More about GFA</a></p>
+	<p><a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca/relabeledSeqs_dedup_relabeledSeqs_dedup.gfa">All sequences in Optimized Dynamic Genome/Graph Implementation (ODGI)</a> - <a href="https://github.com/vgteam/odgi">More about ODGI</a></p>
+	<p><a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca/relabeledSeqs_dedup_relabeledSeqs_dedup.ttl.xz">All sequences in RDF using spodgi</a> - <a href="https://github.com/pangenome/spodgi">More about spodgi</a></p>
+
+
+	<p><a href="http://sparql.genenetwork.org/sparql/">SPARQL endpoint</a> - <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=&query=SELECT+DISTINCT+%3Ffasta+%3Fvalue+WHERE+%7B%3Ffasta+%3Fx%5B+%3Chttp%3A%2F%2Fedamontology.org%2Fdata_2091%3E+%3Fvalue+%5D%7D%0D%0A&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+">Sample query for accessions</a>
+
+	{{ embed|safe }}
+
+	</div>
+
+{% include 'footer.html' %}
+
+   </body>
+</html>

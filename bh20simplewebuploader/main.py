@@ -13,12 +13,15 @@ import pkg_resources
 from flask import Flask, request, redirect, send_file, send_from_directory, render_template, jsonify
 import os.path
 import requests
+import io
+import arvados
+from markupsafe import Markup
 
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__ )
 log.debug("Entering web uploader")
 
-if not os.path.isfile('bh20sequploader/mainx.py'):
+if not os.path.isfile('bh20sequploader/main.py'):
     print("WARNING: run FLASK from the root of the source repository!", file=sys.stderr)
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
@@ -224,12 +227,21 @@ METADATA_OPTION_DEFINITIONS = yaml.safe_load(pkg_resources.resource_stream("bh20
 FORM_ITEMS = generate_form(METADATA_SCHEMA, METADATA_OPTION_DEFINITIONS)
 
 @app.route('/')
+def send_home():
+    """
+    Send the front page.
+    """
+
+    return render_template('home.html', menu='HOME')
+
+
+@app.route('/upload')
 def send_form():
     """
     Send the file upload form/front page.
     """
 
-    return render_template('form.html', fields=FORM_ITEMS, menu='HOME')
+    return render_template('form.html', fields=FORM_ITEMS, menu='UPLOAD')
 
 class FileTooBigError(RuntimeError):
     """
@@ -439,7 +451,52 @@ def get_html_body(fn):
 @app.route('/download')
 def download_page():
     buf = get_html_body('doc/web/download.html')
-    return render_template('about.html',menu='DOWNLOAD',embed=buf)
+    return render_template('resource.html',menu='DOWNLOAD',embed=buf)
+
+@app.route('/status')
+def status_page():
+    """
+    Processing status
+    """
+
+    api = arvados.api()
+    uploader_project = 'lugli-j7d0g-n5clictpuvwk8aa'
+    pending = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", uploader_project]])
+    out = []
+    status = {}
+    for p in pending:
+        prop = p["properties"]
+        out.append(prop)
+        if "status" not in prop:
+            prop["status"] = "pending"
+        prop["created_at"] = p["created_at"]
+        prop["uuid"] = p["uuid"]
+        status[prop["status"]] = status.get(prop["status"], 0) + 1
+
+    output = io.StringIO()
+    for s in status:
+        output.write("<p>%s sequences %s QC</p>" % (status[s], s))
+    output.write(
+"""
+<table>
+<tr><th>Collection</th>
+<th>Sequence label</th>
+<th>Status</th>
+<th>Errors</th></tr>
+""")
+    for r in out:
+        output.write("<tr>")
+        output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+        output.write("<td>%s</td>" % Markup.escape(r["sequence_label"]))
+        output.write("<td>%s</td>" % r["status"])
+        output.write("<td><pre>%s</pre></td>" % Markup.escape("\n".join(r.get("errors", []))))
+        output.write("</tr>")
+    output.write(
+"""
+</table>
+""")
+
+    return render_template('status.html', table=Markup(output.getvalue()), menu='STATUS')
 
 @app.route('/demo')
 def demo_page():

@@ -20,6 +20,7 @@ from markupsafe import Markup
 ARVADOS_API = 'lugli.arvadosapi.com'
 ANONYMOUS_TOKEN = '5o42qdxpxp5cj15jqjf7vnxx5xduhm4ret703suuoa3ivfglfh'
 UPLOADER_PROJECT = 'lugli-j7d0g-n5clictpuvwk8aa'
+VALIDATED_PROJECT = 'lugli-j7d0g-5ct8p1i1wrgyjvp'
 
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__ )
@@ -457,6 +458,47 @@ def download_page():
     buf = get_html_body('doc/web/download.html')
     return render_template('resource.html',menu='DOWNLOAD',embed=buf)
 
+def pending_table(output, items):
+    output.write(
+"""
+<table>
+<tr><th>Collection</th>
+<th>Sequence label</th></tr>
+""")
+    for r in items:
+        if r["status"] != "pending":
+            continue
+        output.write("<tr>")
+        output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+        output.write("<td>%s</td>" % Markup.escape(r["sequence_label"]))
+        output.write("</tr>")
+    output.write(
+"""
+</table>
+""")
+
+def rejected_table(output, items):
+    output.write(
+"""
+<table>
+<tr><th>Collection</th>
+<th>Sequence label</th>
+<th>Errors</th></tr>
+""")
+    for r in items:
+        if r["status"] != "rejected":
+            continue
+        output.write("<tr>")
+        output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+        output.write("<td>%s</td>" % Markup.escape(r["sequence_label"]))
+        output.write("<td><pre>%s</pre></td>" % Markup.escape("\n".join(r.get("errors", []))))
+        output.write("</tr>")
+    output.write(
+"""
+</table>
+""")
+
+
 @app.route('/status')
 def status_page():
     """
@@ -477,27 +519,18 @@ def status_page():
         status[prop["status"]] = status.get(prop["status"], 0) + 1
 
     output = io.StringIO()
-    for s in status:
-        output.write("<p>%s sequences %s QC</p>" % (status[s], s))
-    output.write(
-"""
-<table>
-<tr><th>Collection</th>
-<th>Sequence label</th>
-<th>Status</th>
-<th>Errors</th></tr>
-""")
-    for r in out:
-        output.write("<tr>")
-        output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
-        output.write("<td>%s</td>" % Markup.escape(r["sequence_label"]))
-        output.write("<td>%s</td>" % r["status"])
-        output.write("<td><pre>%s</pre></td>" % Markup.escape("\n".join(r.get("errors", []))))
-        output.write("</tr>")
-    output.write(
-"""
-</table>
-""")
+
+    validated = api.collections().list(filters=[["owner_uuid", "=", VALIDATED_PROJECT]], limit=1).execute()
+    status["passed"] = validated["items_available"]
+
+    for s in (("passed", "/download"), ("pending", "#pending"), ("rejected", "#rejected")):
+        output.write("<p><a href='%s'>%s sequences QC %s</a></p>" % (s[1], status.get(s[0], 0), s[0]))
+
+    output.write("<a id='pending'><h1>Pending</h1>")
+    pending_table(output, out)
+
+    output.write("<a id='rejected'><h1>Rejected</h1>")
+    rejected_table(output, out)
 
     return render_template('status.html', table=Markup(output.getvalue()), menu='STATUS')
 
@@ -534,20 +567,10 @@ baseURL='http://sparql.genenetwork.org/sparql/'
 
 @app.route('/api/getCount', methods=['GET'])
 def getCount():
-    query="""
-PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
-select (COUNT(distinct ?dataset) as ?num)
-{
-   ?dataset pubseq:submitter ?id .
-   ?id ?p ?submitter
-}
-"""
-    payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
-    result = r.json()['results']['bindings']
-    # [{'num': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '1352'}}]
-    # print(result, file=sys.stderr)
-    return jsonify({'sequences': int(result[0]["num"]["value"])})
+    api = arvados.api(host=ARVADOS_API, token=ANONYMOUS_TOKEN)
+    c = api.collections().list(filters=[["owner_uuid", "=", VALIDATED_PROJECT]], limit=1).execute()
+
+    return jsonify({'sequences': c["items_available"]})
 
 @app.route('/api/getAllaccessions', methods=['GET'])
 def getAllaccessions():

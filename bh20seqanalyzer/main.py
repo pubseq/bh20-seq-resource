@@ -187,14 +187,15 @@ def get_workflow_output_from_project(api, uuid):
     cr = api.container_requests().list(filters=[['owner_uuid', '=', uuid],
                                                 ["requesting_container_uuid", "=", None]]).execute()
     if cr["items"] and cr["items"][0]["output_uuid"]:
-        return cr["items"][0]
-    else:
-        return None
+        container = api.containers().get(uuid=cr["items"][0]["container_uuid"]).execute()
+        if container["state"] == "Complete" and container["exit_code"] == 0:
+            return cr["items"][0]
+    return None
 
 
 def copy_most_recent_result(api, analysis_project, latest_result_uuid):
     most_recent_analysis = api.groups().list(filters=[['owner_uuid', '=', analysis_project]],
-                                                  order="created_at desc", limit=1).execute()
+                                                  order="created_at desc").execute()
     for m in most_recent_analysis["items"]:
         wf = get_workflow_output_from_project(api, m["uuid"])
         if wf:
@@ -220,6 +221,7 @@ def move_fastq_to_fasta_results(api, analysis_project, uploader_project):
                                      body={"owner_uuid": uploader_project}).execute()
             p["properties"]["moved_output"] = True
             api.groups().update(uuid=p["uuid"], body={"properties": p["properties"]}).execute()
+            break
 
 
 def upload_schema(api, workflow_def_project):

@@ -17,6 +17,10 @@ import io
 import arvados
 from markupsafe import Markup
 
+ARVADOS_API = 'lugli.arvadosapi.com'
+ANONYMOUS_TOKEN = '5o42qdxpxp5cj15jqjf7vnxx5xduhm4ret703suuoa3ivfglfh'
+UPLOADER_PROJECT = 'lugli-j7d0g-n5clictpuvwk8aa'
+
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__ )
 log.debug("Entering web uploader")
@@ -459,9 +463,8 @@ def status_page():
     Processing status
     """
 
-    api = arvados.api()
-    uploader_project = 'lugli-j7d0g-n5clictpuvwk8aa'
-    pending = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", uploader_project]])
+    api = arvados.api(host=ARVADOS_API, token=ANONYMOUS_TOKEN)
+    pending = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", UPLOADER_PROJECT]])
     out = []
     status = {}
     for p in pending:

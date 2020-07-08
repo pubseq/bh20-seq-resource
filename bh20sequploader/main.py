@@ -19,8 +19,10 @@ log = logging.getLogger(__name__ )
 log.debug("Entering sequence uploader")
 
 ARVADOS_API_HOST='lugli.arvadosapi.com'
-ARVADOS_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
+UPLOADER_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
+ANONYMOUS_API_TOKEN='5o42qdxpxp5cj15jqjf7vnxx5xduhm4ret703suuoa3ivfglfh'
 UPLOAD_PROJECT='lugli-j7d0g-n5clictpuvwk8aa'
+VALIDATED_PROJECT='lugli-j7d0g-n5clictpuvwk8aa'
 
 def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
     failed = False
@@ -69,7 +71,7 @@ def main():
     parser.add_argument("--skip-qc", action="store_true", help="Skip local qc check")
     args = parser.parse_args()
 
-    api = arvados.api(host=ARVADOS_API_HOST, token=ARVADOS_API_TOKEN, insecure=True)
+    api = arvados.api(host=ARVADOS_API_HOST, token=UPLOADER_API_TOKEN, insecure=True)
 
     target = qc_stuff(args.metadata, args.sequence_p1, args.sequence_p2, not args.skip_qc)
     seqlabel = target[0][1]
@@ -105,6 +107,14 @@ def main():
         "upload_ip": external_ip,
         "upload_user": "%s@%s" % (username, socket.gethostname())
     }
+
+    api2 = arvados.api(host=ARVADOS_API_HOST, token=ANONYMOUS_API_TOKEN, insecure=True)
+    dup = api2.collections().list(filters=[["owner_uuid", "in", [VALIDATED_PROJECT, UPLOAD_PROJECT]],
+                                           ["portable_data_hash", "=", col.portable_data_hash()]]).execute()
+    if dup["items"]:
+        # This exact collection has been uploaded before.
+        print("Duplicate of %s" % ([d["uuid"] for d in dup["items"]]))
+        exit(1)
 
     col.save_new(owner_uuid=UPLOAD_PROJECT, name="%s uploaded by %s from %s" %
                  (seqlabel, properties['upload_user'], properties['upload_ip']),

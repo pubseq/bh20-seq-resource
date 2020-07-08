@@ -22,7 +22,7 @@ ARVADOS_API_HOST='lugli.arvadosapi.com'
 UPLOADER_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
 ANONYMOUS_API_TOKEN='5o42qdxpxp5cj15jqjf7vnxx5xduhm4ret703suuoa3ivfglfh'
 UPLOAD_PROJECT='lugli-j7d0g-n5clictpuvwk8aa'
-VALIDATED_PROJECT='lugli-j7d0g-n5clictpuvwk8aa'
+VALIDATED_PROJECT='lugli-j7d0g-5ct8p1i1wrgyjvp'
 
 def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
     failed = False
@@ -69,9 +69,14 @@ def main():
     parser.add_argument('sequence_p2', type=argparse.FileType('rb'), default=None, nargs='?', help='sequence FASTQ pair')
     parser.add_argument("--validate", action="store_true", help="Dry run, validate only")
     parser.add_argument("--skip-qc", action="store_true", help="Skip local qc check")
+    parser.add_argument("--trusted", action="store_true", help="Trust local validation and add directly to validated project")
     args = parser.parse_args()
 
-    api = arvados.api(host=ARVADOS_API_HOST, token=UPLOADER_API_TOKEN, insecure=True)
+    if args.trusted:
+        # Use credentials from environment
+        api = arvados.api()
+    else:
+        api = arvados.api(host=ARVADOS_API_HOST, token=UPLOADER_API_TOKEN, insecure=True)
 
     target = qc_stuff(args.metadata, args.sequence_p1, args.sequence_p2, not args.skip_qc)
     seqlabel = target[0][1]
@@ -116,7 +121,13 @@ def main():
         print("Duplicate of %s" % ([d["uuid"] for d in dup["items"]]))
         exit(1)
 
-    col.save_new(owner_uuid=UPLOAD_PROJECT, name="%s uploaded by %s from %s" %
+    if args.trusted:
+        properties["status"] = "validated"
+        owner_uuid = VALIDATED_PROJECT
+    else:
+        owner_uuid = UPLOAD_PROJECT
+
+    col.save_new(owner_uuid=owner_uuid, name="%s uploaded by %s from %s" %
                  (seqlabel, properties['upload_user'], properties['upload_ip']),
                  properties=properties, ensure_unique_name=True)
 

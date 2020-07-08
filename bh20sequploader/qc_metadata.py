@@ -16,12 +16,12 @@ def qc_metadata(metadatafile):
     if metadata_schema is None:
         schema_resource = pkg_resources.resource_stream(__name__, "bh20seq-schema.yml")
         cache = {"https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-schema.yml": schema_resource.read().decode("utf-8")}
-         metadata_schema = schema_salad.schema.load_schema("https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-schema.yml", cache=cache)
+        metadata_schema = schema_salad.schema.load_schema("https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-schema.yml", cache=cache)
 
-     (document_loader,
-      avsc_names,
-      schema_metadata,
-      metaschema_loader) = metadata_schema
+    (document_loader,
+     avsc_names,
+     schema_metadata,
+     metaschema_loader) = metadata_schema
 
     shex = pkg_resources.resource_stream(__name__, "bh20seq-shex.rdf").read().decode("utf-8")
 

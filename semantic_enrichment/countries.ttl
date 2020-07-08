@@ -335,25 +335,40 @@
     ns1:P625 "Point(29.0 27.0)" .
 
 <http://www.wikidata.org/entity/Q183> rdfs:label "Germany" ;
-    ns1:P30 <http://www.wikidata.org/entity/Q46> .
-
-<http://www.wikidata.org/entity/Q843> rdfs:label "Pakistan" ;
-    ns1:P30 <http://www.wikidata.org/entity/Q48> .
-
-<http://www.wikidata.org/entity/Q881> rdfs:label "Vietnam" ;
-    ns1:P30 <http://www.wikidata.org/entity/Q48> .
-
-<http://www.wikidata.org/entity/Q668> rdfs:label "India" ;
-    ns1:P30 <http://www.wikidata.org/entity/Q48> .
-
-<http://www.wikidata.org/entity/Q739> rdfs:label "Colombia" ;
-    ns1:P30 <http://www.wikidata.org/entity/Q18> .
+    ns1:P17 <http://www.wikidata.org/entity/Q183> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> ;
+    ns1:P625 "Point(10.0 51.0)" .
 
 <http://www.wikidata.org/entity/Q258> rdfs:label "South Africa" ;
-    ns1:P30 <http://www.wikidata.org/entity/Q15> .
+    ns1:P17 <http://www.wikidata.org/entity/Q258> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q15> ;
+    ns1:P625 "Point(24.0 -29.0)" .
 
 <http://www.wikidata.org/entity/Q408> rdfs:label "Australia" ;
-    ns1:P30 <http://www.wikidata.org/entity/Q538> .
+    ns1:P17 <http://www.wikidata.org/entity/Q408> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q538> ;
+    ns1:P625 "Point(137.0 -28.0)" .
+
+<http://www.wikidata.org/entity/Q668> rdfs:label "India" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(83.0 22.8)" .
+
+<http://www.wikidata.org/entity/Q739> rdfs:label "Colombia" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q739> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q18> ;
+    ns1:P625 "Point(-74.0 4.0)" .
+
+<http://www.wikidata.org/entity/Q843> rdfs:label "Pakistan" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q843> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(71.0 30.0)" .
+
+<http://www.wikidata.org/entity/Q881> rdfs:label "Vietnam" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q881> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(108.0 16.0)" .
+
 
 <http://www.wikidata.org/entity/Q538> rdfs:label "Oceania" .
 <http://www.wikidata.org/entity/Q49> rdfs:label "North America" .

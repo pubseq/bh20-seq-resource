@@ -27,6 +27,10 @@ def qc_metadata(metadatafile):
     g = schema_salad.jsonld_context.makerdf("workflow", doc, document_loader.ctx)
     rslt, reason = evaluate(g, shex, doc["id"], "https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-shex.rdf#submissionShape")
 
+    # As part of QC make sure serialization works too, this will raise
+    # an exception if there are invalid URIs.
+    g.serialize(format="ntriples")
+
     if not rslt:
         raise Exception(reason)
 

@@ -197,15 +197,15 @@ $graph:
       doc: Address of the laboratory where the sample was taken
       type: string?
       jsonldPredicate:
-          _id: http://purl.obolibrary.org/obo/OBI_0600047
+          _id: http://purl.obolibrary.org/obo/NCIT_C37900
     provider_sample_id:
       type: string?
       jsonldPredicate:
-          _id: http://purl.obolibrary.org/obo/NCIT_C37900
+          _id: http://www.ebi.ac.uk/efo/EFO_0001741
     submitter_sample_id:
       type: string?
       jsonldPredicate:
-          _id: http://www.ebi.ac.uk/efo/EFO_0001741
+          _id: http://purl.obolibrary.org/obo/NCIT_C42781
     publication:
       doc: Reference to publication of this sample (e.g. DOI, pubmed ID, ...)
       type: string?

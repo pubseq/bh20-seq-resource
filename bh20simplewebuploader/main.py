@@ -505,7 +505,7 @@ def status_page():
     Processing status
     """
 
-    api = arvados.api(host=ARVADOS_API, token=ANONYMOUS_TOKEN)
+    api = arvados.api(host=ARVADOS_API, token=ANONYMOUS_TOKEN, insecure=True)
     pending = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", UPLOADER_PROJECT]])
     out = []
     status = {}
@@ -567,7 +567,7 @@ baseURL='http://sparql.genenetwork.org/sparql/'
 
 @app.route('/api/getCount', methods=['GET'])
 def getCount():
-    api = arvados.api(host=ARVADOS_API, token=ANONYMOUS_TOKEN)
+    api = arvados.api(host=ARVADOS_API, token=ANONYMOUS_TOKEN, insecure=True)
     c = api.collections().list(filters=[["owner_uuid", "=", VALIDATED_PROJECT]], limit=1).execute()
 
     return jsonify({'sequences': c["items_available"]})

@@ -219,10 +219,9 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                                 seq_tec = seq_tec.strip()
                                 if seq_tec in term_to_uri_dict:
                                     seq_tec = term_to_uri_dict[seq_tec]
+                                    new_seq_tec_list.append(seq_tec)
                                 else:
                                     missing_value_list.append('\t'.join([accession_version, 'sample_sequencing_technology', seq_tec]))
-
-                                new_seq_tec_list.append(seq_tec)
 
                             if len(new_seq_tec_list) > 0:
                                 info_for_yaml_dict['technology']['sample_sequencing_technology'] = [x for x in new_seq_tec_list]

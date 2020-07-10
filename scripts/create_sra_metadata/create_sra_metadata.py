@@ -242,6 +242,11 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
         not_created_accession_list.append([accession, 'technology not found'])
         continue
 
+    if 'host_species' not in info_for_yaml_dict['host']:
+        #print(accession, ' - technology not found')
+        not_created_accession_list.append([accession, 'missing host species'])
+        continue
+
     with open(os.path.join(dir_yaml, '{}.yaml'.format(accession)), 'w') as fw:
         json.dump(info_for_yaml_dict, fw, indent=2)
 

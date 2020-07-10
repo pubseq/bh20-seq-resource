@@ -8,7 +8,7 @@ import gzip
 
 dir_yaml = 'yaml'
 
-date = '2020.07.05'
+date = '2020.07.09'
 
 # Query on SRA: 'txid2697049[Organism]' (https://www.ncbi.nlm.nih.gov/sra/?term=txid2697049%5BOrganism%5D)
 # Query on SRA: 'txid2697049[Organism:noexp] NOT 0[Mbases ' (https://www.ncbi.nlm.nih.gov/sra/?term=txid2697049%5BOrganism:noexp%5D%20NOT%200[Mbases)
@@ -50,13 +50,14 @@ sra_metadata_xml_file.close()
 EXPERIMENT_PACKAGE_SET = tree.getroot()
 
 missing_value_list = []
+not_created_accession_list = []
 
 run_accession_set = set()
 run_accession_to_downloadble_file_url_dict = {}
 
 for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     #print(i, EXPERIMENT_PACKAGE)
-    
+
     # A general default-empty yaml could be read from the definitive one
     info_for_yaml_dict = {
         'id': 'placeholder',
@@ -74,17 +75,17 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     #print(accession)
 
     info_for_yaml_dict['sample']['sample_id'] = accession
-    
+
     #SRAFiles = RUN.find('SRAFiles')
     #if SRAFiles is not None:
     #    url = SRAFiles.find('SRAFile').attrib['url']
     #    if 'sra-download.ncbi.nlm.nih.gov' in url:
     #        run_accession_to_downloadble_file_url_dict[accession] = url
-  
+
 
     SAMPLE = EXPERIMENT_PACKAGE.find('SAMPLE')
     SAMPLE_ATTRIBUTE_list = SAMPLE.iter('SAMPLE_ATTRIBUTE')
-    
+
     for SAMPLE_ATTRIBUTE in SAMPLE_ATTRIBUTE_list:
         VALUE = SAMPLE_ATTRIBUTE.find('VALUE')
         if VALUE is not None:
@@ -101,7 +102,7 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                     missing_value_list.append('\t'.join([accession, 'host_species', VALUE_text]))
             elif TAG_text in ['host_health_status', 'host health state']:
                 if VALUE_text in term_to_uri_dict:
-                    info_for_yaml_dict['host']['host_health_status'] = term_to_uri_dict[VALUE_text]                            
+                    info_for_yaml_dict['host']['host_health_status'] = term_to_uri_dict[VALUE_text]
                 elif VALUE_text.strip("'") not in ['missing', 'not collected', 'not provided']:
                     missing_value_list.append('\t'.join([accession, 'host_health_status', VALUE_text]))
             elif TAG_text in ['strain', 'isolate']:
@@ -113,12 +114,12 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
 
                     if value_to_insert in term_to_uri_dict:
                         value_to_insert = term_to_uri_dict[value_to_insert]
-                        
-                    if 'virus_strain' not in info_for_yaml_dict:                        
+
+                    if 'virus_strain' not in info_for_yaml_dict:
                         info_for_yaml_dict['virus']['virus_strain'] = value_to_insert
                     else:
                         info_for_yaml_dict['virus']['virus_strain'] += '; ' + value_to_insert
-            elif TAG_text in ['isolation_source', 'isolation source host-associated']:                    
+            elif TAG_text in ['isolation_source', 'isolation source host-associated']:
                 if VALUE_text in term_to_uri_dict:
                     info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict[VALUE_text]]
                 else:
@@ -145,7 +146,7 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
             elif TAG_text == 'collected_by':
                 if VALUE_text.lower() not in ['not available', 'missing']:
                     name = VALUE_text in ['Dr. Susie Bartlett', 'Ahmed Babiker', 'Aisi Fu', 'Brandi Williamson', 'George Taiaroa', 'Natacha Ogando', 'Tim Dalebout', 'ykut Ozdarendeli']
-                    
+
                     info_for_yaml_dict['sample']['collector_name' if name else 'collecting_institution'] = VALUE_text
             elif TAG_text == 'collecting institution':
                 if VALUE_text.lower() not in ['not provided', 'na']:
@@ -154,11 +155,11 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                 if VALUE_text.lower() not in ['not applicable', 'missing', 'na']:
                     date_to_write = VALUE_text
                     date_is_estimated = True
-                    
+
                     VALUE_text_list = VALUE_text.split('-')
                     if len(VALUE_text_list) == 3:
                         date_is_estimated = False
-                        
+
                         if VALUE_text_list[1].isalpha():
                             date_to_write = parse(VALUE_text).strftime('%Y-%m-%d')
                     elif len(VALUE_text_list) == 2:
@@ -170,7 +171,7 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                             date_to_write = "{}-01-15".format(VALUE_text)
 
                     info_for_yaml_dict['sample']['collection_date'] = date_to_write
-                    
+
                     if date_is_estimated:
                         if 'additional_collection_information' in info_for_yaml_dict['sample']:
                             info_for_yaml_dict['sample']['additional_collection_information'] += "; The 'collection_date' is estimated (the original date was: {})".format(VALUE_text)
@@ -188,8 +189,8 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
 
     taxon_id = SAMPLE.find('SAMPLE_NAME').find('TAXON_ID').text
     info_for_yaml_dict['virus']['virus_species'] = "http://purl.obolibrary.org/obo/NCBITaxon_"+taxon_id
-    
-    
+
+
     EXPERIMENT = EXPERIMENT_PACKAGE.find('EXPERIMENT')
     INSTRUMENT_MODEL = [x.text for x in EXPERIMENT.find('PLATFORM').iter('INSTRUMENT_MODEL')][0]
 
@@ -206,18 +207,18 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
 
     SUBMISSION = EXPERIMENT_PACKAGE.find('SUBMISSION')
     info_for_yaml_dict['submitter']['submitter_sample_id'] = SUBMISSION.attrib['accession']
-    
+
     if SUBMISSION.attrib['lab_name'].lower() not in ['na']:
         info_for_yaml_dict['submitter']['originating_lab'] = SUBMISSION.attrib['lab_name']
 
-    STUDY = EXPERIMENT_PACKAGE.find('STUDY')     
+    STUDY = EXPERIMENT_PACKAGE.find('STUDY')
     info_for_yaml_dict['submitter']['publication'] = STUDY.attrib['alias']
-    
-    
+
+
     Organization = EXPERIMENT_PACKAGE.find('Organization')
     Organization_Name = Organization.find('Name')
     info_for_yaml_dict['submitter']['authors'] = [Organization_Name.text]
-        
+
     Organization_Contact = Organization.find('Contact')
     if Organization_Contact is not None:
         Organization_Contact_Name = Organization_Contact.find('Name')
@@ -231,20 +232,28 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     Organization_Address = Organization.find('Address')
     if Organization_Address is not None:
         info_for_yaml_dict['submitter']['lab_address'] = '; '.join([x.text for x in Organization_Address] + ['Postal code ' + Organization_Address.attrib['postal_code']])
-    
+
     if 'collection_date' not in info_for_yaml_dict['sample']:
         info_for_yaml_dict['sample']['collection_date'] = '1970-01-01'
         info_for_yaml_dict['sample']['additional_collection_information'] = "The real 'collection_date' is missing"
 
     if 'sample_sequencing_technology' not in info_for_yaml_dict['technology']:
-        print(accession, ' - technology not found')
+        #print(accession, ' - technology not found')
+        not_created_accession_list.append([accession, 'technology not found'])
         continue
 
     with open(os.path.join(dir_yaml, '{}.yaml'.format(accession)), 'w') as fw:
         json.dump(info_for_yaml_dict, fw, indent=2)
-    
+
 if len(missing_value_list) > 0:
     path_missing_terms_tsv = 'missing_terms.tsv'
     print('Written missing terms in {}'.format(path_missing_terms_tsv))
     with open(path_missing_terms_tsv, 'w') as fw:
         fw.write('\n'.join(missing_value_list))
+
+if len(not_created_accession_list) > 0:
+    path_not_created_accession_tsv = 'not_created_accession.tsv'
+    print('Written not created accession in {}'.format(path_not_created_accession_tsv))
+    with open(path_not_created_accession_tsv, 'w') as fw:
+        fw.write('\n'.join(['\t'.join(x) for x in not_created_accession_list]))
+

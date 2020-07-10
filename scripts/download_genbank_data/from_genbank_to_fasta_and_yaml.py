@@ -138,6 +138,7 @@ min_len_to_count = 27500
 num_seq_with_len_ge_X_bp = 0
 
 missing_value_list = []
+not_created_accession_list = []
 accession_with_errors_list = []
 
 for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) for name_metadata_xxx_xml in os.listdir(dir_metadata) if name_metadata_xxx_xml.endswith('.xml')]:
@@ -371,7 +372,8 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
 
             if 'sample_sequencing_technology' not in info_for_yaml_dict['technology']:
-                print(accession_version, ' - technology not found')
+                #print(accession_version, ' - technology not found')
+                not_created_accession_list.append([accession_version, 'technology not found'])
                 continue
 
             with open(os.path.join(dir_fasta_and_yaml, '{}.fasta'.format(accession_version)), 'w') as fw:
@@ -399,5 +401,11 @@ if len(accession_with_errors_list) > 0:
     print('Written the accession with errors in {}'.format(path_accession_with_errors_tsv))
     with open(path_accession_with_errors_tsv, 'w') as fw:
         fw.write('\n'.join(accession_with_errors_list))
+
+if len(not_created_accession_list) > 0:
+    path_not_created_accession_tsv = 'not_created_accession.tsv'
+    print('Written not created accession in {}'.format(path_not_created_accession_tsv))
+    with open(path_not_created_accession_tsv, 'w') as fw:
+        fw.write('\n'.join(['\t'.join(x) for x in not_created_accession_list]))
 
 print('Num. new sequences with length >= {} bp: {}'.format(min_len_to_count, num_seq_with_len_ge_X_bp))

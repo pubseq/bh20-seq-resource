@@ -33,9 +33,10 @@ The *public sequence resource* is an initiative by [[https://github.com/arvados/
 ontology experts who want to create something agile and useful for the
 wider research community. The initiative started at the COVID-19
 biohackathon in April 2020 and is ongoing. The main project drivers
-are Pjotr Prins (UTHSC), Peter Amstutz (Curii), Michael Crusoe (Common
-Workflow Language), Thomas Liener (consultant, formerly EBI) and
-Jerven Bolleman (Swiss Institute of Bioinformatics).
+are Pjotr Prins (UTHSC), Peter Amstutz (Curii), Andrea Guarracino
+(University of Rome Tor Vergata), Michael Crusoe (Common Workflow
+Language), Thomas Liener (consultant, formerly EBI), Erik Garrison
+(UCSC) and Jerven Bolleman (Swiss Institute of Bioinformatics).
 
 Notably, as this is a free software initiative, the project represents
 major work by hundreds of software developers and ontology and data
@@ -48,11 +49,12 @@ bioinformatics using agile methods. Unlike the resources from large
 institutes we can improve things on a dime and anyone can contribute
 to building out this resource!
 
-Importantly: all data is published under the [[https://creativecommons.org/licenses/by/4.0/][Creative Commons 4.0
-attribution license]] which means it data can be published and workflows
-can run in public environments allowing for improved access for
-research and reproducible results. This contrasts with some other
-public resources, including GISAID.
+Importantly: all data is published under either the [[https://creativecommons.org/licenses/by/4.0/][Creative Commons
+4.0 attribution license]] or the [[https://creativecommons.org/share-your-work/public-domain/cc0/][CC0 “No Rights Reserved” license]] which
+means it data can be published and workflows can run in public
+environments allowing for improved access for research and
+reproducible results. This contrasts with some other public resources,
+including GISAID.
 
 * Why should I upload my data here?
 
@@ -104,6 +106,8 @@ using workflows from the High Performance Open Biology Lab defined
 
 The Swiss Institute of Bioinformatics has included this data in
 https://covid-19-sparql.expasy.org/ and made it part of [[https://www.uniprot.org/][Uniprot]].
+
+The Pantograph [[https://graph-genome.github.io/][viewer]] uses PubSeq data for their visualisations.
 
 [[https://uthsc.edu][UTHSC]] and [[https://www.ornl.gov/news/ornl-fight-against-covid-19][ORNL]] use COVID-19 PubSeq data for protein prediction and
 drug development.

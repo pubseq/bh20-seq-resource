@@ -251,13 +251,13 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
         json.dump(info_for_yaml_dict, fw, indent=2)
 
 if len(missing_value_list) > 0:
-    path_missing_terms_tsv = 'missing_terms.tsv'
+    path_missing_terms_tsv = 'missing_terms.sra.tsv'
     print('Written missing terms in {}'.format(path_missing_terms_tsv))
     with open(path_missing_terms_tsv, 'w') as fw:
         fw.write('\n'.join(missing_value_list))
 
 if len(not_created_accession_list) > 0:
-    path_not_created_accession_tsv = 'not_created_accession.tsv'
+    path_not_created_accession_tsv = 'not_created_accession.sra.tsv'
     print('Written not created accession in {}'.format(path_not_created_accession_tsv))
     with open(path_not_created_accession_tsv, 'w') as fw:
         fw.write('\n'.join(['\t'.join(x) for x in not_created_accession_list]))

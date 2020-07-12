@@ -391,19 +391,19 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
             continue
 
 if len(missing_value_list) > 0:
-    path_missing_terms_tsv = 'missing_terms.tsv'
+    path_missing_terms_tsv = 'missing_terms.genbank.tsv'
     print('Written missing terms in {}'.format(path_missing_terms_tsv))
     with open(path_missing_terms_tsv, 'w') as fw:
         fw.write('\n'.join(missing_value_list))
 
 if len(accession_with_errors_list) > 0:
-    path_accession_with_errors_tsv = 'accession_with_errors.tsv'
+    path_accession_with_errors_tsv = 'accession_with_errors.genbank.tsv'
     print('Written the accession with errors in {}'.format(path_accession_with_errors_tsv))
     with open(path_accession_with_errors_tsv, 'w') as fw:
         fw.write('\n'.join(accession_with_errors_list))
 
 if len(not_created_accession_list) > 0:
-    path_not_created_accession_tsv = 'not_created_accession.tsv'
+    path_not_created_accession_tsv = 'not_created_accession.genbank.tsv'
     print('Written not created accession in {}'.format(path_not_created_accession_tsv))
     with open(path_not_created_accession_tsv, 'w') as fw:
         fw.write('\n'.join(['\t'.join(x) for x in not_created_accession_list]))

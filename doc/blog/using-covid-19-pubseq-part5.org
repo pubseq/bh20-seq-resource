@@ -1,3 +1,19 @@
+#+TITLE: COVID-19 PubSeq (part 4)
+#+AUTHOR: Pjotr Prins
+# C-c C-e h h   publish
+# C-c !         insert date (use . for active agenda, C-u C-c ! for date, C-u C-c . for time)
+# C-c C-t       task rotate
+# RSS_IMAGE_URL: http://xxxx.xxxx.free.fr/rss_icon.png
+
+#+HTML_HEAD: <link rel="Blog stylesheet" type="text/css" href="blog.css" />
+
+
+* Table of Contents                                                     :TOC:noexport:
+ - [[#modify-metadata][Modify Metadata]]
+ - [[#what-is-the-schema][What is the schema?]]
+ - [[#how-is-the-website-generated][How is the website generated?]]
+ - [[#modifying-the-schema][Modifying the schema]]
+
 * Modify Metadata
 
 The public sequence resource uses multiple data formats listed on the
@@ -10,8 +26,29 @@ data are listed [[./blog?id=using-covid-19-pubseq-part1][here]].
 
 In this BLOG we are going to look at the metadata entered on the
 [[./][COVID-19 PubSeq]] website (or command line client). It is important to
-understand that you and us can change that information.
+understand that anyone, including you, can change that information!
 
 * What is the schema?
 
+The default metadata schema is listed [[https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml][here]].
+
 * How is the website generated?
+
+Using the schema we use [[https://pypi.org/project/PyShEx/][pyshex]] shex expressions and [[https://github.com/common-workflow-language/schema_salad][schema salad]] to
+generate the [[https://github.com/arvados/bh20-seq-resource/blob/edb17e7f7caebfa1e76b21006b1772a33f4f7887/bh20simplewebuploader/templates/form.html#L47][input form]], [[https://github.com/arvados/bh20-seq-resource/blob/edb17e7f7caebfa1e76b21006b1772a33f4f7887/bh20sequploader/qc_metadata.py#L13][validate]] the user input and to build [[https://github.com/arvados/bh20-seq-resource/blob/edb17e7f7caebfa1e76b21006b1772a33f4f7887/workflows/pangenome-generate/merge-metadata.py#L24][RDF]]!
+All from that one metadata schema.
+
+* Modifying the schema
+
+One of the first things we wanted to do is to add a field for the data
+license. Initially we only support CC-4.0 as a license by default, but
+now we want to give uploaders the option to make it an even more
+liberal CC0 license. The first step is to find a good ontology term
+for the field. Searching for `creative commons cc0 rdf' rendered this
+useful [[https://creativecommons.org/ns][page]].  We also find an [[https://wiki.creativecommons.org/wiki/CC_License_Rdf_Overview][overview]] where CC0 is represented as URI
+https://creativecommons.org/publicdomain/zero/1.0/.  Meanwhile the
+attribution license https://creativecommons.org/licenses/by/4.0/.
+According to this [[https://wiki.creativecommons.org/images/d/d6/Ccrel-1.0.pdf][document]] we should really also add fields for
+attributionName and attributionURL.
+
+/Note: work in progress/

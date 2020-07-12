@@ -1,3 +1,24 @@
+#+TITLE: COVID-19 PubSeq (part 4)
+#+AUTHOR: Pjotr Prins
+# C-c C-e h h   publish
+# C-c !         insert date (use . for active agenda, C-u C-c ! for date, C-u C-c . for time)
+# C-c C-t       task rotate
+# RSS_IMAGE_URL: http://xxxx.xxxx.free.fr/rss_icon.png
+
+#+HTML_HEAD: <link rel="Blog stylesheet" type="text/css" href="blog.css" />
+
+
+* Table of Contents                                                     :TOC:noexport:
+ - [[#what-does-this-mean][What does this mean?]]
+ - [[#modify-workflow][Modify Workflow]]
+
+* What does this mean?
+
+This means that when someone uploads a SARS-CoV-2 sequence using one
+of our tools (CLI or web-based) they add a sequence and some metadata
+which triggers a rerun of our workflows.
+
+
 * Modify Workflow
 
 /Work in progress!/

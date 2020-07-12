@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-30 Sat 11:59 -->
+<!-- 2020-07-12 Sun 06:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>COVID-19 PubSeq (part 4)</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Pjotr Prins" />
 <style type="text/css">
@@ -161,19 +161,6 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -193,12 +180,13 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="Blog stylesheet" type="text/css" href="blog.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -242,16 +230,22 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
+<h1 class="title">COVID-19 PubSeq (part 4)</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org31c224e">1. Modify Metadata</a></li>
+<li><a href="#org871ad58">1. Modify Metadata</a></li>
+<li><a href="#org07e8755">2. What is the schema?</a></li>
+<li><a href="#org4857280">3. How is the website generated?</a></li>
+<li><a href="#orge709ae2">4. Modifying the schema</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org31c224e" class="outline-2">
-<h2 id="org31c224e"><span class="section-number-2">1</span> Modify Metadata</h2>
+
+
+<div id="outline-container-org871ad58" class="outline-2">
+<h2 id="org871ad58"><span class="section-number-2">1</span> Modify Metadata</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The public sequence resource uses multiple data formats listed on the
@@ -265,13 +259,56 @@ data are listed <a href="./blog?id=using-covid-19-pubseq-part1">here</a>.
 
 <p>
 In this BLOG we are going to look at the metadata entered on the
-<a href="./">COVID-19 PubSeq</a> website (or command line client).
+<a href="./">COVID-19 PubSeq</a> website (or command line client). It is important to
+understand that anyone, including you, can change that information!
+</p>
+</div>
+</div>
+
+<div id="outline-container-org07e8755" class="outline-2">
+<h2 id="org07e8755"><span class="section-number-2">2</span> What is the schema?</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The default metadata schema is listed <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml">here</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4857280" class="outline-2">
+<h2 id="org4857280"><span class="section-number-2">3</span> How is the website generated?</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Using the schema we use <a href="https://pypi.org/project/PyShEx/">pyshex</a> shex expressions and <a href="https://github.com/common-workflow-language/schema_salad">schema salad</a> to
+generate the <a href="https://github.com/arvados/bh20-seq-resource/blob/edb17e7f7caebfa1e76b21006b1772a33f4f7887/bh20simplewebuploader/templates/form.html#L47">input form</a>, <a href="https://github.com/arvados/bh20-seq-resource/blob/edb17e7f7caebfa1e76b21006b1772a33f4f7887/bh20sequploader/qc_metadata.py#L13">validate</a> the user input and to build <a href="https://github.com/arvados/bh20-seq-resource/blob/edb17e7f7caebfa1e76b21006b1772a33f4f7887/workflows/pangenome-generate/merge-metadata.py#L24">RDF</a>!
+All from that one metadata schema.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge709ae2" class="outline-2">
+<h2 id="orge709ae2"><span class="section-number-2">4</span> Modifying the schema</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+One of the first things we wanted to do is to add a field for the data
+license. Initially we only support CC-4.0 as a license by default, but
+now we want to give uploaders the option to make it an even more
+liberal CC0 license. The first step is to find a good ontology term
+for the field. Searching for `creative commons cc0 rdf' rendered this
+useful <a href="https://creativecommons.org/ns">page</a>.  We also find an <a href="https://wiki.creativecommons.org/wiki/CC_License_Rdf_Overview">overview</a> where CC0 is represented as URI
+<a href="https://creativecommons.org/publicdomain/zero/1.0/">https://creativecommons.org/publicdomain/zero/1.0/</a>.  Meanwhile the
+attribution license <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a>.
+According to this <a href="https://wiki.creativecommons.org/images/d/d6/Ccrel-1.0.pdf">document</a> we should really also add fields for
+attributionName and attributionURL.
+</p>
+
+<p>
+<i>Note: work in progress</i>
 </p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-30 Sat 11:59</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-12 Sun 06:24</small>.
 </div>
 </body>
 </html>

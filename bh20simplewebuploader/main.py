@@ -567,10 +567,33 @@ baseURL='http://sparql.genenetwork.org/sparql/'
 
 @app.route('/api/getCount', methods=['GET'])
 def getCount():
+    """
+    Get sequence counts from Arvados record
+    """
     api = arvados.api(host=ARVADOS_API, token=ANONYMOUS_TOKEN, insecure=True)
     c = api.collections().list(filters=[["owner_uuid", "=", VALIDATED_PROJECT]], limit=1).execute()
 
     return jsonify({'sequences': c["items_available"]})
+
+@app.route('/api/getCountDB', methods=['GET'])
+def getCountDB():
+    """
+    Get sequence counts from Virtuoso DB
+    """
+    query="""
+    PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+    select (COUNT(distinct ?dataset) as ?num)
+    {
+    ?dataset pubseq:submitter ?id .
+    ?id ?p ?submitter
+    }
+    """
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    # [{'num': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '1352'}}]
+    # print(result, file=sys.stderr)
+    return jsonify({'sequences': int(result[0]["num"]["value"])})
 
 @app.route('/api/getAllaccessions', methods=['GET'])
 def getAllaccessions():

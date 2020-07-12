@@ -89,6 +89,10 @@ let fetchCount = () => {
   fetchAPI("/api/getCount");
 }
 
+let fetchCountDB = () => {
+  fetchAPI("/api/getCountDB");
+}
+
 let fetchSEQCountBySpecimen = () => {
   fetchAPIV2("/api/getSEQCountbySpecimenSource");
 }

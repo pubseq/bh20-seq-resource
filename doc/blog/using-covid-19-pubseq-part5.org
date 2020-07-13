@@ -40,7 +40,7 @@ All from that one metadata schema.
 
 * Modifying the schema
 
-One of the first things we wanted to do is to add a field for the data
+One of the first things we want to do is to add a field for the data
 license. Initially we only support CC-4.0 as a license by default, but
 now we want to give uploaders the option to make it an even more
 liberal CC0 license. The first step is to find a good ontology term
@@ -50,5 +50,71 @@ https://creativecommons.org/publicdomain/zero/1.0/.  Meanwhile the
 attribution license https://creativecommons.org/licenses/by/4.0/.
 According to this [[https://wiki.creativecommons.org/images/d/d6/Ccrel-1.0.pdf][document]] we should really also add fields for
 attributionName and attributionURL.
+
+A minimal triple should be
+
+: id  xhtml:license  <http://creativecommons.org/licenses/by/4.0/> .
+
+Other suggestions are
+
+: id  dc:title "Description" .
+: id  cc:attributionName "Your Name" .
+: id  cc:attributionURL <http://resource.org/id>
+
+and 'dc:source' which indicates the original source of any modified
+work, specified as a URI.
+The prefix 'cc:' is an abbreviation for http://creativecommons.org/ns#.
+
+Going back to the schema, where does it fit? Under host, sample,
+virus, technology or submitter block? It could fit under sample, but
+actually the license concerns the whole metadata block and sequence,
+so I think we can fit under its own license tag. For example
+
+
+id: placeholder
+
+: license:
+:     license_type: http://creativecommons.org/licenses/by/4.0/
+:     attribution_title: "Sample ID"
+:     attribution_name: "John doe, Joe Boe, Jonny Oe"
+:     attribution_url: http://covid19.genenetwork.org/id
+:     attribution_source: https://www.ncbi.nlm.nih.gov/pubmed/323088888
+
+So, let's update the example. Notice the license info is optional - if it is missing
+we just assume the default CC-4.0.
+
+One thing that is interesting is that in the name space https://creativecommons.org/ns there
+is no mention of a title. I think it is useful, however, because we have no such field.
+So, we'll add it simply as a title field. Now the draft schema is
+
+#+BEGIN_SRC js
+- name: licenseSchema
+  type: record
+  fields:
+    license_type:
+      doc: License types as refined in https://wiki.creativecommons.org/images/d/d6/Ccrel-1.0.pdf
+      type: string?
+      jsonldPredicate:
+          _id: https://creativecommons.org/ns#License
+    title:
+      doc: Attribution title related to license
+      type: string?
+      jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_001167
+    attribution_url:
+      doc: Attribution URL related to license
+      type: string?
+      jsonldPredicate:
+          _id: https://creativecommons.org/ns#Work
+    attribution_source:
+      doc: Attribution source URL
+      type: string?
+      jsonldPredicate:
+          _id: https://creativecommons.org/ns#Work
+#+END_SRC
+
+Now, we are no ontology experts, right? So, next we submit a patch to our source tree and
+ask for feedback before wiring it up in the data entry form. The pull request was
+submitted here FIXME.
 
 /Note: work in progress/

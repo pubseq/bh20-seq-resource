@@ -1,5 +1,11 @@
 id: placeholder
 
+license:
+    license_type: http://creativecommons.org/licenses/by/4.0/
+    title: "Sample"
+    attribution_name: "John doe, Joe Boe, Jonny Oe"
+    attribution_url: http://covid19.genenetwork.org/id
+
 host:
     host_id: XX1
     host_species: http://purl.obolibrary.org/obo/NCBITaxon_9606
@@ -13,9 +19,9 @@ host:
     additional_host_information: Optional free text field for additional information
 
 sample:
-    sample_id: Id of the sample as defined by the submitter 
+    sample_id: Id of the sample as defined by the submitter
     collector_name: Name of the person that took the sample
-    collecting_institution: Institute that was responsible of sampling  
+    collecting_institution: Institute that was responsible of sampling
     specimen_source: [http://purl.obolibrary.org/obo/NCIT_C155831,http://purl.obolibrary.org/obo/NCIT_C155835]
     collection_date: "2020-01-01"
     collection_location: http://www.wikidata.org/entity/Q148

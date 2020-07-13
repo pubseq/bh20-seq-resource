@@ -1,5 +1,6 @@
 $base: http://biohackathon.org/bh20-seq-schema
 $namespaces:
+  cc:  http://creativecommons.org/ns#
   sch: https://schema.org/
   efo: http://www.ebi.ac.uk/efo/
   obo: http://purl.obolibrary.org/obo/
@@ -8,6 +9,30 @@ $namespaces:
   evs: http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#
 
 $graph:
+
+- name: licenseSchema
+  type: record
+  fields:
+    license_type:
+      doc: License types as defined in https://wiki.creativecommons.org/images/d/d6/Ccrel-1.0.pdf
+      type: string?
+      jsonldPredicate:
+          _id: https://creativecommons.org/ns#License
+    title:
+      doc: Attribution title related to data license
+      type: string?
+      jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_001167
+    attribution_url:
+      doc: Attribution URL related to data license
+      type: string?
+      jsonldPredicate:
+          _id: https://creativecommons.org/ns#Work
+    attribution_source:
+      doc: Attribution source URL related to data license
+      type: string?
+      jsonldPredicate:
+          _id: https://creativecommons.org/ns#Work
 
 - name: hostSchema
   type: record

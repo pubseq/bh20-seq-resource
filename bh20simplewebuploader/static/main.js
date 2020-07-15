@@ -195,7 +195,7 @@ function addField(e) {
   // Increment the number and use the keypath and number to set IDs and cross
   // references.
   // TODO: Heavily dependent on the form field HTML. Maybe we want custom
-  // elements for the labeled controlsd that know how to be list items?
+  // elements for the labeled controls that know how to be list items?
   fieldNumber++
   newField.dataset.number = fieldNumber
   let newID = keypath + '[' + fieldNumber + ']'

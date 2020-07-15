@@ -227,8 +227,13 @@ def generate_form(schema, options):
 
 
 # At startup, we need to load the metadata schema from the uploader module, so we can make a form for it
-METADATA_SCHEMA = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-schema.yml"))
-METADATA_OPTION_DEFINITIONS = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-options.yml"))
+if os.path.isfile("bh20sequploader/bh20seq-schema.yml"):
+    METADATA_SCHEMA = yaml.safe_load(open("bh20sequploader/bh20seq-schema.yml","r").read())
+    METADATA_OPTION_DEFINITIONS = yaml.safe_load(open("bh20sequploader/bh20seq-options.yml","r").read())
+else:
+    METADATA_SCHEMA = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-schema.yml"))
+    METADATA_OPTION_DEFINITIONS = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-options.yml"))
+print(METADATA_SCHEMA,file=sys.stderr)
 FORM_ITEMS = generate_form(METADATA_SCHEMA, METADATA_OPTION_DEFINITIONS)
 
 @app.route('/')

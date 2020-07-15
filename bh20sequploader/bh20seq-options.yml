@@ -3,6 +3,10 @@
 # being unique or at least using the same options in different containing
 # types.
 
+license_type:
+  CC0 Public Domain Dedication: http://creativecommons.org/publicdomain/zero/1.0/
+  CC-BY-4.0 Attribution 4.0 International: http://creativecommons.org/licenses/by/4.0/
+
 host_age_unit:
   Years: http://purl.obolibrary.org/obo/UO_0000036
   Months: http://purl.obolibrary.org/obo/UO_0000035

@@ -14,19 +14,20 @@
  - [[#how-is-the-website-generated][How is the website generated?]]
  - [[#modifying-the-schema][Modifying the schema]]
  - [[#adding-fields-to-the-form][Adding fields to the form]]
+ - [[#testing-the-license-fields][Testing the license fields]]
 
 * Modify Metadata
 
 The public sequence resource uses multiple data formats listed on the
-[[./download][DOWNLOAD]] page. One of the most exciting features is the full support
+[[http://covid19.genenetwork.org/download][download]] page. One of the most exciting features is the full support
 for RDF and semantic web/linked data ontologies. This technology
 allows for querying data in unprescribed ways - that is, you can
 formulate your own queries without dealing with a preset model of that
 data (so typical of CSV files and SQL tables). Examples of exploring
-data are listed [[./blog?id=using-covid-19-pubseq-part1][here]].
+data are listed [[http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part1][here]].
 
 In this BLOG we are going to look at the metadata entered on the
-[[./][COVID-19 PubSeq]] website (or command line client). It is important to
+COVID-19 PubSeq website (or command line client). It is important to
 understand that anyone, including you, can change that information!
 
 * What is the schema?
@@ -42,8 +43,8 @@ All from that one metadata schema.
 * Modifying the schema
 
 One of the first things we want to do is to add a field for the data
-license. Initially we only support CC-4.0 as a license by default, but
-now we want to give uploaders the option to make it an even more
+license. Initially we only supported CC-4.0 as a license, but
+we wanted to give uploaders the option to use an even more
 liberal CC0 license. The first step is to find a good ontology term
 for the field. Searching for `creative commons cc0 rdf' rendered this
 useful [[https://creativecommons.org/ns][page]].  We also find an [[https://wiki.creativecommons.org/wiki/CC_License_Rdf_Overview][overview]] where CC0 is represented as URI
@@ -127,4 +128,20 @@ loaded in [[https://github.com/arvados/bh20-seq-resource/blob/a0c8ebd57b875f265e
 
 With this [[https://github.com/arvados/bh20-seq-resource/commit/b9691c7deae30bd6422fb7b0681572b7b6f78ae3][patch]] the website adds the license input fields on the form.
 
-/Note: work in progress/
+Finally, to make RDF output work we need to add expressions to bh20seq-shex.rdf. This
+was done with this [[https://github.com/arvados/bh20-seq-resource/commit/f4ed46dae20abe5147871495ede2d6ac2b0854bc][patch]]. In the end we decided to use the Dublin core title,
+http://purl.org/metadata/dublin_core_elements#Title:
+
+#+BEGIN_SRC js
+:licenseShape{
+    cc:License xsd:string;
+    dc:Title xsd:string ?;
+    cc:attributionName xsd:string ?;
+    cc:attributionURL xsd:string ?;
+    cc:attributionSource xsd:string ?;
+}
+#+END_SRC
+
+Note that cc:AttributionSource is not really defined in the cc standard.
+
+* TODO Testing the license fields

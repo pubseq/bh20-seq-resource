@@ -1,6 +1,7 @@
 $base: http://biohackathon.org/bh20-seq-schema
 $namespaces:
   cc:  http://creativecommons.org/ns#
+  dc:  http://purl.org/metadata/dublin_core_elements#
   sch: https://schema.org/
   efo: http://www.ebi.ac.uk/efo/
   obo: http://purl.obolibrary.org/obo/
@@ -22,7 +23,7 @@ $graph:
       doc: Attribution title related to data license
       type: string?
       jsonldPredicate:
-          _id: http://semanticscience.org/resource/SIO_001167
+          _id: http://purl.org/metadata/dublin_core_elements#Title
     attribution_name:
       doc: Attribution NAME related to data license
       type: string?

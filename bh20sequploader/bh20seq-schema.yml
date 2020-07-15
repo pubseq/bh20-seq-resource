@@ -23,16 +23,21 @@ $graph:
       type: string?
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_001167
+    attribution_name:
+      doc: Attribution NAME related to data license
+      type: string?
+      jsonldPredicate:
+          _id: https://creativecommons.org/ns#attributionName
     attribution_url:
       doc: Attribution URL related to data license
       type: string?
       jsonldPredicate:
-          _id: https://creativecommons.org/ns#Work
+          _id: https://creativecommons.org/ns#attributionURL
     attribution_source:
       doc: Attribution source URL related to data license
       type: string?
       jsonldPredicate:
-          _id: https://creativecommons.org/ns#Work
+          _id: https://creativecommons.org/ns#attributionSource
 
 - name: hostSchema
   type: record

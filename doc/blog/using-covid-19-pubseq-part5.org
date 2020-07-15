@@ -125,4 +125,6 @@ To add the new fields to the form we have to modify it a little. If we
 go to the upload form we need to add the license box. The schema is
 loaded in [[https://github.com/arvados/bh20-seq-resource/blob/a0c8ebd57b875f265e8b0efec4abfaf892eb6c45/bh20simplewebuploader/main.py#L229][main.py]] in the 'generate_form' function.
 
+With this [[https://github.com/arvados/bh20-seq-resource/commit/b9691c7deae30bd6422fb7b0681572b7b6f78ae3][patch]] the website adds the license input fields on the form.
+
 /Note: work in progress/

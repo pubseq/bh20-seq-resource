@@ -1,5 +1,9 @@
 id: placeholder
 
+
+license:
+    license_type: http://creativecommons.org/licenses/by/4.0/
+
 host:
     host_species: http://purl.obolibrary.org/obo/NCBITaxon_9606
 

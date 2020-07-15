@@ -47,6 +47,7 @@ def type_to_heading(type_name):
     Turn a type name like "sampleSchema" from the metadata schema into a human-readable heading.
     """
 
+    print(type_name,file=sys.stderr)
     # Remove camel case
     decamel = re.sub('([A-Z])', r' \1', type_name)
     # Split
@@ -233,7 +234,7 @@ if os.path.isfile("bh20sequploader/bh20seq-schema.yml"):
 else:
     METADATA_SCHEMA = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-schema.yml"))
     METADATA_OPTION_DEFINITIONS = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-options.yml"))
-print(METADATA_SCHEMA,file=sys.stderr)
+# print(METADATA_SCHEMA,file=sys.stderr)
 FORM_ITEMS = generate_form(METADATA_SCHEMA, METADATA_OPTION_DEFINITIONS)
 
 @app.route('/')

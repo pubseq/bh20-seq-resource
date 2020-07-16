@@ -71,7 +71,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
 }
 
 :licenseShape{
-    cc:License xsd:string;
+    cc:License xsd:string ?;
     dc:Title xsd:string ?;
     cc:attributionName xsd:string ?;
     cc:attributionURL xsd:string ?;

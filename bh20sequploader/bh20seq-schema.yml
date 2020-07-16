@@ -16,7 +16,7 @@ $graph:
   fields:
     license_type:
       doc: License types as defined in https://wiki.creativecommons.org/images/d/d6/Ccrel-1.0.pdf
-      type: string
+      type: string?
       jsonldPredicate:
           _id: https://creativecommons.org/ns#License
     title:

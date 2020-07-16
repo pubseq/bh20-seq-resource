@@ -17,7 +17,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
   MainSchema:submitter @:submitterShape ;
   MainSchema:technology @:technologyShape ;
   MainSchema:virus @:virusShape;
-  MainSchema:license @:licenseShape;
+  MainSchema:license @:licenseShape ?;
 }
 
 :hostShape  {
@@ -71,7 +71,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
 }
 
 :licenseShape{
-    cc:License xsd:string ?;
+    cc:License xsd:string ;
     dc:Title xsd:string ?;
     cc:attributionName xsd:string ?;
     cc:attributionURL xsd:string ?;

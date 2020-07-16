@@ -144,6 +144,28 @@ def generate_form(components, options):
             optional = False
             is_list = False
 
+            # It may have documentation
+            docstring = field.get('doc', None)
+
+            # See if it has a more info/what goes here URL
+            predicate = field.get('jsonldPredicate', {})
+            # Predicate may be a URL, a dict with a URL in _id, maybe a
+            # dict with a URL in _type, or a dict with _id and _type but no
+            # URLs anywhere. Some of these may not technically be allowed
+            # by the format, but if they occur, we might as well try to
+            # handle them.
+            if isinstance(predicate, str):
+                if is_iri(predicate):
+                    ref_iri = predicate
+            else:
+                # Assume it's a dict. Look at the fields we know about.
+                for field in ['_id', 'type']:
+                    field_value = predicate.get(field, None)
+                    if isinstance(field_value, str) and is_iri(field_value) and ref_iri is None:
+                        # Take the first URL-looking thing we find
+                        ref_iri = field_value
+                        break
+
             if isinstance(field_type, MutableSequence):
                 if field_type[0] == "null" and len(field_type) == 2:
                     optional = True
@@ -152,28 +174,6 @@ def generate_form(components, options):
                     raise Exception("Can't handle it")
 
             if isinstance(field_type, MutableMapping):
-                # It may have documentation
-                docstring = field_type.get('doc', None)
-
-                # See if it has a more info/what goes here URL
-                predicate = field_type.get('jsonldPredicate', {})
-                # Predicate may be a URL, a dict with a URL in _id, maybe a
-                # dict with a URL in _type, or a dict with _id and _type but no
-                # URLs anywhere. Some of these may not technically be allowed
-                # by the format, but if they occur, we might as well try to
-                # handle them.
-                if isinstance(predicate, str):
-                    if is_iri(predicate):
-                        ref_iri = predicate
-                else:
-                    # Assume it's a dict. Look at the fields we know about.
-                    for field in ['_id', 'type']:
-                        field_value = predicate.get(field, None)
-                        if isinstance(field_value, str) and is_iri(field_value) and ref_iri is None:
-                            # Take the first URL-looking thing we find
-                            ref_iri = field_value
-                            break
-
                 if field_type["type"] == "array":
                     # Now replace the field type with the actual type string
                     is_list = True
@@ -525,6 +525,54 @@ def rejected_table(output, items):
 </table>
 """)
 
+def workflows_table(output, items):
+    output.write(
+"""
+<table>
+<tr>
+<th>Name</th>
+<th>Sample id</th>
+<th>Started</th>
+<th>Container request</th>
+</tr>
+""")
+    for r in items:
+        output.write("<tr>")
+        try:
+            sid = r["mounts"]["/var/lib/cwl/cwl.input.json"]["content"]["sample_id"]
+            output.write("<td>%s</td>" % Markup.escape(r["name"]))
+            output.write("<td>%s</td>" % Markup.escape(sid))
+            output.write("<td>%s</td>" % Markup.escape(r["created_at"]))
+            output.write("<td><a href='https://workbench.lugli.arvadosapi.com/container_requests/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+        except:
+            pass
+        output.write("</tr>")
+    output.write(
+"""
+</table>
+""")
+
+def validated_table(output, items):
+    output.write(
+"""
+<table>
+<tr>
+<th>Collection</th>
+<th>Sequence label</th>
+</tr>
+""")
+    for r in items:
+        try:
+            output.write("<tr>")
+            output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+            output.write("<td>%s</td>" % Markup.escape(r["properties"].get("sequence_label")))
+            output.write("</tr>")
+        except:
+            pass
+    output.write(
+"""
+</table>
+""")
 
 @app.route('/status')
 def status_page():
@@ -545,13 +593,19 @@ def status_page():
         prop["uuid"] = p["uuid"]
         status[prop["status"]] = status.get(prop["status"], 0) + 1
 
+    workflows = arvados.util.list_all(api.container_requests().list,
+                                      filters=[["name", "in", ["fastq2fasta.cwl"]], ["state", "=", "Committed"]],
+                                      order="created_at asc")
+
     output = io.StringIO()
 
     validated = api.collections().list(filters=[["owner_uuid", "=", VALIDATED_PROJECT]], limit=1).execute()
     status["passed"] = validated["items_available"]
 
-    for s in (("passed", "/download"), ("pending", "#pending"), ("rejected", "#rejected")):
+    for s in (("passed", "/validated"), ("pending", "#pending"), ("rejected", "#rejected")):
         output.write("<p><a href='%s'>%s sequences QC %s</a></p>" % (s[1], status.get(s[0], 0), s[0]))
+
+    output.write("<p><a href='%s'>%s analysis workflows running</a></p>" % ('#workflows', len(workflows)))
 
     output.write("<a id='pending'><h1>Pending</h1></a>")
     pending_table(output, out)
@@ -559,7 +613,18 @@ def status_page():
     output.write("<a id='rejected'><h1>Rejected</h1></a>")
     rejected_table(output, out)
 
+    output.write("<a id='workflows'><h1>Running Workflows</h1></a>")
+    workflows_table(output, workflows)
+
     return render_template('status.html', table=Markup(output.getvalue()), menu='STATUS')
+
+@app.route('/validated')
+def validated_page():
+    api = arvados.api(host=ARVADOS_API, token=ANONYMOUS_TOKEN, insecure=True)
+    output = io.StringIO()
+    validated = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", VALIDATED_PROJECT]])
+    validated_table(output, validated)
+    return render_template('validated.html', table=Markup(output.getvalue()), menu='STATUS')
 
 @app.route('/demo')
 def demo_page():
@@ -583,7 +648,6 @@ def about_page():
 @app.route('/map')
 def map_page():
     return render_template('map.html',menu='DEMO')
-
 
 
 ## Dynamic API functions starting here

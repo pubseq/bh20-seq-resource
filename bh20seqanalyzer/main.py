@@ -240,24 +240,26 @@ class SeqAnalyzer:
     def move_fastq_to_fasta_results(self):
         projects = self.api.groups().list(filters=[['owner_uuid', '=', self.fastq_project],
                                               ["properties.moved_output", "!=", True]],
-                                     order="created_at desc",).execute()
+                                     order="created_at asc",).execute()
         for p in projects["items"]:
             wf = self.get_workflow_output_from_project(p["uuid"])
             if not wf:
                 continue
 
             logging.info("Moving completed fastq2fasta result %s back to uploader project", wf["output_uuid"])
-            self.api.collections().update(uuid=wf["output_uuid"],
-                                     body={"owner_uuid": self.uploader_project}).execute()
 
             col = arvados.collection.Collection(wf["output_uuid"], api_client=self.api, keep_client=self.keepclient)
             with col.open("metadata.yaml") as md:
                 metadata_content = ruamel.yaml.round_trip_load(md)
 
+            colprop = col.get_properties()
+            colprop["sequence_label"] = metadata_content["sample"]["sample_id"]
+            self.api.collections().update(uuid=wf["output_uuid"],
+                                     body={"owner_uuid": self.uploader_project,
+                                           "properties": colprop}).execute()
+
             p["properties"]["moved_output"] = True
-            p["properties"]["sequence_label"] = metadata_content["sample"]["sample_id"]
             self.api.groups().update(uuid=p["uuid"], body={"properties": p["properties"]}).execute()
-            break
 
 
     def upload_schema(self):

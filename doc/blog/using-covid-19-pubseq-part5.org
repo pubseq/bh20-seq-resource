@@ -144,4 +144,8 @@ http://purl.org/metadata/dublin_core_elements#Title:
 
 Note that cc:AttributionSource is not really defined in the cc standard.
 
+When pushing the license info we discovered the workflow broke because
+the existing data had no licensing info. So we changed the license
+field to be optional - a missing license assumes it is CC-BY-4.0.
+
 * TODO Testing the license fields

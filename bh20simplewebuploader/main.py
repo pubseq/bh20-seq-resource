@@ -456,7 +456,7 @@ def receive_files():
 
 
 def edit_button(url,text="Edit text!"):
-    return '<p class="editbutton"><a href="'+url+'">'+text+'!<img src="static/image/edit.png"></a></p>'
+    return '<p class="editbutton"><a href="'+url+'">'+text+'<img src="static/image/edit.png"></a></p>'
 
 def get_html_body(fn,source="https://github.com/arvados/bh20-seq-resource/tree/master/doc"):
     buf = edit_button(source)

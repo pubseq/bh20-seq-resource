@@ -8,7 +8,7 @@ import os
 import sys
 import re
 import string
-import yaml
+import ruamel.yaml as yaml
 import pkg_resources
 from flask import Flask, request, redirect, send_file, send_from_directory, render_template, jsonify
 import os.path
@@ -16,6 +16,9 @@ import requests
 import io
 import arvados
 from markupsafe import Markup
+from schema_salad.sourceline import add_lc_filename
+from schema_salad.schema import shortname
+from typing import MutableSequence, MutableMapping
 
 ARVADOS_API = 'lugli.arvadosapi.com'
 ANONYMOUS_TOKEN = '5o42qdxpxp5cj15jqjf7vnxx5xduhm4ret703suuoa3ivfglfh'
@@ -46,6 +49,8 @@ def type_to_heading(type_name):
     """
     Turn a type name like "sampleSchema" from the metadata schema into a human-readable heading.
     """
+
+    type_name = shortname(type_name)
 
     print(type_name,file=sys.stderr)
     # Remove camel case
@@ -78,7 +83,7 @@ def is_iri(string):
 
     return string.startswith('http')
 
-def generate_form(schema, options):
+def generate_form(components, options):
     """
     Linearize the schema into a list of dicts.
 
@@ -100,9 +105,6 @@ def generate_form(schema, options):
     the schema, and each is a dict of human readable option -> corresponding
     IRI.
     """
-
-    # Get the list of form components, one of which is the root
-    components = schema.get('$graph', [])
 
     # Find the root
     root_name = None
@@ -131,14 +133,25 @@ def generate_form(schema, options):
             # First make a heading, if we aren't the very root of the form
             yield {'heading': type_to_heading(type_name)}
 
-        for field_name, field_type in by_name.get(type_name, {}).get('fields', {}).items():
+        for field in by_name.get(type_name, {}).get('fields', []):
+            field_name = shortname(field["name"])
+            field_type = field["type"]
             # For each field
 
             ref_iri = None
             docstring = None
-            if not isinstance(field_type, str):
-                # If the type isn't a string
 
+            optional = False
+            is_list = False
+
+            if isinstance(field_type, MutableSequence):
+                if field_type[0] == "null" and len(field_type) == 2:
+                    optional = True
+                    field_type = field_type[1]
+                else:
+                    raise Exception("Can't handle it")
+
+            if isinstance(field_type, MutableMapping):
                 # It may have documentation
                 docstring = field_type.get('doc', None)
 
@@ -161,25 +174,13 @@ def generate_form(schema, options):
                             ref_iri = field_value
                             break
 
-
-                # Now overwrite the field type with the actual type string
-                field_type = field_type.get('type', '')
-
-            # Decide if the field is optional (type ends in ?)
-            optional = False
-            if field_type.endswith('?'):
-                # It's optional
-                optional = True
-                # Drop the ?
-                field_type = field_type[:-1]
-
-            # Decide if the field is a list (type ends in [])
-            is_list = False
-            if field_type.endswith('[]'):
-                # It's a list
-                is_list = True
-                # Reduce to the normal type
-                field_type = field_type[:-2]
+                if field_type["type"] == "array":
+                    # Now replace the field type with the actual type string
+                    is_list = True
+                    field_type = field_type.get('items', '')
+                else:
+                    field_type = field_type.get('type', '')
+                    pass
 
             if field_type in by_name:
                 # This is a subrecord. We need to recurse
@@ -227,15 +228,24 @@ def generate_form(schema, options):
     return list(walk_fields(root_name))
 
 
-# At startup, we need to load the metadata schema from the uploader module, so we can make a form for it
-if os.path.isfile("bh20sequploader/bh20seq-schema.yml"):
-    METADATA_SCHEMA = yaml.safe_load(open("bh20sequploader/bh20seq-schema.yml","r").read())
-    METADATA_OPTION_DEFINITIONS = yaml.safe_load(open("bh20sequploader/bh20seq-options.yml","r").read())
-else:
-    METADATA_SCHEMA = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-schema.yml"))
-    METADATA_OPTION_DEFINITIONS = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-options.yml"))
-# print(METADATA_SCHEMA,file=sys.stderr)
-FORM_ITEMS = generate_form(METADATA_SCHEMA, METADATA_OPTION_DEFINITIONS)
+import schema_salad.schema
+def load_schema_generate_form():
+    # At startup, we need to load the metadata schema from the uploader module, so we can make a form for it
+    if os.path.isfile("bh20sequploader/bh20seq-schema.yml"):
+        METADATA_SCHEMA = yaml.round_trip_load(open("bh20sequploader/bh20seq-schema.yml","r").read())
+        METADATA_OPTION_DEFINITIONS = yaml.safe_load(open("bh20sequploader/bh20seq-options.yml","r").read())
+    else:
+        METADATA_SCHEMA = yaml.round_trip_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-schema.yml"))
+        METADATA_OPTION_DEFINITIONS = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-options.yml"))
+
+    METADATA_SCHEMA["name"] = "bh20seq-schema.yml"
+    add_lc_filename(METADATA_SCHEMA, "bh20seq-schema.yml")
+    metaschema_names, _metaschema_doc, metaschema_loader = schema_salad.schema.get_metaschema()
+    schema_doc, schema_metadata = metaschema_loader.resolve_ref(METADATA_SCHEMA, "")
+
+    return generate_form(schema_doc, METADATA_OPTION_DEFINITIONS)
+
+FORM_ITEMS = load_schema_generate_form()
 
 @app.route('/')
 def send_home():
@@ -543,10 +553,10 @@ def status_page():
     for s in (("passed", "/download"), ("pending", "#pending"), ("rejected", "#rejected")):
         output.write("<p><a href='%s'>%s sequences QC %s</a></p>" % (s[1], status.get(s[0], 0), s[0]))
 
-    output.write("<a id='pending'><h1>Pending</h1>")
+    output.write("<a id='pending'><h1>Pending</h1></a>")
     pending_table(output, out)
 
-    output.write("<a id='rejected'><h1>Rejected</h1>")
+    output.write("<a id='rejected'><h1>Rejected</h1></a>")
     rejected_table(output, out)
 
     return render_template('status.html', table=Markup(output.getvalue()), menu='STATUS')

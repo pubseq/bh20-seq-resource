@@ -466,7 +466,7 @@ def get_html_body(fn,source="https://github.com/arvados/bh20-seq-resource/tree/m
 
 @app.route('/download')
 def download_page():
-    buf = get_html_body('doc/web/download.html')
+    buf = get_html_body('doc/web/download.html','https://github.com/arvados/bh20-seq-resource/blob/master/doc/web/download.org')
     return render_template('resource.html',menu='DOWNLOAD',embed=buf)
 
 def pending_table(output, items):

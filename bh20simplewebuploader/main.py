@@ -479,10 +479,13 @@ def pending_table(output, items):
     for r in items:
         if r["status"] != "pending":
             continue
-        output.write("<tr>")
-        output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
-        output.write("<td>%s</td>" % Markup.escape(r["sequence_label"]))
-        output.write("</tr>")
+        try:
+            output.write("<tr>")
+            output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+            output.write("<td>%s</td>" % Markup.escape(r.get("sequence_label")))
+            output.write("</tr>")
+        except:
+            pass
     output.write(
 """
 </table>
@@ -497,13 +500,16 @@ def rejected_table(output, items):
 <th>Errors</th></tr>
 """)
     for r in items:
-        if r["status"] != "rejected":
-            continue
-        output.write("<tr>")
-        output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
-        output.write("<td>%s</td>" % Markup.escape(r["sequence_label"]))
-        output.write("<td><pre>%s</pre></td>" % Markup.escape("\n".join(r.get("errors", []))))
-        output.write("</tr>")
+        try:
+            if r["status"] != "rejected":
+                continue
+            output.write("<tr>")
+            output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+            output.write("<td>%s</td>" % Markup.escape(r.get("sequence_label")))
+            output.write("<td><pre>%s</pre></td>" % Markup.escape("\n".join(r.get("errors", []))))
+            output.write("</tr>")
+        except:
+            pass
     output.write(
 """
 </table>

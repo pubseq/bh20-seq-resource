@@ -364,17 +364,20 @@ def main():
     logging.info("Starting up, monitoring %s for uploads" % (args.uploader_project))
 
     while True:
-        seqanalyzer.move_fastq_to_fasta_results()
+        try:
+            seqanalyzer.move_fastq_to_fasta_results()
 
-        new_collections = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", args.uploader_project]])
-        at_least_one_new_valid_seq = False
-        for c in new_collections:
-            at_least_one_new_valid_seq = seqanalyzer.validate_upload(c, args.revalidate) or at_least_one_new_valid_seq
+            new_collections = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", args.uploader_project]])
+            at_least_one_new_valid_seq = False
+            for c in new_collections:
+                at_least_one_new_valid_seq = seqanalyzer.validate_upload(c, args.revalidate) or at_least_one_new_valid_seq
 
-        if at_least_one_new_valid_seq and not args.no_start_analysis:
-            seqanalyzer.start_pangenome_analysis()
+            if at_least_one_new_valid_seq and not args.no_start_analysis:
+                seqanalyzer.start_pangenome_analysis()
 
-        seqanalyzer.copy_most_recent_result()
+            seqanalyzer.copy_most_recent_result()
+        except Exception as e:
+            logging.exeception("Error in main loop")
 
         if args.once:
             break

@@ -140,7 +140,8 @@ See the [[http://covid19.genenetwork.org/blog]]!
 
 * How do I change the work flows?
 
-See the [[http://covid19.genenetwork.org/blog]]!
+Workflows are on [[https://github.com/arvados/bh20-seq-resource/tree/master/workflows][github]] and can be modified. See also the
+[[[[http://covid19.genenetwork.org/blog]]][workflow blog]].
 
 * How do I change the source code?
 

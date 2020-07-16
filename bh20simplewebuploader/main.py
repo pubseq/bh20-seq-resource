@@ -445,12 +445,12 @@ def receive_files():
 
         if result.returncode != 0:
             # It didn't work. Complain.
-            error_message="Uploader returned value {} and said:".format(result.returncode) + str(result.stderr.decode('utf-8'))
+            error_message="Uploader returned value {} and said:\n".format(result.returncode) + str(result.stderr.decode('utf-8'))
             print(error_message, file=sys.stderr)
             return (render_template('error.html', error_message=error_message), 403)
         else:
             # It worked. Say so.
-            return render_template('success.html', log=result.stdout.decode('utf-8', errors='replace'))
+            return render_template('success.html', log=result.stderr.decode('utf-8', errors='replace'))
     finally:
         shutil.rmtree(dest_dir)
 

@@ -444,8 +444,12 @@ def receive_files():
     finally:
         shutil.rmtree(dest_dir)
 
-def get_html_body(fn):
-    buf = ""
+
+def edit_button(url,text="Edit text!"):
+    return '<p class="editbutton"><a href="'+url+'">'+text+'!<img src="static/image/edit.png"></a></p>'
+
+def get_html_body(fn,source="https://github.com/arvados/bh20-seq-resource/tree/master/doc"):
+    buf = edit_button(source)
     in_body = False
     begin_body = re.compile(r"<body>",re.IGNORECASE)
     end_body = re.compile(r"(</body>|.*=\"postamble\")",re.IGNORECASE)
@@ -457,6 +461,7 @@ def get_html_body(fn):
                 buf += line
             elif begin_body.match(line):
                 in_body = True
+    buf += edit_button(source)
     return buf
 
 @app.route('/download')
@@ -549,13 +554,13 @@ def blog_page():
     blog_content = request.args.get('id') # e.g. using-covid-19-pubseq-part3
     buf = None;
     if blog_content:
-        buf = get_html_body('doc/blog/'+blog_content+'.html')
+        buf = get_html_body('doc/blog/'+blog_content+'.html',"https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/"+blog_content+".org")
     return render_template('blog.html',menu='BLOG',embed=buf,blog=blog_content)
 
 
 @app.route('/about')
 def about_page():
-    buf = get_html_body('doc/web/about.html')
+    buf = get_html_body('doc/web/about.html','https://github.com/arvados/bh20-seq-resource/blob/master/doc/web/about.org')
     return render_template('about.html',menu='ABOUT',embed=buf)
 
 ##

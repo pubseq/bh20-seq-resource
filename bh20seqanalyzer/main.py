@@ -211,9 +211,10 @@ class SeqAnalyzer:
         self.run_workflow(self.pangenome_analysis_project, self.pangenome_workflow_uuid, "Pangenome analysis", inputobj)
 
 
-    def get_workflow_output_from_project(self, uuid):
+    def get_workflow_output_from_project(self, uuid, named):
         cr = self.api.container_requests().list(filters=[['owner_uuid', '=', uuid],
-                                                    ["requesting_container_uuid", "=", None]]).execute()
+                                                         ["requesting_container_uuid", "=", None],
+                                                         ["name", "=", named]]).execute()
         if cr["items"] and cr["items"][0]["output_uuid"]:
             container = self.api.containers().get(uuid=cr["items"][0]["container_uuid"]).execute()
             if container["state"] == "Complete" and container["exit_code"] == 0:
@@ -225,24 +226,26 @@ class SeqAnalyzer:
         most_recent_analysis = self.api.groups().list(filters=[['owner_uuid', '=', self.pangenome_analysis_project]],
                                                       order="created_at desc").execute()
         for m in most_recent_analysis["items"]:
-            wf = self.get_workflow_output_from_project(m["uuid"])
-            if wf:
-                src = self.api.collections().get(uuid=wf["output_uuid"]).execute()
-                dst = self.api.collections().get(uuid=self.latest_result_uuid).execute()
-                if src["portable_data_hash"] != dst["portable_data_hash"]:
-                    logging.info("Copying latest result from '%s' to %s", m["name"], self.latest_result_uuid)
-                    self.api.collections().update(uuid=self.latest_result_uuid,
-                                             body={"manifest_text": src["manifest_text"],
-                                                   "description": "Result from %s %s" % (m["name"], wf["uuid"])}).execute()
-                break
+            wf = self.get_workflow_output_from_project(m["uuid"], "pangenome-generate.cwl")
+            if wf is None:
+                continue
+            src = self.api.collections().get(uuid=wf["output_uuid"]).execute()
+            dst = self.api.collections().get(uuid=self.latest_result_uuid).execute()
+            if src["portable_data_hash"] != dst["portable_data_hash"]:
+                logging.info("Copying latest result from '%s' to %s", m["name"], self.latest_result_uuid)
+                self.api.collections().update(uuid=self.latest_result_uuid,
+                                         body={"manifest_text": src["manifest_text"],
+                                               "description": "Result from %s %s" % (m["name"], wf["uuid"])}).execute()
+            break
 
 
     def move_fastq_to_fasta_results(self):
-        projects = self.api.groups().list(filters=[['owner_uuid', '=', self.fastq_project],
-                                              ["properties.moved_output", "!=", True]],
-                                     order="created_at asc",).execute()
-        for p in projects["items"]:
-            wf = self.get_workflow_output_from_project(p["uuid"])
+        projects = arvados.util.list_all(self.api.groups().list,
+                                         filters=[['owner_uuid', '=', self.fastq_project],
+                                                ["properties.moved_output", "!=", True]],
+                                         order="created_at asc")
+        for p in projects:
+            wf = self.get_workflow_output_from_project(p["uuid"], "fastq2fasta.cwl")
             if not wf:
                 continue
 

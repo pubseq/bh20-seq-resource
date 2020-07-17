@@ -1,0 +1,9 @@
+<PROJECT_SET>
+   <PROJECT alias="PubSeq01">
+      <TITLE>Testing PubSeq Sample uploads</TITLE>
+      <DESCRIPTION>This study aimed to allow for uploading sequences from PubSeq</DESCRIPTION>
+      <SUBMISSION_PROJECT>
+         <SEQUENCING_PROJECT/>
+      </SUBMISSION_PROJECT>
+   </PROJECT>
+</PROJECT_SET>

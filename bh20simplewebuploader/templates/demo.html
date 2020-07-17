@@ -5,8 +5,34 @@
     {% include 'banner.html' %}
     {% include 'menu.html' %}
     {% include 'search.html' %}
-      <p>The Virtuoso database contains <span id="CounterDB"></span> public sequences!</p>
-    {% include 'demo-run.html' %}
+    <p>The Virtuoso database contains <span id="CounterDB"></span> public sequences!</p>
+
+    <section class="search-section">
+      <div class="filter-options" action="#">
+        <p>[Demo] Display content sequences by: </p>
+        <div>
+          <button class="button" onclick="fetchSEQCountBySpecimen()">Count by Specimen source</button>
+          <button class="button" onclick="fetchSEQCountByLocation()">Count by Location</button>
+          <button class="button" onclick="fetchSEQCountByTech()">Count by Sequencer</button>
+          <!-- <button class="button" onclick="fetchAllaccessions()">Show All accessions</button> -->
+          <button class="button" onclick="fetchSEQCountbyContinent()">Count by Continent</button>
+          <button class="button" onclick="fetchMap()">Map</button>
+        </div>
+
+      </div>
+
+    </section>
+    <div id="loader" class="loader invisible">
+    </div>
+
+    <section id="map_view" class="invisible">
+      <div id="map"></div>
+    </section>
+
+    <section>
+      <div id="table"></div>
+    </section>
+
     {% include 'footer.html' %}
 
     <script type="text/javascript">

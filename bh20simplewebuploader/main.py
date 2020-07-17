@@ -628,7 +628,7 @@ def validated_page():
 
 @app.route('/demo')
 def demo_page():
-    return render_template('demo.html',menu='DEMO')
+    return render_template('demo.html',menu='DEMO',load_map=True)
 
 @app.route('/blog',methods=['GET'])
 def blog_page():
@@ -643,11 +643,6 @@ def blog_page():
 def about_page():
     buf = get_html_body('doc/web/about.html','https://github.com/arvados/bh20-seq-resource/blob/master/doc/web/about.org')
     return render_template('about.html',menu='ABOUT',embed=buf)
-
-##
-@app.route('/map')
-def map_page():
-    return render_template('map.html',menu='DEMO')
 
 
 ## Dynamic API functions starting here

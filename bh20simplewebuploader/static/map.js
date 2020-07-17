@@ -42,7 +42,7 @@ function updateMapMarkers(data) {
             [lon, lat] = coordinates.map(parseFloat);
             let point = L.point()
             marker = (L.marker([lat, lon]));
-            marker.bindPopup("<b>" + label + "</b><br/>" + "FastaCount: " +fastaCount);
+            marker.bindPopup("<b>" + label + "</b><br/>" + "SARS-CoV-2<br/>sequences: " +fastaCount);
             markers.addLayer(marker);
         }
     }

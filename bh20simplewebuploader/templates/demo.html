@@ -5,9 +5,20 @@
   <body>
     {% include 'banner.html' %}
     {% include 'menu.html' %}
-    {% include 'search.html' %}
 
     <p>The Virtuoso database contains <span id="CounterDB"></span> public sequences!</p>
+
+    <!--
+    <div class="search">
+      <input id="search-input" type="search" placeholder="FASTA uri" required>
+      <button class="button search-button" type="submit" onclick="search()">
+        <span class="icon ion-search">
+          <span class="sr-only">Search</span>
+        </span>
+      </button>
+      <span class="dropt" title="http://collections.lugli.arvadosapi.com/c=00fede2c6f52b053a14edca01cfa02b7+126/sequence.fasta">(example)<span style="width:500px;"></span></span>
+    </div>
+    -->
 
     <section class="search-section">
       <div class="filter-options" action="#">

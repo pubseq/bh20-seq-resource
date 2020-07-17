@@ -10,7 +10,6 @@ L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     subdomains: ['a','b','c']
 }).addTo(map);
 
-// var markers = L.markerClusterGroup().addTo(mapid)
 
 function drawMap(){
     var mymap = map;
@@ -45,6 +44,7 @@ function drawMap(){
  *
 */
 function updateMapMarkers(data) {
+    let markers = L.markerClusterGroup();
     for (let i = 0; i < data.length; i++) {
         let {"count": fastaCount, GPS, LocationLabel: label } = data[i];
         let coordinates = GPS.split(" ");
@@ -52,8 +52,10 @@ function updateMapMarkers(data) {
             let lat, lon;
             [lon, lat] = coordinates.map(parseFloat);
             let point = L.point()
-            L.marker([lat, lon]).addTo(map)
-                .bindPopup("<b>" + label + "</b><br/>" + "FastaCount: " +fastaCount);
+            marker = (L.marker([lat, lon]));
+            //  .bindPopup("<b>" + label + "</b><br/>" + "FastaCount: " +fastaCount));
+            markers.addLayer(marker);
         }
     }
+    map.addLayer(markers);
 }

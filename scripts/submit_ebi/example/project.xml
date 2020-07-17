@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <PROJECT_SET>
    <PROJECT alias="PubSeq01">
       <TITLE>Testing PubSeq Sample uploads</TITLE>
-      <DESCRIPTION>This study aimed to allow for uploading sequences from PubSeq</DESCRIPTION>
+      <DESCRIPTION>This is a test to allow for uploading sequences from PubSeq</DESCRIPTION>
       <SUBMISSION_PROJECT>
          <SEQUENCING_PROJECT/>
       </SUBMISSION_PROJECT>

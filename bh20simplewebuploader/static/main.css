@@ -385,6 +385,11 @@ div.status {
     border-bottom: 1px solid #ddd;
 }
 
+.map {
+    padding: 20px 32px;
+    // display: inline-block;
+}
+
 .editbutton {
     float: right;
     text-align: right;

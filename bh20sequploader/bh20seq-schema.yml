@@ -1,6 +1,7 @@
 $base: http://biohackathon.org/bh20-seq-schema
 $namespaces:
   cc:  http://creativecommons.org/ns#
+  dc:  http://purl.org/metadata/dublin_core_elements#
   sch: https://schema.org/
   efo: http://www.ebi.ac.uk/efo/
   obo: http://purl.obolibrary.org/obo/
@@ -15,24 +16,29 @@ $graph:
   fields:
     license_type:
       doc: License types as defined in https://wiki.creativecommons.org/images/d/d6/Ccrel-1.0.pdf
-      type: string?
+      type: string
       jsonldPredicate:
           _id: https://creativecommons.org/ns#License
     title:
       doc: Attribution title related to data license
       type: string?
       jsonldPredicate:
-          _id: http://semanticscience.org/resource/SIO_001167
+          _id: http://purl.org/metadata/dublin_core_elements#Title
+    attribution_name:
+      doc: Attribution NAME related to data license
+      type: string?
+      jsonldPredicate:
+          _id: https://creativecommons.org/ns#attributionName
     attribution_url:
       doc: Attribution URL related to data license
       type: string?
       jsonldPredicate:
-          _id: https://creativecommons.org/ns#Work
+          _id: https://creativecommons.org/ns#attributionURL
     attribution_source:
       doc: Attribution source URL related to data license
       type: string?
       jsonldPredicate:
-          _id: https://creativecommons.org/ns#Work
+          _id: https://creativecommons.org/ns#attributionSource
 
 - name: hostSchema
   type: record
@@ -258,6 +264,7 @@ $graph:
     virus: virusSchema
     technology: technologySchema
     submitter: submitterSchema
+    license: ["null", licenseSchema]
     id:
       doc: The subject (eg the fasta/fastq file) that the metadata describes
       type: string

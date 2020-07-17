@@ -47,7 +47,7 @@ h2 > svg {
     float: right;
 }
 
-#map {
+#mapid {
     width: 800px;
     height: 440px;
     border: 1px solid #AAA;
@@ -178,7 +178,7 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
 
 .about {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
     grid-auto-flow: row;
 }
 
@@ -229,7 +229,7 @@ a {
 #metadata_fill_form {
     column-count: 4;
     margin-top: 0.5em;
-    column-width: 250px;
+    column-width: 15em;
 }
 
 .record, .record .field-group, .record .field-group .field {
@@ -238,6 +238,8 @@ a {
     -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
     page-break-inside: avoid; /* Firefox */
     break-inside: avoid;
+    display: block;
+    width: 90%;
 }
 
 .record {
@@ -256,6 +258,10 @@ a {
     display: flex;
     justify-content: space-between;
     width: max-content;
+}
+
+.control {
+    width: 100%;
 }
 
 .filter-options {
@@ -304,9 +310,10 @@ footer {
 }
 
 .sponsors img {
-    width: 80%;
-    display:block;
-    margin:auto;
+    width: auto;
+    display: block;
+    margin: auto;
+    height: 4em;
 }
 
 .loader {
@@ -376,4 +383,23 @@ div.status {
     padding-right: 1em;
     vertical-align: top;
     border-bottom: 1px solid #ddd;
+}
+
+.map {
+    padding: 20px 32px;
+    // display: inline-block;
+}
+
+.editbutton {
+    float: right;
+    text-align: right;
+    background-color: lightgrey;
+    border: 2px solid #4CAF50;
+    border-radius: 12px;
+    color: black;
+    padding: 5px 32px;
+    // text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }

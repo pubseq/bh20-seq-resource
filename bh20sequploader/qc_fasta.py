@@ -84,10 +84,8 @@ def qc_fasta(arg_sequence, check_with_clustalw=True):
                 except Exception as e:
                     logging.warn("QC against reference sequence using 'minimap2': %s", e, exc_info=e)
 
-                if similarity and similarity < 70.0:
+                if similarity < 70.0:
                     raise ValueError("QC fail: alignment to reference was less than 70%% (was %2.2f%%)" % (similarity))
-                if similarity == 0:
-                    raise ValueError("QC fail")
 
         return ("sequence.fasta"+gz, seqlabel)
     elif seq_type == "text/fastq":

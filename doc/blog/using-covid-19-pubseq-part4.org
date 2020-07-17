@@ -10,6 +10,7 @@
 
 * Table of Contents                                                     :TOC:noexport:
  - [[#what-does-this-mean][What does this mean?]]
+ - [[#where-can-i-find-the-workflows][Where can I find the workflows?]]
  - [[#modify-workflow][Modify Workflow]]
 
 * What does this mean?
@@ -18,6 +19,11 @@ This means that when someone uploads a SARS-CoV-2 sequence using one
 of our tools (CLI or web-based) they add a sequence and some metadata
 which triggers a rerun of our workflows.
 
+* Where can I find the workflows?
+
+Workflows are written in the common workflow language (CWL) and listed
+on [[https://github.com/arvados/bh20-seq-resource/tree/master/workflows][github]]. PubSeq being an open project these workflows can be studied
+and modified!
 
 * Modify Workflow
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-12 Sun 06:24 -->
+<!-- 2020-07-17 Fri 05:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq (part 4)</title>
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -235,38 +248,40 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org871ad58">1. Modify Metadata</a></li>
-<li><a href="#org07e8755">2. What is the schema?</a></li>
-<li><a href="#org4857280">3. How is the website generated?</a></li>
-<li><a href="#orge709ae2">4. Modifying the schema</a></li>
+<li><a href="#org758b923">1. Modify Metadata</a></li>
+<li><a href="#orgec32c13">2. What is the schema?</a></li>
+<li><a href="#org2e487b2">3. How is the website generated?</a></li>
+<li><a href="#orge4dfe84">4. Modifying the schema</a></li>
+<li><a href="#org564a7a8">5. Adding fields to the form</a></li>
+<li><a href="#org633781a">6. <span class="todo TODO">TODO</span> Testing the license fields</a></li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-org871ad58" class="outline-2">
-<h2 id="org871ad58"><span class="section-number-2">1</span> Modify Metadata</h2>
+<div id="outline-container-org758b923" class="outline-2">
+<h2 id="org758b923"><span class="section-number-2">1</span> Modify Metadata</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The public sequence resource uses multiple data formats listed on the
-<a href="./download">DOWNLOAD</a> page. One of the most exciting features is the full support
+<a href="http://covid19.genenetwork.org/download">download</a> page. One of the most exciting features is the full support
 for RDF and semantic web/linked data ontologies. This technology
 allows for querying data in unprescribed ways - that is, you can
 formulate your own queries without dealing with a preset model of that
 data (so typical of CSV files and SQL tables). Examples of exploring
-data are listed <a href="./blog?id=using-covid-19-pubseq-part1">here</a>.
+data are listed <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part1">here</a>.
 </p>
 
 <p>
 In this BLOG we are going to look at the metadata entered on the
-<a href="./">COVID-19 PubSeq</a> website (or command line client). It is important to
+COVID-19 PubSeq website (or command line client). It is important to
 understand that anyone, including you, can change that information!
 </p>
 </div>
 </div>
 
-<div id="outline-container-org07e8755" class="outline-2">
-<h2 id="org07e8755"><span class="section-number-2">2</span> What is the schema?</h2>
+<div id="outline-container-orgec32c13" class="outline-2">
+<h2 id="orgec32c13"><span class="section-number-2">2</span> What is the schema?</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The default metadata schema is listed <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml">here</a>.
@@ -274,8 +289,8 @@ The default metadata schema is listed <a href="https://github.com/arvados/bh20-s
 </div>
 </div>
 
-<div id="outline-container-org4857280" class="outline-2">
-<h2 id="org4857280"><span class="section-number-2">3</span> How is the website generated?</h2>
+<div id="outline-container-org2e487b2" class="outline-2">
+<h2 id="org2e487b2"><span class="section-number-2">3</span> How is the website generated?</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Using the schema we use <a href="https://pypi.org/project/PyShEx/">pyshex</a> shex expressions and <a href="https://github.com/common-workflow-language/schema_salad">schema salad</a> to
@@ -285,13 +300,13 @@ All from that one metadata schema.
 </div>
 </div>
 
-<div id="outline-container-orge709ae2" class="outline-2">
-<h2 id="orge709ae2"><span class="section-number-2">4</span> Modifying the schema</h2>
+<div id="outline-container-orge4dfe84" class="outline-2">
+<h2 id="orge4dfe84"><span class="section-number-2">4</span> Modifying the schema</h2>
 <div class="outline-text-2" id="text-4">
 <p>
-One of the first things we wanted to do is to add a field for the data
-license. Initially we only support CC-4.0 as a license by default, but
-now we want to give uploaders the option to make it an even more
+One of the first things we want to do is to add a field for the data
+license. Initially we only supported CC-4.0 as a license, but
+we wanted to give uploaders the option to use an even more
 liberal CC0 license. The first step is to find a good ontology term
 for the field. Searching for `creative commons cc0 rdf' rendered this
 useful <a href="https://creativecommons.org/ns">page</a>.  We also find an <a href="https://wiki.creativecommons.org/wiki/CC_License_Rdf_Overview">overview</a> where CC0 is represented as URI
@@ -302,13 +317,148 @@ attributionName and attributionURL.
 </p>
 
 <p>
-<i>Note: work in progress</i>
+A minimal triple should be
+</p>
+
+<pre class="example">
+id  xhtml:license  &lt;http://creativecommons.org/licenses/by/4.0/&gt; .
+</pre>
+
+
+<p>
+Other suggestions are
+</p>
+
+<pre class="example">
+id  dc:title "Description" .
+id  cc:attributionName "Your Name" .
+id  cc:attributionURL &lt;http://resource.org/id&gt;
+</pre>
+
+
+<p>
+and 'dc:source' which indicates the original source of any modified
+work, specified as a URI.
+The prefix 'cc:' is an abbreviation for <a href="http://creativecommons.org/ns">http://creativecommons.org/ns</a>#.
+</p>
+
+<p>
+Going back to the schema, where does it fit? Under host, sample,
+virus, technology or submitter block? It could fit under sample, but
+actually the license concerns the whole metadata block and sequence,
+so I think we can fit under its own license tag. For example
+</p>
+
+
+<p>
+id: placeholder
+</p>
+
+<pre class="example">
+license:
+    license_type: http://creativecommons.org/licenses/by/4.0/
+    attribution_title: "Sample ID"
+    attribution_name: "John doe, Joe Boe, Jonny Oe"
+    attribution_url: http://covid19.genenetwork.org/id
+    attribution_source: https://www.ncbi.nlm.nih.gov/pubmed/323088888
+</pre>
+
+
+<p>
+So, let's update the example. Notice the license info is optional - if it is missing
+we just assume the default CC-4.0.
+</p>
+
+<p>
+One thing that is interesting is that in the name space <a href="https://creativecommons.org/ns">https://creativecommons.org/ns</a> there
+is no mention of a title. I think it is useful, however, because we have no such field.
+So, we'll add it simply as a title field. Now the draft schema is
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">- name: licenseSchema
+  type: record
+  fields:
+    license_type:
+      doc: License types as refined in https://wiki.creativecommons.org/images/d/d6/Ccrel-1.0.pdf
+      type: string?
+      jsonldPredicate:
+          _id: https://creativecommons.org/ns#License
+    title:
+      doc: Attribution title related to license
+      type: string?
+      jsonldPredicate:
+          _id: http://semanticscience.org/resource/SIO_001167
+    attribution_url:
+      doc: Attribution URL related to license
+      type: string?
+      jsonldPredicate:
+          _id: https://creativecommons.org/ns#Work
+    attribution_source:
+      doc: Attribution source URL
+      type: string?
+      jsonldPredicate:
+          _id: https://creativecommons.org/ns#Work
+</pre>
+</div>
+
+<p>
+Now, we are no ontology experts, right? So, next we submit a patch to
+our source tree and ask for feedback before wiring it up in the data
+entry form. The pull request was submitted <a href="https://github.com/arvados/bh20-seq-resource/pull/97">here</a> and reviewed on the
+gitter channel and I merged it.
 </p>
 </div>
 </div>
+
+<div id="outline-container-org564a7a8" class="outline-2">
+<h2 id="org564a7a8"><span class="section-number-2">5</span> Adding fields to the form</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+To add the new fields to the form we have to modify it a little. If we
+go to the upload form we need to add the license box. The schema is
+loaded in <a href="https://github.com/arvados/bh20-seq-resource/blob/a0c8ebd57b875f265e8b0efec4abfaf892eb6c45/bh20simplewebuploader/main.py#L229">main.py</a> in the 'generate<sub>form</sub>' function.
+</p>
+
+<p>
+With this <a href="https://github.com/arvados/bh20-seq-resource/commit/b9691c7deae30bd6422fb7b0681572b7b6f78ae3">patch</a> the website adds the license input fields on the form.
+</p>
+
+<p>
+Finally, to make RDF output work we need to add expressions to bh20seq-shex.rdf. This
+was done with this <a href="https://github.com/arvados/bh20-seq-resource/commit/f4ed46dae20abe5147871495ede2d6ac2b0854bc">patch</a>. In the end we decided to use the Dublin core title,
+<a href="http://purl.org/metadata/dublin_core_elements#Title">http://purl.org/metadata/dublin_core_elements#Title</a>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">:licenseShape{
+    cc:License xsd:string;
+    dc:Title xsd:string ?;
+    cc:attributionName xsd:string ?;
+    cc:attributionURL xsd:string ?;
+    cc:attributionSource xsd:string ?;
+}
+</pre>
+</div>
+
+<p>
+Note that cc:AttributionSource is not really defined in the cc standard.
+</p>
+
+<p>
+When pushing the license info we discovered the workflow broke because
+the existing data had no licensing info. So we changed the license
+field to be optional - a missing license assumes it is CC-BY-4.0.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org633781a" class="outline-2">
+<h2 id="org633781a"><span class="section-number-2">6</span> <span class="todo TODO">TODO</span> Testing the license fields</h2>
+</div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-12 Sun 06:24</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-16 Thu 03:27</small>.
 </div>
 </body>
 </html>

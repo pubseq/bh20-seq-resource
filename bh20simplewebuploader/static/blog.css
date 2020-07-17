@@ -4,12 +4,13 @@
 .timestamp { font-family: monospace; color: darkgreen; }
 
 h1,h2 { font-family: Lucida Sans Typewriter,Lucida Console,monaco,Bitstream Vera Sans Mono,monospace; color:black;background-color:#F0F8FF; }
-h2 { color: darkblue; }
-h3,h4 { color: black; }
+h2 { color: black; }
+h3,h4 { color: black; margin:0; }
 code { color: darkblue; }
-body {font-family: Palatino, 'Palatino Linotype', serif; color:black;background-color:#e5d8f0; font-size: large }
+body {font-family: Palatino, 'Palatino Linotype', serif; color:black; background-color:white; font-size: large }
 
-div.verbatim { margin: 30px; color: black; background-color: white; border-style:outset; font-family: palatino font, monospace; font-size:80%;  font-weight:bold; }
+div.verbatim { margin: 30px; color: black; background-color: white; border-style:outset;
+               font-family: palatino font, monospace; font-size:80%;  font-weight:bold; }
 div.quote { font-family: palatino font, monospace; font-size:80%; }
 div.quotation { font-family: palatino font, monospace; font-size:80%; }
 pre.example { margin: 30px; font-family: prestige, monospace; color:black; font-size:70%; background-color: lightyellow;  }
@@ -23,10 +24,10 @@ div[id="text-table-of-contents"]{
 }
 div[class^="outline-text"] {
     margin: 10px;
-    background-color:#ebe6f0;
-    border-style: dotted;
-    border-color: #98bf21;
-    border-width: 1px;
+    // background-color:white;
+    // border-style: dotted;
+    // border-color: #98bf21;
+    // border-width: 1px;
     font-family: Palatino, 'Palatino Linotype', serif; color:black; font-size: large
 }
 span[class="todo TESTING"] {

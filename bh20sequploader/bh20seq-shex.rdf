@@ -1,6 +1,8 @@
 PREFIX : <https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-shex.rdf#>
 PREFIX MainSchema: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
 PREFIX hostSchema: <http://biohackathon.org/bh20-seq-schema#hostSchema/>
+PREFIX cc:  <http://creativecommons.org/ns#>
+PREFIX dc:  <http://purl.org/metadata/dublin_core_elements#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX sio: <http://semanticscience.org/resource/>
@@ -15,10 +17,11 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
   MainSchema:submitter @:submitterShape ;
   MainSchema:technology @:technologyShape ;
   MainSchema:virus @:virusShape;
+  MainSchema:license @:licenseShape ?;
 }
 
 :hostShape  {
-  	efo:EFO_0000532 [ obo:NCBITaxon_~ ] ;
+    efo:EFO_0000532 [ obo:NCBITaxon_~ ] ;
     sio:SIO_000115 xsd:string ?;
     obo:PATO_0000047 [ obo:PATO_0000384 obo:PATO_0000383 obo:PATO_0001340] ?;
     obo:PATO_0000011 xsd:integer ?;
@@ -32,14 +35,14 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
 
 :sampleShape  {
     sio:SIO_000115 xsd:string;
-	  evs:C25164 xsd:string;
-	  obo:GAZ_00000448 [wikidata:~] ;
+    evs:C25164 xsd:string;
+    obo:GAZ_00000448 [wikidata:~] ;
     obo:OBI_0001895 xsd:string ?;
     obo:NCIT_C41206 xsd:string ?;
     obo:OBI_0001479 IRI {0,2};
     obo:OBI_0001472 xsd:string ?;
     sio:SIO_001167 xsd:string ?;
-	edam:data_2091 IRI {0,3};
+    edam:data_2091 IRI {0,3};
 }
 
 :submitterShape {
@@ -47,7 +50,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
     sio:SIO_000116 xsd:string *;
     sio:SIO_000172 xsd:string ?;
     obo:NCIT_C37984 xsd:string ?;
-  	obo:NCIT_C37900 xsd:string ?;
+    obo:NCIT_C37900 xsd:string ?;
     efo:EFO_0001741 xsd:string ?;
     obo:NCIT_C42781 xsd:string ?;
     obo:NCIT_C19026 xsd:string ?;
@@ -63,6 +66,14 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
 }
 
 :virusShape{
-	edam:data_1875 [ obo:NCBITaxon_~ ] ;
-  	sio:SIO_010055 xsd:string ?;
+    edam:data_1875 [ obo:NCBITaxon_~ ] ;
+    sio:SIO_010055 xsd:string ?;
+}
+
+:licenseShape{
+    cc:License xsd:string ;
+    dc:Title xsd:string ?;
+    cc:attributionName xsd:string ?;
+    cc:attributionURL xsd:string ?;
+    cc:attributionSource xsd:string ?;
 }

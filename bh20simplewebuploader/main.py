@@ -8,7 +8,7 @@ import os
 import sys
 import re
 import string
-import yaml
+import ruamel.yaml as yaml
 import pkg_resources
 from flask import Flask, request, redirect, send_file, send_from_directory, render_template, jsonify
 import os.path
@@ -16,6 +16,9 @@ import requests
 import io
 import arvados
 from markupsafe import Markup
+from schema_salad.sourceline import add_lc_filename
+from schema_salad.schema import shortname
+from typing import MutableSequence, MutableMapping
 
 ARVADOS_API = 'lugli.arvadosapi.com'
 ANONYMOUS_TOKEN = '5o42qdxpxp5cj15jqjf7vnxx5xduhm4ret703suuoa3ivfglfh'
@@ -47,6 +50,9 @@ def type_to_heading(type_name):
     Turn a type name like "sampleSchema" from the metadata schema into a human-readable heading.
     """
 
+    type_name = shortname(type_name)
+
+    print(type_name,file=sys.stderr)
     # Remove camel case
     decamel = re.sub('([A-Z])', r' \1', type_name)
     # Split
@@ -77,7 +83,7 @@ def is_iri(string):
 
     return string.startswith('http')
 
-def generate_form(schema, options):
+def generate_form(components, options):
     """
     Linearize the schema into a list of dicts.
 
@@ -99,9 +105,6 @@ def generate_form(schema, options):
     the schema, and each is a dict of human readable option -> corresponding
     IRI.
     """
-
-    # Get the list of form components, one of which is the root
-    components = schema.get('$graph', [])
 
     # Find the root
     root_name = None
@@ -130,55 +133,54 @@ def generate_form(schema, options):
             # First make a heading, if we aren't the very root of the form
             yield {'heading': type_to_heading(type_name)}
 
-        for field_name, field_type in by_name.get(type_name, {}).get('fields', {}).items():
+        for field in by_name.get(type_name, {}).get('fields', []):
+            field_name = shortname(field["name"])
+            field_type = field["type"]
             # For each field
 
             ref_iri = None
             docstring = None
-            if not isinstance(field_type, str):
-                # If the type isn't a string
 
-                # It may have documentation
-                docstring = field_type.get('doc', None)
-
-                # See if it has a more info/what goes here URL
-                predicate = field_type.get('jsonldPredicate', {})
-                # Predicate may be a URL, a dict with a URL in _id, maybe a
-                # dict with a URL in _type, or a dict with _id and _type but no
-                # URLs anywhere. Some of these may not technically be allowed
-                # by the format, but if they occur, we might as well try to
-                # handle them.
-                if isinstance(predicate, str):
-                    if is_iri(predicate):
-                        ref_iri = predicate
-                else:
-                    # Assume it's a dict. Look at the fields we know about.
-                    for field in ['_id', 'type']:
-                        field_value = predicate.get(field, None)
-                        if isinstance(field_value, str) and is_iri(field_value) and ref_iri is None:
-                            # Take the first URL-looking thing we find
-                            ref_iri = field_value
-                            break
-
-
-                # Now overwrite the field type with the actual type string
-                field_type = field_type.get('type', '')
-
-            # Decide if the field is optional (type ends in ?)
             optional = False
-            if field_type.endswith('?'):
-                # It's optional
-                optional = True
-                # Drop the ?
-                field_type = field_type[:-1]
-
-            # Decide if the field is a list (type ends in [])
             is_list = False
-            if field_type.endswith('[]'):
-                # It's a list
-                is_list = True
-                # Reduce to the normal type
-                field_type = field_type[:-2]
+
+            # It may have documentation
+            docstring = field.get('doc', None)
+
+            # See if it has a more info/what goes here URL
+            predicate = field.get('jsonldPredicate', {})
+            # Predicate may be a URL, a dict with a URL in _id, maybe a
+            # dict with a URL in _type, or a dict with _id and _type but no
+            # URLs anywhere. Some of these may not technically be allowed
+            # by the format, but if they occur, we might as well try to
+            # handle them.
+            if isinstance(predicate, str):
+                if is_iri(predicate):
+                    ref_iri = predicate
+            else:
+                # Assume it's a dict. Look at the fields we know about.
+                for field in ['_id', 'type']:
+                    field_value = predicate.get(field, None)
+                    if isinstance(field_value, str) and is_iri(field_value) and ref_iri is None:
+                        # Take the first URL-looking thing we find
+                        ref_iri = field_value
+                        break
+
+            if isinstance(field_type, MutableSequence):
+                if field_type[0] == "null" and len(field_type) == 2:
+                    optional = True
+                    field_type = field_type[1]
+                else:
+                    raise Exception("Can't handle it")
+
+            if isinstance(field_type, MutableMapping):
+                if field_type["type"] == "array":
+                    # Now replace the field type with the actual type string
+                    is_list = True
+                    field_type = field_type.get('items', '')
+                else:
+                    field_type = field_type.get('type', '')
+                    pass
 
             if field_type in by_name:
                 # This is a subrecord. We need to recurse
@@ -226,10 +228,24 @@ def generate_form(schema, options):
     return list(walk_fields(root_name))
 
 
-# At startup, we need to load the metadata schema from the uploader module, so we can make a form for it
-METADATA_SCHEMA = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-schema.yml"))
-METADATA_OPTION_DEFINITIONS = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-options.yml"))
-FORM_ITEMS = generate_form(METADATA_SCHEMA, METADATA_OPTION_DEFINITIONS)
+import schema_salad.schema
+def load_schema_generate_form():
+    # At startup, we need to load the metadata schema from the uploader module, so we can make a form for it
+    if os.path.isfile("bh20sequploader/bh20seq-schema.yml"):
+        METADATA_SCHEMA = yaml.round_trip_load(open("bh20sequploader/bh20seq-schema.yml","r").read())
+        METADATA_OPTION_DEFINITIONS = yaml.safe_load(open("bh20sequploader/bh20seq-options.yml","r").read())
+    else:
+        METADATA_SCHEMA = yaml.round_trip_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-schema.yml"))
+        METADATA_OPTION_DEFINITIONS = yaml.safe_load(pkg_resources.resource_stream("bh20sequploader", "bh20seq-options.yml"))
+
+    METADATA_SCHEMA["name"] = "bh20seq-schema.yml"
+    add_lc_filename(METADATA_SCHEMA, "bh20seq-schema.yml")
+    metaschema_names, _metaschema_doc, metaschema_loader = schema_salad.schema.get_metaschema()
+    schema_doc, schema_metadata = metaschema_loader.resolve_ref(METADATA_SCHEMA, "")
+
+    return generate_form(schema_doc, METADATA_OPTION_DEFINITIONS)
+
+FORM_ITEMS = load_schema_generate_form()
 
 @app.route('/')
 def send_home():
@@ -237,7 +253,7 @@ def send_home():
     Send the front page.
     """
 
-    return render_template('home.html', menu='HOME')
+    return render_template('home.html', menu='HOME', load_map=True)
 
 
 @app.route('/upload')
@@ -429,17 +445,21 @@ def receive_files():
 
         if result.returncode != 0:
             # It didn't work. Complain.
-            error_message="Uploader returned value {} and said:".format(result.returncode) + str(result.stderr.decode('utf-8'))
+            error_message="Uploader returned value {} and said:\n".format(result.returncode) + str(result.stderr.decode('utf-8'))
             print(error_message, file=sys.stderr)
             return (render_template('error.html', error_message=error_message), 403)
         else:
             # It worked. Say so.
-            return render_template('success.html', log=result.stdout.decode('utf-8', errors='replace'))
+            return render_template('success.html', log=result.stderr.decode('utf-8', errors='replace'))
     finally:
         shutil.rmtree(dest_dir)
 
-def get_html_body(fn):
-    buf = ""
+
+def edit_button(url,text="Edit text!"):
+    return '<p class="editbutton"><a href="'+url+'">'+text+'<img src="static/image/edit.png"></a></p>'
+
+def get_html_body(fn,source="https://github.com/arvados/bh20-seq-resource/tree/master/doc"):
+    buf = edit_button(source)
     in_body = False
     begin_body = re.compile(r"<body>",re.IGNORECASE)
     end_body = re.compile(r"(</body>|.*=\"postamble\")",re.IGNORECASE)
@@ -451,11 +471,12 @@ def get_html_body(fn):
                 buf += line
             elif begin_body.match(line):
                 in_body = True
+    buf += edit_button(source)
     return buf
 
 @app.route('/download')
 def download_page():
-    buf = get_html_body('doc/web/download.html')
+    buf = get_html_body('doc/web/download.html','https://github.com/arvados/bh20-seq-resource/blob/master/doc/web/download.org')
     return render_template('resource.html',menu='DOWNLOAD',embed=buf)
 
 def pending_table(output, items):
@@ -468,10 +489,13 @@ def pending_table(output, items):
     for r in items:
         if r["status"] != "pending":
             continue
-        output.write("<tr>")
-        output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
-        output.write("<td>%s</td>" % Markup.escape(r["sequence_label"]))
-        output.write("</tr>")
+        try:
+            output.write("<tr>")
+            output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+            output.write("<td>%s</td>" % Markup.escape(r.get("sequence_label")))
+            output.write("</tr>")
+        except:
+            pass
     output.write(
 """
 </table>
@@ -486,18 +510,69 @@ def rejected_table(output, items):
 <th>Errors</th></tr>
 """)
     for r in items:
-        if r["status"] != "rejected":
-            continue
+        try:
+            if r["status"] != "rejected":
+                continue
+            output.write("<tr>")
+            output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+            output.write("<td>%s</td>" % Markup.escape(r.get("sequence_label")))
+            output.write("<td><pre>%s</pre></td>" % Markup.escape("\n".join(r.get("errors", []))))
+            output.write("</tr>")
+        except:
+            pass
+    output.write(
+"""
+</table>
+""")
+
+def workflows_table(output, items):
+    output.write(
+"""
+<table>
+<tr>
+<th>Name</th>
+<th>Sample id</th>
+<th>Started</th>
+<th>Container request</th>
+</tr>
+""")
+    for r in items:
         output.write("<tr>")
-        output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
-        output.write("<td>%s</td>" % Markup.escape(r["sequence_label"]))
-        output.write("<td><pre>%s</pre></td>" % Markup.escape("\n".join(r.get("errors", []))))
+        try:
+            sid = r["mounts"]["/var/lib/cwl/cwl.input.json"]["content"]["sample_id"]
+            output.write("<td>%s</td>" % Markup.escape(r["name"]))
+            output.write("<td>%s</td>" % Markup.escape(sid))
+            output.write("<td>%s</td>" % Markup.escape(r["created_at"]))
+            output.write("<td><a href='https://workbench.lugli.arvadosapi.com/container_requests/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+        except:
+            pass
         output.write("</tr>")
     output.write(
 """
 </table>
 """)
 
+def validated_table(output, items):
+    output.write(
+"""
+<table>
+<tr>
+<th>Collection</th>
+<th>Sequence label</th>
+</tr>
+""")
+    for r in items:
+        try:
+            output.write("<tr>")
+            output.write("<td><a href='https://workbench.lugli.arvadosapi.com/collections/%s'>%s</a></td>" % (r["uuid"], r["uuid"]))
+            output.write("<td>%s</td>" % Markup.escape(r["properties"].get("sequence_label")))
+            output.write("</tr>")
+        except:
+            pass
+    output.write(
+"""
+</table>
+""")
 
 @app.route('/status')
 def status_page():
@@ -518,45 +593,56 @@ def status_page():
         prop["uuid"] = p["uuid"]
         status[prop["status"]] = status.get(prop["status"], 0) + 1
 
+    workflows = arvados.util.list_all(api.container_requests().list,
+                                      filters=[["name", "in", ["fastq2fasta.cwl"]], ["state", "=", "Committed"]],
+                                      order="created_at asc")
+
     output = io.StringIO()
 
     validated = api.collections().list(filters=[["owner_uuid", "=", VALIDATED_PROJECT]], limit=1).execute()
     status["passed"] = validated["items_available"]
 
-    for s in (("passed", "/download"), ("pending", "#pending"), ("rejected", "#rejected")):
+    for s in (("passed", "/validated"), ("pending", "#pending"), ("rejected", "#rejected")):
         output.write("<p><a href='%s'>%s sequences QC %s</a></p>" % (s[1], status.get(s[0], 0), s[0]))
 
-    output.write("<a id='pending'><h1>Pending</h1>")
+    output.write("<p><a href='%s'>%s analysis workflows running</a></p>" % ('#workflows', len(workflows)))
+
+    output.write("<a id='pending'><h1>Pending</h1></a>")
     pending_table(output, out)
 
-    output.write("<a id='rejected'><h1>Rejected</h1>")
+    output.write("<a id='rejected'><h1>Rejected</h1></a>")
     rejected_table(output, out)
+
+    output.write("<a id='workflows'><h1>Running Workflows</h1></a>")
+    workflows_table(output, workflows)
 
     return render_template('status.html', table=Markup(output.getvalue()), menu='STATUS')
 
+@app.route('/validated')
+def validated_page():
+    api = arvados.api(host=ARVADOS_API, token=ANONYMOUS_TOKEN, insecure=True)
+    output = io.StringIO()
+    validated = arvados.util.list_all(api.collections().list, filters=[["owner_uuid", "=", VALIDATED_PROJECT]])
+    validated_table(output, validated)
+    return render_template('validated.html', table=Markup(output.getvalue()), menu='STATUS')
+
 @app.route('/demo')
 def demo_page():
-    return render_template('demo.html',menu='DEMO')
+    return render_template('demo.html',menu='DEMO',load_map=True)
 
 @app.route('/blog',methods=['GET'])
 def blog_page():
     blog_content = request.args.get('id') # e.g. using-covid-19-pubseq-part3
     buf = None;
     if blog_content:
-        buf = get_html_body('doc/blog/'+blog_content+'.html')
+        buf = get_html_body('doc/blog/'+blog_content+'.html',"https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/"+blog_content+".org")
     return render_template('blog.html',menu='BLOG',embed=buf,blog=blog_content)
 
 
 @app.route('/about')
 def about_page():
-    buf = get_html_body('doc/web/about.html')
+    buf = get_html_body('doc/web/about.html','https://github.com/arvados/bh20-seq-resource/blob/master/doc/web/about.org')
     return render_template('about.html',menu='ABOUT',embed=buf)
-
-##
-@app.route('/map')
-def map_page():
-    return render_template('map.html',menu='DEMO')
-
 
 
 ## Dynamic API functions starting here

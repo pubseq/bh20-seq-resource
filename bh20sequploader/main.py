@@ -29,11 +29,10 @@ def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
     try:
         log.debug("Checking metadata" if do_qc else "Skipping metadata check")
         if do_qc and not qc_metadata(metadata.name):
-            log.warning("Failed metadata qc")
+            log.warning("Failed metadata QC")
             failed = True
     except Exception as e:
-        log.debug(e)
-        print(e)
+        log.exception("Failed metadata QC")
         failed = True
 
     target = []
@@ -45,8 +44,7 @@ def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
             target[0] = ("reads_1."+target[0][0][6:], target[0][1])
             target[1] = ("reads_2."+target[1][0][6:], target[0][1])
     except Exception as e:
-        log.debug(e)
-        print(e)
+        log.exception("Failed sequence QC")
         failed = True
 
     if failed:
@@ -82,7 +80,7 @@ def main():
     seqlabel = target[0][1]
 
     if args.validate:
-        print("Valid")
+        log.info("Valid")
         exit(0)
 
     col = arvados.collection.Collection(api_client=api)
@@ -91,10 +89,10 @@ def main():
     if args.sequence_p2:
         upload_sequence(col, target[1], args.sequence_p2)
 
-    print("Reading metadata")
+    log.info("Reading metadata")
     with col.open("metadata.yaml", "w") as f:
         r = args.metadata.read(65536)
-        print(r[0:20])
+        log.info(r[0:20])
         while r:
             f.write(r)
             r = args.metadata.read(65536)
@@ -118,7 +116,7 @@ def main():
                                            ["portable_data_hash", "=", col.portable_data_hash()]]).execute()
     if dup["items"]:
         # This exact collection has been uploaded before.
-        print("Duplicate of %s" % ([d["uuid"] for d in dup["items"]]))
+        log.error("Duplicate of %s" % ([d["uuid"] for d in dup["items"]]))
         exit(1)
 
     if args.trusted:
@@ -131,9 +129,9 @@ def main():
                  (seqlabel, properties['upload_user'], properties['upload_ip']),
                  properties=properties, ensure_unique_name=True)
 
-    print("Saved to %s" % col.manifest_locator())
-
-    print("Done")
+    log.info("Saved to %s" % col.manifest_locator())
+    log.info("Done")
+    exit(0)
 
 if __name__ == "__main__":
     main()

@@ -42,7 +42,7 @@ repository.
 
 ### Using the Web Uploader
 
-To run the web uploader in a GNU Guix environment/container
+To run the web uploader in a GNU Guix environment/container run it with something like
 
 ```
 guix environment guix --ad-hoc git python python-flask python-pyyaml python-pycurl python-magic  nss-certs --network openssl -- env FLASK_ENV=development PYTHONPATH=$PYTHONPATH:./bh20sequploader FLASK_APP=bh20simplewebuploader/main.py flask run
@@ -59,7 +59,7 @@ WIP: add gunicorn container
 Currently the full webserver container deploy command looks like
 
 ```
-penguin2:~/iwrk/opensource/code/vg/bh20-seq-resource$ env GUIX_PACKAGE_PATH=~/iwrk/opensource/guix/guix-bioinformatics/ ~/iwrk/opensource/guix/guix/pre-inst-env guix environment -C guix --ad-hoc git python python-flask python-pyyaml python-pycurl python-magic  nss-certs python-pyshex python-pyyaml --network openssl python-pyshex python-pyshexc clustalw python-schema-salad python-arvados-python-client --share=/export/tmp -- env TMPDIR=/export/tmp FLASK_ENV=development FLASK_APP=bh20simplewebuploader/main.py flask run
-``
+penguin2:~/iwrk/opensource/code/vg/bh20-seq-resource$  env GUIX_PACKAGE_PATH=~/iwrk/opensource/guix/guix-oinformatics/ ~/iwrk/opensource/guix/guix/pre-inst-env guix environment -C guix --ad-hoc git python python-flask python-pyyaml python-pycurl python-magic  nss-certs python-pyshex python-pyyaml --network openssl python-pyshex python-pyshexc clustalw python-schema-salad python-arvados-python-client --share=/export/tmp -- env TMPDIR=/export/tmp FLASK_ENV=development FLASK_APP=bh20simplewebuploader/main.py flask run
+```
 
 Note: see above on GUIX_PACKAGE_PATH.

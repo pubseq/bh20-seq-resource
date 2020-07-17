@@ -13,70 +13,41 @@ function myFunction() {
     }
 }
 
-let map = L.map( 'map', {
-  center: [37.0902, -95.7129],  // Default to U.S.A
-  minZoom: 3,
-  zoom: 0
-});
-L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  subdomains: ['a','b','c']
-}).addTo( map );
-
-let markers = L.markerClusterGroup().addTo(map)
-
-
 function fetchAPI(apiEndPoint) {
-  fetch(scriptRoot + apiEndPoint)
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-        console.log(data);
-      markers.clearLayers();
-      document.getElementById("results").classList.remove("invisible");
-      document.getElementById("loader").classList.add("invisible");
-      if (!(apiEndPoint === "/api/getAllaccessions")) {
-        for (let i = 0; i < data.length; i++) {
-          let {"count": fastaCount, GPS, LocationLabel: label } = data[i];
-          let coordinates = GPS.split(" ");
-          if (!(coordinates == null)) {
-            let lat, lon;
-            [lon, lat] = coordinates.map(parseFloat);
-            let point = L.point()
-            let marker = L.marker([lat, lon]);
-            marker.bindPopup("<b>" + label + "</b><br/>" + "FastaCount: " +fastaCount);
-            markers.addLayer(marker)
-          }}
-      }
-      // Reload the map
-      map.invalidateSize();
-    });
-  document.getElementById("results").classList.add("invisible");
-  document.getElementById("loader").classList.remove("invisible");
-
+    fetch(scriptRoot + apiEndPoint)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+        });
+    document.getElementById("map_view").classList.add("invisible");
+    document.getElementById("loader").classList.remove("invisible");
 }
 
-// Copy from function above but now added as table instead of plain json
-function fetchAPIV2(apiEndPoint) {
-  fetch(scriptRoot + apiEndPoint)
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      console.log(data)
-       htmlString="<table>"
+// Copy from function above but now output HTML table instead of plain json
+function fetchHTMLTable(apiEndPoint) {
+    fetch(scriptRoot + apiEndPoint)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            console.log(data)
+            htmlString="<table>"
 
-       // Depending on what we want to explore we'd have to call a different function ....? But how to Include that?
-       for (var i=0; i<data.length;i++) {
-            htmlString=htmlString+"<tr><td><a href='#' onclick='fetchSEQByLocation(\""+data[i]["key"]+"\");'>"+data[i]["label"]+"</a></td><td>"+data[i]["count"]+"<td></tr>"
-       }
-       htmlString=htmlString+"</table>"
+            // Depending on what we want to explore we'd have to call a different function ....? But how to Include that?
+            /*
+            for (var i=0; i<data.length;i++) {
+                htmlString=htmlString+"<tr><td><a href='#' onclick='fetchSEQByLocation(\""+data[i]["key"]+"\");'>"+data[i]["label"]+"</a></td><td>"+data[i]["count"]+"<td></tr>"
+            }
+*/
+            for (var i=0; i<data.length;i++) {
+                htmlString=htmlString+"<tr><td>"+data[i]["label"]+"</td><td>"+data[i]["count"]+"<td></tr>"
+            }
+            htmlString=htmlString+"</table>"
 
-      document.getElementById("table").innerHTML = htmlString
-    });
-
-  document.getElementById("results").classList.add("invisible");
+            document.getElementById("table").innerHTML = htmlString
+        });
 }
 
 
@@ -85,36 +56,39 @@ let search = () => {
   fetchAPI(scriptRoot + "/api/getDetailsForSeq?seq=" + encodeURIComponent(m));
 }
 
+// Get count from Arvados
 let fetchCount = () => {
   fetchAPI("/api/getCount");
 }
 
+// Get count from Virtuoso
 let fetchCountDB = () => {
   fetchAPI("/api/getCountDB");
 }
 
 let fetchSEQCountBySpecimen = () => {
-  fetchAPIV2("/api/getSEQCountbySpecimenSource");
+  fetchHTMLTable("/api/getSEQCountbySpecimenSource");
 }
 
 let fetchSEQCountByLocation = () => {
-  fetchAPIV2("/api/getSEQCountbyLocation");
+  fetchHTMLTable("/api/getSEQCountbyLocation");
 }
 
 let fetchSEQCountByTech = () => {
-  fetchAPIV2("/api/getSEQCountbytech");
+  fetchHTMLTable("/api/getSEQCountbytech");
 }
 
 let fetchAllaccessions = () => {
-  fetchAPI("/api/getAllaccessions");
+  fetchHTMLTable("/api/getAllaccessions");
 };
 
-let fetchCountByGPS = () => {
-  fetchAPI("/api/getCountByGPS");
+let fetchMap = () => {
+    fetchAPI("/api/getCountByGPS");
+    updateMapMarkers();
 };
 
 let fetchSEQCountbyLocation = () => {
-  fetchAPIV2("/api/getSEQCountbyLocation");
+  fetchHTMLTable("/api/getSEQCountbyLocation");
 };
 
 let fetchSEQByLocation = () => {
@@ -122,7 +96,7 @@ let fetchSEQByLocation = () => {
 };
 
 let fetchSEQCountbyContinent = () => {
-  fetchAPIV2("/api/getSEQCountbyContinent");
+  fetchHTMLTable("/api/getSEQCountbyContinent");
 }
 
 
@@ -195,7 +169,7 @@ function addField(e) {
   // Increment the number and use the keypath and number to set IDs and cross
   // references.
   // TODO: Heavily dependent on the form field HTML. Maybe we want custom
-  // elements for the labeled controlsd that know how to be list items?
+  // elements for the labeled controls that know how to be list items?
   fieldNumber++
   newField.dataset.number = fieldNumber
   let newID = keypath + '[' + fieldNumber + ']'
@@ -251,37 +225,4 @@ function on_submit_button() {
         alert(document.getElementById('example').validationMessage);
         return false;
     }
-}
-
-
-
-//
-
-function drawMap(){
-
-// initialize the map on the "map" div with a given center and zoom
-var mymap = L.map('mapid').setView([51.505, -0.09], 1);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(mymap);
-
-fetch(scriptRoot + "api/getCountByGPS")
-    .then(response => {
-    console.log(response)
-      return response.json();
-    })
-    .then(data => {
-
-   for (var i=0; i<data.length;i++) {
-   gps=data[i]["GPS"].split(" ")
-    var circle = L.circle([gps[1], gps[0]], {
-    color: 'red',
-    fillColor: '#f03',
-    fillOpacity: 0.5,
-    radius: parseInt(data[i]["count"])  //not working for whatever reason
-        }).addTo(mymap);
-      }
-
-      });
 }

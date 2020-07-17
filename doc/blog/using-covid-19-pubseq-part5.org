@@ -13,19 +13,21 @@
  - [[#what-is-the-schema][What is the schema?]]
  - [[#how-is-the-website-generated][How is the website generated?]]
  - [[#modifying-the-schema][Modifying the schema]]
+ - [[#adding-fields-to-the-form][Adding fields to the form]]
+ - [[#testing-the-license-fields][Testing the license fields]]
 
 * Modify Metadata
 
 The public sequence resource uses multiple data formats listed on the
-[[./download][DOWNLOAD]] page. One of the most exciting features is the full support
+[[http://covid19.genenetwork.org/download][download]] page. One of the most exciting features is the full support
 for RDF and semantic web/linked data ontologies. This technology
 allows for querying data in unprescribed ways - that is, you can
 formulate your own queries without dealing with a preset model of that
 data (so typical of CSV files and SQL tables). Examples of exploring
-data are listed [[./blog?id=using-covid-19-pubseq-part1][here]].
+data are listed [[http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part1][here]].
 
 In this BLOG we are going to look at the metadata entered on the
-[[./][COVID-19 PubSeq]] website (or command line client). It is important to
+COVID-19 PubSeq website (or command line client). It is important to
 understand that anyone, including you, can change that information!
 
 * What is the schema?
@@ -41,8 +43,8 @@ All from that one metadata schema.
 * Modifying the schema
 
 One of the first things we want to do is to add a field for the data
-license. Initially we only support CC-4.0 as a license by default, but
-now we want to give uploaders the option to make it an even more
+license. Initially we only supported CC-4.0 as a license, but
+we wanted to give uploaders the option to use an even more
 liberal CC0 license. The first step is to find a good ontology term
 for the field. Searching for `creative commons cc0 rdf' rendered this
 useful [[https://creativecommons.org/ns][page]].  We also find an [[https://wiki.creativecommons.org/wiki/CC_License_Rdf_Overview][overview]] where CC0 is represented as URI
@@ -113,8 +115,37 @@ So, we'll add it simply as a title field. Now the draft schema is
           _id: https://creativecommons.org/ns#Work
 #+END_SRC
 
-Now, we are no ontology experts, right? So, next we submit a patch to our source tree and
-ask for feedback before wiring it up in the data entry form. The pull request was
-submitted here FIXME.
+Now, we are no ontology experts, right? So, next we submit a patch to
+our source tree and ask for feedback before wiring it up in the data
+entry form. The pull request was submitted [[https://github.com/arvados/bh20-seq-resource/pull/97][here]] and reviewed on the
+gitter channel and I merged it.
 
-/Note: work in progress/
+* Adding fields to the form
+
+To add the new fields to the form we have to modify it a little. If we
+go to the upload form we need to add the license box. The schema is
+loaded in [[https://github.com/arvados/bh20-seq-resource/blob/a0c8ebd57b875f265e8b0efec4abfaf892eb6c45/bh20simplewebuploader/main.py#L229][main.py]] in the 'generate_form' function.
+
+With this [[https://github.com/arvados/bh20-seq-resource/commit/b9691c7deae30bd6422fb7b0681572b7b6f78ae3][patch]] the website adds the license input fields on the form.
+
+Finally, to make RDF output work we need to add expressions to bh20seq-shex.rdf. This
+was done with this [[https://github.com/arvados/bh20-seq-resource/commit/f4ed46dae20abe5147871495ede2d6ac2b0854bc][patch]]. In the end we decided to use the Dublin core title,
+http://purl.org/metadata/dublin_core_elements#Title:
+
+#+BEGIN_SRC js
+:licenseShape{
+    cc:License xsd:string;
+    dc:Title xsd:string ?;
+    cc:attributionName xsd:string ?;
+    cc:attributionURL xsd:string ?;
+    cc:attributionSource xsd:string ?;
+}
+#+END_SRC
+
+Note that cc:AttributionSource is not really defined in the cc standard.
+
+When pushing the license info we discovered the workflow broke because
+the existing data had no licensing info. So we changed the license
+field to be optional - a missing license assumes it is CC-BY-4.0.
+
+* TODO Testing the license fields

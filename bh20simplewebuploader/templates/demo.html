@@ -1,13 +1,51 @@
 <!DOCTYPE html>
 <html>
   {% include 'header.html' %}
+  {% include 'mapheader.html' %}
   <body>
     {% include 'banner.html' %}
     {% include 'menu.html' %}
-    {% include 'search.html' %}
-      <p>The Virtuoso database contains <span id="CounterDB"></span> public sequences!</p>
-    {% include 'demo-run.html' %}
-    {% include 'footer.html' %}
+
+    <p>The Virtuoso database contains <span id="CounterDB"></span> public sequences!</p>
+
+    <!--
+    <div class="search">
+      <input id="search-input" type="search" placeholder="FASTA uri" required>
+      <button class="button search-button" type="submit" onclick="search()">
+        <span class="icon ion-search">
+          <span class="sr-only">Search</span>
+        </span>
+      </button>
+      <span class="dropt" title="http://collections.lugli.arvadosapi.com/c=00fede2c6f52b053a14edca01cfa02b7+126/sequence.fasta">(example)<span style="width:500px;"></span></span>
+    </div>
+    -->
+
+    <section class="search-section">
+      <div class="filter-options" action="#">
+        <p>[Demo] Display content sequences by: </p>
+        <div>
+          <button class="button" onclick="fetchSEQCountBySpecimen()">Count by Specimen source</button>
+          <button class="button" onclick="fetchSEQCountByLocation()">Count by Location</button>
+          <button class="button" onclick="fetchSEQCountByTech()">Count by Sequencer</button>
+          <!-- <button class="button" onclick="fetchAllaccessions()">Show All accessions</button> -->
+          <button class="button" onclick="fetchSEQCountbyContinent()">Count by Continent</button>
+        </div>
+
+      </div>
+
+    </section>
+    <div id="loader" class="loader invisible">
+    </div>
+
+    <section id="map_view" class="map">
+      <div id="mapid"></div>
+    </section>
+
+    <section>
+      <div id="table"></div>
+    </section>
+
+ {% include 'footer.html' %}
 
     <script type="text/javascript">
       let scriptRoot = {{ request.script_root|tojson|safe }}; // examples
@@ -24,7 +62,10 @@
               });
       });
 
+     drawMap()
+
     </script>
+
   </body>
 
 </html>

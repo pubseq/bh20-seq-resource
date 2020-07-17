@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   {% include 'header.html' %}
+  {% include 'mapheader.html' %}
     <body>
       {% include 'banner.html' %}
       {% include 'menu.html' %}
@@ -44,7 +45,19 @@
                 </div>
         </section>
 
-{% include 'footer.html' %}
+      <section id="map_view" class="invisible">
+        <div id="mapid"></div>
+      </section>
+
+      {% include 'footer.html' %}
+
+
+      <script type="text/javascript">
+        let scriptRoot = {{ request.script_root|tojson|safe }}; // examples
+
+        drawMap()
+
+      </script>
 
    </body>
 </html>

@@ -253,7 +253,7 @@ def send_home():
     Send the front page.
     """
 
-    return render_template('home.html', menu='HOME')
+    return render_template('home.html', menu='HOME', load_map=True)
 
 
 @app.route('/upload')

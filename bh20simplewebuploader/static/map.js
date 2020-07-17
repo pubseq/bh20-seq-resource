@@ -31,6 +31,7 @@ function drawMap(){
                     radius: parseInt(data[i]["count"])  //not working for whatever reason
                 }).addTo(mymap);
             }
+            // updateMapMarkers(data);
 
       });
     document.getElementById("map_view").classList.remove("invisible");
@@ -42,11 +43,11 @@ function drawMap(){
 /* This function updates the map with markers
  *
 */
-function updateMapMarkers() {
+function updateMapMarkers(data) {
     // markers.clearLayers(); // remove all markers
     // document.getElementById("results").classList.remove("invisible");
-    document.getElementById("loader").classList.add("invisible");
-    /*
+    // document.getElementById("loader").classList.add("invisible");
+
     for (let i = 0; i < data.length; i++) {
         let {"count": fastaCount, GPS, LocationLabel: label } = data[i];
         let coordinates = GPS.split(" ");
@@ -57,10 +58,11 @@ function updateMapMarkers() {
             let marker = L.marker([lat, lon]);
             marker.bindPopup("<b>" + label + "</b><br/>" + "FastaCount: " +fastaCount);
             // markers.addLayer(marker)
-        }}
-    */
+        }
+    }
+
     // Reload the map
-    map.invalidateSize();
+    // map.invalidateSize();
     // document.getElementById("map_view").classList.add("invisible");
     // document.getElementById("loader").classList.add("invisible");
 }

@@ -9,11 +9,14 @@ delete_patterns = [
     "%missing%`host_species`%",
     "%QC fail: alignment%",
     "%does not look like a valid URI%",
-    "%Duplicate of%"
+    "%Duplicate of%",
+    "%No matching triples found for predicate obo:NCIT_C42781%",
+    "%does not look like a valid URI%"
     ]
 
 revalidate_patterns = [
-    "%missing%`license`%"
+    "%missing%`license`%",
+    "%QC fail%"
 ]
 
 for p in delete_patterns:

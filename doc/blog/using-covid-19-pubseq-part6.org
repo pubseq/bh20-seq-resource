@@ -23,7 +23,10 @@ why not export the same to EBI too with the least amount of effort?
 
 COVID-19 PubSeq is a data source - both sequence data and metadata -
 that can be used to push data to other sources, such as EBI. You can
-register [[https://ena-docs.readthedocs.io/en/latest/submit/samples/programmatic.html][samples programmatically]] with a specific XML interface.
+register [[https://ena-docs.readthedocs.io/en/latest/submit/samples/programmatic.html][samples programmatically]] with a specific XML interface.  Note
+that (at this point) if you want to submit a sequence (FASTA) it can
+only be done through the [[https://ena-docs.readthedocs.io/en/latest/submit/general-guide/webin-cli.html][Webin-CLI]]. Raw data (FASTQ) can go through
+the XML interface.
 
 EBI sequence resources are presented through ENA. For example
 [[https://www.ebi.ac.uk/ena/browser/view/MT394864][Sequence: MT394864.1]].
@@ -42,9 +45,9 @@ EBI has XML Formats for
 - PROJECT
 
 with the schemas listed [[ftp://ftp.ebi.ac.uk/pub/databases/ena/doc/xsd/sra_1_5/][here]].  Since we are submitting sequences we
-should follow submitting [[https://ena-docs.readthedocs.io/en/latest/submit/assembly.html][full genome assembly guidelines]] and [[https://ena-docs.readthedocs.io/en/latest/submit/general-guide/programmatic.html][ENA
-guidelines]]. The first step is to define the study, next the sample and
-finally the sequence (assembly).
+should follow submitting [[https://ena-docs.readthedocs.io/en/latest/submit/assembly.html][full genome assembly guidelines]] and
+[[https://ena-docs.readthedocs.io/en/latest/submit/general-guide/programmatic.html][ENA guidelines]]. The first step is to define the study, next the sample
+and finally the sequence (assembly).
 
 * Defining the EBI study
 

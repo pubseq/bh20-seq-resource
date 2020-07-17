@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-29 Fri 12:06 -->
+<!-- 2020-07-17 Fri 05:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq (part 1)</title>
@@ -248,20 +248,20 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9afe6ab">1. What does this mean?</a></li>
-<li><a href="#orgf4bc3d4">2. Fetch sequence data</a></li>
-<li><a href="#org9d7d482">3. Predicates</a></li>
-<li><a href="#orgc6046bb">4. Fetch submitter info and other metadata</a></li>
-<li><a href="#orgdcb216b">5. Fetch all sequences from Washington state</a></li>
-<li><a href="#org7060f51">6. Discussion</a></li>
-<li><a href="#orgdc51ccc">7. Acknowledgements</a></li>
+<li><a href="#org0db5db0">1. What does this mean?</a></li>
+<li><a href="#orge5267fd">2. Fetch sequence data</a></li>
+<li><a href="#orgfbd3adc">3. Predicates</a></li>
+<li><a href="#org08e70e1">4. Fetch submitter info and other metadata</a></li>
+<li><a href="#org9194557">5. Fetch all sequences from Washington state</a></li>
+<li><a href="#org76317ad">6. Discussion</a></li>
+<li><a href="#orgeb871a1">7. Acknowledgements</a></li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-org9afe6ab" class="outline-2">
-<h2 id="org9afe6ab"><span class="section-number-2">1</span> What does this mean?</h2>
+<div id="outline-container-org0db5db0" class="outline-2">
+<h2 id="org0db5db0"><span class="section-number-2">1</span> What does this mean?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This means that when someone uploads a SARS-CoV-2 sequence using one
@@ -274,24 +274,24 @@ expressed in a <a href="https://github.com/arvados/bh20-seq-resource/blob/master
   type: record
   fields:
     host_species:
-        doc: Host species as defined in NCBITaxon, e.g. http://purl.obolibrary.org/obo/NCBITaxon_<span style="color: #8bc34a;">9606</span> for Homo sapiens
+        doc: Host species as defined in NCBITaxon, e.g. http://purl.obolibrary.org/obo/NCBITaxon_9606 for Homo sapiens
         type: string
         jsonldPredicate:
-          _id: http://www.ebi.ac.uk/efo/EFO_<span style="color: #8bc34a;">0000532</span>
-          _type: <span style="color: #9ccc65;">"@id"</span>
-          noLinkCheck: <span style="color: #8bc34a;">true</span>
+          _id: http://www.ebi.ac.uk/efo/EFO_0000532
+          _type: "@id"
+          noLinkCheck: true
     host_sex:
-        doc: Sex of the host as defined in PATO, expect male <span style="color: #e91e63;">()</span> or female <span style="color: #e91e63;">()</span>
+        doc: Sex of the host as defined in PATO, expect male () or female ()
         type: string?
         jsonldPredicate:
-          _id: http://purl.obolibrary.org/obo/PATO_<span style="color: #8bc34a;">0000047</span>
-          _type: <span style="color: #9ccc65;">"@id"</span>
-          noLinkCheck: <span style="color: #8bc34a;">true</span>
+          _id: http://purl.obolibrary.org/obo/PATO_0000047
+          _type: "@id"
+          noLinkCheck: true
     host_age:
-        doc: Age of the host as number <span style="color: #e91e63;">(</span>e.g. <span style="color: #8bc34a;">50</span><span style="color: #e91e63;">)</span>
+        doc: Age of the host as number (e.g. 50)
         type: int?
         jsonldPredicate:
-          _id: http://purl.obolibrary.org/obo/PATO_<span style="color: #8bc34a;">0000011</span>
+          _id: http://purl.obolibrary.org/obo/PATO_0000011
 </pre>
 </div>
 
@@ -314,8 +314,8 @@ initiative!
 </div>
 
 
-<div id="outline-container-orgf4bc3d4" class="outline-2">
-<h2 id="orgf4bc3d4"><span class="section-number-2">2</span> Fetch sequence data</h2>
+<div id="outline-container-orge5267fd" class="outline-2">
+<h2 id="orge5267fd"><span class="section-number-2">2</span> Fetch sequence data</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The latest run of the pipeline can be viewed <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">here</a>. Each of these
@@ -339,8 +339,8 @@ these identifiers throughout.
 </div>
 </div>
 
-<div id="outline-container-org9d7d482" class="outline-2">
-<h2 id="org9d7d482"><span class="section-number-2">3</span> Predicates</h2>
+<div id="outline-container-orgfbd3adc" class="outline-2">
+<h2 id="orgfbd3adc"><span class="section-number-2">3</span> Predicates</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 To explore an RDF dataset, the first query we can do is open and gets
@@ -350,10 +350,10 @@ the following in a SPARQL end point
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?p
-<span style="color: #e91e63;">{</span>
+<pre class="src src-sql">select distinct ?p
+{
    ?o ?p ?s
-<span style="color: #e91e63;">}</span>
+}
 </pre>
 </div>
 
@@ -364,10 +364,10 @@ To get a <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=&amp;q
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?g
-<span style="color: #e91e63;">{</span>
-    GRAPH ?g <span style="color: #2196F3;">{</span>?s ?p ?o<span style="color: #2196F3;">}</span>
-<span style="color: #e91e63;">}</span>
+<pre class="src src-sql">select distinct ?g
+{
+    GRAPH ?g {?s ?p ?o}
+}
 </pre>
 </div>
 
@@ -383,10 +383,10 @@ To list all submitters, try
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?s
-<span style="color: #e91e63;">{</span>
-   ?o <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/submitter">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/submitter">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/submitter">#MainSchema/submitter&gt;</a> ?s
-<span style="color: #e91e63;">}</span>
+<pre class="src src-sql">select distinct ?s
+{
+   ?o &lt;http://biohackathon.org/bh20-seq-schema#MainSchema/submitter&gt; ?s
+}
 </pre>
 </div>
 
@@ -397,11 +397,11 @@ and by
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?s
-<span style="color: #e91e63;">{</span>
-   ?o <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/submitter">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/submitter">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/submitter">#MainSchema/submitter&gt;</a> ?id .
+<pre class="src src-sql">select distinct ?s
+{
+   ?o &lt;http://biohackathon.org/bh20-seq-schema#MainSchema/submitter&gt; ?id .
    ?id ?p ?s
-<span style="color: #e91e63;">}</span>
+}
 </pre>
 </div>
 
@@ -415,12 +415,12 @@ To lift the full URL out of the query you can use a header like
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">#MainSchema/&gt;</a>
-<span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?dataset ?submitter
-<span style="color: #e91e63;">{</span>
+<pre class="src src-sql">PREFIX pubseq: &lt;http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+select distinct ?dataset ?submitter
+{
    ?dataset pubseq:submitter ?id .
    ?id ?p ?submitter
-<span style="color: #e91e63;">}</span>
+}
 </pre>
 </div>
 
@@ -438,32 +438,32 @@ Now we got this far, lets <a href="http://sparql.genenetwork.org/sparql/?default
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">#MainSchema/&gt;</a>
-<span style="color: #fff59d;">select</span> <span style="color: #e91e63;">(</span><span style="color: #ff8A65;">COUNT</span><span style="color: #2196F3;">(</span><span style="color: #fff59d;">distinct</span> ?dataset<span style="color: #2196F3;">)</span> <span style="color: #fff59d;">as</span> ?num<span style="color: #e91e63;">)</span>
-<span style="color: #e91e63;">{</span>
+<pre class="src src-sql">PREFIX pubseq: &lt;http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+select (COUNT(distinct ?dataset) as ?num)
+{
    ?dataset pubseq:submitter ?id .
    ?id ?p ?submitter
-<span style="color: #e91e63;">}</span>
+}
 </pre>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-orgc6046bb" class="outline-2">
-<h2 id="orgc6046bb"><span class="section-number-2">4</span> Fetch submitter info and other metadata</h2>
+<div id="outline-container-org08e70e1" class="outline-2">
+<h2 id="org08e70e1"><span class="section-number-2">4</span> Fetch submitter info and other metadata</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 To get dataests with submitters we can do the above
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">#MainSchema/&gt;</a>
-<span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?dataset ?p ?submitter
-<span style="color: #e91e63;">{</span>
+<pre class="src src-sql">PREFIX pubseq: &lt;http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+select distinct ?dataset ?p ?submitter
+{
    ?dataset pubseq:submitter ?id .
    ?id ?p ?submitter
-<span style="color: #e91e63;">}</span>
+}
 </pre>
 </div>
 
@@ -480,13 +480,13 @@ Let's focus on one sample with
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">#MainSchema/&gt;</a>
-<span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?dataset ?submitter
-<span style="color: #e91e63;">{</span>
+<pre class="src src-sql">PREFIX pubseq: &lt;http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+select distinct ?dataset ?submitter
+{
    ?dataset pubseq:submitter ?id .
    ?id ?p ?submitter .
-   FILTER<span style="color: #2196F3;">(</span><span style="color: #fff59d;">CONTAINS</span><span style="color: #EF6C00;">(</span>?submitter,"Roychoudhury"<span style="color: #EF6C00;">)</span><span style="color: #2196F3;">)</span> .
-<span style="color: #e91e63;">}</span>
+   FILTER(CONTAINS(?submitter,"Roychoudhury")) .
+}
 </pre>
 </div>
 
@@ -496,12 +496,12 @@ see if we can get a sample ID by listing sample predicates
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">#MainSchema/&gt;</a>
-<span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?p
-<span style="color: #e91e63;">{</span>
+<pre class="src src-sql">PREFIX pubseq: &lt;http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+select distinct ?p
+{
    ?dataset ?p ?o .
    ?dataset pubseq:submitter ?id .
-<span style="color: #e91e63;">}</span>
+}
 </pre>
 </div>
 
@@ -513,15 +513,15 @@ Let's zoom in on those of Roychoudhury with
 
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/">#MainSchema/&gt;</a>
-<span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?sid ?sample ?p1 ?dataset ?submitter
-<span style="color: #e91e63;">{</span>
+<pre class="src src-sql">PREFIX pubseq: &lt;http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+select distinct ?sid ?sample ?p1 ?dataset ?submitter
+{
    ?dataset pubseq:submitter ?id .
    ?id ?p ?submitter .
-   FILTER<span style="color: #2196F3;">(</span><span style="color: #fff59d;">CONTAINS</span><span style="color: #EF6C00;">(</span>?submitter,"Roychoudhury"<span style="color: #EF6C00;">)</span><span style="color: #2196F3;">)</span> .
+   FILTER(CONTAINS(?submitter,"Roychoudhury")) .
    ?dataset pubseq:sample ?sid .
    ?sid ?p1 ?sample
-<span style="color: #e91e63;">}</span>
+}
 </pre>
 </div>
 
@@ -532,18 +532,13 @@ this database. Let's focus on one sample "MT326090.1" with predicate
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
-PREFIX sio: &lt;http://semanticscience.org/resource/">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
-PREFIX sio: &lt;http://semanticscience.org/resource/">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
-PREFIX sio: &lt;http://semanticscience.org/resource/">#MainSchema/&gt;
-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
-PREFIX sio: &lt;http://semanticscience.org/resource/">PREFIX</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
-PREFIX sio: &lt;http://semanticscience.org/resource/"> sio: &lt;http://semanticscience.org/resource/&gt;</a>
-<span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?sample ?p ?o
-<span style="color: #e91e63;">{</span>
+<pre class="src src-sql">PREFIX pubseq: &lt;http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/&gt;
+select distinct ?sample ?p ?o
+{
    ?sample sio:SIO_000115 "MT326090.1" .
    ?sample ?p ?o .
-<span style="color: #e91e63;">}</span>
+}
 </pre>
 </div>
 
@@ -561,8 +556,8 @@ to view/query the database.
 </div>
 </div>
 
-<div id="outline-container-orgdcb216b" class="outline-2">
-<h2 id="orgdcb216b"><span class="section-number-2">5</span> Fetch all sequences from Washington state</h2>
+<div id="outline-container-org9194557" class="outline-2">
+<h2 id="org9194557"><span class="section-number-2">5</span> Fetch all sequences from Washington state</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Now we know how to get at the origin we can do it the other way round
@@ -570,15 +565,11 @@ and fetch all sequences referring to Washington state
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql">
-<span style="color: #fff59d;">select</span> ?seq ?sample
-<span style="color: #e91e63;">{</span>
-    ?seq <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
-    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
-    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
-    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223">#MainSchema/sample&gt; ?sample .
-    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223&gt;</a>
-<span style="color: #e91e63;">}</span>
+<pre class="src src-sql">select ?seq ?sample
+{
+    ?seq &lt;http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223&gt;
+}
 </pre>
 </div>
 
@@ -586,11 +577,26 @@ and fetch all sequences referring to Washington state
 which lists 300 sequences originating from Washington state! Which is almost
 half of the set coming out of GenBank.
 </p>
+
+<p>
+Likewise to list all sequences from Turkey we can find the wikidata
+entity is <a href="https://www.wikidata.org/wiki/Q43">Q43</a>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql">select ?seq ?sample
+{
+    ?seq &lt;http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q43&gt;
+}
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org7060f51" class="outline-2">
-<h2 id="org7060f51"><span class="section-number-2">6</span> Discussion</h2>
+
+<div id="outline-container-org76317ad" class="outline-2">
+<h2 id="org76317ad"><span class="section-number-2">6</span> Discussion</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 The public sequence uploader collects sequences, raw data and
@@ -601,8 +607,8 @@ referenced in publications and origins are citeable.
 </div>
 </div>
 
-<div id="outline-container-orgdc51ccc" class="outline-2">
-<h2 id="orgdc51ccc"><span class="section-number-2">7</span> Acknowledgements</h2>
+<div id="outline-container-orgeb871a1" class="outline-2">
+<h2 id="orgeb871a1"><span class="section-number-2">7</span> Acknowledgements</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 The overall effort was due to magnificent freely donated input by a
@@ -617,7 +623,7 @@ Garrison this initiative would not have existed!
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-29 Fri 12:06</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-17 Fri 05:02</small>.
 </div>
 </body>
 </html>

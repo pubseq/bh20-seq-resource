@@ -83,9 +83,12 @@ also a submission 'command' is required looking like
 
 The webin system accepts such sources using a command like
 
-: curl -u username:password -F "SUBMISSION=@submission.xml" -F "PROJECT=@project.xml" "https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/"
+: curl -u username:password -F "SUBMISSION=@submission.xml" \
+:   -F "PROJECT=@project.xml" "https://wwwdev.ebi.ac.uk/ena/submit/drop-box/submit/"
 
-as described [[https://ena-docs.readthedocs.io/en/latest/submit/study/programmatic.html#submit-the-xmls-using-curl][here]].
+as described [[https://ena-docs.readthedocs.io/en/latest/submit/study/programmatic.html#submit-the-xmls-using-curl][here]]. Note that this is the test server. For the final
+version use www.ebi.ac.uk instead of wwwdev.ebi.ac.uk.  You may also
+need the --insecure switch to circumvent certificate checking.
 
 /work in progress (WIP)/
 

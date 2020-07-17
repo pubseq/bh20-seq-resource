@@ -20,17 +20,6 @@ function drawMap(){
             return response.json();
         })
         .then(data => {
-            /*
-            for (var i=0; i<data.length;i++) {
-                gps=data[i]["GPS"].split(" ")
-                var circle = L.circle([gps[1], gps[0]], {
-                    color: 'red',
-                    fillColor: '#f03',
-                    fillOpacity: 0.5,
-                    radius: parseInt(data[i]["count"])  //not working for whatever reason
-                }).addTo(mymap);
-            }
-            */
             updateMapMarkers(data);
 
       });
@@ -53,7 +42,7 @@ function updateMapMarkers(data) {
             [lon, lat] = coordinates.map(parseFloat);
             let point = L.point()
             marker = (L.marker([lat, lon]));
-            //  .bindPopup("<b>" + label + "</b><br/>" + "FastaCount: " +fastaCount));
+            marker.bindPopup("<b>" + label + "</b><br/>" + "FastaCount: " +fastaCount);
             markers.addLayer(marker);
         }
     }

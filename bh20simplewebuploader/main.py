@@ -459,7 +459,11 @@ def edit_button(url,text="Edit text!"):
     return '<p class="editbutton"><a href="'+url+'">'+text+'<img src="static/image/edit.png"></a></p>'
 
 def get_html_body(fn,source="https://github.com/arvados/bh20-seq-resource/tree/master/doc"):
-    buf = edit_button(source)
+    """
+    This function gets the HTML generated from org-mode exports, strips
+    headers and footers and surrounds it with a blog section.
+    """
+    buf = '<section class="blog">'+edit_button(source)
     in_body = False
     begin_body = re.compile(r"<body>",re.IGNORECASE)
     end_body = re.compile(r"(</body>|.*=\"postamble\")",re.IGNORECASE)
@@ -471,7 +475,7 @@ def get_html_body(fn,source="https://github.com/arvados/bh20-seq-resource/tree/m
                 buf += line
             elif begin_body.match(line):
                 in_body = True
-    buf += edit_button(source)
+    buf += edit_button(source)+'</section>'
     return buf
 
 @app.route('/download')

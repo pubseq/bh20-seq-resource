@@ -7,7 +7,7 @@ h1,h2 { font-family: Lucida Sans Typewriter,Lucida Console,monaco,Bitstream Vera
 h2 { color: black; }
 h3,h4 { color: black; margin:0; }
 code { color: darkblue; }
-body {font-family: Palatino, 'Palatino Linotype', serif; color:black; background-color:white; font-size: large }
+body {font-family: Palatino, 'Palatino Linotype', serif; color:black; background-color:white; font-size: large; padding: 10px; }
 
 div.verbatim { margin: 30px; color: black; background-color: white; border-style:outset;
                font-family: palatino font, monospace; font-size:80%;  font-weight:bold; }

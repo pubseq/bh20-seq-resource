@@ -9,6 +9,7 @@
  - [[#why-should-i-not-upload-by-data-here][Why should I not upload by data here?]]
  - [[#how-does-the-public-sequence-resource-work][How does the public sequence resource work?]]
  - [[#who-uses-the-public-sequence-resource][Who uses the public sequence resource?]]
+ - [[#how-can-i-contribute][How can I contribute?]]
  - [[#is-this-about-open-data][Is this about open data?]]
  - [[#is-this-about-free-software][Is this about free software?]]
  - [[#how-do-i-upload-raw-data][How do I upload raw data?]]
@@ -47,14 +48,17 @@ wrangling experts. Thank you everyone!
 The short version is that we use state-of-the-art practices in
 bioinformatics using agile methods. Unlike the resources from large
 institutes we can improve things on a dime and anyone can contribute
-to building out this resource!
+to building out this resource! Sequences from GenBank, EBI/ENA and
+others are regularly added to PubSeq. We encourage people to everyone
+to submit on PubSeq because of its superior live tooling and metadata
+support (see the next question).
 
 Importantly: all data is published under either the [[https://creativecommons.org/licenses/by/4.0/][Creative Commons
 4.0 attribution license]] or the [[https://creativecommons.org/share-your-work/public-domain/cc0/][CC0 “No Rights Reserved” license]] which
 means it data can be published and workflows can run in public
 environments allowing for improved access for research and
 reproducible results. This contrasts with some other public resources,
-including GISAID.
+such as GISAID.
 
 * Why should I upload my data here?
 
@@ -77,7 +81,7 @@ including GISAID.
 4. Your data will be used to develop drug targets
 
 Finally, if you upload your data here we have workflows that output
-formatted data suitable for uploading to EBI resources (and soon
+formatted data suitable for [[http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part6][uploading to EBI resources]] (and soon
 others). Uploading your data here get your data ready for upload to
 multiple resources.
 
@@ -109,8 +113,16 @@ https://covid-19-sparql.expasy.org/ and made it part of [[https://www.uniprot.or
 
 The Pantograph [[https://graph-genome.github.io/][viewer]] uses PubSeq data for their visualisations.
 
-[[https://uthsc.edu][UTHSC]] and [[https://www.ornl.gov/news/ornl-fight-against-covid-19][ORNL]] use COVID-19 PubSeq data for protein prediction and
-drug development.
+[[https://uthsc.edu][UTHSC]] (USA), [[https://www.esr.cri.nz/][ESR]] (New Zealand) and [[https://www.ornl.gov/news/ornl-fight-against-covid-19][ORNL]] (USA) use COVID-19 PubSeq data
+for monitoring, protein prediction and drug development.
+
+* How can I contribute?
+
+You can contribute by submitting sequences, updating metadata, submit
+issues on our issue tracker, and more importantly add functionality.
+See 'How do I change the source code' below. Read through our online
+documentation at http://covid19.genenetwork.org/blog as a starting
+point.
 
 * Is this about open data?
 
@@ -140,8 +152,8 @@ See the [[http://covid19.genenetwork.org/blog]]!
 
 * How do I change the work flows?
 
-Workflows are on [[https://github.com/arvados/bh20-seq-resource/tree/master/workflows][github]] and can be modified. See also the
-[[[[http://covid19.genenetwork.org/blog]]][workflow blog]].
+Workflows are on [[https://github.com/arvados/bh20-seq-resource/tree/master/workflows][github]] and can be modified. See also the BLOG
+[[http://covid19.genenetwork.org/blog]] on workflows.
 
 * How do I change the source code?
 

@@ -8,7 +8,6 @@ body {
     margin: 0;
 }
 
-
 h1, h2, h3, h4 {
     font-family: 'Inter', sans-serif;
     color: #008066;
@@ -186,6 +185,10 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
     text-align: left;
 }
 
+.about a {
+    color: #008066;
+}
+
 .about p {
     // font-weight: 300;
     color: #505050;
@@ -342,6 +345,14 @@ footer {
         display: flex;
         flex-direction: column;
     }
+}
+
+.blog {
+    margin: 10px;
+}
+
+.blog h2 {
+    color: black;
 }
 
 .blog-table {

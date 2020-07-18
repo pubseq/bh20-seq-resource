@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-12 Sun 06:29 -->
+<!-- 2020-07-18 Sat 03:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>About/FAQ</title>
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -185,7 +198,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -234,29 +247,30 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgac6ad8b">1. What is the 'public sequence resource' about?</a></li>
-<li><a href="#org0c21c2e">2. Who created the public sequence resource?</a></li>
-<li><a href="#org3fb8cb3">3. How does the public sequence resource compare to other data resources?</a></li>
-<li><a href="#org6cd9ea2">4. Why should I upload my data here?</a></li>
-<li><a href="#org0b6e3fb">5. Why should I not upload by data here?</a></li>
-<li><a href="#org3eb3a4e">6. How does the public sequence resource work?</a></li>
-<li><a href="#org7a397f5">7. Who uses the public sequence resource?</a></li>
-<li><a href="#org92cb008">8. Is this about open data?</a></li>
-<li><a href="#org232d6fa">9. Is this about free software?</a></li>
-<li><a href="#orgd93869f">10. How do I upload raw data?</a></li>
-<li><a href="#org88e8b0a">11. How do I change metadata?</a></li>
-<li><a href="#orgd04b8f8">12. How do I change the work flows?</a></li>
-<li><a href="#org5d1ee05">13. How do I change the source code?</a></li>
-<li><a href="#orgae6461b">14. Should I choose CC-BY or CC0?</a></li>
-<li><a href="#org3ea90a9">15. How do I deal with private data and privacy?</a></li>
-<li><a href="#org7ff7106">16. How do I communicate with you?</a></li>
-<li><a href="#org9566fa7">17. Who are the sponsors?</a></li>
+<li><a href="#org0db9061">1. What is the 'public sequence resource' about?</a></li>
+<li><a href="#org983877d">2. Who created the public sequence resource?</a></li>
+<li><a href="#org83093c3">3. How does the public sequence resource compare to other data resources?</a></li>
+<li><a href="#org9b31fd4">4. Why should I upload my data here?</a></li>
+<li><a href="#org4e92cb5">5. Why should I not upload by data here?</a></li>
+<li><a href="#orgdfe72f6">6. How does the public sequence resource work?</a></li>
+<li><a href="#orgd0c5abb">7. Who uses the public sequence resource?</a></li>
+<li><a href="#org56f4a54">8. How can I contribute?</a></li>
+<li><a href="#org2240ef7">9. Is this about open data?</a></li>
+<li><a href="#orgbb655e0">10. Is this about free software?</a></li>
+<li><a href="#org4e779f4">11. How do I upload raw data?</a></li>
+<li><a href="#org83f6b7b">12. How do I change metadata?</a></li>
+<li><a href="#org1bc6dab">13. How do I change the work flows?</a></li>
+<li><a href="#org1140d62">14. How do I change the source code?</a></li>
+<li><a href="#orge182714">15. Should I choose CC-BY or CC0?</a></li>
+<li><a href="#orgf4a692b">16. How do I deal with private data and privacy?</a></li>
+<li><a href="#org7757574">17. How do I communicate with you?</a></li>
+<li><a href="#org194006f">18. Who are the sponsors?</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgac6ad8b" class="outline-2">
-<h2 id="orgac6ad8b"><span class="section-number-2">1</span> What is the 'public sequence resource' about?</h2>
+<div id="outline-container-org0db9061" class="outline-2">
+<h2 id="org0db9061"><span class="section-number-2">1</span> What is the 'public sequence resource' about?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The <b>public sequence resource</b> aims to provide a generic and useful
@@ -267,8 +281,8 @@ sequence comparison and protein prediction.
 </div>
 </div>
 
-<div id="outline-container-org0c21c2e" class="outline-2">
-<h2 id="org0c21c2e"><span class="section-number-2">2</span> Who created the public sequence resource?</h2>
+<div id="outline-container-org983877d" class="outline-2">
+<h2 id="org983877d"><span class="section-number-2">2</span> Who created the public sequence resource?</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The <b>public sequence resource</b> is an initiative by <a href="https://github.com/arvados/bh20-seq-resource/graphs/contributors">bioinformatics</a> and
@@ -289,14 +303,17 @@ wrangling experts. Thank you everyone!
 </div>
 </div>
 
-<div id="outline-container-org3fb8cb3" class="outline-2">
-<h2 id="org3fb8cb3"><span class="section-number-2">3</span> How does the public sequence resource compare to other data resources?</h2>
+<div id="outline-container-org83093c3" class="outline-2">
+<h2 id="org83093c3"><span class="section-number-2">3</span> How does the public sequence resource compare to other data resources?</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 The short version is that we use state-of-the-art practices in
 bioinformatics using agile methods. Unlike the resources from large
 institutes we can improve things on a dime and anyone can contribute
-to building out this resource!
+to building out this resource! Sequences from GenBank, EBI/ENA and
+others are regularly added to PubSeq. We encourage people to everyone
+to submit on PubSeq because of its superior live tooling and metadata
+support (see the next question).
 </p>
 
 <p>
@@ -305,13 +322,13 @@ Importantly: all data is published under either the <a href="https://creativecom
 means it data can be published and workflows can run in public
 environments allowing for improved access for research and
 reproducible results. This contrasts with some other public resources,
-including GISAID.
+such as GISAID.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org6cd9ea2" class="outline-2">
-<h2 id="org6cd9ea2"><span class="section-number-2">4</span> Why should I upload my data here?</h2>
+<div id="outline-container-org9b31fd4" class="outline-2">
+<h2 id="org9b31fd4"><span class="section-number-2">4</span> Why should I upload my data here?</h2>
 <div class="outline-text-2" id="text-4">
 <ol class="org-ol">
 <li>We champion truly shareable data without licensing restrictions - with proper
@@ -335,15 +352,15 @@ Bioinformatics COVID-19 knowledge base
 
 <p>
 Finally, if you upload your data here we have workflows that output
-formatted data suitable for uploading to EBI resources (and soon
+formatted data suitable for <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part6">uploading to EBI resources</a> (and soon
 others). Uploading your data here get your data ready for upload to
 multiple resources.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org0b6e3fb" class="outline-2">
-<h2 id="org0b6e3fb"><span class="section-number-2">5</span> Why should I not upload by data here?</h2>
+<div id="outline-container-org4e92cb5" class="outline-2">
+<h2 id="org4e92cb5"><span class="section-number-2">5</span> Why should I not upload by data here?</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Funny question.  There are only good reasons to upload your data here
@@ -365,8 +382,8 @@ for bulk uploads!
 </div>
 </div>
 
-<div id="outline-container-org3eb3a4e" class="outline-2">
-<h2 id="org3eb3a4e"><span class="section-number-2">6</span> How does the public sequence resource work?</h2>
+<div id="outline-container-orgdfe72f6" class="outline-2">
+<h2 id="orgdfe72f6"><span class="section-number-2">6</span> How does the public sequence resource work?</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 On uploading a sequence with metadata it will automatically be
@@ -377,8 +394,8 @@ using workflows from the High Performance Open Biology Lab defined
 </div>
 </div>
 
-<div id="outline-container-org7a397f5" class="outline-2">
-<h2 id="org7a397f5"><span class="section-number-2">7</span> Who uses the public sequence resource?</h2>
+<div id="outline-container-orgd0c5abb" class="outline-2">
+<h2 id="orgd0c5abb"><span class="section-number-2">7</span> Who uses the public sequence resource?</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 The Swiss Institute of Bioinformatics has included this data in
@@ -390,15 +407,28 @@ The Pantograph <a href="https://graph-genome.github.io/">viewer</a> uses PubSeq 
 </p>
 
 <p>
-<a href="https://uthsc.edu">UTHSC</a> and <a href="https://www.ornl.gov/news/ornl-fight-against-covid-19">ORNL</a> use COVID-19 PubSeq data for protein prediction and
-drug development.
+<a href="https://uthsc.edu">UTHSC</a> (USA), <a href="https://www.esr.cri.nz/">ESR</a> (New Zealand) and <a href="https://www.ornl.gov/news/ornl-fight-against-covid-19">ORNL</a> (USA) use COVID-19 PubSeq data
+for monitoring, protein prediction and drug development.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org92cb008" class="outline-2">
-<h2 id="org92cb008"><span class="section-number-2">8</span> Is this about open data?</h2>
+<div id="outline-container-org56f4a54" class="outline-2">
+<h2 id="org56f4a54"><span class="section-number-2">8</span> How can I contribute?</h2>
 <div class="outline-text-2" id="text-8">
+<p>
+You can contribute by submitting sequences, updating metadata, submit
+issues on our issue tracker, and more importantly add functionality.
+See 'How do I change the source code' below. Read through our online
+documentation at <a href="http://covid19.genenetwork.org/blog">http://covid19.genenetwork.org/blog</a> as a starting
+point.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2240ef7" class="outline-2">
+<h2 id="org2240ef7"><span class="section-number-2">9</span> Is this about open data?</h2>
+<div class="outline-text-2" id="text-9">
 <p>
 All data is published under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons 4.0 attribution license</a>
 (CC-BY-4.0). You can download the raw and published (GFA/RDF/FASTA)
@@ -407,9 +437,9 @@ data and store it for further processing.
 </div>
 </div>
 
-<div id="outline-container-org232d6fa" class="outline-2">
-<h2 id="org232d6fa"><span class="section-number-2">9</span> Is this about free software?</h2>
-<div class="outline-text-2" id="text-9">
+<div id="outline-container-orgbb655e0" class="outline-2">
+<h2 id="orgbb655e0"><span class="section-number-2">10</span> Is this about free software?</h2>
+<div class="outline-text-2" id="text-10">
 <p>
 Absolutely. Free software allows for fully reproducible pipelines. You
 can take our workflows and data and run it elsewhere!
@@ -417,9 +447,9 @@ can take our workflows and data and run it elsewhere!
 </div>
 </div>
 
-<div id="outline-container-orgd93869f" class="outline-2">
-<h2 id="orgd93869f"><span class="section-number-2">10</span> How do I upload raw data?</h2>
-<div class="outline-text-2" id="text-10">
+<div id="outline-container-org4e779f4" class="outline-2">
+<h2 id="org4e779f4"><span class="section-number-2">11</span> How do I upload raw data?</h2>
+<div class="outline-text-2" id="text-11">
 <p>
 We are preparing raw sequence data pipelines (fastq and BAM). The
 reason is that we want the best data possible for downstream analysis
@@ -433,17 +463,8 @@ assembly variations into consideration. This is all work in progress.
 </div>
 </div>
 
-<div id="outline-container-org88e8b0a" class="outline-2">
-<h2 id="org88e8b0a"><span class="section-number-2">11</span> How do I change metadata?</h2>
-<div class="outline-text-2" id="text-11">
-<p>
-See the <a href="http://covid19.genenetwork.org/blog">http://covid19.genenetwork.org/blog</a>!
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgd04b8f8" class="outline-2">
-<h2 id="orgd04b8f8"><span class="section-number-2">12</span> How do I change the work flows?</h2>
+<div id="outline-container-org83f6b7b" class="outline-2">
+<h2 id="org83f6b7b"><span class="section-number-2">12</span> How do I change metadata?</h2>
 <div class="outline-text-2" id="text-12">
 <p>
 See the <a href="http://covid19.genenetwork.org/blog">http://covid19.genenetwork.org/blog</a>!
@@ -451,9 +472,19 @@ See the <a href="http://covid19.genenetwork.org/blog">http://covid19.genenetwork
 </div>
 </div>
 
-<div id="outline-container-org5d1ee05" class="outline-2">
-<h2 id="org5d1ee05"><span class="section-number-2">13</span> How do I change the source code?</h2>
+<div id="outline-container-org1bc6dab" class="outline-2">
+<h2 id="org1bc6dab"><span class="section-number-2">13</span> How do I change the work flows?</h2>
 <div class="outline-text-2" id="text-13">
+<p>
+Workflows are on <a href="https://github.com/arvados/bh20-seq-resource/tree/master/workflows">github</a> and can be modified. See also the BLOG
+<a href="http://covid19.genenetwork.org/blog">http://covid19.genenetwork.org/blog</a> on workflows.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1140d62" class="outline-2">
+<h2 id="org1140d62"><span class="section-number-2">14</span> How do I change the source code?</h2>
+<div class="outline-text-2" id="text-14">
 <p>
 Go to our <a href="https://github.com/arvados/bh20-seq-resource">source code repositories</a>, fork/clone the repository, change
 something and submit a <a href="https://github.com/arvados/bh20-seq-resource/pulls">pull request</a> (PR). That easy! Check out how
@@ -462,9 +493,9 @@ many PRs we already merged.
 </div>
 </div>
 
-<div id="outline-container-orgae6461b" class="outline-2">
-<h2 id="orgae6461b"><span class="section-number-2">14</span> Should I choose CC-BY or CC0?</h2>
-<div class="outline-text-2" id="text-14">
+<div id="outline-container-orge182714" class="outline-2">
+<h2 id="orge182714"><span class="section-number-2">15</span> Should I choose CC-BY or CC0?</h2>
+<div class="outline-text-2" id="text-15">
 <p>
 Restrictive data licenses are hampering data sharing and reproducible
 research. CC0 is the preferred license because it gives researchers
@@ -479,9 +510,9 @@ In all honesty: we prefer both data and software to be free.
 </div>
 </div>
 
-<div id="outline-container-org3ea90a9" class="outline-2">
-<h2 id="org3ea90a9"><span class="section-number-2">15</span> How do I deal with private data and privacy?</h2>
-<div class="outline-text-2" id="text-15">
+<div id="outline-container-orgf4a692b" class="outline-2">
+<h2 id="orgf4a692b"><span class="section-number-2">16</span> How do I deal with private data and privacy?</h2>
+<div class="outline-text-2" id="text-16">
 <p>
 A public sequence resource is about public data. Metadata can refer to
 private data. You can use your own (anonymous) identifiers.  We also
@@ -491,18 +522,18 @@ plan to combine identifiers with clinical data stored securely at
 </div>
 </div>
 
-<div id="outline-container-org7ff7106" class="outline-2">
-<h2 id="org7ff7106"><span class="section-number-2">16</span> How do I communicate with you?</h2>
-<div class="outline-text-2" id="text-16">
+<div id="outline-container-org7757574" class="outline-2">
+<h2 id="org7757574"><span class="section-number-2">17</span> How do I communicate with you?</h2>
+<div class="outline-text-2" id="text-17">
 <p>
 We use a <a href="https://gitter.im/arvados/pubseq?utm_source=share-link&amp;utm_medium=link&amp;utm_campaign=share-link">gitter channel</a> you can join.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9566fa7" class="outline-2">
-<h2 id="org9566fa7"><span class="section-number-2">17</span> Who are the sponsors?</h2>
-<div class="outline-text-2" id="text-17">
+<div id="outline-container-org194006f" class="outline-2">
+<h2 id="org194006f"><span class="section-number-2">18</span> Who are the sponsors?</h2>
+<div class="outline-text-2" id="text-18">
 <p>
 The main sponsors are listed in the footer. In addition to the time
 generously donated by many contributors we also acknowledge Amazon AWS
@@ -512,7 +543,7 @@ for donating COVID-19 related compute time.
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-12 Sun 04:54</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-18 Sat 03:27</small>.
 </div>
 </body>
 </html>

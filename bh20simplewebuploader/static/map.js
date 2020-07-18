@@ -45,13 +45,12 @@ seqMarker = L.Marker.extend({
 
 function updateMapMarkers(data) {
     let markers = L.markerClusterGroup({
-
         iconCreateFunction: function (cluster) {
             var theseMarkers = cluster.getAllChildMarkers(); //// -- this is the array of each marker in the cluster.
 
             sumCount = 0;
             for (var i = 0; i < theseMarkers.length; i++) {
-                console.log(theseMarkers[i]);
+                // console.log(theseMarkers[i]);
                 sumCount += theseMarkers[i].options.sequences;
             }
 
@@ -59,24 +58,9 @@ function updateMapMarkers(data) {
 
             return L.divIcon({
                 html: sumCount,
-                className: 'cluster digits-' + digits,
-                iconSize: null
+                className: 'my-custom-icon my-custom-icon-'+digits,
             });
         },
-
-        pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, {
-                opacity: 1,
-                color: getSColor(10),
-                weight: getSwieght(10),
-                fillColor: getColor(10),
-                fillOpacity: .3,
-                radius: getRad(10),
-                pane: 'circlesIIOM'
-            });
-
-        },
-
     });
     for (let i = 0; i < data.length; i++) {
         let {"count": fastaCount, GPS, LocationLabel: label } = data[i];

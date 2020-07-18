@@ -401,6 +401,56 @@ div.status {
     // display: inline-block;
 }
 
+.map-marker-cluster {
+    background-clip: padding-box;
+    border-radius: 20px;
+}
+.map-marker-cluster div {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-top: 5px;
+
+    text-align: center;
+    border-radius: 15px;
+    font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+.map-marker-cluster span {
+    line-height: 30px;
+}
+
+.my-custom-icon {
+  width: 60px !important;
+  height: 40px !important;
+  // margin-left: -12px;
+  // margin-top: -40px;
+  opacity: 0.5;
+  border-radius: 30px;
+  // border: 2px solid #3F51B5;
+  text-align: center;
+  color: black;
+  background-color: lightgreen;
+  font-size: 20px;
+}
+
+.my-custom-icon.my-custom-icon-1 {
+}
+.my-custom-icon.my-custom-icon-2 {
+  background-color: #FFFAF0;
+}
+.my-custom-icon.my-custom-icon-3 {
+  background-color: #00CED1;
+}
+.my-custom-icon.my-custom-icon-4 {
+  background-color: #FFD700;
+}
+.my-custom-icon.my-custom-icon-5 {
+  background-color: pink;
+}
+.my-custom-icon.my-custom-icon-6 {
+  background-color: lightgrey;
+}
+
 .editbutton {
     float: right;
     text-align: right;

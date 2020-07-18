@@ -29,11 +29,46 @@ function drawMap(){
 
 
 
-/* This function updates the map with markers
- *
-*/
+
+/*
+ * This function updates the map with markers
+ */
+
 function updateMapMarkers(data) {
-    let markers = L.markerClusterGroup();
+    let markers = L.markerClusterGroup({
+
+        iconCreateFunction: function (cluster) {
+            var theseMarkers = cluster.getAllChildMarkers(); //// -- this is the array of each marker in the cluster.
+
+            sumCount = 0;
+            for (var i = 0; i < theseMarkers.length; i++) {
+                // sumCount += theseMarkers[i].feature.properties.Confirmed;
+                sumCount += 1;
+            }
+
+            var digits = (sumCount + '').length;
+
+            return L.divIcon({
+                html: sumCount,
+                className: 'cluster digits-' + digits,
+                iconSize: null
+            });
+        },
+
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, {
+                opacity: 1,
+                color: getSColor(feature.properties.Confirmed),
+                weight: getSwieght(feature.properties.Confirmed),
+                fillColor: getColor(feature.properties.Confirmed),
+                fillOpacity: .3,
+                radius: getRad(feature.properties.Confirmed),
+                pane: 'circlesIIOM'
+            });
+
+        },
+
+    });
     for (let i = 0; i < data.length; i++) {
         let {"count": fastaCount, GPS, LocationLabel: label } = data[i];
         let coordinates = GPS.split(" ");

@@ -31,8 +31,17 @@ function drawMap(){
 
 
 /*
- * This function updates the map with markers
+ * These functions updates the map with markers
  */
+
+seqMarker = L.Marker.extend({
+   options: {
+       seqMarkerLocation: "Loc",
+       contributors: "countContrib",
+       sequences: "countSeq"
+   }
+});
+
 
 function updateMapMarkers(data) {
     let markers = L.markerClusterGroup({
@@ -42,8 +51,8 @@ function updateMapMarkers(data) {
 
             sumCount = 0;
             for (var i = 0; i < theseMarkers.length; i++) {
-                // sumCount += theseMarkers[i].feature.properties.Confirmed;
-                sumCount += 1;
+                console.log(theseMarkers[i]);
+                sumCount += theseMarkers[i].options.sequences;
             }
 
             var digits = (sumCount + '').length;
@@ -58,11 +67,11 @@ function updateMapMarkers(data) {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker(latlng, {
                 opacity: 1,
-                color: getSColor(feature.properties.Confirmed),
-                weight: getSwieght(feature.properties.Confirmed),
-                fillColor: getColor(feature.properties.Confirmed),
+                color: getSColor(10),
+                weight: getSwieght(10),
+                fillColor: getColor(10),
                 fillOpacity: .3,
-                radius: getRad(feature.properties.Confirmed),
+                radius: getRad(10),
                 pane: 'circlesIIOM'
             });
 
@@ -71,12 +80,14 @@ function updateMapMarkers(data) {
     });
     for (let i = 0; i < data.length; i++) {
         let {"count": fastaCount, GPS, LocationLabel: label } = data[i];
+        let countSeq = Number(fastaCount);
+
         let coordinates = GPS.split(" ");
         if (!(coordinates == null)) {
             let lat, lon;
             [lon, lat] = coordinates.map(parseFloat);
             let point = L.point()
-            marker = (L.marker([lat, lon]));
+            marker = new seqMarker([lat, lon],markerOptions={title: fastaCount+" sequences",sequences: countSeq});
             marker.bindPopup("<b>" + label + "</b><br/>" + "SARS-CoV-2<br/>sequences: " +fastaCount);
             markers.addLayer(marker);
         }

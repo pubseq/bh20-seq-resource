@@ -9,10 +9,25 @@
 
 
 * Table of Contents                                                     :TOC:noexport:
+ - [[#short-version][Short version]]
  - [[#generating-output-for-ebi][Generating output for EBI]]
  - [[#defining-the-ebi-study][Defining the EBI study]]
  - [[#define-the-ebi-sample][Define the EBI sample]]
  - [[#define-the-ebi-sequence][Define the EBI sequence]]
+
+* Short version
+
+PubSeq can export files that can be uploaded to EBI/ENA. This saves
+you work. Steps are:
+
+1. Register and account for EBI/ENA as explained [[https://ena-docs.readthedocs.io/en/latest/submit/general-guide.html][here]].
+2. Register a study online or use XML files discussed below
+3. Export a sample XML and push to EBI/ENA
+4. Zip sequence data and push to EBI/ENA
+
+Because PubSeq's metadata for is richer than the metadata EBI/ENA asks
+for, it is easy to generate and export the forms using the [[http://covid19.genenetwork.org/export][EXPORT]]
+page.
 
 * Generating output for EBI
 
@@ -81,6 +96,8 @@ also a submission 'command' is required looking like
 
 #+END_SRC
 
+Working XML examples we tested can be found [[https://github.com/arvados/bh20-seq-resource/tree/master/scripts/submit_ebi/example][here]].
+
 The webin system accepts such sources using a command like
 
 : curl -u username:password -F "SUBMISSION=@submission.xml" \
@@ -88,7 +105,7 @@ The webin system accepts such sources using a command like
 
 as described [[https://ena-docs.readthedocs.io/en/latest/submit/study/programmatic.html#submit-the-xmls-using-curl][here]]. Note that this is the test server. For the final
 version use www.ebi.ac.uk instead of wwwdev.ebi.ac.uk.  You may also
-need the --insecure switch to circumvent certificate checking.
+need the =--insecure= switch to circumvent certificate checking.
 
 /work in progress (WIP)/
 

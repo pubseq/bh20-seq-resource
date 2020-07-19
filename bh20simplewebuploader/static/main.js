@@ -21,8 +21,6 @@ function fetchAPI(apiEndPoint) {
         .then(data => {
             console.log(data);
         });
-    document.getElementById("map_view").classList.add("invisible");
-    document.getElementById("loader").classList.remove("invisible");
 }
 
 // Copy from function above but now output HTML table instead of plain json
@@ -51,7 +49,13 @@ function fetchHTMLTable(apiEndPoint) {
 }
 
 
-let search = () => {
+/* Fetch record info using a 'global search' */
+let searchGlobal = () => {
+    let m =  document.getElementById('search-input').value;
+    fetchAPI(scriptRoot + "/api/search?s=" + encodeURIComponent(m));
+}
+
+let searchSeq = () => {
   let m =  document.getElementById('search-input').value;
   fetchAPI(scriptRoot + "/api/getDetailsForSeq?seq=" + encodeURIComponent(m));
 }

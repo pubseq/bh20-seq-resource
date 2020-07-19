@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  {% include 'header.html' %}
+  <body>
+    {% include 'banner.html' %}
+    {% include 'menu.html' %}
+
+    <h1>Export Data</h1>
+    <section class="blog">
+
+    COVID-19 PubSeq allows for exporting forms and data for other
+    services.
+
+    <h2>Export EBI/ENA Forms</h2>
+
+    <p>
+    Uploading data to EBI/ENA with PubSeq is described
+    <a href="/blog?id=using-covid-19-pubseq-part6">here</a>.
+    To export, first search for an uploaded entry through its
+    identifier:
+    </p>
+
+    <div class="search">
+      <input id="search-input" type="search" placeholder="e.g. MT246484" required>
+      <button class="button search-button" type="submit" onclick="searchGlobal()">
+        <span class="icon ion-search">
+          <span class="sr-only">Search</span>
+        </span>
+      </button>
+    </div>
+
+    </section>
+
+    {% include 'footer.html' %}
+
+    <script type="text/javascript">
+      let scriptRoot = {{ request.script_root|tojson|safe }}; // examples
+    </script>
+  </body>
+
+</html>

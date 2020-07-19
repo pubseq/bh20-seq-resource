@@ -630,6 +630,10 @@ def validated_page():
     validated_table(output, validated)
     return render_template('validated.html', table=Markup(output.getvalue()), menu='STATUS')
 
+@app.route('/export')
+def export_page():
+    return render_template('export.html',menu='EXPORT')
+
 @app.route('/demo')
 def demo_page():
     return render_template('demo.html',menu='DEMO',load_map=True)
@@ -684,6 +688,11 @@ def getCountDB():
     # [{'num': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '1352'}}]
     # print(result, file=sys.stderr)
     return jsonify({'sequences': int(result[0]["num"]["value"])})
+
+# Execute a 'global search'
+@app.route('/api/search', methods=['GET'])
+def search():
+    return jsonify(["TESTME"])
 
 @app.route('/api/getAllaccessions', methods=['GET'])
 def getAllaccessions():

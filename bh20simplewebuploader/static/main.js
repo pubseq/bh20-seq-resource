@@ -2,6 +2,15 @@
  * Menu and navigation
  */
 
+/* Small helpers */
+function cell(text) {
+    html = ""
+    html += '  <div class="rTableCell">';
+    html += text;
+    html += '  </div>';
+    return html
+}
+
 /* Convert a list of table items to an HTML DIV table */
 function toDIVTable(rows) {
     if (rows.length == 0)
@@ -9,14 +18,15 @@ function toDIVTable(rows) {
     else {
         html = '<div class="rTable">';
         rows.forEach(row => {
+            seq = row['seq'];
             html += '<div class="rTableRow">';
-            html += '  <div class="rTableCell">';
-            html += row["id"];
-            html += '  </div>';
+            html += cell(row['id']);
+            html += cell('<a href="'+seq+'">FASTA</a>');
             html += '</div>';
         });
         html += '</div>';
     }
+    console.log(html);
     document.getElementById("table").innerHTML = html;
 }
 

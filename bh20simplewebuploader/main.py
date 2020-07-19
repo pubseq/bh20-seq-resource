@@ -702,7 +702,7 @@ def search():
     ?sample sio:SIO_000115 ?id .
     ?seq pubseq:sample ?sample .
     ?sample ?p ?o .
-    }
+    } limit 100
     """ % s
     payload = {'query': query, 'format': 'json'}
     r = requests.get(baseURL, params=payload)

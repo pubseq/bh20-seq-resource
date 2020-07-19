@@ -347,6 +347,37 @@ footer {
     }
 }
 
+
+.rTable
+{
+    display: table;
+}
+.rTableTitle
+{
+    display: table-caption;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}
+.rTableHeading
+{
+    display: table-row;
+    font-weight: bold;
+    text-align: center;
+}
+.rTableRow
+{
+    display: table-row;
+}
+.rTableCell
+{
+    display: table-cell;
+    border: solid;
+    border-width: thin;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
 .blog {
     margin: 10px;
 }

@@ -18,10 +18,13 @@ function toDIVTable(rows) {
     else {
         html = '<div class="rTable">';
         rows.forEach(row => {
+            id = row['id'];
             seq = row['seq'];
+            info = row['info'];
             html += '<div class="rTableRow">';
-            html += cell(row['id']);
+            html += cell('<a href="'+info+'">'+id+'</a>');
             html += cell('<a href="'+seq+'">FASTA</a>');
+            html += cell('<a href="/api/ebi-sample.xml?id='+id+'">EBI/ENA export XML</a>');
             html += '</div>';
         });
         html += '</div>';

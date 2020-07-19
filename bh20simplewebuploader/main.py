@@ -696,12 +696,13 @@ def search():
     query = """
     PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
     PREFIX sio: <http://semanticscience.org/resource/>
-    select distinct ?id ?seq
+    PREFIX edam: <http://edamontology.org/>
+    select distinct ?id ?seq ?info
     {
     ?sample sio:SIO_000115 "%s" .
     ?sample sio:SIO_000115 ?id .
     ?seq pubseq:sample ?sample .
-    ?sample ?p ?o .
+    ?sample edam:data_2091 ?info .
     } limit 100
     """ % s
     payload = {'query': query, 'format': 'json'}
@@ -711,6 +712,7 @@ def search():
     return jsonify([{
         'id': x['id']['value'],
         'seq': x['seq']['value'],
+        'info': x['info']['value'],
     } for x in result])
 
 @app.route('/api/getAllaccessions', methods=['GET'])
@@ -934,3 +936,7 @@ def getSEQbyLocationAndSpecimenSource():
     r = requests.get(baseURL, params=payload)
     result = r.json()['results']['bindings']
     return str(result)
+
+@app.route('/api/ebi-sample.xml', methods=['GET'])
+def ebi_sample():
+    return render_template('ebi-sample.xml')

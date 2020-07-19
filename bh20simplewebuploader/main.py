@@ -692,7 +692,26 @@ def getCountDB():
 # Execute a 'global search'
 @app.route('/api/search', methods=['GET'])
 def search():
-    return jsonify(["TESTME"])
+    s = request.args.get('s')
+    query = """
+    PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+    PREFIX sio: <http://semanticscience.org/resource/>
+    select distinct ?id ?seq
+    {
+    ?sample sio:SIO_000115 "%s" .
+    ?sample sio:SIO_000115 ?id .
+    ?seq pubseq:sample ?sample .
+    ?sample ?p ?o .
+    }
+    """ % s
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    result = r.json()['results']['bindings']
+    print(result,file=sys.stderr);
+    return jsonify([{
+        'id': x['id']['value'],
+        'seq': x['seq']['value'],
+    } for x in result])
 
 @app.route('/api/getAllaccessions', methods=['GET'])
 def getAllaccessions():

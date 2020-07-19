@@ -2,6 +2,24 @@
  * Menu and navigation
  */
 
+/* Convert a list of table items to an HTML DIV table */
+function toDIVTable(rows) {
+    if (rows.length == 0)
+        html = "no results";
+    else {
+        html = '<div class="rTable">';
+        rows.forEach(row => {
+            html += '<div class="rTableRow">';
+            html += '  <div class="rTableCell">';
+            html += row["id"];
+            html += '  </div>';
+            html += '</div>';
+        });
+        html += '</div>';
+    }
+    document.getElementById("table").innerHTML = html;
+}
+
 /* Toggle between adding and removing the "responsive" class to topnav
  * when the user clicks on the icon */
 function myFunction() {
@@ -13,13 +31,16 @@ function myFunction() {
     }
 }
 
-function fetchAPI(apiEndPoint) {
+function fetchAPI(apiEndPoint,injectHTML=NULL) {
     fetch(scriptRoot + apiEndPoint)
         .then(response => {
+            console.log("* response",response);
             return response.json();
         })
         .then(data => {
-            console.log(data);
+            console.log("* data",data);
+            if (injectHTML)
+                injectHTML(data);
         });
 }
 
@@ -48,11 +69,29 @@ function fetchHTMLTable(apiEndPoint) {
         });
 }
 
+/* Fetch record info using a 'global search'. Returns for example
 
-/* Fetch record info using a 'global search' */
-let searchGlobal = () => {
+[
+  {
+    "id": "MT326090.1",
+    "seq": "http://collections.lugli.arvadosapi.com/c=10eaef75e0b875f81aa1f411c75370cf+126/sequence.fasta"
+  },
+  {
+    "id": "MT326090.1",
+    "seq": "http://collections.lugli.arvadosapi.com/c=5a4c815f3e076ad7760a91864c39dd07+126/sequence.fasta"
+  }
+]
+
+
+ */
+let searchGlobal = (toHTML) => {
     let m =  document.getElementById('search-input').value;
-    fetchAPI(scriptRoot + "/api/search?s=" + encodeURIComponent(m));
+    fetchAPI(scriptRoot + "/api/search?s=" + encodeURIComponent(m), toHTML);
+}
+
+// Same as above, but generates div table
+let searchGlobaltoDIVTable = () => {
+    searchGlobal(toDIVTable);
 }
 
 let searchSeq = () => {

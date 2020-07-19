@@ -111,6 +111,7 @@ need the =--insecure= switch to circumvent certificate checking.
 
 * Define the EBI sample
 
+EBI's sample form for virus is defined [[https://www.ebi.ac.uk/ena/browser/view/ERC000033][here]].
 
 /work in progress (WIP)/
 

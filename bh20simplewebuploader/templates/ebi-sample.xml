@@ -1,62 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SAMPLE_SET>
-  <SAMPLE alias="PubSeqSam0001" center_name="PubSeq01">
-    <TITLE>human gastric microbiota, mucosal</TITLE>
+  <SAMPLE alias="{{ id }}" center_name="COVID-19 PubSeq">
+    <TITLE>COVID-19 PubSeq Sample</TITLE>
     <SAMPLE_NAME>
-      <TAXON_ID>1284369</TAXON_ID>
-      <SCIENTIFIC_NAME>stomach metagenome</SCIENTIFIC_NAME>
-      <COMMON_NAME></COMMON_NAME>
+      <TAXON_ID>2697049</TAXON_ID>
+      <SCIENTIFIC_NAME>Severe acute respiratory syndrome coronavirus 2</SCIENTIFIC_NAME>
+      <COMMON_NAME>SARS-CoV-2</COMMON_NAME>
     </SAMPLE_NAME>
     <SAMPLE_ATTRIBUTES>
       <SAMPLE_ATTRIBUTE>
         <TAG>investigation type</TAG>
-        <VALUE>mimarks-survey</VALUE>
+        <VALUE>{{ investigation_type }}</VALUE>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>sequencing method</TAG>
-        <VALUE>pyrosequencing</VALUE>
+        <VALUE>{{ sequence_method }}</VALUE>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>collection date</TAG>
-        <VALUE>2010</VALUE>
-      </SAMPLE_ATTRIBUTE>
-      <SAMPLE_ATTRIBUTE>
-        <TAG>host body site</TAG>
-        <VALUE>Mucosa of stomach</VALUE>
-      </SAMPLE_ATTRIBUTE>
-      <SAMPLE_ATTRIBUTE>
-        <TAG>human-associated environmental package</TAG>
-        <VALUE>human-associated</VALUE>
+        <VALUE>{{ time }}</VALUE>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>geographic location (latitude)</TAG>
-        <VALUE>1.81</VALUE>
+        <VALUE>{{ latidude }}</VALUE>
      <UNITS>DD</UNITS>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>geographic location (longitude)</TAG>
-        <VALUE>-78.76</VALUE>
+        <VALUE>{{ longitude }}</VALUE>
      <UNITS>DD</UNITS>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
      <TAG>geographic location (country and/or sea)</TAG>
-     <VALUE>Colombia</VALUE>
+     <VALUE>{{ country }}</VALUE>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>geographic location (region and locality)</TAG>
-        <VALUE>Tumaco</VALUE>
-      </SAMPLE_ATTRIBUTE>
-      <SAMPLE_ATTRIBUTE>
-        <TAG>environment (biome)</TAG>
-        <VALUE>coast</VALUE>
-      </SAMPLE_ATTRIBUTE>
-      <SAMPLE_ATTRIBUTE>
-        <TAG>environment (feature)</TAG>
-        <VALUE>human-associated habitat</VALUE>
+        <VALUE>{{ locality }}</VALUE>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>environment (material)</TAG>
-        <VALUE>gastric biopsy</VALUE>
+        <VALUE>{{ material }}</VALUE>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>ENA-CHECKLIST</TAG>
@@ -65,4 +49,3 @@
     </SAMPLE_ATTRIBUTES>
   </SAMPLE>
 </SAMPLE_SET>
-

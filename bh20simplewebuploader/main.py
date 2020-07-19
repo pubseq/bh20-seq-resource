@@ -937,6 +937,7 @@ def getSEQbyLocationAndSpecimenSource():
     result = r.json()['results']['bindings']
     return str(result)
 
-@app.route('/api/ebi-sample.xml', methods=['GET'])
-def ebi_sample():
-    return render_template('ebi-sample.xml')
+@app.route('/api/ebi/sample-<id>.xml', methods=['GET'])
+def ebi_sample(id):
+    page = render_template('ebi-sample.xml',**locals())
+    return page

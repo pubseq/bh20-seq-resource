@@ -24,7 +24,7 @@ function toDIVTable(rows) {
             html += '<div class="rTableRow">';
             html += cell('<a href="'+info+'">'+id+'</a>');
             html += cell('<a href="'+seq+'">FASTA</a>');
-            html += cell('<a href="/api/ebi-sample.xml?id='+id+'">EBI/ENA export XML</a>');
+            html += cell('<a href="/api/ebi/sample-'+id+'.xml">EBI/ENA export XML</a>');
             html += '</div>';
         });
         html += '</div>';

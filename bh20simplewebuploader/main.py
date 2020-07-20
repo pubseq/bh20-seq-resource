@@ -638,6 +638,11 @@ def export_page():
 def demo_page():
     return render_template('demo.html',menu='DEMO',load_map=True)
 
+@app.route('/apidoc')
+def apidoc_page():
+    buf = get_html_body('test/rest-api.html',"https://github.com/arvados/bh20-seq-resource/blob/master/test/rest-api.org")
+    return render_template('blog.html',menu='BLOG',embed=buf)
+
 @app.route('/blog',methods=['GET'])
 def blog_page():
     blog_content = request.args.get('id') # e.g. using-covid-19-pubseq-part3
@@ -651,7 +656,6 @@ def blog_page():
 def about_page():
     buf = get_html_body('doc/web/about.html','https://github.com/arvados/bh20-seq-resource/blob/master/doc/web/about.org')
     return render_template('about.html',menu='ABOUT',embed=buf)
-
 
 ## Dynamic API functions starting here
 ## This is quick and dirty for now, just to get something out and demonstrate the queries

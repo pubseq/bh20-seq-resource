@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-20 Mon 06:02 -->
+<!-- 2020-07-20 Mon 06:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -246,18 +246,18 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc04a8fc">1. PubSeq REST API</a>
+<li><a href="#orgb24ef14">1. PubSeq REST API</a>
 <ul>
-<li><a href="#org239717f">1.1. Introduction</a></li>
-<li><a href="#org6637383">1.2. Fetch EBI XML</a></li>
+<li><a href="#orgd7c015d">1.1. Introduction</a></li>
+<li><a href="#orgb2caa89">1.2. Fetch EBI XML</a></li>
 </ul>
 </li>
-<li><a href="#org1577576">2. Configure emacs to run tests</a></li>
+<li><a href="#org68f26b2">2. Configure emacs to run tests</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc04a8fc" class="outline-2">
-<h2 id="orgc04a8fc"><span class="section-number-2">1</span> PubSeq REST API</h2>
+<div id="outline-container-orgb24ef14" class="outline-2">
+<h2 id="orgb24ef14"><span class="section-number-2">1</span> PubSeq REST API</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Here we document the public REST API that comes with PubSeq. The tests
@@ -266,8 +266,8 @@ for running the tests inside emacs.
 </p>
 </div>
 
-<div id="outline-container-org239717f" class="outline-3">
-<h3 id="org239717f"><span class="section-number-3">1.1</span> Introduction</h3>
+<div id="outline-container-orgd7c015d" class="outline-3">
+<h3 id="orgd7c015d"><span class="section-number-3">1.1</span> Introduction</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 We built a REST API for COVID-19 PubSeq. The API source code can be
@@ -299,11 +299,39 @@ assert response_body["service"] == "PubSeq", "PubSeq API not found"
 response_body
 </pre>
 </div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">service</td>
+<td class="org-left">:</td>
+<td class="org-left">PubSeq</td>
+<td class="org-left">version</td>
+<td class="org-left">:</td>
+<td class="org-right">0.1</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
-<div id="outline-container-org6637383" class="outline-3">
-<h3 id="org6637383"><span class="section-number-3">1.2</span> Fetch EBI XML</h3>
+<div id="outline-container-orgb2caa89" class="outline-3">
+<h3 id="orgb2caa89"><span class="section-number-3">1.2</span> Fetch EBI XML</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 PubSeq provides an API that is used to export formats that are
@@ -315,12 +343,66 @@ documented <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq
 <pre class="src src-python">requests.get("http://covid19.genenetwork.org/api/ebi/sample-MT32690.1.xml").text
 </pre>
 </div>
+
+<pre class="example">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;SAMPLE_SET&gt;
+  &lt;SAMPLE alias="MT32690.1" center_name="COVID-19 PubSeq"&gt;
+    &lt;TITLE&gt;COVID-19 PubSeq Sample&lt;/TITLE&gt;
+    &lt;SAMPLE_NAME&gt;
+      &lt;TAXON_ID&gt;2697049&lt;/TAXON_ID&gt;
+      &lt;SCIENTIFIC_NAME&gt;Severe acute respiratory syndrome coronavirus 2&lt;/SCIENTIFIC_NAME&gt;
+      &lt;COMMON_NAME&gt;SARS-CoV-2&lt;/COMMON_NAME&gt;
+    &lt;/SAMPLE_NAME&gt;
+    &lt;SAMPLE_ATTRIBUTES&gt;
+      &lt;SAMPLE_ATTRIBUTE&gt;
+        &lt;TAG&gt;investigation type&lt;/TAG&gt;
+        &lt;VALUE&gt;&lt;/VALUE&gt;
+      &lt;/SAMPLE_ATTRIBUTE&gt;
+      &lt;SAMPLE_ATTRIBUTE&gt;
+        &lt;TAG&gt;sequencing method&lt;/TAG&gt;
+        &lt;VALUE&gt;&lt;/VALUE&gt;
+      &lt;/SAMPLE_ATTRIBUTE&gt;
+      &lt;SAMPLE_ATTRIBUTE&gt;
+        &lt;TAG&gt;collection date&lt;/TAG&gt;
+        &lt;VALUE&gt;&lt;/VALUE&gt;
+      &lt;/SAMPLE_ATTRIBUTE&gt;
+      &lt;SAMPLE_ATTRIBUTE&gt;
+        &lt;TAG&gt;geographic location (latitude)&lt;/TAG&gt;
+        &lt;VALUE&gt;&lt;/VALUE&gt;
+     &lt;UNITS&gt;DD&lt;/UNITS&gt;
+      &lt;/SAMPLE_ATTRIBUTE&gt;
+      &lt;SAMPLE_ATTRIBUTE&gt;
+        &lt;TAG&gt;geographic location (longitude)&lt;/TAG&gt;
+        &lt;VALUE&gt;&lt;/VALUE&gt;
+     &lt;UNITS&gt;DD&lt;/UNITS&gt;
+      &lt;/SAMPLE_ATTRIBUTE&gt;
+      &lt;SAMPLE_ATTRIBUTE&gt;
+     &lt;TAG&gt;geographic location (country and/or sea)&lt;/TAG&gt;
+     &lt;VALUE&gt;&lt;/VALUE&gt;
+      &lt;/SAMPLE_ATTRIBUTE&gt;
+      &lt;SAMPLE_ATTRIBUTE&gt;
+        &lt;TAG&gt;geographic location (region and locality)&lt;/TAG&gt;
+        &lt;VALUE&gt;&lt;/VALUE&gt;
+      &lt;/SAMPLE_ATTRIBUTE&gt;
+      &lt;SAMPLE_ATTRIBUTE&gt;
+        &lt;TAG&gt;environment (material)&lt;/TAG&gt;
+        &lt;VALUE&gt;&lt;/VALUE&gt;
+      &lt;/SAMPLE_ATTRIBUTE&gt;
+      &lt;SAMPLE_ATTRIBUTE&gt;
+        &lt;TAG&gt;ENA-CHECKLIST&lt;/TAG&gt;
+        &lt;VALUE&gt;ERC000011&lt;/VALUE&gt;
+      &lt;/SAMPLE_ATTRIBUTE&gt;
+    &lt;/SAMPLE_ATTRIBUTES&gt;
+  &lt;/SAMPLE&gt;
+&lt;/SAMPLE_SET&gt;
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org1577576" class="outline-2">
-<h2 id="org1577576"><span class="section-number-2">2</span> Configure emacs to run tests</h2>
+<div id="outline-container-org68f26b2" class="outline-2">
+<h2 id="org68f26b2"><span class="section-number-2">2</span> Configure emacs to run tests</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Execute a code
@@ -346,7 +428,7 @@ To skip confirmations you may also want to set
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-20 Mon 06:02</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-20 Mon 06:13</small>.
 </div>
 </body>
 </html>

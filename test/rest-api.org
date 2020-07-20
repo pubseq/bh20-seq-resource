@@ -22,7 +22,7 @@ curl http://covid19.genenetwork.org/api/version
 
 The Python3 version is
 
-#+begin_src python :session
+#+begin_src python :session :exports both
 import requests
 response = requests.get("http://covid19.genenetwork.org/api/version")
 response_body = response.json()
@@ -39,7 +39,7 @@ PubSeq provides an API that is used to export formats that are
 suitable for uploading data to EBI/ENA from our [[http://covid19.genenetwork.org/export][EXPORT]] menu. This is
 documented [[http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part6][here]].
 
-#+begin_src python :session
+#+begin_src python :session :exports both
 requests.get("http://covid19.genenetwork.org/api/ebi/sample-MT32690.1.xml").text
 #+end_src
 

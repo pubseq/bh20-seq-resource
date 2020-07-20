@@ -25,11 +25,17 @@ import requests
 response = requests.get("http://covid19.genenetwork.org/api/version")
 response_body = response.json()
 assert response_body["service"] == "PubSeq", "PubSeq API not found"
+response_body
 #+end_src
 
 #+RESULTS:
+| service | : | PubSeq | version | : | 0.1 |
 
 ** Fetch EBI XML
+
+PubSeq provides an API that is used to export formats that are
+suitable for uploading data to EBI/ENA from our [[http://covid19.genenetwork.org/export][EXPORT]] menu. This is
+documented [[http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part6][here]].
 
 #+begin_src python :session
 requests.get("http://covid19.genenetwork.org/api/ebi/sample-MT32690.1.xml").text

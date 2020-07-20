@@ -1,40 +1,38 @@
 * PubSeq REST API
 
 Here we document the public REST API that comes with PubSeq. The tests
-are written and run in the amazing emacs [[https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html][org-babel]]. Execute a code
-block with C-c C-c. You may need to set
+run in the amazing emacs [[https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html][org-babel]].  See the bottom of this document
+for running the tests inside emacs.
 
-#+begin_src elisp
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((python . t)))
-(setq org-babel-python-command "python3")
+** Introduction
+
+We built a REST API for COVID-19 PubSeq. The API source code can be
+found in [[https://github.com/arvados/bh20-seq-resource/tree/master/bh20simplewebuploader/api.py][api.py]]. To see if the service is up try
+
+: curl http://covid19.genenetwork.org/api/version
+
+#+begin_src js
+{
+  "service": "PubSeq",
+  "version": 0.1
+}
 #+end_src
 
-#+RESULTS:
-: python3
-
-To skip confirmations you may also want to set
-
-: (setq org-confirm-babel-evaluate nil)
-
-** Check the version
+The Python3 version is
 
 #+begin_src python :session
 import requests
-response = requests.get("http://localhost:5000/api/version")
+response = requests.get("http://covid19.genenetwork.org/api/version")
 response_body = response.json()
 assert response_body["service"] == "PubSeq", "PubSeq API not found"
-response_body
 #+end_src
 
 #+RESULTS:
-| service | : | PubSeq | version | : | 0.1 |
 
 ** Fetch EBI XML
 
 #+begin_src python :session
-requests.get("http://localhost:5000/api/ebi/sample-MT32690.1.xml").text
+requests.get("http://covid19.genenetwork.org/api/ebi/sample-MT32690.1.xml").text
 #+end_src
 
 #+RESULTS:
@@ -91,3 +89,22 @@ requests.get("http://localhost:5000/api/ebi/sample-MT32690.1.xml").text
   </SAMPLE>
 </SAMPLE_SET>
 #+end_example
+
+* Configure emacs to run tests
+
+Execute a code
+block with C-c C-c. You may need to set
+
+#+begin_src elisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)))
+(setq org-babel-python-command "python3")
+#+end_src
+
+#+RESULTS:
+: python3
+
+To skip confirmations you may also want to set
+
+: (setq org-confirm-babel-evaluate nil)

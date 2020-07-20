@@ -9,7 +9,9 @@ for running the tests inside emacs.
 We built a REST API for COVID-19 PubSeq. The API source code can be
 found in [[https://github.com/arvados/bh20-seq-resource/tree/master/bh20simplewebuploader/api.py][api.py]]. To see if the service is up try
 
-: curl http://covid19.genenetwork.org/api/version
+#+begin_src sh
+curl http://covid19.genenetwork.org/api/version
+#+end_src
 
 #+begin_src js
 {

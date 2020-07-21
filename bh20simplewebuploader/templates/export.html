@@ -5,30 +5,10 @@
     {% include 'banner.html' %}
     {% include 'menu.html' %}
 
-    <h1>Export Data</h1>
-    <section class="blog">
 
-    COVID-19 PubSeq allows for exporting forms and data for other
-    services.
-
-    <h2>SPARQL</h2>
-
-    <p>
-      First of all, PubSeq exports a SPARQL endpoint
-      <a href="http://sparql.genenetwork.org/sparql/">here</a> that allows
-      you do do any query on the data. See this
-      <a href="/blog?id=using-covid-19-pubseq-part1">document</a> for
-      examples.
-    </p>
-
-    <h2>Export EBI/ENA Forms</h2>
-
-    <p>
-      Uploading data to EBI/ENA with PubSeq is described
-      <a href="/blog?id=using-covid-19-pubseq-part6">here</a>. To
-      export, first search for an uploaded entry through its
-      identifier:
-    </p>
+    {% if embed %}
+    {{ embed|safe }}
+    {% endif %}
 
     <div class="search">
       <input id="search-input" type="search" placeholder="e.g. MT326090.1" required>

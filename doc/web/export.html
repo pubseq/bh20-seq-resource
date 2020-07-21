@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-21 Tue 01:32 -->
+<!-- 2020-07-21 Tue 01:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PubSeq REST API</title>
+<title>About/FAQ</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Pjotr Prins" />
 <style type="text/css">
@@ -193,7 +193,6 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="Blog stylesheet" type="text/css" href="blog.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -242,202 +241,67 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href=""> UP </a>
- |
- <a accesskey="H" href="http://covid19.genenetwork.org/apidoc"> HOME </a>
-</div><div id="content">
-<h1 class="title">PubSeq REST API</h1>
+<div id="content">
+<h1 class="title">About/FAQ</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0db7287">1. PubSeq REST API</a>
-<ul>
-<li><a href="#orgd98cd95">1.1. Introduction</a></li>
-<li><a href="#org8951ab6">1.2. Fetch EBI XML</a></li>
-</ul>
-</li>
-<li><a href="#orgbde9911">2. Configure emacs to run tests</a></li>
+<li><a href="#org1b344eb">1. Export data</a></li>
+<li><a href="#orgc7785c0">2. SPARQL API</a></li>
+<li><a href="#org5b66ee0">3. REST API</a></li>
+<li><a href="#org3f92e6f">4. Export EBI/ENA Forms</a></li>
 </ul>
 </div>
 </div>
 
-
-
-<div id="outline-container-org0db7287" class="outline-2">
-<h2 id="org0db7287"><span class="section-number-2">1</span> PubSeq REST API</h2>
+<div id="outline-container-org1b344eb" class="outline-2">
+<h2 id="org1b344eb"><span class="section-number-2">1</span> Export data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-Here we document the public REST API that comes with PubSeq. The tests
-run in the amazing emacs <a href="https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html">org-babel</a>.  See the bottom of this document
-for running the tests inside emacs.
+Apart from straight file <a href="http://covid19.genenetwork.org/download">downloads</a> COVID-19 PubSeq allows for
+exporting forms and data for other services.
 </p>
 </div>
-
-<div id="outline-container-orgd98cd95" class="outline-3">
-<h3 id="orgd98cd95"><span class="section-number-3">1.1</span> Introduction</h3>
-<div class="outline-text-3" id="text-1-1">
-<p>
-We built a REST API for COVID-19 PubSeq. The API source code can be
-found in <a href="https://github.com/arvados/bh20-seq-resource/tree/master/bh20simplewebuploader/api.py">api.py</a>. To see if the service is up try
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh">curl http://covid19.genenetwork.org/api/version
-</pre>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-js">{
-  "service": "PubSeq",
-  "version": 0.1
-}
-</pre>
-</div>
-
-<p>
-The Python3 version is
-</p>
-
-<div class="org-src-container">
-<pre class="src src-python">import requests
-response = requests.get("http://covid19.genenetwork.org/api/version")
-response_body = response.json()
-assert response_body["service"] == "PubSeq", "PubSeq API not found"
-response_body
-</pre>
-</div>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-right" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">service</td>
-<td class="org-left">:</td>
-<td class="org-left">PubSeq</td>
-<td class="org-left">version</td>
-<td class="org-left">:</td>
-<td class="org-right">0.1</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-
-<div id="outline-container-org8951ab6" class="outline-3">
-<h3 id="org8951ab6"><span class="section-number-3">1.2</span> Fetch EBI XML</h3>
-<div class="outline-text-3" id="text-1-2">
-<p>
-PubSeq provides an API that is used to export formats that are
-suitable for uploading data to EBI/ENA from our <a href="http://covid19.genenetwork.org/export">EXPORT</a> menu. This is
-documented <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part6">here</a>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-python">requests.get("http://covid19.genenetwork.org/api/ebi/sample-MT32690.1.xml").text
-</pre>
-</div>
-
-<pre class="example">
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;SAMPLE_SET&gt;
-  &lt;SAMPLE alias="MT32690.1" center_name="COVID-19 PubSeq"&gt;
-    &lt;TITLE&gt;COVID-19 PubSeq Sample&lt;/TITLE&gt;
-    &lt;SAMPLE_NAME&gt;
-      &lt;TAXON_ID&gt;2697049&lt;/TAXON_ID&gt;
-      &lt;SCIENTIFIC_NAME&gt;Severe acute respiratory syndrome coronavirus 2&lt;/SCIENTIFIC_NAME&gt;
-      &lt;COMMON_NAME&gt;SARS-CoV-2&lt;/COMMON_NAME&gt;
-    &lt;/SAMPLE_NAME&gt;
-    &lt;SAMPLE_ATTRIBUTES&gt;
-      &lt;SAMPLE_ATTRIBUTE&gt;
-        &lt;TAG&gt;investigation type&lt;/TAG&gt;
-        &lt;VALUE&gt;&lt;/VALUE&gt;
-      &lt;/SAMPLE_ATTRIBUTE&gt;
-      &lt;SAMPLE_ATTRIBUTE&gt;
-        &lt;TAG&gt;sequencing method&lt;/TAG&gt;
-        &lt;VALUE&gt;&lt;/VALUE&gt;
-      &lt;/SAMPLE_ATTRIBUTE&gt;
-      &lt;SAMPLE_ATTRIBUTE&gt;
-        &lt;TAG&gt;collection date&lt;/TAG&gt;
-        &lt;VALUE&gt;&lt;/VALUE&gt;
-      &lt;/SAMPLE_ATTRIBUTE&gt;
-      &lt;SAMPLE_ATTRIBUTE&gt;
-        &lt;TAG&gt;geographic location (latitude)&lt;/TAG&gt;
-        &lt;VALUE&gt;&lt;/VALUE&gt;
-     &lt;UNITS&gt;DD&lt;/UNITS&gt;
-      &lt;/SAMPLE_ATTRIBUTE&gt;
-      &lt;SAMPLE_ATTRIBUTE&gt;
-        &lt;TAG&gt;geographic location (longitude)&lt;/TAG&gt;
-        &lt;VALUE&gt;&lt;/VALUE&gt;
-     &lt;UNITS&gt;DD&lt;/UNITS&gt;
-      &lt;/SAMPLE_ATTRIBUTE&gt;
-      &lt;SAMPLE_ATTRIBUTE&gt;
-     &lt;TAG&gt;geographic location (country and/or sea)&lt;/TAG&gt;
-     &lt;VALUE&gt;&lt;/VALUE&gt;
-      &lt;/SAMPLE_ATTRIBUTE&gt;
-      &lt;SAMPLE_ATTRIBUTE&gt;
-        &lt;TAG&gt;geographic location (region and locality)&lt;/TAG&gt;
-        &lt;VALUE&gt;&lt;/VALUE&gt;
-      &lt;/SAMPLE_ATTRIBUTE&gt;
-      &lt;SAMPLE_ATTRIBUTE&gt;
-        &lt;TAG&gt;environment (material)&lt;/TAG&gt;
-        &lt;VALUE&gt;&lt;/VALUE&gt;
-      &lt;/SAMPLE_ATTRIBUTE&gt;
-      &lt;SAMPLE_ATTRIBUTE&gt;
-        &lt;TAG&gt;ENA-CHECKLIST&lt;/TAG&gt;
-        &lt;VALUE&gt;ERC000011&lt;/VALUE&gt;
-      &lt;/SAMPLE_ATTRIBUTE&gt;
-    &lt;/SAMPLE_ATTRIBUTES&gt;
-  &lt;/SAMPLE&gt;
-&lt;/SAMPLE_SET&gt;
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgbde9911" class="outline-2">
-<h2 id="orgbde9911"><span class="section-number-2">2</span> Configure emacs to run tests</h2>
+<div id="outline-container-orgc7785c0" class="outline-2">
+<h2 id="orgc7785c0"><span class="section-number-2">2</span> SPARQL API</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-Execute a code
-block with C-c C-c. You may need to set
+First of all, PubSeq exports a SPARQL endpoint <a href="http://sparql.genenetwork.org/sparql/">here</a> that allows you do
+do any query on the data. See this <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part1">document</a> for examples.
 </p>
-
-<div class="org-src-container">
-<pre class="src src-elisp">(org-babel-do-load-languages
- 'org-babel-load-languages
- '((python . t)))
-(setq org-babel-python-command "python3")
-</pre>
+</div>
 </div>
 
+<div id="outline-container-org5b66ee0" class="outline-2">
+<h2 id="org5b66ee0"><span class="section-number-2">3</span> REST API</h2>
+<div class="outline-text-2" id="text-3">
 <p>
-To skip confirmations you may also want to set
+In addition to above flexible SPARQL endpoint - which is essentially
+is a query REST API - PubSeq exports its own
+<a href="http://covid19.genenetwork.org/apidoc">REST API</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3f92e6f" class="outline-2">
+<h2 id="org3f92e6f"><span class="section-number-2">4</span> Export EBI/ENA Forms</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Uploading data to EBI/ENA with PubSeq is described <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part6">here</a>.
 </p>
 
-<pre class="example">
-(setq org-confirm-babel-evaluate nil)
-</pre>
+<p>
+To export,
+first search for an uploaded entry through its identifier:
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-21 Tue 01:32</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-21 Tue 01:51</small>.
 </div>
 </body>
 </html>

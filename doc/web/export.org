@@ -1,0 +1,32 @@
+#+TITLE: About/FAQ
+#+AUTHOR: Pjotr Prins
+
+* Table of Contents                                                     :TOC:noexport:
+ - [[#export-data][Export data]]
+ - [[#sparql-api][SPARQL API]]
+ - [[#rest-api][REST API]]
+ - [[#export-ebiena-forms][Export EBI/ENA Forms]]
+
+* Export data
+
+Apart from straight file [[http://covid19.genenetwork.org/download][downloads]] COVID-19 PubSeq allows for
+exporting forms and data for other services.
+
+* SPARQL API
+
+
+First of all, PubSeq exports a SPARQL endpoint [[http://sparql.genenetwork.org/sparql/][here]] that allows you do
+do any query on the data. See this [[http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part1][document]] for examples.
+
+* REST API
+
+In addition to above flexible SPARQL endpoint - which is essentially
+is a query REST API - PubSeq exports its own
+[[http://covid19.genenetwork.org/apidoc][REST API]].
+
+* Export EBI/ENA Forms
+
+Uploading data to EBI/ENA with PubSeq is described [[http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part6][here]].
+
+To export,
+first search for an uploaded entry through its identifier:

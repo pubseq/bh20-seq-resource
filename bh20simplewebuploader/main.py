@@ -632,7 +632,8 @@ def validated_page():
 
 @app.route('/export')
 def export_page():
-    return render_template('export.html',menu='EXPORT')
+    buf = get_html_body('doc/web/export.html',"https://github.com/arvados/bh20-seq-resource/blob/master/doc/web/export.org")
+    return render_template('export.html',menu='EXPORT',embed=buf)
 
 @app.route('/demo')
 def demo_page():
@@ -641,7 +642,7 @@ def demo_page():
 @app.route('/apidoc')
 def apidoc_page():
     buf = get_html_body('test/rest-api.html',"https://github.com/arvados/bh20-seq-resource/blob/master/test/rest-api.org")
-    return render_template('blog.html',menu='BLOG',embed=buf)
+    return render_template('blog.html',menu='BLOG',embed=buf,blog=True)
 
 @app.route('/blog',methods=['GET'])
 def blog_page():

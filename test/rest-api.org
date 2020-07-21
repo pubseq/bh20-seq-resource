@@ -1,3 +1,17 @@
+# C-c C-e h h   publish
+# C-c !         insert date (use . for active agenda, C-u C-c ! for date+time, C-u C-c . for time)
+# C-c C-t       task rotate
+# RSS_IMAGE_URL: http://xxxx.xxxx.free.fr/rss_icon.png
+
+#+TITLE: PubSeq REST API
+#+AUTHOR: Pjotr Prins
+#+HTML_LINK_HOME: http://covid19.genenetwork.org/apidoc
+# OPTIONS: section-numbers: nil, with-drawers: t
+
+#+HTML_HEAD: <link rel="Blog stylesheet" type="text/css" href="blog.css" />
+
+
+
 * PubSeq REST API
 
 Here we document the public REST API that comes with PubSeq. The tests
@@ -32,6 +46,9 @@ response_body
 
 #+RESULTS:
 | service | : | PubSeq | version | : | 0.1 |
+
+** Fetch metadata
+
 
 ** Fetch EBI XML
 

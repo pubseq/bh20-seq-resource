@@ -15,14 +15,18 @@ def fetch_sample_metadata(id):
     PREFIX sio: <http://semanticscience.org/resource/>
     PREFIX edam: <http://edamontology.org/>
     PREFIX efo: <http://www.ebi.ac.uk/efo/>
-    select distinct ?id ?seq ?info ?sequencer
+    PREFIX evs: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+    PREFIX obo: <http://purl.obolibrary.org/obo/>
+    select distinct ?id ?seq ?date ?info ?specimen ?sequencer
     {
-    ?sample sio:SIO_000115 "%s" .
-    ?sample sio:SIO_000115 ?id .
-    ?seq pubseq:technology ?tech .
-    ?seq pubseq:sample ?sample .
-    ?sample edam:data_2091 ?info .
-    ?tech efo:EFO_0002699 ?sequencer .
+      ?sample sio:SIO_000115 "%s" ;
+              sio:SIO_000115 ?id ;
+              evs:C25164 ?date .
+      ?seq    pubseq:technology ?tech ;
+              pubseq:sample ?sample .
+      ?tech   efo:EFO_0002699 ?sequencer .
+      optional { ?sample edam:data_2091 ?info } .
+      optional { ?sample obo:OBI_0001479 ?specimen } .
     } limit 5
     """ % id
     payload = {'query': query, 'format': 'json'}
@@ -39,19 +43,21 @@ def version():
 def sample(id):
     # metadata = file.name(seq)+"/metadata.yaml"
     meta = fetch_sample_metadata(id)
+    print(meta)
     return jsonify([{
         'id': x['id']['value'],
         'fasta': x['seq']['value'],
         'collection': os.path.dirname(x['seq']['value']),
+        'date': x['date']['value'],
         'info': x['info']['value'],
+        'specimen': x['specimen']['value'],
         'sequencer': x['sequencer']['value'],
     } for x in meta])
 
 @app.route('/api/ebi/sample-<id>.xml', methods=['GET'])
 def ebi_sample(id):
     meta = fetch_sample_metadata(id)[0]
-    print("HERE",meta,file=sys.stderr)
-    page = render_template('ebi-sample.xml',sampleid=id,sequencer=meta['sequencer']['value'])
+    page = render_template('ebi-sample.xml',sampleid=id,sequencer=meta['sequencer']['value'],date=meta['date']['value'],specimen=meta['specimen']['value'])
     return page
 
 @app.route('/api/search', methods=['GET'])

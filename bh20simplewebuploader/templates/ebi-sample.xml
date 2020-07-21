@@ -18,7 +18,7 @@
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>collection date</TAG>
-        <VALUE>{{ time }}</VALUE>
+        <VALUE>{{ date }}</VALUE>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>geographic location (latitude)</TAG>
@@ -40,7 +40,7 @@
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>environment (material)</TAG>
-        <VALUE>{{ material }}</VALUE>
+        <VALUE>{{ specimen }}</VALUE>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>ENA-CHECKLIST</TAG>

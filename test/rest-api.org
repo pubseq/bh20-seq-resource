@@ -53,12 +53,11 @@ When you use the search box on PubSeq it queries the REST end point
 for information on the search items. For example
 
 #+begin_src python :session :exports both
-requests.get(baseURL+"/api/search?s=MT326090.1").json()
+requests.get(baseURL+"/api/search?s=MT533203.1").json()
 #+end_src
 
 #+RESULTS:
-| collection | : | http://collections.lugli.arvadosapi.com/c=10eaef75e0b875f81aa1f411c75370cf+126 | fasta | : | http://collections.lugli.arvadosapi.com/c=10eaef75e0b875f81aa1f411c75370cf+126/sequence.fasta | id | : | MT326090.1 | info | : | http://identifiers.org/insdc/MT326090.1#sequence |
-| collection | : | http://collections.lugli.arvadosapi.com/c=5a4c815f3e076ad7760a91864c39dd07+126 | fasta | : | http://collections.lugli.arvadosapi.com/c=5a4c815f3e076ad7760a91864c39dd07+126/sequence.fasta | id | : | MT326090.1 | info | : | http://identifiers.org/insdc/MT326090.1#sequence |
+| collection | : | http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126 | fasta | : | http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/sequence.fasta | id | : | MT533203.1 | info | : | http://identifiers.org/insdc/MT533203.1#sequence |
 
 where collection is the raw uploaded data. The hash value in ~c=~ is
 computed on the contents of the Arvados keep [[https://doc.arvados.org/v2.0/user/tutorials/tutorial-keep-mount-gnu-linux.html][collection]] and effectively
@@ -66,9 +65,18 @@ acts as a deduplication uuid.
 
 ** Fetch metadata
 
+Using above collection link you can fetch the metadata in JSON as it
+was uploaded originally from the SHeX expression, e.g. using
+https://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/
+
+But better to use the more advanced sample metadata fetcher
+because is does a bit more in terms of expansion
 
 #+begin_src python :session :exports both
+requests.get(baseURL+"/api/sample/MT533203.1.json").json()
 #+end_src
+
+#+RESULTS:
 
 
 

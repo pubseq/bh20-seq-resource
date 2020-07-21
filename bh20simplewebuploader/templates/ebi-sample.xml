@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SAMPLE_SET>
-  <SAMPLE alias="{{ id }}" center_name="COVID-19 PubSeq">
+  <SAMPLE alias="{{ sampleid }}" center_name="COVID-19 PubSeq">
     <TITLE>COVID-19 PubSeq Sample</TITLE>
     <SAMPLE_NAME>
       <TAXON_ID>2697049</TAXON_ID>
@@ -14,7 +14,7 @@
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>sequencing method</TAG>
-        <VALUE>{{ sequence_method }}</VALUE>
+        <VALUE>{{ sequencer }}</VALUE>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>collection date</TAG>

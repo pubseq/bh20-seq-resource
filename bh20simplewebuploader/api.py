@@ -7,13 +7,51 @@ import sys
 from flask import Flask, request, redirect, send_file, send_from_directory, render_template, jsonify
 from bh20simplewebuploader.main import app, baseURL
 
+# Helper functions
+
+def fetch_sample_metadata(id):
+    query = """
+    PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+    PREFIX sio: <http://semanticscience.org/resource/>
+    PREFIX edam: <http://edamontology.org/>
+    PREFIX efo: <http://www.ebi.ac.uk/efo/>
+    select distinct ?id ?seq ?info ?sequencer
+    {
+    ?sample sio:SIO_000115 "%s" .
+    ?sample sio:SIO_000115 ?id .
+    ?seq pubseq:technology ?tech .
+    ?seq pubseq:sample ?sample .
+    ?sample edam:data_2091 ?info .
+    ?tech efo:EFO_0002699 ?sequencer .
+    } limit 5
+    """ % id
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(baseURL, params=payload)
+    return r.json()['results']['bindings']
+
+# Main API routes
+
 @app.route('/api/version')
 def version():
     return jsonify({ 'service': 'PubSeq', 'version': 0.10 })
 
+@app.route('/api/sample/<id>.json')
+def sample(id):
+    # metadata = file.name(seq)+"/metadata.yaml"
+    meta = fetch_sample_metadata(id)
+    return jsonify([{
+        'id': x['id']['value'],
+        'fasta': x['seq']['value'],
+        'collection': os.path.dirname(x['seq']['value']),
+        'info': x['info']['value'],
+        'sequencer': x['sequencer']['value'],
+    } for x in meta])
+
 @app.route('/api/ebi/sample-<id>.xml', methods=['GET'])
 def ebi_sample(id):
-    page = render_template('ebi-sample.xml',**locals())
+    meta = fetch_sample_metadata(id)[0]
+    print("HERE",meta,file=sys.stderr)
+    page = render_template('ebi-sample.xml',sampleid=id,sequencer=meta['sequencer']['value'])
     return page
 
 @app.route('/api/search', methods=['GET'])

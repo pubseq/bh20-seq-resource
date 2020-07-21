@@ -694,32 +694,6 @@ def getCountDB():
     # print(result, file=sys.stderr)
     return jsonify({'sequences': int(result[0]["num"]["value"])})
 
-# Execute a 'global search'
-@app.route('/api/search', methods=['GET'])
-def search():
-    s = request.args.get('s')
-    query = """
-    PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
-    PREFIX sio: <http://semanticscience.org/resource/>
-    PREFIX edam: <http://edamontology.org/>
-    select distinct ?id ?seq ?info
-    {
-    ?sample sio:SIO_000115 "%s" .
-    ?sample sio:SIO_000115 ?id .
-    ?seq pubseq:sample ?sample .
-    ?sample edam:data_2091 ?info .
-    } limit 100
-    """ % s
-    payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
-    result = r.json()['results']['bindings']
-    print(result,file=sys.stderr);
-    return jsonify([{
-        'id': x['id']['value'],
-        'seq': x['seq']['value'],
-        'info': x['info']['value'],
-    } for x in result])
-
 @app.route('/api/getAllaccessions', methods=['GET'])
 def getAllaccessions():
     query="""SELECT DISTINCT ?fasta ?value WHERE {?fasta ?x[ <http://edamontology.org/data_2091> ?value ]}"""

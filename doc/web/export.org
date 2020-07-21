@@ -28,5 +28,4 @@ is a query REST API - PubSeq exports its own
 
 Uploading data to EBI/ENA with PubSeq is described [[http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part6][here]].
 
-To export,
-first search for an uploaded entry through its identifier:
+To export, first search for an uploaded entry through its identifier:

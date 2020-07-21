@@ -10,8 +10,6 @@
 
 #+HTML_HEAD: <link rel="Blog stylesheet" type="text/css" href="blog.css" />
 
-
-
 * PubSeq REST API
 
 Here we document the public REST API that comes with PubSeq. The tests
@@ -38,7 +36,9 @@ The Python3 version is
 
 #+begin_src python :session :exports both
 import requests
-response = requests.get("http://covid19.genenetwork.org/api/version")
+baseURL="http://localhost:5000" # for development
+# baseURL="http://covid19.genenetwork.org"
+response = requests.get(baseURL+"/api/version")
 response_body = response.json()
 assert response_body["service"] == "PubSeq", "PubSeq API not found"
 response_body
@@ -47,7 +47,29 @@ response_body
 #+RESULTS:
 | service | : | PubSeq | version | : | 0.1 |
 
+** Search for an entry
+
+When you use the search box on PubSeq it queries the REST end point
+for information on the search items. For example
+
+#+begin_src python :session :exports both
+requests.get(baseURL+"/api/search?s=MT326090.1").json()
+#+end_src
+
+#+RESULTS:
+| collection | : | http://collections.lugli.arvadosapi.com/c=10eaef75e0b875f81aa1f411c75370cf+126 | fasta | : | http://collections.lugli.arvadosapi.com/c=10eaef75e0b875f81aa1f411c75370cf+126/sequence.fasta | id | : | MT326090.1 | info | : | http://identifiers.org/insdc/MT326090.1#sequence |
+| collection | : | http://collections.lugli.arvadosapi.com/c=5a4c815f3e076ad7760a91864c39dd07+126 | fasta | : | http://collections.lugli.arvadosapi.com/c=5a4c815f3e076ad7760a91864c39dd07+126/sequence.fasta | id | : | MT326090.1 | info | : | http://identifiers.org/insdc/MT326090.1#sequence |
+
+where collection is the raw uploaded data. The hash value in ~c=~ is
+computed on the contents of the Arvados keep [[https://doc.arvados.org/v2.0/user/tutorials/tutorial-keep-mount-gnu-linux.html][collection]] and effectively
+acts as a deduplication uuid.
+
 ** Fetch metadata
+
+
+#+begin_src python :session :exports both
+#+end_src
+
 
 
 ** Fetch EBI XML
@@ -57,14 +79,14 @@ suitable for uploading data to EBI/ENA from our [[http://covid19.genenetwork.org
 documented [[http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part6][here]].
 
 #+begin_src python :session :exports both
-requests.get("http://covid19.genenetwork.org/api/ebi/sample-MT32690.1.xml").text
+requests.get(baseURL+"/api/ebi/sample-MT326090.1.xml").text
 #+end_src
 
 #+RESULTS:
 #+begin_example
 <?xml version="1.0" encoding="UTF-8"?>
 <SAMPLE_SET>
-  <SAMPLE alias="MT32690.1" center_name="COVID-19 PubSeq">
+  <SAMPLE alias="MT326090.1" center_name="COVID-19 PubSeq">
     <TITLE>COVID-19 PubSeq Sample</TITLE>
     <SAMPLE_NAME>
       <TAXON_ID>2697049</TAXON_ID>
@@ -125,6 +147,7 @@ block with C-c C-c. You may need to set
  'org-babel-load-languages
  '((python . t)))
 (setq org-babel-python-command "python3")
+(setq org-babel-eval-verbose t)
 #+end_src
 
 #+RESULTS:
@@ -133,3 +156,5 @@ block with C-c C-c. You may need to set
 To skip confirmations you may also want to set
 
 : (setq org-confirm-babel-evaluate nil)
+
+To see output of the inpreter open then *Python* buffer.

@@ -19,11 +19,11 @@ function toDIVTable(rows) {
         html = '<div class="rTable">';
         rows.forEach(row => {
             id = row['id'];
-            seq = row['seq'];
             info = row['info'];
             html += '<div class="rTableRow">';
             html += cell('<a href="'+info+'">'+id+'</a>');
-            html += cell('<a href="'+seq+'">FASTA</a>');
+            html += cell('<a href="'+row['collection']+'">Collection</a>');
+            html += cell('<a href="'+row['fasta']+'">FASTA</a>');
             html += cell('<a href="/api/ebi/sample-'+id+'.xml">EBI/ENA export XML</a>');
             html += '</div>';
         });

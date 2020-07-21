@@ -17,14 +17,15 @@ def fetch_sample_metadata(id):
     PREFIX efo: <http://www.ebi.ac.uk/efo/>
     PREFIX evs: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
     PREFIX obo: <http://purl.obolibrary.org/obo/>
-    select distinct ?id ?seq ?date ?info ?specimen ?sequencer
+    select distinct ?id ?seq ?date ?info ?specimen ?sequencer ?mapper
     {
       ?sample sio:SIO_000115 "%s" ;
               sio:SIO_000115 ?id ;
               evs:C25164 ?date .
       ?seq    pubseq:technology ?tech ;
               pubseq:sample ?sample .
-      ?tech   efo:EFO_0002699 ?sequencer .
+      ?tech   efo:EFO_0002699 ?mapper ;
+              obo:OBI_0600047 ?sequencer .
       optional { ?sample edam:data_2091 ?info } .
       optional { ?sample obo:OBI_0001479 ?specimen } .
     } limit 5
@@ -52,6 +53,7 @@ def sample(id):
         'info': x['info']['value'],
         'specimen': x['specimen']['value'],
         'sequencer': x['sequencer']['value'],
+        'mapper': x['mapper']['value'],
     } for x in meta])
 
 @app.route('/api/ebi/sample-<id>.xml', methods=['GET'])

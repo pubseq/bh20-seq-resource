@@ -77,6 +77,7 @@ requests.get(baseURL+"/api/sample/MT533203.1.json").json()
 #+end_src
 
 #+RESULTS:
+| collection | : | http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126 | date | : | 2020-04-27 | fasta | : | http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/sequence.fasta | id | : | MT533203.1 | info | : | http://identifiers.org/insdc/MT533203.1#sequence | mapper | : | minimap v. 2.17 | sequencer | : | http://www.ebi.ac.uk/efo/EFO_0008632 | specimen | : | http://purl.obolibrary.org/obo/NCIT_C155831 |
 
 
 
@@ -108,11 +109,11 @@ requests.get(baseURL+"/api/ebi/sample-MT326090.1.xml").text
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>sequencing method</TAG>
-        <VALUE></VALUE>
+        <VALUE>http://purl.obolibrary.org/obo/OBI_0000759</VALUE>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>collection date</TAG>
-        <VALUE></VALUE>
+        <VALUE>2020-03-21</VALUE>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>geographic location (latitude)</TAG>
@@ -134,7 +135,7 @@ requests.get(baseURL+"/api/ebi/sample-MT326090.1.xml").text
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>environment (material)</TAG>
-        <VALUE></VALUE>
+        <VALUE>http://purl.obolibrary.org/obo/NCIT_C155831</VALUE>
       </SAMPLE_ATTRIBUTE>
       <SAMPLE_ATTRIBUTE>
         <TAG>ENA-CHECKLIST</TAG>

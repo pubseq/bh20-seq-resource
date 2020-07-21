@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-21 Tue 01:32 -->
+<!-- 2020-07-21 Tue 05:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PubSeq REST API</title>
@@ -252,21 +252,21 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0db7287">1. PubSeq REST API</a>
+<li><a href="#orgc76638c">1. PubSeq REST API</a>
 <ul>
-<li><a href="#orgd98cd95">1.1. Introduction</a></li>
-<li><a href="#org8951ab6">1.2. Fetch EBI XML</a></li>
+<li><a href="#org247cf63">1.1. Introduction</a></li>
+<li><a href="#orgcc2b1b0">1.2. Search for an entry</a></li>
+<li><a href="#org0ef2d2f">1.3. Fetch metadata</a></li>
+<li><a href="#org82c693c">1.4. Fetch EBI XML</a></li>
 </ul>
 </li>
-<li><a href="#orgbde9911">2. Configure emacs to run tests</a></li>
+<li><a href="#org49153e2">2. Configure emacs to run tests</a></li>
 </ul>
 </div>
 </div>
 
-
-
-<div id="outline-container-org0db7287" class="outline-2">
-<h2 id="org0db7287"><span class="section-number-2">1</span> PubSeq REST API</h2>
+<div id="outline-container-orgc76638c" class="outline-2">
+<h2 id="orgc76638c"><span class="section-number-2">1</span> PubSeq REST API</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Here we document the public REST API that comes with PubSeq. The tests
@@ -275,8 +275,8 @@ for running the tests inside emacs.
 </p>
 </div>
 
-<div id="outline-container-orgd98cd95" class="outline-3">
-<h3 id="orgd98cd95"><span class="section-number-3">1.1</span> Introduction</h3>
+<div id="outline-container-org247cf63" class="outline-3">
+<h3 id="org247cf63"><span class="section-number-3">1.1</span> Introduction</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 We built a REST API for COVID-19 PubSeq. The API source code can be
@@ -302,7 +302,9 @@ The Python3 version is
 
 <div class="org-src-container">
 <pre class="src src-python">import requests
-response = requests.get("http://covid19.genenetwork.org/api/version")
+baseURL="http://localhost:5000" # for development
+# baseURL="http://covid19.genenetwork.org"
+response = requests.get(baseURL+"/api/version")
 response_body = response.json()
 assert response_body["service"] == "PubSeq", "PubSeq API not found"
 response_body
@@ -339,9 +341,181 @@ response_body
 </div>
 </div>
 
-<div id="outline-container-org8951ab6" class="outline-3">
-<h3 id="org8951ab6"><span class="section-number-3">1.2</span> Fetch EBI XML</h3>
+<div id="outline-container-orgcc2b1b0" class="outline-3">
+<h3 id="orgcc2b1b0"><span class="section-number-3">1.2</span> Search for an entry</h3>
 <div class="outline-text-3" id="text-1-2">
+<p>
+When you use the search box on PubSeq it queries the REST end point
+for information on the search items. For example
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">requests.get(baseURL+"/api/search?s=MT533203.1").json()
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">collection</td>
+<td class="org-left">:</td>
+<td class="org-left"><a href="http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126">http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126</a></td>
+<td class="org-left">fasta</td>
+<td class="org-left">:</td>
+<td class="org-left"><a href="http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/sequence.fasta">http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/sequence.fasta</a></td>
+<td class="org-left">id</td>
+<td class="org-left">:</td>
+<td class="org-left">MT533203.1</td>
+<td class="org-left">info</td>
+<td class="org-left">:</td>
+<td class="org-left"><a href="http://identifiers.org/insdc/MT533203.1#sequence">http://identifiers.org/insdc/MT533203.1#sequence</a></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+where collection is the raw uploaded data. The hash value in <code>c=</code> is
+computed on the contents of the Arvados keep <a href="https://doc.arvados.org/v2.0/user/tutorials/tutorial-keep-mount-gnu-linux.html">collection</a> and effectively
+acts as a deduplication uuid.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0ef2d2f" class="outline-3">
+<h3 id="org0ef2d2f"><span class="section-number-3">1.3</span> Fetch metadata</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Using above collection link you can fetch the metadata in JSON as it
+was uploaded originally from the SHeX expression, e.g. using
+<a href="https://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/">https://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/</a>
+</p>
+
+<p>
+But better to use the more advanced sample metadata fetcher
+because is does a bit more in terms of expansion
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">requests.get(baseURL+"/api/sample/MT533203.1.json").json()
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">collection</td>
+<td class="org-left">:</td>
+<td class="org-left"><a href="http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126">http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126</a></td>
+<td class="org-left">date</td>
+<td class="org-left">:</td>
+<td class="org-right">2020-04-27</td>
+<td class="org-left">fasta</td>
+<td class="org-left">:</td>
+<td class="org-left"><a href="http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/sequence.fasta">http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/sequence.fasta</a></td>
+<td class="org-left">id</td>
+<td class="org-left">:</td>
+<td class="org-left">MT533203.1</td>
+<td class="org-left">info</td>
+<td class="org-left">:</td>
+<td class="org-left"><a href="http://identifiers.org/insdc/MT533203.1#sequence">http://identifiers.org/insdc/MT533203.1#sequence</a></td>
+<td class="org-left">mapper</td>
+<td class="org-left">:</td>
+<td class="org-left">minimap v. 2.17</td>
+<td class="org-left">sequencer</td>
+<td class="org-left">:</td>
+<td class="org-left"><a href="http://www.ebi.ac.uk/efo/EFO_0008632">http://www.ebi.ac.uk/efo/EFO_0008632</a></td>
+<td class="org-left">specimen</td>
+<td class="org-left">:</td>
+<td class="org-left"><a href="http://purl.obolibrary.org/obo/NCIT_C155831">http://purl.obolibrary.org/obo/NCIT_C155831</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+<div id="outline-container-org82c693c" class="outline-3">
+<h3 id="org82c693c"><span class="section-number-3">1.4</span> Fetch EBI XML</h3>
+<div class="outline-text-3" id="text-1-4">
 <p>
 PubSeq provides an API that is used to export formats that are
 suitable for uploading data to EBI/ENA from our <a href="http://covid19.genenetwork.org/export">EXPORT</a> menu. This is
@@ -349,14 +523,14 @@ documented <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">requests.get("http://covid19.genenetwork.org/api/ebi/sample-MT32690.1.xml").text
+<pre class="src src-python">requests.get(baseURL+"/api/ebi/sample-MT326090.1.xml").text
 </pre>
 </div>
 
 <pre class="example">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;SAMPLE_SET&gt;
-  &lt;SAMPLE alias="MT32690.1" center_name="COVID-19 PubSeq"&gt;
+  &lt;SAMPLE alias="MT326090.1" center_name="COVID-19 PubSeq"&gt;
     &lt;TITLE&gt;COVID-19 PubSeq Sample&lt;/TITLE&gt;
     &lt;SAMPLE_NAME&gt;
       &lt;TAXON_ID&gt;2697049&lt;/TAXON_ID&gt;
@@ -370,11 +544,11 @@ documented <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq
       &lt;/SAMPLE_ATTRIBUTE&gt;
       &lt;SAMPLE_ATTRIBUTE&gt;
         &lt;TAG&gt;sequencing method&lt;/TAG&gt;
-        &lt;VALUE&gt;&lt;/VALUE&gt;
+        &lt;VALUE&gt;http://purl.obolibrary.org/obo/OBI_0000759&lt;/VALUE&gt;
       &lt;/SAMPLE_ATTRIBUTE&gt;
       &lt;SAMPLE_ATTRIBUTE&gt;
         &lt;TAG&gt;collection date&lt;/TAG&gt;
-        &lt;VALUE&gt;&lt;/VALUE&gt;
+        &lt;VALUE&gt;2020-03-21&lt;/VALUE&gt;
       &lt;/SAMPLE_ATTRIBUTE&gt;
       &lt;SAMPLE_ATTRIBUTE&gt;
         &lt;TAG&gt;geographic location (latitude)&lt;/TAG&gt;
@@ -396,7 +570,7 @@ documented <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq
       &lt;/SAMPLE_ATTRIBUTE&gt;
       &lt;SAMPLE_ATTRIBUTE&gt;
         &lt;TAG&gt;environment (material)&lt;/TAG&gt;
-        &lt;VALUE&gt;&lt;/VALUE&gt;
+        &lt;VALUE&gt;http://purl.obolibrary.org/obo/NCIT_C155831&lt;/VALUE&gt;
       &lt;/SAMPLE_ATTRIBUTE&gt;
       &lt;SAMPLE_ATTRIBUTE&gt;
         &lt;TAG&gt;ENA-CHECKLIST&lt;/TAG&gt;
@@ -410,8 +584,8 @@ documented <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq
 </div>
 </div>
 
-<div id="outline-container-orgbde9911" class="outline-2">
-<h2 id="orgbde9911"><span class="section-number-2">2</span> Configure emacs to run tests</h2>
+<div id="outline-container-org49153e2" class="outline-2">
+<h2 id="org49153e2"><span class="section-number-2">2</span> Configure emacs to run tests</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Execute a code
@@ -423,6 +597,7 @@ block with C-c C-c. You may need to set
  'org-babel-load-languages
  '((python . t)))
 (setq org-babel-python-command "python3")
+(setq org-babel-eval-verbose t)
 </pre>
 </div>
 
@@ -433,11 +608,16 @@ To skip confirmations you may also want to set
 <pre class="example">
 (setq org-confirm-babel-evaluate nil)
 </pre>
+
+
+<p>
+To see output of the inpreter open then <b>Python</b> buffer.
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-21 Tue 01:32</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-21 Tue 05:38</small>.
 </div>
 </body>
 </html>

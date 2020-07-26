@@ -28,6 +28,8 @@ resource for COVID-19 research.  The focus is on providing the best
 possible sequence data with associated metadata that can be used for
 sequence comparison and protein prediction.
 
+We were at the *Bioinformatics Community Conference 2020*! Have a look at the [[https://bcc2020.sched.com/event/coLw]][video talk] ([[https://drive.google.com/file/d/1skXHwVKM_gl73-_4giYIOQ1IlC5X5uBo/view?usp=sharing]][alternative link]) and the [[https://drive.google.com/file/d/1vyEgfvSqhM9yIwWZ6Iys-QxhxtVxPSdp/view?usp=sharing]][poster].
+
 * Who created the public sequence resource?
 
 The *public sequence resource* is an initiative by [[https://github.com/arvados/bh20-seq-resource/graphs/contributors][bioinformatics]] and

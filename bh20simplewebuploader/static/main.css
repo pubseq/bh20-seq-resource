@@ -177,7 +177,7 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
 
 .about {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-auto-flow: row;
 }
 

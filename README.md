@@ -9,7 +9,7 @@ web interface. You can use it to upload the genomes of SARS-CoV-2
 samples to make them publicly and freely available to other
 researchers. For more information see the [paper](./paper/paper.md).
 
-![alt text](./image/website.png "Website")
+![alt text](./image/homepage.png "Website")
 
 To get started, first [install the uploader](#installation), and use the `bh20-seq-uploader` command to [upload your data](#usage).
 

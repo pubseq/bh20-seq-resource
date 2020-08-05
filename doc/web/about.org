@@ -17,7 +17,10 @@
  - [[#how-do-i-change-the-work-flows][How do I change the work flows?]]
  - [[#how-do-i-change-the-source-code][How do I change the source code?]]
  - [[#should-i-choose-cc-by-or-cc0][Should I choose CC-BY or CC0?]]
+ - [[#are-there-also-variant-in-the-RDF-databases]][Are there also variant in the RDF databases?]
  - [[#how-do-i-deal-with-private-data-and-privacy][How do I deal with private data and privacy?]]
+ - [[#do-you-have-any-checks-or-concerns-if-human-sequence-accidentally-submitted-to-your-service-as-part-of-a-fastq][Do you have any checks or concerns if human sequence accidentally submitted to your service as part of a fastq?]
+ - [[#does-PubSeq-support-only-SARS-CoV-2=data]][Does PubSeq support only SARS-CoV-2 data?]
  - [[#how-do-i-communicate-with-you][How do I communicate with you?]]
  - [[#who-are-the-sponsors][Who are the sponsors?]]
 
@@ -27,6 +30,8 @@ The *public sequence resource* aims to provide a generic and useful
 resource for COVID-19 research.  The focus is on providing the best
 possible sequence data with associated metadata that can be used for
 sequence comparison and protein prediction.
+
+We were at the *Bioinformatics Community Conference 2020*! Have a look at the [[https://bcc2020.sched.com/event/coLw]][video talk] ([[https://drive.google.com/file/d/1skXHwVKM_gl73-_4giYIOQ1IlC5X5uBo/view?usp=sharing]][alternative link]) and the [[https://drive.google.com/file/d/1vyEgfvSqhM9yIwWZ6Iys-QxhxtVxPSdp/view?usp=sharing]][poster].
 
 * Who created the public sequence resource?
 
@@ -171,12 +176,27 @@ because we know people like the attribution clause.
 
 In all honesty: we prefer both data and software to be free.
 
+* Are there also variant in the RDF databases? *
+
+We do output a RDF file with the pangenome built in, and you can parse it because it has variants implicitly.
+
+We are also writing tools to generate VCF files directly from the pangenome.
+
 * How do I deal with private data and privacy?
 
 A public sequence resource is about public data. Metadata can refer to
 private data. You can use your own (anonymous) identifiers.  We also
 plan to combine identifiers with clinical data stored securely at
 [[https://redcap-covid19.elixir-luxembourg.org/redcap/][REDCap]]. See the relevant [[https://github.com/arvados/bh20-seq-resource/issues/21][tracker]] for more information and contributing.
+
+* Do you have any checks or concerns if human sequence accidentally submitted to your service as part of a fastq? *
+
+We are planning to remove reads that match the human reference.
+
+* Does PubSeq support only SARS-CoV-2 data? *
+
+To date, PubSeq is a resource specific to SARS-CoV-2, but we are designing it to be able to support other species in the future.
+
 
 * How do I communicate with you?
 

@@ -234,6 +234,6 @@ The web interface using this exact same script so it should just work
 
 ** Example: uploading bulk GenBank sequences
 
-We also use above script to bulk upload GenBank sequences with a [[https://github.com/arvados/bh20-seq-resource/blob/master/scripts/from_genbank_to_fasta_and_yaml.py][FASTA
+We also use above script to bulk upload GenBank sequences with a [[https://github.com/arvados/bh20-seq-resource/blob/master/scripts/download_genbank_data/from_genbank_to_fasta_and_yaml.py][FASTA
 and YAML]] extractor specific for GenBank. This means that the steps we
 took above for uploading a GenBank sequence are already automated.

@@ -31,9 +31,9 @@ outputs:
   odgiRDF:
     type: File
     outputSource: odgi2rdf/rdf
-  readsMergeDedup:
+  readsMergeDedupSortedByQualAndLen:
     type: File
-    outputSource: dedup/reads_dedup
+    outputSource: dedup_and_sort_by_quality_and_len/reads_dedupped_sorted_by_quality_and_len
   mergedMetadata:
     type: File
     outputSource: mergeMetadata/merged
@@ -51,17 +51,13 @@ steps:
       exclude: exclude
     out: [relabeledSeqs, originalLabels]
     run: relabel-seqs.cwl
-  dedup:
+  dedup_and_sort_by_quality_and_len:
     in: {reads: relabel/relabeledSeqs}
-    out: [reads_dedup, dups]
-    run: ../tools/seqkit/seqkit_rmdup.cwl
-  sort_by_quality_and_len:
-    in: {reads: dedup/reads_dedup}
-    out: [reads_sorted_by_quality_and_len]
+    out: [reads_dedupped_sorted_by_quality_and_len, dups]
     run: sort_fasta_by_quality_and_len.cwl
   induceGraph:
     in:
-      readsFA: sort_by_quality_and_len/reads_sorted_by_quality_and_len
+      readsFA: dedup_and_sort_by_quality_and_len/reads_dedupped_sorted_by_quality_and_len
     out: [spoaGFA]
     run: spoa.cwl
   buildGraph:
@@ -90,7 +86,7 @@ steps:
       metadata: metadata
       metadataSchema: metadataSchema
       subjects: subjects
-      dups: dedup/dups
+      dups: dedup_and_sort_by_quality_and_len/dups
       originalLabels: relabel/originalLabels
     out: [merged]
     run: merge-metadata.cwl

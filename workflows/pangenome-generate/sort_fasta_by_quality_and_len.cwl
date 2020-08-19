@@ -1,5 +1,9 @@
 cwlVersion: v1.1
 class: CommandLineTool
+hints:
+  ResourceRequirement:
+    coresMin: 1
+    ramMin: 1024
 inputs:
   readsFA:
     type: File

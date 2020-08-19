@@ -181,13 +181,7 @@ class SeqAnalyzer:
         if self.schema_ref is None:
             self.upload_schema()
 
-        validated = arvados.util.list_all(self.api.collections().list, filters=[
-            ["owner_uuid", "=", self.validated_project],
-            ["properties.status", "=", "validated"]])
         inputobj = {
-            "inputReads": [],
-            "metadata": [],
-            "subjects": [],
             "metadataSchema": {
                 "class": "File",
                 "location": self.schema_ref
@@ -195,19 +189,10 @@ class SeqAnalyzer:
             "exclude": {
                 "class": "File",
                 "location": self.exclude_list
-            }
+            },
+            "src_project": self.validated_project
         }
-        validated.sort(key=lambda v: v["portable_data_hash"])
-        for v in validated:
-            inputobj["inputReads"].append({
-                "class": "File",
-                "location": "keep:%s/sequence.fasta" % v["portable_data_hash"]
-            })
-            inputobj["metadata"].append({
-                "class": "File",
-                "location": "keep:%s/metadata.yaml" % v["portable_data_hash"]
-            })
-            inputobj["subjects"].append("http://collections.lugli.arvadosapi.com/c=%s/sequence.fasta" % v["portable_data_hash"])
+
         self.run_workflow(self.pangenome_analysis_project, self.pangenome_workflow_uuid, "Pangenome analysis", inputobj)
 
 

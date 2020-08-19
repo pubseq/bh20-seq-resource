@@ -2,8 +2,7 @@ cwlVersion: v1.1
 class: CommandLineTool
 inputs:
   readsFA: File
-stdout: $(inputs.readsFA.nameroot).g6.gfa
-script:
+  script:
     type: File
     default: {class: File, location: relabel-seqs.py}
 outputs:
@@ -20,6 +19,7 @@ hints:
     ramMin: $(15 * 1024)
     outdirMin: $(Math.ceil(inputs.readsFA.size/(1024*1024*1024) + 20))
 baseCommand: spoa
+stdout: $(inputs.readsFA.nameroot).g6.gfa
 arguments: [
     $(inputs.readsFA),
     -G,

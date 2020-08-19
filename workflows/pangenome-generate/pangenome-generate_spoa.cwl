@@ -5,11 +5,8 @@ requirements:
   ScatterFeatureRequirement: {}
   StepInputExpressionRequirement: {}
 inputs:
-  inputReads: File[]
-  metadata: File[]
-  metadataSchema: File
-  subjects: string[]
-  exclude: File?
+  seqs: File
+  metadata: File
   bin_widths:
     type: int[]
     default: [ 1, 4, 16, 64, 256, 1000, 4000, 16000]
@@ -36,7 +33,7 @@ outputs:
     outputSource: dedup_and_sort_by_quality_and_len/reads_dedupped_sorted_by_quality_and_len
   mergedMetadata:
     type: File
-    outputSource: mergeMetadata/merged
+    outputSource: dups2metadata/merged
   indexed_paths:
     type: File
     outputSource: index_paths/indexed_paths
@@ -44,15 +41,8 @@ outputs:
     type: Directory
     outputSource: segment_components/colinear_components
 steps:
-  relabel:
-    in:
-      readsFA: inputReads
-      subjects: subjects
-      exclude: exclude
-    out: [relabeledSeqs, originalLabels]
-    run: relabel-seqs.cwl
   dedup_and_sort_by_quality_and_len:
-    in: {reads: relabel/relabeledSeqs}
+    in: {reads: seqs}
     out: [reads_dedupped_sorted_by_quality_and_len, dups]
     run: sort_fasta_by_quality_and_len.cwl
   induceGraph:
@@ -81,15 +71,12 @@ steps:
     in: {odgi: buildGraph/odgiGraph}
     out: [rdf]
     run: odgi_to_rdf.cwl
-  mergeMetadata:
+  dups2metadata:
     in:
       metadata: metadata
-      metadataSchema: metadataSchema
-      subjects: subjects
       dups: dedup_and_sort_by_quality_and_len/dups
-      originalLabels: relabel/originalLabels
     out: [merged]
-    run: merge-metadata.cwl
+    run: dups2metadata.cwl
   bin_paths:
     run: ../tools/odgi/odgi_bin.cwl
     in:

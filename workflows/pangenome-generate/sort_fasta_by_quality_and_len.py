@@ -6,7 +6,9 @@
 import os
 import sys
 import gzip
-import xxhash
+
+#import xxhash # Faster library
+import hashlib
 
 def open_gzipsafe(path_file):
     if path_file.endswith('.gz'):
@@ -26,7 +28,9 @@ with open_gzipsafe(path_fasta) as f:
         header = fasta.strip('\n').split('\n')[0]
         sequence = ''.join(fasta.strip('\n').split('\n')[1:])
 
-        hash = xxhash.xxh64(sequence).hexdigest()
+        ##hash = xxhash.xxh64(sequence).hexdigest() # Faster library
+        hash = hashlib.md5(sequence.encode('utf-8')).hexdigest()
+
         if hash not in hash_to_count_and_headers_dict:
             # New sequence
             hash_to_count_and_headers_dict[hash] = [0, []]

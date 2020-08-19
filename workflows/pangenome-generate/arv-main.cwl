@@ -10,9 +10,9 @@ outputs:
   odgiGraph:
     type: File
     outputSource: pangenome-generate/odgiGraph
-  odgiPNG:
-    type: File
-    outputSource: pangenome-generate/odgiPNG
+#  odgiPNG:
+#    type: File
+#    outputSource: pangenome-generate/odgiPNG
   spoaGFA:
     type: File
     outputSource: pangenome-generate/spoaGFA
@@ -25,12 +25,12 @@ outputs:
   mergedMetadata:
     type: File
     outputSource: pangenome-generate/mergedMetadata
-  indexed_paths:
-    type: File
-    outputSource: pangenome-generate/indexed_paths
-  colinear_components:
-    type: Directory
-    outputSource: pangenome-generate/colinear_components
+#  indexed_paths:
+#    type: File
+#    outputSource: pangenome-generate/indexed_paths
+#  colinear_components:
+#    type: Directory
+#    outputSource: pangenome-generate/colinear_components
 steps:
   collect-seqs:
     run: collect-seqs.cwl
@@ -45,4 +45,4 @@ steps:
       seqs: collect-seqs/relabeledSeqs
       metadata: collect-seqs/mergedMetadata
       exclude: exclude
-    out: [odgiGraph, odgiPNG, spoaGFA, odgiRDF, readsMergeDedup, mergedMetadata, indexed_paths, colinear_components]
+    out: [odgiGraph, spoaGFA, odgiRDF, readsMergeDedup, mergedMetadata]

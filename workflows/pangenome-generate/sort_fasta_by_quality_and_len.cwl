@@ -16,6 +16,9 @@ stdout: $(inputs.readsFA.nameroot).sorted_by_quality_and_len.fasta
 outputs:
   sortedReadsFA:
     type: stdout
+  dups:
+    type: File
+    outputBinding: {glob: dups.txt}
 requirements:
   InlineJavascriptRequirement: {}
   ShellCommandRequirement: {}

@@ -10,10 +10,9 @@ outputs:
     type: stdout
 requirements:
   InlineJavascriptRequirement: {}
-  ShellCommandRequirement: {}
 hints:
   DockerRequirement:
-    dockerPull: "quay.io/biocontainers/spoa:3.0.2--hc9558a2_0"
+    dockerPull: "quay.io/biocontainers/spoa:3.4.0--hc9558a2_0"
   ResourceRequirement:
     coresMin: 1
     ramMin: $(15 * 1024)

@@ -30,7 +30,7 @@ outputs:
     outputSource: odgi2rdf/rdf
   readsMergeDedupSortedByQualAndLen:
     type: File
-    outputSource: dedup_and_sort_by_quality_and_len/reads_dedupped_sorted_by_quality_and_len
+    outputSource: dedup_and_sort_by_quality_and_len/sortedReadsFA
   mergedMetadata:
     type: File
     outputSource: dups2metadata/merged
@@ -42,12 +42,12 @@ outputs:
 #    outputSource: segment_components/colinear_components
 steps:
   dedup_and_sort_by_quality_and_len:
-    in: {reads: seqs}
+    in: {readsFA: seqs}
     out: [sortedReadsFA, dups]
     run: sort_fasta_by_quality_and_len.cwl
   induceGraph:
     in:
-      readsFA: dedup_and_sort_by_quality_and_len/reads_dedupped_sorted_by_quality_and_len
+      readsFA: dedup_and_sort_by_quality_and_len/sortedReadsFA
     out: [spoaGFA]
     run: spoa.cwl
   buildGraph:

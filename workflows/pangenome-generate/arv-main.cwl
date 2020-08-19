@@ -21,7 +21,7 @@ outputs:
     outputSource: pangenome-generate/odgiRDF
   readsMergeDedup:
     type: File
-    outputSource: pangenome-generate/readsMergeDedup
+    outputSource: pangenome-generate/readsMergeDedupSortedByQualAndLen
   mergedMetadata:
     type: File
     outputSource: pangenome-generate/mergedMetadata
@@ -45,4 +45,4 @@ steps:
       seqs: collect-seqs/relabeledSeqs
       metadata: collect-seqs/mergedMetadata
       exclude: exclude
-    out: [odgiGraph, spoaGFA, odgiRDF, readsMergeDedup, mergedMetadata]
+    out: [odgiGraph, spoaGFA, odgiRDF, readsMergeDedupSortedByQualAndLen, mergedMetadata]

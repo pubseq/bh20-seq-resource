@@ -10,15 +10,23 @@ Antigua and Barbuda,http://www.wikidata.org/entity/Q781
 Argentina,http://www.wikidata.org/entity/Q414
 Armenia,http://www.wikidata.org/entity/Q399
 Australia,http://www.wikidata.org/entity/Q408
-Australia: Queensland,http://www.wikidata.org/entity/Q36074
-Australia: Victoria,http://www.wikidata.org/entity/Q36687
-"Australia: Melbourne, Victoria",http://www.wikidata.org/entity/Q3141
-Australia: Northern Territory,http://www.wikidata.org/entity/Q3235
-Australia: NSW,http://www.wikidata.org/entity/Q3224
+Australia:Queensland,http://www.wikidata.org/entity/Q36074
+Australia:Victoria,http://www.wikidata.org/entity/Q36687
+"Australia:Melbourne, Victoria",http://www.wikidata.org/entity/Q3141
+Australia:Northern Territory,http://www.wikidata.org/entity/Q3235
+Australia:NSW,http://www.wikidata.org/entity/Q3224
+Australia:South Australia,http://www.wikidata.org/entity/Q35715
 Austria,http://www.wikidata.org/entity/Q40
 Azerbaijan,http://www.wikidata.org/entity/Q227
 Bahrain,http://www.wikidata.org/entity/Q398
 Bangladesh,http://www.wikidata.org/entity/Q902
+Bangladesh:Barishal,http://www.wikidata.org/entity/Q747840
+Bangladesh:Chattogram,http://www.wikidata.org/entity/Q376749
+Bangladesh:Chittagong,http://www.wikidata.org/entity/Q376749
+Bangladesh:Dhaka,http://www.wikidata.org/entity/Q1354
+Bangladesh:Khulna,http://www.wikidata.org/entity/Q243325
+Bangladesh:Narayanganj,http://www.wikidata.org/entity/Q1990163
+Bangladesh:Rangpur,http://www.wikidata.org/entity/Q994514
 Barbados,http://www.wikidata.org/entity/Q244
 Belarus,http://www.wikidata.org/entity/Q184
 Belgium,http://www.wikidata.org/entity/Q31
@@ -29,6 +37,7 @@ Bolivia,http://www.wikidata.org/entity/Q750
 Bosnia and Herzegovina,http://www.wikidata.org/entity/Q225
 Botswana,http://www.wikidata.org/entity/Q963
 Brazil,http://www.wikidata.org/entity/Q155
+"Brazil:Feira de Santana, BA",http://www.wikidata.org/entity/Q194343
 Brunei,http://www.wikidata.org/entity/Q921
 Bulgaria,http://www.wikidata.org/entity/Q219
 Burkina Faso,http://www.wikidata.org/entity/Q965
@@ -37,59 +46,59 @@ Cambodia,http://www.wikidata.org/entity/Q424
 Cambodia:Sihanoukville,http://www.wikidata.org/entity/Q18207676
 Cameroon,http://www.wikidata.org/entity/Q1009
 Canada,http://www.wikidata.org/entity/Q16
-Canada: Toronto,http://www.wikidata.org/entity/Q172
+Canada:Toronto,http://www.wikidata.org/entity/Q172
 Cape Verde,http://www.wikidata.org/entity/Q1011
 Central African Republic,http://www.wikidata.org/entity/Q929
 Chad,http://www.wikidata.org/entity/Q657
 Chile,http://www.wikidata.org/entity/Q298
 China,http://www.wikidata.org/entity/Q148
-China: Anhui,http://www.wikidata.org/entity/Q40956
-"China: Anhui, Fuyang":http://www.wikidata.org/entity/Q360584
-China: Beijing,http://www.wikidata.org/entity/Q956
-China: Chongqing,http://www.wikidata.org/entity/Q11725
-China: Fujian,http://www.wikidata.org/entity/Q41705
-China: Gansu,http://www.wikidata.org/entity/Q42392
-China: Guangdong,http://www.wikidata.org/entity/Q15175
-"China: Guangdong, Guangzhou",http://www.wikidata.org/entity/Q16572
-China: Guangxi Zhuang Autonomous Region,http://www.wikidata.org/entity/Q15176
-China: Guangzhou,http://www.wikidata.org/entity/Q16572
-China: Guizhou,http://www.wikidata.org/entity/Q47097
-China: Hangzhou,http://www.wikidata.org/entity/Q4970
-China: Hainan,http://www.wikidata.org/entity/Q42200
-China: Hebei,http://www.wikidata.org/entity/Q21208
-China: Heilongjiang,http://www.wikidata.org/entity/Q19206
-China: Henan,http://www.wikidata.org/entity/Q43684
-China: Hong Kong,http://www.wikidata.org/entity/Q8646
-China: HuaShang,http://www.wikidata.org/entity/Q148
-China: Hubei,http://www.wikidata.org/entity/Q46862
-"China: Hubei, Wuhan",http://www.wikidata.org/entity/Q11746
-China: Hunan,http://www.wikidata.org/entity/Q45761
-China: Inner Mongolia,http://www.wikidata.org/entity/Q41079
-China: Jiangsu,http://www.wikidata.org/entity/Q16963
-China: Jiangxi,http://www.wikidata.org/entity/Q57052
-China: Jilin,http://www.wikidata.org/entity/Q45208
-China: Liaoning,http://www.wikidata.org/entity/Q43934
-China: Macau,http://www.wikidata.org/entity/Q14773
-China: Nanchang,http://www.wikidata.org/entity/Q171943
-China: Ningxia Hui Autonomous Region,http://www.wikidata.org/entity/Q57448
-China: Qinghai,http://www.wikidata.org/entity/Q45833
-China: Shaanxi,http://www.wikidata.org/entity/Q47974
-China: Shandong,http://www.wikidata.org/entity/Q43407
-China: Shanghai,http://www.wikidata.org/entity/Q8686
+China:Anhui,http://www.wikidata.org/entity/Q40956
+"China:Anhui, Fuyang",http://www.wikidata.org/entity/Q360584
+China:Beijing,http://www.wikidata.org/entity/Q956
+China:Chongqing,http://www.wikidata.org/entity/Q11725
+China:Chengdu,http://www.wikidata.org/entity/Q30002
+China:Fujian,http://www.wikidata.org/entity/Q41705
+China:Gansu,http://www.wikidata.org/entity/Q42392
+China:Guangdong,http://www.wikidata.org/entity/Q15175
+"China:Guangdong, Guangzhou",http://www.wikidata.org/entity/Q16572
+China:Guangxi Zhuang Autonomous Region,http://www.wikidata.org/entity/Q15176
+China:Guangzhou,http://www.wikidata.org/entity/Q16572
+China:Guizhou,http://www.wikidata.org/entity/Q47097
+China:Hangzhou,http://www.wikidata.org/entity/Q4970
+China:Hainan,http://www.wikidata.org/entity/Q42200
+China:Hebei,http://www.wikidata.org/entity/Q21208
+China:Heilongjiang,http://www.wikidata.org/entity/Q19206
+China:Henan,http://www.wikidata.org/entity/Q43684
+China:Hong Kong,http://www.wikidata.org/entity/Q8646
+China:HuaShang,http://www.wikidata.org/entity/Q148
+China:Hubei,http://www.wikidata.org/entity/Q46862
+"China:Hubei, Wuhan",http://www.wikidata.org/entity/Q11746
+China:Hunan,http://www.wikidata.org/entity/Q45761
+China:Inner Mongolia,http://www.wikidata.org/entity/Q41079
+China:Jiangsu,http://www.wikidata.org/entity/Q16963
+"China:Jiangsu, Changzhou",http://www.wikidata.org/entity/Q16963
+China:Jiangxi,http://www.wikidata.org/entity/Q57052
+China:Jilin,http://www.wikidata.org/entity/Q45208
+China:Liaoning,http://www.wikidata.org/entity/Q43934
+China:Macau,http://www.wikidata.org/entity/Q14773
+China:Nanchang,http://www.wikidata.org/entity/Q171943
+China:Ningxia Hui Autonomous Region,http://www.wikidata.org/entity/Q57448
+China:Qinghai,http://www.wikidata.org/entity/Q45833
+China:Shaanxi,http://www.wikidata.org/entity/Q47974
+China:Shandong,http://www.wikidata.org/entity/Q43407
 China:Shanghai,http://www.wikidata.org/entity/Q8686
-China: Shanxi,http://www.wikidata.org/entity/Q46913
-China: Shenzhen,http://www.wikidata.org/entity/Q15174
-China: Sichuan,http://www.wikidata.org/entity/Q19770
-China: Tianjin,http://www.wikidata.org/entity/Q11736
-China: Tibet Autonomous Region,http://www.wikidata.org/entity/Q17269
-China: Wuhan,http://www.wikidata.org/entity/Q11746
+China:Shanxi,http://www.wikidata.org/entity/Q46913
+China:Shenzhen,http://www.wikidata.org/entity/Q15174
+China:Sichuan,http://www.wikidata.org/entity/Q19770
+China:Tianjin,http://www.wikidata.org/entity/Q11736
+China:Tibet Autonomous Region,http://www.wikidata.org/entity/Q17269
 China:Wuhan,http://www.wikidata.org/entity/Q11746
-China: Xinjiang,http://www.wikidata.org/entity/Q34800
-China: Yunnan,http://www.wikidata.org/entity/Q43194
-China: Zhejiang,http://www.wikidata.org/entity/Q16967
-"China: Zhejiang, Hangzhou",http://www.wikidata.org/entity/Q4970
+China:Xinjiang,http://www.wikidata.org/entity/Q34800
+China:Yunnan,http://www.wikidata.org/entity/Q43194
+China:Zhejiang,http://www.wikidata.org/entity/Q16967
+"China:Zhejiang, Hangzhou",http://www.wikidata.org/entity/Q4970
 Colombia,http://www.wikidata.org/entity/Q739
-Colombia: Antioquia,http://www.wikidata.org/entity/Q123304
+Colombia:Antioquia,http://www.wikidata.org/entity/Q123304
 Comoros,http://www.wikidata.org/entity/Q970
 Costa Rica,http://www.wikidata.org/entity/Q800
 Croatia,http://www.wikidata.org/entity/Q224
@@ -117,43 +126,146 @@ France,http://www.wikidata.org/entity/Q142
 Gabon,http://www.wikidata.org/entity/Q1000
 Georgia,http://www.wikidata.org/entity/Q230
 Germany,http://www.wikidata.org/entity/Q183
-Germany: Bavaria,http://www.wikidata.org/entity/Q980
-Germany: Dusseldorf,http://www.wikidata.org/entity/Q1718
-Germany: Heinsberg,http://www.wikidata.org/entity/Q14833
-Germany: Starnberg,http://www.wikidata.org/entity/Q61936
+Germany:Bavaria,http://www.wikidata.org/entity/Q980
+Germany:Dusseldorf,http://www.wikidata.org/entity/Q1718
+Germany:Heinsberg,http://www.wikidata.org/entity/Q14833
+Germany:Starnberg,http://www.wikidata.org/entity/Q61936
 Ghana,http://www.wikidata.org/entity/Q117
 Greece,http://www.wikidata.org/entity/Q41
-Greece: Athens,http://www.wikidata.org/entity/Q1524
+Greece:Athens,http://www.wikidata.org/entity/Q1524
 Grenada,http://www.wikidata.org/entity/Q769
 Guatemala,http://www.wikidata.org/entity/Q774
+Guam,http://www.wikidata.org/entity/Q16635
 Guinea,http://www.wikidata.org/entity/Q1006
 Guinea-Bissau,http://www.wikidata.org/entity/Q1007
 Guyana,http://www.wikidata.org/entity/Q734
 Haiti,http://www.wikidata.org/entity/Q790
 Honduras,http://www.wikidata.org/entity/Q783
 Hungary,http://www.wikidata.org/entity/Q28
+Hong Kong,http://www.wikidata.org/entity/Q8646
 Iceland,http://www.wikidata.org/entity/Q189
 Icelandic Commonwealth,http://www.wikidata.org/entity/Q62389
 India,http://www.wikidata.org/entity/Q668
-India: Ahmedabad,http://www.wikidata.org/entity/Q1070
-India: Kerala State,http://www.wikidata.org/entity/Q1186
-India: Rajkot,http://www.wikidata.org/entity/Q1815245
+"India:Assam, Golaghat",http://www.wikidata.org/entity/Q1708160
+India:Kerala State,http://www.wikidata.org/entity/Q1186
+"India:Ahmedabad",http://www.wikidata.org/entity/Q1070
+"India:Gujarat, Ahmedabad",http://www.wikidata.org/entity/Q1070
+"India:Bardoli",http://www.wikidata.org/entity/Q712003
+"India:Gujarat, Bardoli",http://www.wikidata.org/entity/Q712003
+"India:Bayad",http://www.wikidata.org/entity/Q25622187
+"India:Gujarat, Bayad",http://www.wikidata.org/entity/Q25622187
+"India:Bharuch",http://www.wikidata.org/entity/Q760153
+"India:Gujarat, Bharuch",http://www.wikidata.org/entity/Q760153
+"India:Bhavnagar",http://www.wikidata.org/entity/Q242992
+"India:Gujarat, Bhavnagar",http://www.wikidata.org/entity/Q242992
+"India:Bhuj",http://www.wikidata.org/entity/Q15244505
+"India:Gujarat, Bhuj",http://www.wikidata.org/entity/Q15244505
+"India:Botad",http://www.wikidata.org/entity/Q858162
+"India:Gujarat, Botad",http://www.wikidata.org/entity/Q858162
+"India:Choryasi",http://www.wikidata.org/entity/Q2757125
+"India:Gujarat, Choryasi",http://www.wikidata.org/entity/Q2757125
+"India:Chuda",http://www.wikidata.org/entity/Q724951
+"India:Gujarat, Chuda",http://www.wikidata.org/entity/Q724951
+"India:Dahegam",http://www.wikidata.org/entity/Q582485
+"India:Gujarat, Dahegam",http://www.wikidata.org/entity/Q582485
+"India:Dahod",http://www.wikidata.org/entity/Q186518
+"India:Gujarat, Dahod",http://www.wikidata.org/entity/Q186518
+"India:Daskroi",http://www.wikidata.org/entity/Q27684996
+"India:Gujarat, Daskroi",http://www.wikidata.org/entity/Q27684996
+"India:Dhanera",http://www.wikidata.org/entity/Q1266017
+"India:Gujarat, Dhanera",http://www.wikidata.org/entity/Q1266017
+"India:Dhansura",http://www.wikidata.org/entity/Q5269024
+"India:Gujarat, Dhansura",http://www.wikidata.org/entity/Q5269024
+"India:Dholka",http://www.wikidata.org/entity/Q1263568
+"India:Gujarat, Dholka",http://www.wikidata.org/entity/Q1263568
+"India:Gandhinagar",http://www.wikidata.org/entity/Q11910
+"India:Gujarat, Gandhinagar",http://www.wikidata.org/entity/Q11910
+"India:Ghogha",http://www.wikidata.org/entity/Q1707463
+"India:Gujarat, Ghogha",http://www.wikidata.org/entity/Q1707463
+"India:Gondal",http://www.wikidata.org/entity/Q1536978
+"India:Gujarat, Gondal",http://www.wikidata.org/entity/Q1536978
+"India:Himatnagar",http://www.wikidata.org/entity/Q1708155
+"India:Gujarat, Himatnagar",http://www.wikidata.org/entity/Q1708155
+"India:Jamnagar",http://www.wikidata.org/entity/Q1154
+"India:Gujarat, Jamnagar",http://www.wikidata.org/entity/Q1154
+"India:Jetpur",http://www.wikidata.org/entity/Q968713
+"India:Gujarat, Jetpur",http://www.wikidata.org/entity/Q968713
+"India:Junagadh",http://www.wikidata.org/entity/Q11864
+"India:Gujarat, Junagadh",http://www.wikidata.org/entity/Q11864
+"India:Kadi",http://www.wikidata.org/entity/Q2726621
+"India:Gujarat, Kadi",http://www.wikidata.org/entity/Q2726621
+"India:Kalol",http://www.wikidata.org/entity/Q2724740
+"India:Gujarat, Kalol",http://www.wikidata.org/entity/Q2724740
+"India:Kamrej",http://www.wikidata.org/entity/Q6359640
+"India:Gujarat, Kamrej",http://www.wikidata.org/entity/Q6359640
+"India:Kapadvanj",http://www.wikidata.org/entity/Q2341421
+"India:Gujarat, Kapadvanj",http://www.wikidata.org/entity/Q2341421
+"India:Kheda",http://www.wikidata.org/entity/Q775759
+"India:Gujarat, Kheda",http://www.wikidata.org/entity/Q775759
+"India:Khedbrahma",http://www.wikidata.org/entity/Q9461
+"India:Gujarat, Khedbrahma",http://www.wikidata.org/entity/Q9461
+"India:Kodinar",http://www.wikidata.org/entity/Q2239007
+"India:Gujarat, Kodinar",http://www.wikidata.org/entity/Q2239007
+"India:Mahemdavad",http://www.wikidata.org/entity/Q2233469
+"India:Gujarat, Mahemdavad",http://www.wikidata.org/entity/Q2233469
+"India:Mahuva",http://www.wikidata.org/entity/Q1924998
+"India:Gujarat, Mahuva",http://www.wikidata.org/entity/Q1924998
+"India:Mandvi",http://www.wikidata.org/entity/Q2570689
+"India:Gujarat, Mandvi",http://www.wikidata.org/entity/Q2570689
+"India:Mansa",http://www.wikidata.org/entity/Q720211
+"India:Gujarat, Mansa",http://www.wikidata.org/entity/Q720211
+"India:Modasa",http://www.wikidata.org/entity/Q2320097
+"India:Gujarat, Modasa",http://www.wikidata.org/entity/Q2320097
+"India:Nadiad",http://www.wikidata.org/entity/Q219039
+"India:Gujarat, Nadiad",http://www.wikidata.org/entity/Q219039
+"India:Olpad",http://www.wikidata.org/entity/Q2726258
+"India:Gujarat, Olpad",http://www.wikidata.org/entity/Q2726258
+"India:Palanpur",http://www.wikidata.org/entity/Q949907
+"India:Gujarat, Palanpur",http://www.wikidata.org/entity/Q949907
+"India:Prantij",http://www.wikidata.org/entity/Q2724388
+"India:Gujarat, Prantij",http://www.wikidata.org/entity/Q2724388
+"India:Rajkot",http://www.wikidata.org/entity/Q1815245
+"India:Gujarat, Rajkot",http://www.wikidata.org/entity/Q1815245
+"India:Savli",http://www.wikidata.org/entity/Q7428379
+"India:Gujarat, Savli",http://www.wikidata.org/entity/Q7428379
+"India:Surat",http://www.wikidata.org/entity/Q4629
+"India:Gujarat, Surat",http://www.wikidata.org/entity/Q4629
+"India:Talod",http://www.wikidata.org/entity/Q2570216
+"India:Gujarat, Talod",http://www.wikidata.org/entity/Q2570216
+"India:Una",http://www.wikidata.org/entity/Q1622928
+"India:Gujarat, Una",http://www.wikidata.org/entity/Q1622928
+"India:Vadodara",http://www.wikidata.org/entity/Q11909
+"India:Gujarat, Vadodara",http://www.wikidata.org/entity/Q11909
+"India:Hyderabad",http://www.wikidata.org/entity/Q1361
+"India:hamadan",http://www.wikidata.org/entity/Q1361
+"India:Hamadan",http://www.wikidata.org/entity/Q28587
+"Iraq:Erbil",http://www.wikidata.org/entity/Q132754
+"Iraq:Kurdistan region, Erbil",http://www.wikidata.org/entity/Q132754
+"Iraq:Kurdistan region, Erbil",http://www.wikidata.org/entity/Q132754
 Indonesia,http://www.wikidata.org/entity/Q252
 Iran,http://www.wikidata.org/entity/Q794
-Iran: Qum,http://www.wikidata.org/entity/Q131664
-Iran: Tehran,http://www.wikidata.org/entity/Q3616
+Iran:Qum,http://www.wikidata.org/entity/Q131664
+Iran:Tehran,http://www.wikidata.org/entity/Q3616
 Iraq,http://www.wikidata.org/entity/Q796
 Ireland,http://www.wikidata.org/entity/Q27
 Israel,http://www.wikidata.org/entity/Q801
 Italy,http://www.wikidata.org/entity/Q38
-Italy: Cagliari,http://www.wikidata.org/entity/Q1897
-Italy: Lazio,http://www.wikidata.org/entity/Q1282
-Italy: Palermo,http://www.wikidata.org/entity/Q2656
-Italy: Rome,http://www.wikidata.org/entity/Q220
+Italy:Cagliari,http://www.wikidata.org/entity/Q1897
+Italy:Lazio,http://www.wikidata.org/entity/Q1282
+Italy:Milan,http://www.wikidata.org/entity/Q490
+Italy:Palermo,http://www.wikidata.org/entity/Q2656
+Italy:Rome,http://www.wikidata.org/entity/Q220
 Ivory Coast,http://www.wikidata.org/entity/Q1008
 Jamaica,http://www.wikidata.org/entity/Q766
 Japan,http://www.wikidata.org/entity/Q17
+Japan:Chiba,http://www.wikidata.org/entity/Q170616
+Japan:Ishikawa,http://www.wikidata.org/entity/Q1205335
+Japan:Kochi,http://www.wikidata.org/entity/Q200251
+Japan:Saitama,http://www.wikidata.org/entity/Q134635
+Japan:Tokyo,http://www.wikidata.org/entity/Q1490
 Jordan,http://www.wikidata.org/entity/Q810
+Jordan:Amman,http://www.wikidata.org/entity/Q3805
+Jordan:Irbid,http://www.wikidata.org/entity/Q194165
 Kazakhstan,http://www.wikidata.org/entity/Q232
 Kenya,http://www.wikidata.org/entity/Q114
 Kingdom of Denmark,http://www.wikidata.org/entity/Q756617
@@ -174,42 +286,60 @@ Madagascar,http://www.wikidata.org/entity/Q1019
 Malawi,http://www.wikidata.org/entity/Q1020
 Malaysia,http://www.wikidata.org/entity/Q833
 Maldives,http://www.wikidata.org/entity/Q826
+Malaysia:Kuala Lumpur,http://www.wikidata.org/entity/Q1865
 Mali,http://www.wikidata.org/entity/Q912
 Malta,http://www.wikidata.org/entity/Q233
 Marshall Islands,http://www.wikidata.org/entity/Q709
 Mauritania,http://www.wikidata.org/entity/Q1025
 Mauritius,http://www.wikidata.org/entity/Q1027
 Mexico,http://www.wikidata.org/entity/Q96
+Mexico:Baja California Sur,http://www.wikidata.org/entity/Q46508
+Mexico:Hidalgo,http://www.wikidata.org/entity/Q80903
+Mexico:Mexico City,http://www.wikidata.org/entity/Q1489
+Mexico:Mexico State,http://www.wikidata.org/entity/Q82112
+Mexico:Michoacan,http://www.wikidata.org/entity/Q79861
+Mexico:Morelos,http://www.wikidata.org/entity/Q66117
+Mexico:Oaxaca,http://www.wikidata.org/entity/Q34110
+Mexico:Puebla,http://www.wikidata.org/entity/Q79923
+Mexico:Queretaro,http://www.wikidata.org/entity/Q79754
 Moldova,http://www.wikidata.org/entity/Q217
 Monaco,http://www.wikidata.org/entity/Q235
 Mongolia,http://www.wikidata.org/entity/Q711
 Montenegro,http://www.wikidata.org/entity/Q236
 Morocco,http://www.wikidata.org/entity/Q1028
+Morocco:Casablanca,http://www.wikidata.org/entity/Q7903
+Morocco:casablanca,http://www.wikidata.org/entity/Q7903
 Mozambique,http://www.wikidata.org/entity/Q1029
 Myanmar,http://www.wikidata.org/entity/Q836
 Namibia,http://www.wikidata.org/entity/Q1030
 Nauru,http://www.wikidata.org/entity/Q697
-Netherlands: Milheeze,http://www.wikidata.org/entity/Q3314115
+Netherlands:Milheeze,http://www.wikidata.org/entity/Q3314115
+Netherlands,http://www.wikidata.org/entity/Q55
+Netherlands:Leiden,http://www.wikidata.org/entity/Q33456378
 Nepal,http://www.wikidata.org/entity/Q837
+Nepal:Kathmandu,http://www.wikidata.org/entity/Q3037
 New Zealand,http://www.wikidata.org/entity/Q664
+New Zealand:Auckland,http://www.wikidata.org/entity/Q37100
 Nicaragua,http://www.wikidata.org/entity/Q811
 Niger,http://www.wikidata.org/entity/Q1032
 Nigeria,http://www.wikidata.org/entity/Q1033
-Nigeria: Lagos,http://www.wikidata.org/entity/Q8673
+Nigeria:Lagos,http://www.wikidata.org/entity/Q8673
 North Korea,http://www.wikidata.org/entity/Q423
 North Macedonia,http://www.wikidata.org/entity/Q221
 Norway,http://www.wikidata.org/entity/Q20
 Oman,http://www.wikidata.org/entity/Q842
 Ottoman Empire,http://www.wikidata.org/entity/Q12560
 Pakistan,http://www.wikidata.org/entity/Q843
-Pakistan: Gilgit,http://www.wikidata.org/entity/Q609024
-Pakistan: KPK,http://www.wikidata.org/entity/Q183314
+Pakistan:Gilgit,http://www.wikidata.org/entity/Q609024
+Pakistan:Karachi,http://www.wikidata.org/entity/Q8660
+Pakistan:KPK,http://www.wikidata.org/entity/Q183314
 Palau,http://www.wikidata.org/entity/Q695
 Panama,http://www.wikidata.org/entity/Q804
 Papua New Guinea,http://www.wikidata.org/entity/Q691
 Paraguay,http://www.wikidata.org/entity/Q733
 People's Republic of China,http://www.wikidata.org/entity/Q148
 Peru,http://www.wikidata.org/entity/Q419
+Peru:Lima,http://www.wikidata.org/entity/Q2868
 Philippines,http://www.wikidata.org/entity/Q928
 Poland,http://www.wikidata.org/entity/Q36
 Portugal,http://www.wikidata.org/entity/Q45
@@ -220,6 +350,12 @@ Republic of Geneva,http://www.wikidata.org/entity/Q23366230
 Republic of the Congo,http://www.wikidata.org/entity/Q971
 Romania,http://www.wikidata.org/entity/Q218
 Russia,http://www.wikidata.org/entity/Q159
+Russia:Saint Petersburg,http://www.wikidata.org/entity/Q656
+"Russia:Saint Petersburg, Krasnoye Selo",http://www.wikidata.org/entity/Q155587
+"Russia:Leningrad region,Kipen",http://www.wikidata.org/entity/Q4221032
+"Russia:Moscow",http://www.wikidata.org/entity/Q649
+"Russia:Moscow region",http://www.wikidata.org/entity/Q649
+"Russia:Republic of Buryatia,Ulan-Ude",http://www.wikidata.org/entity/Q6816
 Rwanda,http://www.wikidata.org/entity/Q1037
 Saint Kitts and Nevis,http://www.wikidata.org/entity/Q763
 Saint Lucia,http://www.wikidata.org/entity/Q760
@@ -228,23 +364,33 @@ Samoa,http://www.wikidata.org/entity/Q683
 San Marino,http://www.wikidata.org/entity/Q238
 São Tomé and Príncipe,http://www.wikidata.org/entity/Q1039
 Saudi Arabia,http://www.wikidata.org/entity/Q851
+Saudi Arabia:Jeddah,http://www.wikidata.org/entity/Q374365
 Senegal,http://www.wikidata.org/entity/Q1041
 Serbia,http://www.wikidata.org/entity/Q403
+Serbia:Kraljevo,http://www.wikidata.org/entity/Q206317
+Serbia:Novi Pazar,http://www.wikidata.org/entity/Q202453
+Serbia:Novi Sad,http://www.wikidata.org/entity/Q55630
+Serbia:Uzice,http://www.wikidata.org/entity/Q59473
 Seychelles,http://www.wikidata.org/entity/Q1042
 Sierra Leone,http://www.wikidata.org/entity/Q1044
+Sierra Leone:Bonthe,http://www.wikidata.org/entity/Q892886
+Sierra Leone:Freetown,http://www.wikidata.org/entity/Q3780
 Singapore,http://www.wikidata.org/entity/Q334
 Slovakia,http://www.wikidata.org/entity/Q214
 Slovenia,http://www.wikidata.org/entity/Q215
 Solomon Islands,http://www.wikidata.org/entity/Q685
 Somalia,http://www.wikidata.org/entity/Q1045
 South Africa,http://www.wikidata.org/entity/Q258
-South Africa: KwaZulu-Natal,http://www.wikidata.org/entity/Q81725
-South Africa: KZN,http://www.wikidata.org/entity/Q81725
+South Africa:KwaZulu-Natal,http://www.wikidata.org/entity/Q81725
+South Africa:KZN,http://www.wikidata.org/entity/Q81725
 South African Republic,http://www.wikidata.org/entity/Q550374
 South Korea,http://www.wikidata.org/entity/Q884
 South Sudan,http://www.wikidata.org/entity/Q958
 Spain,http://www.wikidata.org/entity/Q29
-Spain: Valencia,http://www.wikidata.org/entity/Q8818
+Spain:ASTURIAS,http://www.wikidata.org/entity/Q3934
+Spain:Asturias,http://www.wikidata.org/entity/Q3934
+Spain:Donostia-San Sebatian,http://www.wikidata.org/entity/Q10313
+Spain:Valencia,http://www.wikidata.org/entity/Q8818
 Sri Lanka,http://www.wikidata.org/entity/Q854
 State of Los Altos,http://www.wikidata.org/entity/Q738264
 Sudan,http://www.wikidata.org/entity/Q1049
@@ -262,7 +408,7 @@ Togo,http://www.wikidata.org/entity/Q945
 Tonga,http://www.wikidata.org/entity/Q678
 Trinidad and Tobago,http://www.wikidata.org/entity/Q754
 Tunisia,http://www.wikidata.org/entity/Q948
-Tunisia: Tunis,http://www.wikidata.org/entity/Q3572
+Tunisia:Tunis,http://www.wikidata.org/entity/Q3572
 Turkey,http://www.wikidata.org/entity/Q43
 Turkmenistan,http://www.wikidata.org/entity/Q874
 Tuvalu,http://www.wikidata.org/entity/Q672
@@ -273,122 +419,274 @@ United Arab Republic,http://www.wikidata.org/entity/Q170468
 United Kingdom,http://www.wikidata.org/entity/Q145
 United States of America,http://www.wikidata.org/entity/Q30
 Uruguay,http://www.wikidata.org/entity/Q77
+Puerto Rico,http://www.wikidata.org/entity/Q1183
+USA:PR,http://www.wikidata.org/entity/Q1183
 USA,http://www.wikidata.org/entity/Q30
-USA: AK,http://www.wikidata.org/entity/Q797
-USA: AL,http://www.wikidata.org/entity/Q173
-USA: AR,http://www.wikidata.org/entity/Q1612
-USA: AZ,http://www.wikidata.org/entity/Q816
-USA: Arizona,http://www.wikidata.org/entity/Q816
-USA: CA,http://www.wikidata.org/entity/Q99
+USA:Ak,http://www.wikidata.org/entity/Q797
+USA:AK,http://www.wikidata.org/entity/Q797
+USA:AL,http://www.wikidata.org/entity/Q173
+"USA:Alabama",http://www.wikidata.org/entity/Q173
+"USA:Alabama, Mobile county",http://www.wikidata.org/entity/Q495738
+"USA:Arizona, Maricopa county",http://www.wikidata.org/entity/Q58691
+"USA:Arkansas, Little Rock",http://www.wikidata.org/entity/Q33405
+"USA:Avondale, LA",http://www.wikidata.org/entity/Q79449
+"USA:AVONDALE, LA",http://www.wikidata.org/entity/Q79449
+"USA:CA, Alameda",http://www.wikidata.org/entity/Q490744
+"USA:California, Los Angeles county",http://www.wikidata.org/entity/Q104994
+"USA:California, San Diego county",http://www.wikidata.org/entity/Q108143
+"USA:California, Santa Clara county",http://www.wikidata.org/entity/Q110739
+"USA:Colorado, Denver county",http://www.wikidata.org/entity/Q15906757
+"USA:Colorado, El Paso county",http://www.wikidata.org/entity/Q108494
+"USA:Connecticut, Fairfield county",http://www.wikidata.org/entity/Q54231
+"USA:East Feliciana Parish, Louisiana",http://www.wikidata.org/entity/Q504375
+"USA:Florida, Miami-dade county",http://www.wikidata.org/entity/Q468557
+"USA:Florida, Palm Beach county",http://www.wikidata.org/entity/Q484294
+"USA:Gheens, LA",http://www.wikidata.org/entity/Q17511495
+"USA:GHEENS, LA",http://www.wikidata.org/entity/Q17511495
+"USA:Hammond, LA",http://www.wikidata.org/entity/Q856860
+"USA:HAMMOND, LA",http://www.wikidata.org/entity/Q856860
+"USA:Houma, LA",http://www.wikidata.org/entity/Q388503
+"USA:HOUMA, LA",http://www.wikidata.org/entity/Q388503
+"USA:Illinois, Cook county",http://www.wikidata.org/entity/Q108418
+"USA:Illinois, Dupage county",http://www.wikidata.org/entity/Q109626
+"USA:Illinois, Kane county",http://www.wikidata.org/entity/Q486112
+"USA:Illinois, Lake county",http://www.wikidata.org/entity/Q484263
+"USA:Illinois, Mchenry county",http://www.wikidata.org/entity/Q487403
+"USA:Illinois, Winnebago county",http://www.wikidata.org/entity/Q110606
+"USA:Illinois, Winnebago County",http://www.wikidata.org/entity/Q110606
+"USA:Imperial, California",http://www.wikidata.org/entity/Q169952
+"USA:Iowa, Dubuque county",http://www.wikidata.org/entity/Q113756
+"USA:Iowa, Jackson county",http://www.wikidata.org/entity/Q485780
+"USA:Killona, LA",http://www.wikidata.org/entity/Q1844136
+"USA:KILLONA, LA",http://www.wikidata.org/entity/Q1844136
+"USA:Lacombe, LA",http://www.wikidata.org/entity/Q1844136
+"USA:LACOMBE, LA",http://www.wikidata.org/entity/Q2320197
+"USA:Lockport, LA",http://www.wikidata.org/entity/Q2194112
+"USA:LOCKPORT, LA",http://www.wikidata.org/entity/Q2194112
+"USA:Maringouin, LA",http://www.wikidata.org/entity/Q2673176
+"USA:MARINGOUIN, LA",http://www.wikidata.org/entity/Q2673176
+"USA:Marrero, LA",http://www.wikidata.org/entity/Q1902531
+"USA:MARRERO, LA",http://www.wikidata.org/entity/Q1902531
+"USA:Massachusetts, Middlesex county",http://www.wikidata.org/entity/Q54073
+"USA:Massachusetts, Norfolk county",http://www.wikidata.org/entity/Q54079
+"USA:Minnesota, Stearns county",http://www.wikidata.org/entity/Q491148
+"USA:Missouri, St. Louis County",http://www.wikidata.org/entity/Q498034
+"USA:Missouri, Saint Louis county",http://www.wikidata.org/entity/Q498034
+"USA:Napoleonville, LA",http://www.wikidata.org/entity/Q209223
+"USA:NAPOLEONVILLE, LA",http://www.wikidata.org/entity/Q209223
+USA:New Hampshire,http://www.wikidata.org/entity/Q759
+"USA:New Jersey, Bergen county",http://www.wikidata.org/entity/Q112915
+"USA:New Jersey, Burlington county",http://www.wikidata.org/entity/Q138141
+"USA:New Jersey, Essex county",http://www.wikidata.org/entity/Q128077
+"USA:Raceland, LA",http://www.wikidata.org/entity/Q2154341
+"USA:RACELAND, LA",http://www.wikidata.org/entity/Q2154341
+"USA:Saint Rose, LA",http://www.wikidata.org/entity/Q7402139
+"USA:SAINT ROSE, LA",http://www.wikidata.org/entity/Q7402139
+"USA:Slidell LA",http://www.wikidata.org/entity/Q988156
+"USA:SLIDELL LA",http://www.wikidata.org/entity/Q988156
+"USA:Snohomish County,WA",http://www.wikidata.org/entity/Q110403
+"USA:South Carolina, Berkeley",http://www.wikidata.org/entity/Q495105
+"USA:South Carolina, Berkeley County",http://www.wikidata.org/entity/Q495105
+"USA:South Carolina, Kershaw",http://www.wikidata.org/entity/Q3239690
+"USA:South Carolina, Richland",http://www.wikidata.org/entity/Q505993
+"USA:South Carolina, Richland County",http://www.wikidata.org/entity/Q505993
+"USA:South Dakota, Minnehaha county",http://www.wikidata.org/entity/Q489222
+"USA:Thibodaux,LA",http://www.wikidata.org/entity/Q1013317
+"USA:THIBODAUX,LA",http://www.wikidata.org/entity/Q1013317
+"USA:Violet, LA",http://www.wikidata.org/entity/Q2491691
+"USA:VIOLET, LA",http://www.wikidata.org/entity/Q2491691
+"USA:Washington,Chelan County",http://www.wikidata.org/entity/Q493236
+"USA:Washington,Cowlitz County",http://www.wikidata.org/entity/Q156276
+"USA:Washington,Grays Harbor County",http://www.wikidata.org/entity/Q493222
+"USA:Washington,Spokane County",http://www.wikidata.org/entity/Q485276
+"USA:Washington,Thurston County",http://www.wikidata.org/entity/Q113773
+"USA:Washington,Walla Walla County",http://www.wikidata.org/entity/Q485305
+"USA:Washington,Yakima County",http://www.wikidata.org/entity/Q156629
+"USA:Wisconsin, Brown county",http://www.wikidata.org/entity/Q494893
+"USA:Wisconsin, Chippewa county",http://www.wikidata.org/entity/Q127184
+"USA:Wisconsin, Columbia county",http://www.wikidata.org/entity/Q493529
+"USA:Wisconsin, Dane county",http://www.wikidata.org/entity/Q502200
+"USA:Wisconsin, Dane County",http://www.wikidata.org/entity/Q502200
+"USA:Wisconsin, Dodge County",http://www.wikidata.org/entity/Q372796
+"USA:Wisconsin, Fond du Lac county",http://www.wikidata.org/entity/Q494912
+"USA:Wisconsin, Grant county",http://www.wikidata.org/entity/Q500977
+"USA:Wisconsin, Green county",http://www.wikidata.org/entity/Q489163
+"USA:Wisconsin, Jackson county",http://www.wikidata.org/entity/Q500897
+"USA:Wisconsin, Lafayette county",http://www.wikidata.org/entity/Q431440
+"USA:Wisconsin, Manitowoc county",http://www.wikidata.org/entity/Q500984
+"USA:Wisconsin, Milwaukee county",http://www.wikidata.org/entity/Q502294
+"USA:Wisconsin, Monroe county",http://www.wikidata.org/entity/Q932966
+"USA:Wisconsin, Outagamie county",http://www.wikidata.org/entity/Q510244
+"USA:Wisconsin, Ozaukee county",http://www.wikidata.org/entity/Q505874
+"USA:Wisconsin, Racine county",http://www.wikidata.org/entity/Q510122
+"USA:Wisconsin, Richland county",http://www.wikidata.org/entity/Q501596
+"USA:Wisconsin, Sauk county",http://www.wikidata.org/entity/Q500933
+"USA:Wisconsin, Sheboygan county",http://www.wikidata.org/entity/Q500803
+"USA:Wisconsin, Trempealeau county",http://www.wikidata.org/entity/Q494923
+"USA:Wisconsin, Vernon county",http://www.wikidata.org/entity/Q501587
+"USA:Wisconsin, Washington county",http://www.wikidata.org/entity/Q501559
+"USA:Wisconsin, Waukesha county",http://www.wikidata.org/entity/Q370654
+"USA:Wisconsin, Winnebago county",http://www.wikidata.org/entity/Q502244
+USA:Maine,http://www.wikidata.org/entity/Q724
+USA:AR,http://www.wikidata.org/entity/Q1612
+USA:AZ,http://www.wikidata.org/entity/Q816
+USA:Arizona,http://www.wikidata.org/entity/Q816
+"USA:Bayside, Wisconsin",http://www.wikidata.org/entity/Q1987502
+"USA:Brookfield, Wisconsin",http://www.wikidata.org/entity/Q929024
+"USA:Brown Deer, Wisconsin",http://www.wikidata.org/entity/Q2346859
+"USA:Cudahy, Wisconsin",http://www.wikidata.org/entity/Q1569290
+"USA:Elm Grove, Wisconsin",http://www.wikidata.org/entity/Q2686389
+"USA:Glendale, Wisconsin",http://www.wikidata.org/entity/Q1569527
+"USA:Grafton, Wisconsin",http://www.wikidata.org/entity/Q959651
+"USA:Green Field, Wisconsin",http://www.wikidata.org/entity/Q182877
+"USA:Greenfield, Wisconsin",http://www.wikidata.org/entity/Q182877
+"USA:Hartford, Wisconsin",http://www.wikidata.org/entity/Q1569368
+"USA:Mequon, Wisconsin",http://www.wikidata.org/entity/Q1019382
+"USA:Milwaukee, Wisconsin",http://www.wikidata.org/entity/Q37836
+"USA:Mount Horeb, Wisconsin",http://www.wikidata.org/entity/Q2226176
+"USA:New Berlin, Wisconsin",http://www.wikidata.org/entity/Q1005623
+"USA:Oak Creek, Wisconsin",http://www.wikidata.org/entity/Q1003711
+"USA:Pewaukee, Wisconsin",http://www.wikidata.org/entity/Q1992191
+"USA:Port Washi, Wisconsin",http://www.wikidata.org/entity/Q525041
+"USA:Racine, Wisconsin",http://www.wikidata.org/entity/Q40340
+"USA:River Hills, Wisconsin",http://www.wikidata.org/entity/Q1970272
+"USA:Saukville, Wisconsin",http://www.wikidata.org/entity/Q2557113
+"USA:Slinger, Wisconsin",http://www.wikidata.org/entity/Q2432859
+"USA:South Milwaukee, Wisconsin",http://www.wikidata.org/entity/Q1023550
+"USA:Thiensvill, Wisconsin",http://www.wikidata.org/entity/Q1851797
+"USA:Thiensville, Wisconsin",http://www.wikidata.org/entity/Q1851797
+"USA:Verona, Wisconsin",http://www.wikidata.org/entity/Q1569520
+"USA:Wauwatosa, Wisconsin",http://www.wikidata.org/entity/Q1006865
+"USA:Whitefish, Wisconsin",http://www.wikidata.org/entity/Q1944698
+"USA:Whitefish Bay, Wisconsin",http://www.wikidata.org/entity/Q1944698
+"USA:Hamilton, MT",http://www.wikidata.org/entity/Q602520
+USA:Wyoming,http://www.wikidata.org/entity/Q1214
+USA:Iowa,http://www.wikidata.org/entity/Q1546
 USA:CA,http://www.wikidata.org/entity/Q99
-USA: California,http://www.wikidata.org/entity/Q99
 USA:California,http://www.wikidata.org/entity/Q99
-"USA: CA, San Diego County",http://www.wikidata.org/entity/Q108143
-"USA: California, Monterey County",http://www.wikidata.org/entity/Q108072
-USA: CO,http://www.wikidata.org/entity/Q1261
-USA: CT,http://www.wikidata.org/entity/Q779
-USA: Connecticut,http://www.wikidata.org/entity/Q779
-USA: DC,http://www.wikidata.org/entity/Q3551781
-USA: DE,http://www.wikidata.org/entity/Q1393
-USA: FL,http://www.wikidata.org/entity/Q812
-USA: GA,http://www.wikidata.org/entity/Q1428
-USA: Georgia,http://www.wikidata.org/entity/Q1428
-USA: HI,http://www.wikidata.org/entity/Q782
-USA: IA,http://www.wikidata.org/entity/Q1546
-USA: ID,http://www.wikidata.org/entity/Q1221
-USA: IL,http://www.wikidata.org/entity/Q1204
-USA: Illinois,http://www.wikidata.org/entity/Q1204
-USA: IN,http://www.wikidata.org/entity/Q1415
-USA: KS,http://www.wikidata.org/entity/Q1558
-USA: KY,http://www.wikidata.org/entity/Q1603
-USA: LA,http://www.wikidata.org/entity/Q1588
-"USA: SLIDELL, LA, LA",https://www.wikidata.org/wiki/Q988156
-"USA: Slidell, LA, LA",https://www.wikidata.org/wiki/Q988156
-"USA: New Orleans, LA",https://www.wikidata.org/wiki/Q34404
-USA: MA,http://www.wikidata.org/entity/Q771
-USA: Massachusetts,http://www.wikidata.org/entity/Q771
-USA: MD,http://www.wikidata.org/entity/Q1391
-USA: ME,http://www.wikidata.org/entity/Q724
-USA: MI,http://www.wikidata.org/entity/Q1166
-USA: Michigan,http://www.wikidata.org/entity/Q1166
-USA: MN,http://www.wikidata.org/entity/Q1527
+"USA:San Diego, California",http://www.wikidata.org/entity/Q16552
+"USA:CA,Alameda",http://www.wikidata.org/entity/Q490744
+"USA:CA, San Diego County",http://www.wikidata.org/entity/Q108143
+"USA:California, Monterey County",http://www.wikidata.org/entity/Q108072
+USA:CO,http://www.wikidata.org/entity/Q1261
+USA:CT,http://www.wikidata.org/entity/Q779
+USA:Connecticut,http://www.wikidata.org/entity/Q779
+USA:DC,http://www.wikidata.org/entity/Q3551781
+USA:DE,http://www.wikidata.org/entity/Q1393
+USA:FL,http://www.wikidata.org/entity/Q812
+USA:GA,http://www.wikidata.org/entity/Q1428
+USA:Georgia,http://www.wikidata.org/entity/Q1428
+USA:HI,http://www.wikidata.org/entity/Q782
+USA:Hayward,http://www.wikidata.org/entity/Q491114
+USA:IA,http://www.wikidata.org/entity/Q1546
+USA:ID,http://www.wikidata.org/entity/Q1221
+USA:IL,http://www.wikidata.org/entity/Q1204
+USA:Illinois,http://www.wikidata.org/entity/Q1204
+USA:IN,http://www.wikidata.org/entity/Q1415
+USA:KS,http://www.wikidata.org/entity/Q1558
+USA:KY,http://www.wikidata.org/entity/Q1603
+USA:LA,http://www.wikidata.org/entity/Q65
+USA:Los Angeles,http://www.wikidata.org/entity/Q65
+"USA:SLIDELL, LA, LA",https://www.wikidata.org/wiki/Q988156
+"USA:Slidell, LA, LA",https://www.wikidata.org/wiki/Q988156
+"USA:Seattle, WA",https://www.wikidata.org/wiki/Q5083
+"USA:New Orleans, LA",https://www.wikidata.org/wiki/Q34404
+"USA:NEW ORLEANS, LA",https://www.wikidata.org/wiki/Q34404
+"USA:New Orleans, Louisiana",https://www.wikidata.org/wiki/Q34404
+USA:MA,http://www.wikidata.org/entity/Q771
+USA:Massachusetts,http://www.wikidata.org/entity/Q771
+USA:MD,http://www.wikidata.org/entity/Q1391
+USA:ME,http://www.wikidata.org/entity/Q724
+USA:MI,http://www.wikidata.org/entity/Q1166
+USA:Michigan,http://www.wikidata.org/entity/Q1166
+USA:MN,http://www.wikidata.org/entity/Q1527
 USA:Minnesota,http://www.wikidata.org/entity/Q1527
-USA: Minnesota,http://www.wikidata.org/entity/Q1527
-USA: MO,http://www.wikidata.org/entity/Q1581
-USA: MS,http://www.wikidata.org/entity/Q1494
-USA: MT,http://www.wikidata.org/entity/Q1212
-USA: NC,http://www.wikidata.org/entity/Q1454
-USA: ND,http://www.wikidata.org/entity/Q1207
-USA: NE,http://www.wikidata.org/entity/Q1553
-USA: NH,http://www.wikidata.org/entity/Q759
-USA: NJ,http://www.wikidata.org/entity/Q1408
-USA: NM,http://www.wikidata.org/entity/Q1522
-USA: North Carolina,http://www.wikidata.org/entity/Q1454
-USA: NV,http://www.wikidata.org/entity/Q1227
-USA: NY,http://www.wikidata.org/entity/Q1384
-USA: New York,http://www.wikidata.org/entity/Q1384
-USA: OH,http://www.wikidata.org/entity/Q1397
-USA: Ohio,http://www.wikidata.org/entity/Q1397
-USA: OK,http://www.wikidata.org/entity/Q1649
-USA: OR,http://www.wikidata.org/entity/Q824
-USA: PA,http://www.wikidata.org/entity/Q1400
-USA: RI,http://www.wikidata.org/entity/Q1387
-"USA: San Francisco, CA",http://www.wikidata.org/entity/Q62
-USA: SC,http://www.wikidata.org/entity/Q1456
-USA: South Carolina,http://www.wikidata.org/entity/Q1456
-USA: SD,http://www.wikidata.org/entity/Q1211
-"USA: Snohomish County, WA",http://www.wikidata.org/entity/Q110403
-"USA: Washington,Snohomish County",http://www.wikidata.org/entity/Q110403
-"USA: Washington, Snohomish County",http://www.wikidata.org/entity/Q110403
-"USA: Washington,Skagit County",http://www.wikidata.org/entity/Q113892
-"USA: Washington, Skagit County",http://www.wikidata.org/entity/Q113892
-"USA: Washington,Pierce County",http://www.wikidata.org/entity/Q156459
-"USA: Washington, Pierce County",http://www.wikidata.org/entity/Q156459
-"USA: Washington,Mason County",http://www.wikidata.org/entity/Q111904
-"USA: Washington, Mason County",http://www.wikidata.org/entity/Q111904
-"USA: Washington,Kittitas County",http://www.wikidata.org/entity/Q111540
-"USA: Washington,King County",http://www.wikidata.org/entity/Q108861
-"USA: Washington, King County",http://www.wikidata.org/entity/Q108861
-"USA: King County,WA",http://www.wikidata.org/entity/Q108861
-"USA: Washington,Jefferson County",http://www.wikidata.org/entity/Q384737
-"USA: Washington,Grant County",http://www.wikidata.org/entity/Q281681
-"USA: Washington, Grant County",http://www.wikidata.org/entity/Q281681
-"USA: Washington,Franklin County",http://www.wikidata.org/entity/Q118716
-"USA: Washington, Franklin County",http://www.wikidata.org/entity/Q118716
-"USA: Washington,Clark County",http://www.wikidata.org/entity/Q156287
-"USA: Washington,Benton County",http://www.wikidata.org/entity/Q156216
-"USA: Washington, Benton County",http://www.wikidata.org/entity/Q156216
-"USA: Washington,Asotin County",http://www.wikidata.org/entity/Q156295
-"USA: Washington, Asotin County",http://www.wikidata.org/entity/Q156295
-"USA: Washington,Adams County",http://www.wikidata.org/entity/Q156273
-"USA: Washington, Adams County",http://www.wikidata.org/entity/Q156273
-"USA: Washington, Spokane County",http://www.wikidata.org/entity/Q485276
-"USA: Washington, Douglas County",http://www.wikidata.org/entity/Q156220
-"USA: Washington, Cowlitz County",http://www.wikidata.org/entity/Q156276
-USA: TN,http://www.wikidata.org/entity/Q1509
-USA: TX,http://www.wikidata.org/entity/Q1439
-USA: UT,http://www.wikidata.org/entity/Q829
-USA: VA,http://www.wikidata.org/entity/Q1370
-USA: Virginia,http://www.wikidata.org/entity/Q1370
+USA:MO,http://www.wikidata.org/entity/Q1581
+USA:MS,http://www.wikidata.org/entity/Q1494
+USA:MT,http://www.wikidata.org/entity/Q1212
+USA:NC,http://www.wikidata.org/entity/Q1454
+USA:ND,http://www.wikidata.org/entity/Q1207
+USA:NE,http://www.wikidata.org/entity/Q1553
+USA:NH,http://www.wikidata.org/entity/Q759
+USA:NJ,http://www.wikidata.org/entity/Q1408
+USA:New Jersey,http://www.wikidata.org/entity/Q1408
+USA:NM,http://www.wikidata.org/entity/Q1522
+USA:North Carolina,http://www.wikidata.org/entity/Q1454
+USA:NV,http://www.wikidata.org/entity/Q1227
+USA:NY,http://www.wikidata.org/entity/Q1384
+USA:New York,http://www.wikidata.org/entity/Q1384
+"USA:New York, Nassau county",http://www.wikidata.org/entity/Q54064
+"USA:New York, Onondaga county",http://www.wikidata.org/entity/Q114904
+"USA:New York, Rockland county",http://www.wikidata.org/entity/Q111098
+"USA:New York, Westchester county",http://www.wikidata.org/entity/Q54066
+USA:OH,http://www.wikidata.org/entity/Q1397
+USA:Ohio,http://www.wikidata.org/entity/Q1397
+"USA:Ohio, Cuyahoga county",http://www.wikidata.org/entity/Q251267
+"USA:Pennsylvania, Montgomery county",http://www.wikidata.org/entity/Q378527
+USA:OK,http://www.wikidata.org/entity/Q1649
+USA:OR,http://www.wikidata.org/entity/Q824
+"USA:Oregon, Wisconsin",http://www.wikidata.org/entity/Q824
+USA:PA,http://www.wikidata.org/entity/Q1400
+USA:RI,http://www.wikidata.org/entity/Q1387
+"USA:San Francisco, CA",http://www.wikidata.org/entity/Q62
+USA:SC,http://www.wikidata.org/entity/Q1456
+USA:South Carolina,http://www.wikidata.org/entity/Q1456
+USA:SD,http://www.wikidata.org/entity/Q1211
+"USA:Snohomish County, WA",http://www.wikidata.org/entity/Q110403
+"USA:Washington,Snohomish County",http://www.wikidata.org/entity/Q110403
+"USA:Washington, Snohomish County",http://www.wikidata.org/entity/Q110403
+"USA:Washington,Skagit County",http://www.wikidata.org/entity/Q113892
+"USA:Washington, Skagit County",http://www.wikidata.org/entity/Q113892
+"USA:Washington,Pierce County",http://www.wikidata.org/entity/Q156459
+"USA:Washington, Pierce County",http://www.wikidata.org/entity/Q156459
+"USA:Washington,Mason County",http://www.wikidata.org/entity/Q111904
+"USA:Washington, Mason County",http://www.wikidata.org/entity/Q111904
+"USA:Washington,Kittitas County",http://www.wikidata.org/entity/Q111540
+"USA:Washington,King County",http://www.wikidata.org/entity/Q108861
+"USA:Washington, King County",http://www.wikidata.org/entity/Q108861
+"USA:King County,WA",http://www.wikidata.org/entity/Q108861
+"USA:Washington,Jefferson County",http://www.wikidata.org/entity/Q384737
+"USA:Washington, Jefferson County",http://www.wikidata.org/entity/Q384737
+"USA:Washington,Grant County",http://www.wikidata.org/entity/Q281681
+"USA:Washington, Grant County",http://www.wikidata.org/entity/Q281681
+"USA:Washington,Franklin County",http://www.wikidata.org/entity/Q118716
+"USA:Washington, Franklin County",http://www.wikidata.org/entity/Q118716
+"USA:Washington,Clark County",http://www.wikidata.org/entity/Q156287
+"USA:Washington,Benton County",http://www.wikidata.org/entity/Q156216
+"USA:Washington, Benton County",http://www.wikidata.org/entity/Q156216
+"USA:Washington,Asotin County",http://www.wikidata.org/entity/Q156295
+"USA:Washington, Asotin County",http://www.wikidata.org/entity/Q156295
+"USA:Washington,Adams County",http://www.wikidata.org/entity/Q156273
+"USA:Washington, Adams County",http://www.wikidata.org/entity/Q156273
+"USA:Washington, Spokane County",http://www.wikidata.org/entity/Q485276
+"USA:Washington, Douglas County",http://www.wikidata.org/entity/Q156220
+"USA:Washington, Cowlitz County",http://www.wikidata.org/entity/Q156276
+USA:TN,http://www.wikidata.org/entity/Q1509
+USA:TX,http://www.wikidata.org/entity/Q1439
+USA:Texas,http://www.wikidata.org/entity/Q1439
+USA:UT,http://www.wikidata.org/entity/Q829
+USA:VA,http://www.wikidata.org/entity/Q1370
 USA:Virginia,http://www.wikidata.org/entity/Q1370
-USA: VT,http://www.wikidata.org/entity/Q16551
-USA: WA,http://www.wikidata.org/entity/Q1223
-USA: Washington,http://www.wikidata.org/entity/Q1223
-USA: WI,http://www.wikidata.org/entity/Q1537
-USA: Wisconsin,http://www.wikidata.org/entity/Q1537
+USA:VT,http://www.wikidata.org/entity/Q16551
+USA:WA,http://www.wikidata.org/entity/Q1223
+USA:Washington,http://www.wikidata.org/entity/Q1223
+USA:WI,http://www.wikidata.org/entity/Q1537
+USA:Wisconsin,http://www.wikidata.org/entity/Q1537
 "USA: Washington,Yakima County",http://www.wikidata.org/entity/Q156629
-"USA: Washington, Yakima County",http://www.wikidata.org/entity/Q156629
-"USA: Washington,Whatcom County",http://www.wikidata.org/entity/Q156623
-"USA: Dane County, Wisconsin",http://www.wikidata.org/entity/Q502200
-USA: WV,http://www.wikidata.org/entity/Q1371
-USA: WY,http://www.wikidata.org/entity/Q1214
+"USA:Washington, Yakima County",http://www.wikidata.org/entity/Q156629
+"USA:Washington,Whatcom County",http://www.wikidata.org/entity/Q156623
+"USA:Dane County, Wisconsin",http://www.wikidata.org/entity/Q502200
+USA:WV,http://www.wikidata.org/entity/Q1371
+USA:WY,http://www.wikidata.org/entity/Q1214
+"USA:WI,Madison",http://www.wikidata.org/entity/Q43788
+"USA:Madison, Wisconsin",http://www.wikidata.org/entity/Q43788
 Uzbekistan,http://www.wikidata.org/entity/Q265
 Vanuatu,http://www.wikidata.org/entity/Q686
 Vatican City,http://www.wikidata.org/entity/Q237
 Venezuela,http://www.wikidata.org/entity/Q717
 Viet nam,http://www.wikidata.org/entity/Q881
 Viet Nam,http://www.wikidata.org/entity/Q881
-Viet Nam: Ho Chi Minh city,http://www.wikidata.org/entity/Q1854
+Viet Nam:Ho Chi Minh city,http://www.wikidata.org/entity/Q1854
 Vietnam,http://www.wikidata.org/entity/Q881
 Yemen,http://www.wikidata.org/entity/Q805
 Zambia,http://www.wikidata.org/entity/Q953

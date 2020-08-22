@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-17 Fri 05:03 -->
+<!-- 2020-08-22 Sat 07:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq (part 4)</title>
@@ -248,19 +248,28 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org758b923">1. Modify Metadata</a></li>
-<li><a href="#orgec32c13">2. What is the schema?</a></li>
-<li><a href="#org2e487b2">3. How is the website generated?</a></li>
-<li><a href="#orge4dfe84">4. Modifying the schema</a></li>
-<li><a href="#org564a7a8">5. Adding fields to the form</a></li>
-<li><a href="#org633781a">6. <span class="todo TODO">TODO</span> Testing the license fields</a></li>
+<li><a href="#org935d151">1. Modify Metadata</a></li>
+<li><a href="#orgfb70872">2. What is the schema?</a></li>
+<li><a href="#orga76b489">3. How is the website generated?</a></li>
+<li><a href="#org80bb905">4. Changing the license field</a>
+<ul>
+<li><a href="#org3689b60">4.1. Modifying the schema</a></li>
+<li><a href="#org07e0c66">4.2. Adding fields to the form</a></li>
+<li><a href="#org1cfb94a">4.3. <span class="todo TODO">TODO</span> Testing the license fields</a></li>
+</ul>
+</li>
+<li><a href="#org88d4555">5. Changing GEO or location field</a>
+<ul>
+<li><a href="#org063bcfa">5.1. Relaxing the shex constraint</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-org758b923" class="outline-2">
-<h2 id="org758b923"><span class="section-number-2">1</span> Modify Metadata</h2>
+<div id="outline-container-org935d151" class="outline-2">
+<h2 id="org935d151"><span class="section-number-2">1</span> Modify Metadata</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The public sequence resource uses multiple data formats listed on the
@@ -268,8 +277,8 @@ The public sequence resource uses multiple data formats listed on the
 for RDF and semantic web/linked data ontologies. This technology
 allows for querying data in unprescribed ways - that is, you can
 formulate your own queries without dealing with a preset model of that
-data (so typical of CSV files and SQL tables). Examples of exploring
-data are listed <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part1">here</a>.
+data (which is how one has to approach CSV files and SQL
+tables). Examples of exploring data are listed <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part1">here</a>.
 </p>
 
 <p>
@@ -280,8 +289,8 @@ understand that anyone, including you, can change that information!
 </div>
 </div>
 
-<div id="outline-container-orgec32c13" class="outline-2">
-<h2 id="orgec32c13"><span class="section-number-2">2</span> What is the schema?</h2>
+<div id="outline-container-orgfb70872" class="outline-2">
+<h2 id="orgfb70872"><span class="section-number-2">2</span> What is the schema?</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The default metadata schema is listed <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml">here</a>.
@@ -289,8 +298,8 @@ The default metadata schema is listed <a href="https://github.com/arvados/bh20-s
 </div>
 </div>
 
-<div id="outline-container-org2e487b2" class="outline-2">
-<h2 id="org2e487b2"><span class="section-number-2">3</span> How is the website generated?</h2>
+<div id="outline-container-orga76b489" class="outline-2">
+<h2 id="orga76b489"><span class="section-number-2">3</span> How is the website generated?</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Using the schema we use <a href="https://pypi.org/project/PyShEx/">pyshex</a> shex expressions and <a href="https://github.com/common-workflow-language/schema_salad">schema salad</a> to
@@ -300,9 +309,13 @@ All from that one metadata schema.
 </div>
 </div>
 
-<div id="outline-container-orge4dfe84" class="outline-2">
-<h2 id="orge4dfe84"><span class="section-number-2">4</span> Modifying the schema</h2>
+<div id="outline-container-org80bb905" class="outline-2">
+<h2 id="org80bb905"><span class="section-number-2">4</span> Changing the license field</h2>
 <div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org3689b60" class="outline-3">
+<h3 id="org3689b60"><span class="section-number-3">4.1</span> Modifying the schema</h3>
+<div class="outline-text-3" id="text-4-1">
 <p>
 One of the first things we want to do is to add a field for the data
 license. Initially we only supported CC-4.0 as a license, but
@@ -380,25 +393,25 @@ So, we'll add it simply as a title field. Now the draft schema is
   type: record
   fields:
     license_type:
-      doc: License types as refined in https://wiki.creativecommons.org/images/d/d6/Ccrel-1.0.pdf
+      doc: License types as refined <span style="color: #fff59d;">in</span> https:<span style="color: #b0bec5;">//</span><span style="color: #b0bec5;">wiki.creativecommons.org/images/d/d6/Ccrel-1.0.pdf</span>
       type: string?
       jsonldPredicate:
-          _id: https://creativecommons.org/ns#License
+          _id: https:<span style="color: #b0bec5;">//</span><span style="color: #b0bec5;">creativecommons.org/ns#License</span>
     title:
       doc: Attribution title related to license
       type: string?
       jsonldPredicate:
-          _id: http://semanticscience.org/resource/SIO_001167
+          _id: http:<span style="color: #b0bec5;">//</span><span style="color: #b0bec5;">semanticscience.org/resource/SIO_001167</span>
     attribution_url:
       doc: Attribution URL related to license
       type: string?
       jsonldPredicate:
-          _id: https://creativecommons.org/ns#Work
+          _id: https:<span style="color: #b0bec5;">//</span><span style="color: #b0bec5;">creativecommons.org/ns#Work</span>
     attribution_source:
       doc: Attribution source URL
       type: string?
       jsonldPredicate:
-          _id: https://creativecommons.org/ns#Work
+          _id: https:<span style="color: #b0bec5;">//</span><span style="color: #b0bec5;">creativecommons.org/ns#Work</span>
 </pre>
 </div>
 
@@ -411,13 +424,13 @@ gitter channel and I merged it.
 </div>
 </div>
 
-<div id="outline-container-org564a7a8" class="outline-2">
-<h2 id="org564a7a8"><span class="section-number-2">5</span> Adding fields to the form</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-org07e0c66" class="outline-3">
+<h3 id="org07e0c66"><span class="section-number-3">4.2</span> Adding fields to the form</h3>
+<div class="outline-text-3" id="text-4-2">
 <p>
 To add the new fields to the form we have to modify it a little. If we
 go to the upload form we need to add the license box. The schema is
-loaded in <a href="https://github.com/arvados/bh20-seq-resource/blob/a0c8ebd57b875f265e8b0efec4abfaf892eb6c45/bh20simplewebuploader/main.py#L229">main.py</a> in the 'generate<sub>form</sub>' function.
+loaded in <a href="https://github.com/arvados/bh20-seq-resource/blob/a0c8ebd57b875f265e8b0efec4abfaf892eb6c45/bh20simplewebuploader/main.py#L229">main.py</a> in the 'generate-form' function.
 </p>
 
 <p>
@@ -453,12 +466,71 @@ field to be optional - a missing license assumes it is CC-BY-4.0.
 </div>
 </div>
 
-<div id="outline-container-org633781a" class="outline-2">
-<h2 id="org633781a"><span class="section-number-2">6</span> <span class="todo TODO">TODO</span> Testing the license fields</h2>
+<div id="outline-container-org1cfb94a" class="outline-3">
+<h3 id="org1cfb94a"><span class="section-number-3">4.3</span> <span class="todo TODO">TODO</span> Testing the license fields</h3>
+</div>
+</div>
+
+<div id="outline-container-org88d4555" class="outline-2">
+<h2 id="org88d4555"><span class="section-number-2">5</span> Changing GEO or location field</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+When fetching information from GenBank and EBI/ENA we also translate
+the location into an unambiguous identifier. We opted for the wikidata
+tag. E.g. for New York city it is <a href="https://www.wikidata.org/wiki/Q60">https://www.wikidata.org/wiki/Q60</a>
+and for New York state it is <a href="https://www.wikidata.org/wiki/Q1384">https://www.wikidata.org/wiki/Q1384</a>. If
+everyone uses these metadata URIs it is easy to group when making
+queries. Note that we should be using
+<a href="http://www.wikidata.org/entity/Q60">http://www.wikidata.org/entity/Q60</a> in the dataset (http instead of
+https and entitity instead of wiki).
+</p>
+
+<p>
+Unfortunately the main repositories of SARS-CoV-2 have variable
+strings of text for location and/or GPS coordinates. For us to support
+our schema we had to translate all options and this proves expensive.
+</p>
+</div>
+
+<div id="outline-container-org063bcfa" class="outline-3">
+<h3 id="org063bcfa"><span class="section-number-3">5.1</span> Relaxing the shex constraint</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+So we decide to relax the enforcement of this type of metadata and to
+allow for a free form string.
+</p>
+
+<p>
+The schema already used <a href="http://purl.obolibrary.org/obo/GAZ_00000448">http://purl.obolibrary.org/obo/GAZ_00000448</a>
+which states:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">Class: geographic
+  location
+  Term IRI: http:<span style="color: #b0bec5;">//</span><span style="color: #b0bec5;">purl.obolibrary.org/obo/GAZ_00000448</span>
+Definition: A reference to a place on
+  the Earth, by its name or by its geographical location.
+</pre>
+</div>
+
+<p>
+and when you check count by location in the <a href="./demo">DEMO</a> it lists a free
+format.
+</p>
+
+<p>
+So, why does the validation step balk when importing GenBank?
+The problem was in the <a href="https://github.com/arvados/bh20-seq-resource/blob/46d4b7a3a31f6605f81d43ecd6651d60a5782364/bh20sequploader/bh20seq-shex.rdf#L39">shex check</a> for RDF generation.
+Removing the wikidata requirement relaxed the imports with this
+<a href="https://github.com/arvados/bh20-seq-resource/commit/f776816ee2b1af7ccc84afb494f68a81a51f5a76">patch</a>.
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-16 Thu 03:27</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-08-22 Sat 07:42</small>.
 </div>
 </body>
 </html>

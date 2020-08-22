@@ -17,6 +17,7 @@
    - [[#adding-fields-to-the-form][Adding fields to the form]]
    - [[#testing-the-license-fields][Testing the license fields]]
  - [[#changing-geo-or-location-field][Changing GEO or location field]]
+   - [[#relaxing-the-shex-constraint][Relaxing the shex constraint]]
 
 * Modify Metadata
 
@@ -169,6 +170,8 @@ Unfortunately the main repositories of SARS-CoV-2 have variable
 strings of text for location and/or GPS coordinates. For us to support
 our schema we had to translate all options and this proves expensive.
 
+** Relaxing the shex constraint
+
 So we decide to relax the enforcement of this type of metadata and to
 allow for a free form string.
 
@@ -188,4 +191,5 @@ format.
 
 So, why does the validation step balk when importing GenBank?
 The problem was in the [[https://github.com/arvados/bh20-seq-resource/blob/46d4b7a3a31f6605f81d43ecd6651d60a5782364/bh20sequploader/bh20seq-shex.rdf#L39][shex check]] for RDF generation.
-Removing the wikidata requirement relaxed the imports.
+Removing the wikidata requirement relaxed the imports with this
+[[https://github.com/arvados/bh20-seq-resource/commit/f776816ee2b1af7ccc84afb494f68a81a51f5a76][patch]].

@@ -146,7 +146,6 @@ instead on https and entity instead of wiki) the submission went
 through. Reload the page (it won't empty the fields) to re-enable the
 submit button.
 
-
 * Step 4: Check output
 
 The current pipeline takes 5.5 hours to complete! Once it completes

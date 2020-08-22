@@ -658,6 +658,11 @@ def about_page():
     buf = get_html_body('doc/web/about.html','https://github.com/arvados/bh20-seq-resource/blob/master/doc/web/about.org')
     return render_template('about.html',menu='ABOUT',embed=buf)
 
+@app.route('/contact')
+def contact_page():
+    buf = get_html_body('doc/web/contact.html','https://github.com/arvados/bh20-seq-resource/blob/master/doc/web/contact.org')
+    return render_template('about.html',menu='CONTACT',embed=buf)
+
 ## Dynamic API functions starting here
 ## This is quick and dirty for now, just to get something out and demonstrate the queries
 ## Feel free to rename the functions/endpoints, feel free to process result so we get nicer JSON

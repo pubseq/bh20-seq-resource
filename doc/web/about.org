@@ -204,7 +204,7 @@ To date, PubSeq is a resource specific to SARS-CoV-2, but we are designing it to
 
 * How do I communicate with you?
 
-We use a [[https://gitter.im/arvados/pubseq?utm_source=share-link&utm_medium=link&utm_campaign=share-link][gitter channel]] you can join.
+We use a [[https://gitter.im/arvados/pubseq?utm_source=share-link&utm_medium=link&utm_campaign=share-link][gitter channel]] you can join. See also [[./contact][contact]].
 
 * Who are the sponsors?
 

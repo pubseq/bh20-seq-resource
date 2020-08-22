@@ -1,0 +1,20 @@
+#+TITLE: CONTACT
+#+AUTHOR: Pjotr Prins
+
+* CONTACT and SUPPORT
+
+COVID-19 PubSeq was created by a group of [[https://github.com/arvados/bh20-seq-resource/graphs/contributors][bioinformaticians]] and
+software developers working at leading institutes (see sponsors
+below). You can talk with us directly on a [[https://gitter.im/arvados/pubseq?utm_source=share-link&utm_medium=link&utm_campaign=share-link][gitter channel]]. We are open
+to improving work flows and analysis.
+
+** Professional support
+
+To use COVID-19 PubSeq solutions for professional purposes you can
+contact [[mailto:info@curii.com][Curii]], the creators of [[https://arvados.org/][Arvados]], directly.
+
+COVID-19 is built on Arvados using CWL workflows.
+
+** E-mail
+
+For other questions feel free to write directly to [[mailto:pjotr.public821@thebird.nl][Pjotr Prins]].

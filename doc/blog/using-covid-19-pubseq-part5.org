@@ -12,9 +12,11 @@
  - [[#modify-metadata][Modify Metadata]]
  - [[#what-is-the-schema][What is the schema?]]
  - [[#how-is-the-website-generated][How is the website generated?]]
- - [[#modifying-the-schema][Modifying the schema]]
- - [[#adding-fields-to-the-form][Adding fields to the form]]
- - [[#testing-the-license-fields][Testing the license fields]]
+ - [[#changing-the-license-field][Changing the license field]]
+   - [[#modifying-the-schema][Modifying the schema]]
+   - [[#adding-fields-to-the-form][Adding fields to the form]]
+   - [[#testing-the-license-fields][Testing the license fields]]
+ - [[#changing-geo-or-location-field][Changing GEO or location field]]
 
 * Modify Metadata
 
@@ -40,7 +42,9 @@ Using the schema we use [[https://pypi.org/project/PyShEx/][pyshex]] shex expres
 generate the [[https://github.com/arvados/bh20-seq-resource/blob/edb17e7f7caebfa1e76b21006b1772a33f4f7887/bh20simplewebuploader/templates/form.html#L47][input form]], [[https://github.com/arvados/bh20-seq-resource/blob/edb17e7f7caebfa1e76b21006b1772a33f4f7887/bh20sequploader/qc_metadata.py#L13][validate]] the user input and to build [[https://github.com/arvados/bh20-seq-resource/blob/edb17e7f7caebfa1e76b21006b1772a33f4f7887/workflows/pangenome-generate/merge-metadata.py#L24][RDF]]!
 All from that one metadata schema.
 
-* Modifying the schema
+* Changing the license field
+
+** Modifying the schema
 
 One of the first things we want to do is to add a field for the data
 license. Initially we only supported CC-4.0 as a license, but
@@ -120,11 +124,11 @@ our source tree and ask for feedback before wiring it up in the data
 entry form. The pull request was submitted [[https://github.com/arvados/bh20-seq-resource/pull/97][here]] and reviewed on the
 gitter channel and I merged it.
 
-* Adding fields to the form
+** Adding fields to the form
 
 To add the new fields to the form we have to modify it a little. If we
 go to the upload form we need to add the license box. The schema is
-loaded in [[https://github.com/arvados/bh20-seq-resource/blob/a0c8ebd57b875f265e8b0efec4abfaf892eb6c45/bh20simplewebuploader/main.py#L229][main.py]] in the 'generate_form' function.
+loaded in [[https://github.com/arvados/bh20-seq-resource/blob/a0c8ebd57b875f265e8b0efec4abfaf892eb6c45/bh20simplewebuploader/main.py#L229][main.py]] in the 'generate-form' function.
 
 With this [[https://github.com/arvados/bh20-seq-resource/commit/b9691c7deae30bd6422fb7b0681572b7b6f78ae3][patch]] the website adds the license input fields on the form.
 
@@ -148,4 +152,40 @@ When pushing the license info we discovered the workflow broke because
 the existing data had no licensing info. So we changed the license
 field to be optional - a missing license assumes it is CC-BY-4.0.
 
-* TODO Testing the license fields
+** TODO Testing the license fields
+
+* Changing GEO or location field
+
+When fetching information from GenBank and EBI/ENA we also translate
+the location into an unambiguous identifier. We opted for the wikidata
+tag. E.g. for New York city it is https://www.wikidata.org/wiki/Q60
+and for New York state it is https://www.wikidata.org/wiki/Q1384. If
+everyone uses these metadata URIs it is easy to group when making
+queries. Note that we should be using
+http://www.wikidata.org/entity/Q60 in the dataset (http instead of
+https and entitity instead of wiki).
+
+Unfortunately the main repositories of SARS-CoV-2 have variable
+strings of text for location and/or GPS coordinates. For us to support
+our schema we had to translate all options and this proves expensive.
+
+So we decide to relax the enforcement of this type of metadata and to
+allow for a free form string.
+
+The schema already used http://purl.obolibrary.org/obo/GAZ_00000448
+which states:
+
+#+BEGIN_SRC js
+Class: geographic
+  location
+  Term IRI: http://purl.obolibrary.org/obo/GAZ_00000448
+Definition: A reference to a place on
+  the Earth, by its name or by its geographical location.
+#+END_SRC
+
+and when you check count by location in the [[./demo][DEMO]] it lists a free
+format.
+
+So, why does the validation step balk when importing GenBank?
+The problem was in the [[https://github.com/arvados/bh20-seq-resource/blob/46d4b7a3a31f6605f81d43ecd6651d60a5782364/bh20sequploader/bh20seq-shex.rdf#L39][shex check]] for RDF generation.
+Removing the wikidata requirement relaxed the imports.

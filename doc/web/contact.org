@@ -4,9 +4,10 @@
 * CONTACT and SUPPORT
 
 COVID-19 PubSeq was created by a group of [[https://github.com/arvados/bh20-seq-resource/graphs/contributors][bioinformaticians]] and
-software developers working at leading institutes (see sponsors
-below). You can talk with us directly on a [[https://gitter.im/arvados/pubseq?utm_source=share-link&utm_medium=link&utm_campaign=share-link][gitter channel]]. We are open
-to improving work flows and analysis.
+software developers working at leading institutes (see sponsors below)
+with the goal of making online analysis available to everyone. You can
+talk with us directly on a [[https://gitter.im/arvados/pubseq?utm_source=share-link&utm_medium=link&utm_campaign=share-link][gitter channel]]. We are open to improving
+work flows and analysis.
 
 ** Professional support
 

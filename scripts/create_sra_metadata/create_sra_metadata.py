@@ -23,13 +23,18 @@ term_to_uri_dict = {}
 for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_xxx_csv) for name_xxx_csv in os.listdir(dir_dict_ontology_standardization) if name_xxx_csv.endswith('.csv')]:
     print('Read {}'.format(path_dict_xxx_csv))
 
-    with open(path_dict_xxx_csv, 'r') as f:
+    with open(path_dict_xxx_csv) as f:
         for line in f:
             if len(line.split(',')) > 2:
                 term, uri = line.strip('\n').split('",')
-                term = term.strip('"')
             else:
                 term, uri = line.strip('\n').split(',')
+
+            term = term.strip('"')
+
+            if term in term_to_uri_dict:
+                print('Warning: in the dictionaries there are more entries for the same term ({}).'.format(term))
+                continue
 
             term_to_uri_dict[term] = uri
 
@@ -178,6 +183,9 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                         else:
                             info_for_yaml_dict['sample']['additional_collection_information'] = "The 'collection_date' is estimated (the original date was: {})".format(VALUE_text)
             elif TAG_text == 'geo_loc_name':
+                if ': ' in VALUE_text:
+                    VALUE_text = VALUE_text.replace(': ', ':')
+
                 if VALUE_text in term_to_uri_dict:
                     info_for_yaml_dict['sample']['collection_location'] = term_to_uri_dict[VALUE_text]
                 elif VALUE_text.lower() not in ['na', 'not applicable']:

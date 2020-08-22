@@ -121,9 +121,10 @@ for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_x
         for line in f:
             if len(line.split(',')) > 2:
                 term, uri = line.strip('\n').split('",')
-                term = term.strip('"')
             else:
                 term, uri = line.strip('\n').split(',')
+
+            term = term.strip('"')
 
             if term in term_to_uri_dict:
                 print('Warning: in the dictionaries there are more entries for the same term ({}).'.format(term))
@@ -243,6 +244,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                     GBQualifier_name_text = GBQualifier.find('GBQualifier_name').text
 
                     if GBQualifier_name_text == 'host':
+                        GBQualifier_value_text = GBQualifier_value_text.split(';')[0] # For case like Homo sapiens;sex:female
                         if GBQualifier_value_text in term_to_uri_dict:
                             # Cases like 'Felis catus; Domestic Shorthair'
                             info_for_yaml_dict['host']['host_species'] = term_to_uri_dict[GBQualifier_value_text]
@@ -353,8 +355,8 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
                         info_for_yaml_dict['sample']['collection_date'] = date_to_write
                     elif GBQualifier_name_text in ['lat_lon', 'country']:
-                        if GBQualifier_value_text == 'Hong Kong':
-                            GBQualifier_value_text = 'China: Hong Kong'
+                        if GBQualifier_name_text == 'country' and ': ' in GBQualifier_value_text:
+                            GBQualifier_value_text = GBQualifier_value_text.replace(': ', ':')
 
                         if GBQualifier_value_text in term_to_uri_dict:
                             info_for_yaml_dict['sample']['collection_location'] = term_to_uri_dict[GBQualifier_value_text]

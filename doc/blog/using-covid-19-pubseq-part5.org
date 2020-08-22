@@ -23,8 +23,8 @@ The public sequence resource uses multiple data formats listed on the
 for RDF and semantic web/linked data ontologies. This technology
 allows for querying data in unprescribed ways - that is, you can
 formulate your own queries without dealing with a preset model of that
-data (so typical of CSV files and SQL tables). Examples of exploring
-data are listed [[http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part1][here]].
+data (which is how one has to approach CSV files and SQL
+tables). Examples of exploring data are listed [[http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part1][here]].
 
 In this BLOG we are going to look at the metadata entered on the
 COVID-19 PubSeq website (or command line client). It is important to

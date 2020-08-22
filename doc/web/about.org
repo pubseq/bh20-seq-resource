@@ -3,6 +3,7 @@
 
 * Table of Contents                                                     :TOC:noexport:
  - [[#what-is-the-public-sequence-resource-about][What is the 'public sequence resource' about?]]
+ - [[#presentations][Presentations]]
  - [[#who-created-the-public-sequence-resource][Who created the public sequence resource?]]
  - [[#how-does-the-public-sequence-resource-compare-to-other-data-resources][How does the public sequence resource compare to other data resources?]]
  - [[#why-should-i-upload-my-data-here][Why should I upload my data here?]]
@@ -17,10 +18,10 @@
  - [[#how-do-i-change-the-work-flows][How do I change the work flows?]]
  - [[#how-do-i-change-the-source-code][How do I change the source code?]]
  - [[#should-i-choose-cc-by-or-cc0][Should I choose CC-BY or CC0?]]
- - [[#are-there-also-variant-in-the-RDF-databases]][Are there also variant in the RDF databases?]
+ - [[#are-there-also-variant-in-the-rdf-databases-][Are there also variant in the RDF databases? *]]
  - [[#how-do-i-deal-with-private-data-and-privacy][How do I deal with private data and privacy?]]
- - [[#do-you-have-any-checks-or-concerns-if-human-sequence-accidentally-submitted-to-your-service-as-part-of-a-fastq][Do you have any checks or concerns if human sequence accidentally submitted to your service as part of a fastq?]
- - [[#does-PubSeq-support-only-SARS-CoV-2=data]][Does PubSeq support only SARS-CoV-2 data?]
+ - [[#do-you-have-any-checks-or-concerns-if-human-sequence-accidentally-submitted-to-your-service-as-part-of-a-fastq-][Do you have any checks or concerns if human sequence accidentally submitted to your service as part of a fastq? *]]
+ - [[#does-pubseq-support-only-sars-cov-2-data-][Does PubSeq support only SARS-CoV-2 data? *]]
  - [[#how-do-i-communicate-with-you][How do I communicate with you?]]
  - [[#who-are-the-sponsors][Who are the sponsors?]]
 
@@ -31,7 +32,10 @@ resource for COVID-19 research.  The focus is on providing the best
 possible sequence data with associated metadata that can be used for
 sequence comparison and protein prediction.
 
-We were at the *Bioinformatics Community Conference 2020*! Have a look at the [[https://bcc2020.sched.com/event/coLw]][video talk] ([[https://drive.google.com/file/d/1skXHwVKM_gl73-_4giYIOQ1IlC5X5uBo/view?usp=sharing]][alternative link]) and the [[https://drive.google.com/file/d/1vyEgfvSqhM9yIwWZ6Iys-QxhxtVxPSdp/view?usp=sharing]][poster].
+* Presentations
+
+We presented at the BOSC 2020 Have a look at the [[https://bcc2020.sched.com/event/coLw][video]] ([[https://drive.google.com/file/d/1skXHwVKM_gl73-_4giYIOQ1IlC5X5uBo/view?usp=sharing][alternative
+link]]) and the [[https://drive.google.com/file/d/1vyEgfvSqhM9yIwWZ6Iys-QxhxtVxPSdp/view?usp=sharing][poster]].
 
 * Who created the public sequence resource?
 

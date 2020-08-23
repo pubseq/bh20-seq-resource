@@ -1,14 +1,23 @@
 nasopharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155831
+Nasopharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155831
+NPS,http://purl.obolibrary.org/obo/NCIT_C155831
+NasopharyngealSwab,http://purl.obolibrary.org/obo/NCIT_C155831
+Naso-pharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155831
+nasopharingeal swab,http://purl.obolibrary.org/obo/NCIT_C155831
+Nasopharyngeal (NP) Swab,http://purl.obolibrary.org/obo/NCIT_C155831
 nasopharyngeal swabs,http://purl.obolibrary.org/obo/NCIT_C155831
 nasopharyngeal exudate,http://purl.obolibrary.org/obo/NCIT_C155831
 nasopharyngeal,http://purl.obolibrary.org/obo/NCIT_C155831
+Nasopharyngeal,http://purl.obolibrary.org/obo/NCIT_C155831
 respiratory swab,http://purl.obolibrary.org/obo/NCIT_C155831
 naso-pharyngeal exudate,http://purl.obolibrary.org/obo/NCIT_C155831
 nasopharyngeal aspirate,http://purl.obolibrary.org/obo/NCIT_C155831
 nasal swab specimen,http://purl.obolibrary.org/obo/NCIT_C155831
+nasal swal,http://purl.obolibrary.org/obo/NCIT_C155831
 pharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155831
 respiratory secretion,http://purl.obolibrary.org/obo/NCIT_C155831
 mid-nasal swab,http://purl.obolibrary.org/obo/NCIT_C155831
+Mid-nasal swab,http://purl.obolibrary.org/obo/NCIT_C155831
 nasopharyngeal (throat) washings,http://purl.obolibrary.org/obo/NCIT_C155831
 oropharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155835
 throat swab,http://purl.obolibrary.org/obo/NCIT_C155835
@@ -16,7 +25,10 @@ oro-pharyngeal,http://purl.obolibrary.org/obo/NCIT_C155835
 Oropharyngal,http://purl.obolibrary.org/obo/NCIT_C155835
 oralpharyngeal,http://purl.obolibrary.org/obo/NCIT_C155835
 Oral-pharyngeal,http://purl.obolibrary.org/obo/NCIT_C155835
+oral-pharyngeal,http://purl.obolibrary.org/obo/NCIT_C155835
+oro-pharngyl swab,http://purl.obolibrary.org/obo/NCIT_C155835
 Oro-pharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155835
+oro-pharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155835
 Oropharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155835
 oro pharyngeal swab,http://purl.obolibrary.org/obo/NCIT_C155835
 buccal swab,http://purl.obolibrary.org/obo/NCIT_C155835
@@ -33,4 +45,5 @@ aspirate,http://purl.obolibrary.org/obo/NCIT_C13347
 stool,http://purl.obolibrary.org/obo/NCIT_C13234
 serum,http://purl.obolibrary.org/obo/NCIT_C13325
 saliva,http://purl.obolibrary.org/obo/NCIT_C13275
+Deep throat saliva,http://purl.obolibrary.org/obo/NCIT_C13275
 nasal swab,http://purl.obolibrary.org/obo/NCIT_C132119

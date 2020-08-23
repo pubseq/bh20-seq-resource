@@ -1,6 +1,20 @@
 30.59 N 114.3 E,http://www.wikidata.org/entity/Q11746
 35.92 N 74.33 E,http://www.wikidata.org/entity/Q609024
 39.54 N 116.23 E,http://www.wikidata.org/entity/Q198244
+22.3039019 N 73.1680977 E,http://www.wikidata.org/entity/Q11909
+22.3394 N 114.166 E,http://www.wikidata.org/entity/Q8646
+22.6813385 N 72.8771793 E,http://www.wikidata.org/entity/Q219039
+23.052214 N 72.603157 E,http://www.wikidata.org/entity/Q1070
+23.0524508 N 72.600668 E,http://www.wikidata.org/entity/Q1070
+24.5046286 N 72.0209126 E,http://www.wikidata.org/entity/Q1266017
+40.71 N 74.00 W,http://www.wikidata.org/entity/Q11253
+41.31 N 72.92 W,http://www.wikidata.org/entity/Q49145
+43.0731 N 89.4012 W,http://www.wikidata.org/entity/Q43788
+44.3148 N 85.6024 W,http://www.wikidata.org/entity/Q22086086
+51.06 N 6.12 E,http://www.wikidata.org/entity/Q14833
+51.22 N 6.77 E,http://www.wikidata.org/entity/Q1718
+22.3137564 N 73.1465874 E,http://www.wikidata.org/entity/Q11909
+"22.8197678 N 72.7573375 E",http://www.wikidata.org/entity/Q2233469
 Afghanistan,http://www.wikidata.org/entity/Q889
 Albania,http://www.wikidata.org/entity/Q222
 Algeria,http://www.wikidata.org/entity/Q262
@@ -237,11 +251,11 @@ India:Kerala State,http://www.wikidata.org/entity/Q1186
 "India:Vadodara",http://www.wikidata.org/entity/Q11909
 "India:Gujarat, Vadodara",http://www.wikidata.org/entity/Q11909
 "India:Hyderabad",http://www.wikidata.org/entity/Q1361
-"India:hamadan",http://www.wikidata.org/entity/Q1361
-"India:Hamadan",http://www.wikidata.org/entity/Q28587
+"Iran:hamadan",http://www.wikidata.org/entity/Q1361
+"Iran:Hamadan",http://www.wikidata.org/entity/Q28587
 "Iraq:Erbil",http://www.wikidata.org/entity/Q132754
 "Iraq:Kurdistan region, Erbil",http://www.wikidata.org/entity/Q132754
-"Iraq:Kurdistan region, Erbil",http://www.wikidata.org/entity/Q132754
+"Iraq:Kuedistan region, Erbil",http://www.wikidata.org/entity/Q132754
 Indonesia,http://www.wikidata.org/entity/Q252
 Iran,http://www.wikidata.org/entity/Q794
 Iran:Qum,http://www.wikidata.org/entity/Q131664
@@ -294,6 +308,7 @@ Mauritania,http://www.wikidata.org/entity/Q1025
 Mauritius,http://www.wikidata.org/entity/Q1027
 Mexico,http://www.wikidata.org/entity/Q96
 Mexico:Baja California Sur,http://www.wikidata.org/entity/Q46508
+"Mexico:Tijuana, BajaCalifornia",http://www.wikidata.org/entity/Q124739
 Mexico:Hidalgo,http://www.wikidata.org/entity/Q80903
 Mexico:Mexico City,http://www.wikidata.org/entity/Q1489
 Mexico:Mexico State,http://www.wikidata.org/entity/Q82112
@@ -409,6 +424,8 @@ Tonga,http://www.wikidata.org/entity/Q678
 Trinidad and Tobago,http://www.wikidata.org/entity/Q754
 Tunisia,http://www.wikidata.org/entity/Q948
 Tunisia:Tunis,http://www.wikidata.org/entity/Q3572
+Tunisia:Ben Arous,http://www.wikidata.org/entity/Q816443
+Tunisia:Bizerte,http://www.wikidata.org/entity/Q189546
 Turkey,http://www.wikidata.org/entity/Q43
 Turkmenistan,http://www.wikidata.org/entity/Q874
 Tuvalu,http://www.wikidata.org/entity/Q672
@@ -428,11 +445,13 @@ USA:AL,http://www.wikidata.org/entity/Q173
 "USA:Alabama",http://www.wikidata.org/entity/Q173
 "USA:Alabama, Mobile county",http://www.wikidata.org/entity/Q495738
 "USA:Arizona, Maricopa county",http://www.wikidata.org/entity/Q58691
+"USA:Maricopa County, Arizona",http://www.wikidata.org/entity/Q58691
 "USA:Arkansas, Little Rock",http://www.wikidata.org/entity/Q33405
 "USA:Avondale, LA",http://www.wikidata.org/entity/Q79449
 "USA:AVONDALE, LA",http://www.wikidata.org/entity/Q79449
 "USA:CA, Alameda",http://www.wikidata.org/entity/Q490744
 "USA:California, Los Angeles county",http://www.wikidata.org/entity/Q104994
+"USA:California,Los Angeles County",http://www.wikidata.org/entity/Q104994
 "USA:California, San Diego county",http://www.wikidata.org/entity/Q108143
 "USA:California, Santa Clara county",http://www.wikidata.org/entity/Q110739
 "USA:Colorado, Denver county",http://www.wikidata.org/entity/Q15906757
@@ -455,6 +474,7 @@ USA:AL,http://www.wikidata.org/entity/Q173
 "USA:Illinois, Winnebago county",http://www.wikidata.org/entity/Q110606
 "USA:Illinois, Winnebago County",http://www.wikidata.org/entity/Q110606
 "USA:Imperial, California",http://www.wikidata.org/entity/Q169952
+"USA:South Carolina, Fairfield",http://www.wikidata.org/entity/Q323432
 "USA:Iowa, Dubuque county",http://www.wikidata.org/entity/Q113756
 "USA:Iowa, Jackson county",http://www.wikidata.org/entity/Q485780
 "USA:Killona, LA",http://www.wikidata.org/entity/Q1844136
@@ -508,18 +528,22 @@ USA:New Hampshire,http://www.wikidata.org/entity/Q759
 "USA:Wisconsin, Dane county",http://www.wikidata.org/entity/Q502200
 "USA:Wisconsin, Dane County",http://www.wikidata.org/entity/Q502200
 "USA:Wisconsin, Dodge County",http://www.wikidata.org/entity/Q372796
+"USA:Wisconsin, Dodge county",http://www.wikidata.org/entity/Q372796
 "USA:Wisconsin, Fond du Lac county",http://www.wikidata.org/entity/Q494912
 "USA:Wisconsin, Grant county",http://www.wikidata.org/entity/Q500977
 "USA:Wisconsin, Green county",http://www.wikidata.org/entity/Q489163
 "USA:Wisconsin, Jackson county",http://www.wikidata.org/entity/Q500897
+"USA:Wisconsin, Jefferson county",http://www.wikidata.org/entity/Q500958
 "USA:Wisconsin, Lafayette county",http://www.wikidata.org/entity/Q431440
 "USA:Wisconsin, Manitowoc county",http://www.wikidata.org/entity/Q500984
+"USA:Wisconsin, Marquette county",http://www.wikidata.org/entity/Q500918
 "USA:Wisconsin, Milwaukee county",http://www.wikidata.org/entity/Q502294
 "USA:Wisconsin, Monroe county",http://www.wikidata.org/entity/Q932966
 "USA:Wisconsin, Outagamie county",http://www.wikidata.org/entity/Q510244
 "USA:Wisconsin, Ozaukee county",http://www.wikidata.org/entity/Q505874
 "USA:Wisconsin, Racine county",http://www.wikidata.org/entity/Q510122
 "USA:Wisconsin, Richland county",http://www.wikidata.org/entity/Q501596
+"USA:Wisconsin, Rock county",http://www.wikidata.org/entity/Q500939
 "USA:Wisconsin, Sauk county",http://www.wikidata.org/entity/Q500933
 "USA:Wisconsin, Sheboygan county",http://www.wikidata.org/entity/Q500803
 "USA:Wisconsin, Trempealeau county",http://www.wikidata.org/entity/Q494923
@@ -587,8 +611,8 @@ USA:KS,http://www.wikidata.org/entity/Q1558
 USA:KY,http://www.wikidata.org/entity/Q1603
 USA:LA,http://www.wikidata.org/entity/Q65
 USA:Los Angeles,http://www.wikidata.org/entity/Q65
-"USA:SLIDELL, LA, LA",https://www.wikidata.org/wiki/Q988156
-"USA:Slidell, LA, LA",https://www.wikidata.org/wiki/Q988156
+"USA:SLIDELL, LA",https://www.wikidata.org/wiki/Q988156
+"USA:Slidell, LA",https://www.wikidata.org/wiki/Q988156
 "USA:Seattle, WA",https://www.wikidata.org/wiki/Q5083
 "USA:New Orleans, LA",https://www.wikidata.org/wiki/Q34404
 "USA:NEW ORLEANS, LA",https://www.wikidata.org/wiki/Q34404
@@ -647,6 +671,7 @@ USA:SD,http://www.wikidata.org/entity/Q1211
 "USA:King County,WA",http://www.wikidata.org/entity/Q108861
 "USA:Washington,Jefferson County",http://www.wikidata.org/entity/Q384737
 "USA:Washington, Jefferson County",http://www.wikidata.org/entity/Q384737
+"USA:Washington, Jefferson county",http://www.wikidata.org/entity/Q384737
 "USA:Washington,Grant County",http://www.wikidata.org/entity/Q281681
 "USA:Washington, Grant County",http://www.wikidata.org/entity/Q281681
 "USA:Washington,Franklin County",http://www.wikidata.org/entity/Q118716

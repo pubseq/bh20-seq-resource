@@ -9,13 +9,26 @@ with the goal of making online analysis available to everyone. You can
 talk with us directly on a [[https://gitter.im/arvados/pubseq?utm_source=share-link&utm_medium=link&utm_campaign=share-link][gitter channel]]. We are open to improving
 work flows and analysis.
 
+** Oxford Nanopore Analysis
+
+We run Oxford Nanopore ourselves. We aim to make it easy to analyse
+Nanopore material using our *free* Cloud infrastructure. If you need
+help in using the online workflows don't hesitate to contact us.
+
+** Data from other sequencers
+
+We accept FASTA sequences of SARS-CoV-2. Simply upload them using the
+web form and/or REST API. No sign-up required! If you have large scale
+short read data and require support we can discuss that. We also run
+Illumina sequencing in several places.
+
 ** Professional support
 
 To use COVID-19 PubSeq solutions for professional purposes you can
-contact [[mailto:info@curii.com][Curii]], the creators of [[https://arvados.org/][Arvados]], directly.
+contact Boston based [[mailto:info@curii.com][Curii]], the creators of [[https://arvados.org/][Arvados]], directly.
 
 COVID-19 is built on Arvados using CWL workflows.
 
 ** E-mail
 
-For other questions feel free to write directly to [[mailto:pjotr.public821@thebird.nl][Pjotr Prins]].
+For questions feel free to write directly to [[mailto:pjotr.public821@thebird.nl][Pjotr Prins]].

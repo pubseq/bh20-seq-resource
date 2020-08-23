@@ -27,10 +27,39 @@
 
 * What is the 'public sequence resource' about?
 
-The *public sequence resource* aims to provide a generic and useful
-resource for COVID-19 research.  The focus is on providing the best
-possible sequence data with associated metadata that can be used for
-sequence comparison and protein prediction.
+PubSeq, the *public sequence resource*, aims to provide a generic and
+useful resource for COVID-19 research.  The focus is on providing the
+best possible sequence data with associated metadata that can be used
+for sequence comparison and protein prediction.
+
+Just to avoid the notion that PubSeq is a biorepository: it is far
+more than that. We are not competing with the likes of GenBank,
+EBI/ENA and GISAID - in fact, PubSeq sources much of the data from
+those and they get ours.
+
+There is no conflict of posting data to multiple repositories.
+
+It is better to view PubSeq as an *open precision medicine initiative* that
+allows for early detection of new variants and strains; very valuable
+for both testing and treatment. We have live analysis work flows that
+run on uploading a new sequence. Contributing sequences helps the
+overall detection. At this moment the output is limited.  We will soon
+add interactive discovery tools.  Uploading data from a sequencer will
+give researchers all information they want in 5 hours *without any
+bioinformatics knowledge*. We may even provide workflows that take
+data straight from the sequencer.  In fact, you get very little out of
+existing biorepositories, in our opinion, unless you have solid
+bioinformatics support. And even then there is the question about
+comparing data that was created using different technologies and
+workflows. How do you deal with that?
+
+With PubSeq we are in a position to reanalyse that data from raw
+material when new insights arise.  It is likely that COVID19 will be
+around for another year at least.  After that we should prepare for
+the next pandemic. PubSeq is meant for that. We take the long view and
+it will only get more powerful.  Who knows: maybe the live analysis
+part of PubSeq will be an approach that other biorepositories will
+follow.
 
 * Presentations
 

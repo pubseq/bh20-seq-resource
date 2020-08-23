@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-22 Sat 05:09 -->
+<!-- 2020-08-23 Sun 04:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CONTACT</title>
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -185,7 +198,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -234,18 +247,20 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfe47a1e">1. CONTACT and SUPPORT</a>
+<li><a href="#org3a0b775">1. CONTACT and SUPPORT</a>
 <ul>
-<li><a href="#org4181827">1.1. Professional support</a></li>
-<li><a href="#orgd92cea5">1.2. E-mail</a></li>
+<li><a href="#org26cee6f">1.1. Oxford Nanopore Analysis</a></li>
+<li><a href="#org8d24eb8">1.2. Data from other sequencers</a></li>
+<li><a href="#org8915c4e">1.3. Professional support</a></li>
+<li><a href="#org4406d74">1.4. E-mail</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgfe47a1e" class="outline-2">
-<h2 id="orgfe47a1e"><span class="section-number-2">1</span> CONTACT and SUPPORT</h2>
+<div id="outline-container-org3a0b775" class="outline-2">
+<h2 id="org3a0b775"><span class="section-number-2">1</span> CONTACT and SUPPORT</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 COVID-19 PubSeq was created by a group of <a href="https://github.com/arvados/bh20-seq-resource/graphs/contributors">bioinformaticians</a> and
@@ -256,12 +271,35 @@ work flows and analysis.
 </p>
 </div>
 
-<div id="outline-container-org4181827" class="outline-3">
-<h3 id="org4181827"><span class="section-number-3">1.1</span> Professional support</h3>
+<div id="outline-container-org26cee6f" class="outline-3">
+<h3 id="org26cee6f"><span class="section-number-3">1.1</span> Oxford Nanopore Analysis</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
+We run Oxford Nanopore ourselves. We aim to make it easy to analyse
+Nanopore material using our <b>free</b> Cloud infrastructure. If you need
+help in using the online workflows don't hesitate to contact us.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8d24eb8" class="outline-3">
+<h3 id="org8d24eb8"><span class="section-number-3">1.2</span> Data from other sequencers</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+We accept FASTA sequences of SARS-CoV-2. Simply upload them using the
+web form and/or REST API. No sign-up required! If you have large scale
+short read data and require support we can discuss that. We also run
+Illumina sequencing in several places.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8915c4e" class="outline-3">
+<h3 id="org8915c4e"><span class="section-number-3">1.3</span> Professional support</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
 To use COVID-19 PubSeq solutions for professional purposes you can
-contact <a href="mailto:info@curii.com">Curii</a>, the creators of <a href="https://arvados.org/">Arvados</a>, directly.
+contact Boston based <a href="mailto:info@curii.com">Curii</a>, the creators of <a href="https://arvados.org/">Arvados</a>, directly.
 </p>
 
 <p>
@@ -270,18 +308,18 @@ COVID-19 is built on Arvados using CWL workflows.
 </div>
 </div>
 
-<div id="outline-container-orgd92cea5" class="outline-3">
-<h3 id="orgd92cea5"><span class="section-number-3">1.2</span> E-mail</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-org4406d74" class="outline-3">
+<h3 id="org4406d74"><span class="section-number-3">1.4</span> E-mail</h3>
+<div class="outline-text-3" id="text-1-4">
 <p>
-For other questions feel free to write directly to <a href="mailto:pjotr.public821@thebird.nl">Pjotr Prins</a>.
+For questions feel free to write directly to <a href="mailto:pjotr.public821@thebird.nl">Pjotr Prins</a>.
 </p>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-08-22 Sat 05:09</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-08-23 Sun 04:35</small>.
 </div>
 </body>
 </html>

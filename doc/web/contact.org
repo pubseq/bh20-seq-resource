@@ -11,9 +11,16 @@ work flows and analysis.
 
 ** Oxford Nanopore Analysis
 
-We run Oxford Nanopore ourselves. We aim to make it easy to analyse
-Nanopore material using our *free* Cloud infrastructure. If you need
-help in using the online workflows don't hesitate to contact us.
+@@html: <img class="img-right" src="static/image/oxford-nanopore.jpg" />@@
+
+We run [[https://en.wikipedia.org/wiki/Oxford_Nanopore_Technologies][Oxford Nanopore]] ourselves. It is an exaciting technology
+because it gives us an accurate SARS-CoV-2 sequencer for a few
+thousand dollars which can be run in a living room! With PubSeq we aim
+to make it easy to analyse Nanopore material using our *free* Cloud
+infrastructure. If you need help in using the online workflows don't
+hesitate to contact us.
+
+@@html: </br></br></br>@@
 
 ** Data from other sequencers
 

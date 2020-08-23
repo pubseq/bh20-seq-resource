@@ -411,6 +411,11 @@ footer {
     display: table-row-group;
 }
 
+.img-right {
+    float: right;
+    height: 200px;
+}
+
 div.status {
     margin: 1em;
 }

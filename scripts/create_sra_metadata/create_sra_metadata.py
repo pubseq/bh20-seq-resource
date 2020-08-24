@@ -23,13 +23,18 @@ term_to_uri_dict = {}
 for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_xxx_csv) for name_xxx_csv in os.listdir(dir_dict_ontology_standardization) if name_xxx_csv.endswith('.csv')]:
     print('Read {}'.format(path_dict_xxx_csv))
 
-    with open(path_dict_xxx_csv, 'r') as f:
+    with open(path_dict_xxx_csv) as f:
         for line in f:
             if len(line.split(',')) > 2:
                 term, uri = line.strip('\n').split('",')
-                term = term.strip('"')
             else:
                 term, uri = line.strip('\n').split(',')
+
+            term = term.strip('"')
+
+            if term in term_to_uri_dict:
+                print('Warning: in the dictionaries there are more entries for the same term ({}).'.format(term))
+                continue
 
             term_to_uri_dict[term] = uri
 
@@ -123,10 +128,12 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                 if VALUE_text in term_to_uri_dict:
                     info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict[VALUE_text]]
                 else:
-                    if VALUE_text.lower() in ['np/op', 'np/op swab', 'np/np swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab', 'combined nasopharyngeal and oropharyngeal swab']:
+                    if VALUE_text.lower() in ['np/op', 'np/op swab', 'np/np swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab', 'combined nasopharyngeal and oropharyngeal swab', 'naso and/or oropharyngeal swab']:
                         info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal swab'], term_to_uri_dict['oropharyngeal swab']]
-                    elif VALUE_text.lower() in ['nasopharyngeal swab/throat swab', 'nasopharyngeal/throat swab', 'nasopharyngeal swab and throat swab', 'nasal swab and throat swab', 'nasopharyngeal aspirate/throat swab']:
+                    elif VALUE_text.lower() in ['nasopharyngeal swab/throat swab', 'nasopharyngeal/throat swab', 'nasopharyngeal swab and throat swab', 'nasal swab and throat swab', 'nasopharyngeal aspirate/throat swab', 'Nasopharyngeal/Throat']:
                         info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal swab'], term_to_uri_dict['throat swab']]
+                    elif VALUE_text.lower() in ['nasopharyngeal aspirate & throat swab', 'nasopharyngeal aspirate and throat swab']:
+                        info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal aspirate'], term_to_uri_dict['throat swab']]
                     elif VALUE_text.lower() in ['nasal swab and throat swab']:
                         info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasal swab'], term_to_uri_dict['throat swab']]
                     elif VALUE_text.lower() in ['nasal-swab and oro-pharyngeal swab']:
@@ -178,6 +185,9 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                         else:
                             info_for_yaml_dict['sample']['additional_collection_information'] = "The 'collection_date' is estimated (the original date was: {})".format(VALUE_text)
             elif TAG_text == 'geo_loc_name':
+                if ': ' in VALUE_text:
+                    VALUE_text = VALUE_text.replace(': ', ':')
+
                 if VALUE_text in term_to_uri_dict:
                     info_for_yaml_dict['sample']['collection_location'] = term_to_uri_dict[VALUE_text]
                 elif VALUE_text.lower() not in ['na', 'not applicable']:

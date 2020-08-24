@@ -38,6 +38,7 @@ MGISEQ2000,http://virtual-bh/MGISEQ2000
 Illumina HiSeq X,http://www.ebi.ac.uk/efo/EFO_0008567
 ONT GridION X5,http://www.ebi.ac.uk/efo/EFO_0008633
 ONT PremethION,http://www.ebi.ac.uk/efo/EFO_0008634
+PromethION,http://www.ebi.ac.uk/efo/EFO_0008634
 PacBio RS II,http://www.ebi.ac.uk/efo/EFO_0008631
 PacBio Sequel System,http://www.ebi.ac.uk/efo/EFO_0008630
 Illumina Genome Analyzer,http://www.ebi.ac.uk/efo/EFO_0004200

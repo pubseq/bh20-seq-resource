@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-24 Mon 04:31 -->
+<!-- 2020-08-24 Mon 04:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq Uploading Data (part 3)</title>
@@ -248,40 +248,40 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgdaec996">1. Uploading Data</a></li>
-<li><a href="#org8472a05">2. Step 1: Upload sequence</a></li>
-<li><a href="#org668a46d">3. Step 2: Add metadata</a>
+<li><a href="#org5eb82f9">1. Uploading Data</a></li>
+<li><a href="#org9a7f43d">2. Step 1: Upload sequence</a></li>
+<li><a href="#org322f24b">3. Step 2: Add metadata</a>
 <ul>
-<li><a href="#orga044bef">3.1. Obligatory fields</a>
+<li><a href="#org7a2c9cd">3.1. Obligatory fields</a>
 <ul>
-<li><a href="#org8e17492">3.1.1. Sample ID (sample<sub>id</sub>)</a></li>
-<li><a href="#orgd9805db">3.1.2. Collection date</a></li>
-<li><a href="#org3bd4901">3.1.3. Collection location</a></li>
-<li><a href="#org921de27">3.1.4. Sequencing technology</a></li>
-<li><a href="#org39fa678">3.1.5. Authors</a></li>
+<li><a href="#orgeb203ec">3.1.1. Sample ID (sample<sub>id</sub>)</a></li>
+<li><a href="#orga9f28ff">3.1.2. Collection date</a></li>
+<li><a href="#orge64dc86">3.1.3. Collection location</a></li>
+<li><a href="#org8a7bef0">3.1.4. Sequencing technology</a></li>
+<li><a href="#orgace282c">3.1.5. Authors</a></li>
 </ul>
 </li>
-<li><a href="#org5315804">3.2. Optional fields</a>
+<li><a href="#org47a9c87">3.2. Optional fields</a>
 <ul>
-<li><a href="#orgf2b82d9">3.2.1. Host information</a></li>
-<li><a href="#org8986ca7">3.2.2. Collecting institution</a></li>
-<li><a href="#orge03eb0c">3.2.3. Specimen source</a></li>
-<li><a href="#org6815a6e">3.2.4. Source database accession</a></li>
-<li><a href="#org51b37e8">3.2.5. Strain name</a></li>
+<li><a href="#orgfb90548">3.2.1. Host information</a></li>
+<li><a href="#org35c161b">3.2.2. Collecting institution</a></li>
+<li><a href="#orgbb1d8c4">3.2.3. Specimen source</a></li>
+<li><a href="#orgd9dd6a3">3.2.4. Source database accession</a></li>
+<li><a href="#orgb792494">3.2.5. Strain name</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org5778da6">4. Step 3: Submit to COVID-19 PubSeq</a>
+<li><a href="#org13818f4">4. Step 3: Submit to COVID-19 PubSeq</a>
 <ul>
-<li><a href="#orge803d65">4.1. Trouble shooting</a></li>
+<li><a href="#orgba0200f">4.1. Trouble shooting</a></li>
 </ul>
 </li>
-<li><a href="#org540cfdf">5. Step 4: Check output</a></li>
-<li><a href="#org6c43ab3">6. Bulk sequence uploader</a>
+<li><a href="#org96f85a0">5. Step 4: Check output</a></li>
+<li><a href="#org272d9f9">6. Bulk sequence uploader</a>
 <ul>
-<li><a href="#org99bb8b7">6.1. Run the uploader (CLI)</a></li>
-<li><a href="#orga88593f">6.2. Example: uploading bulk GenBank sequences</a></li>
+<li><a href="#org55d91d9">6.1. Run the uploader (CLI)</a></li>
+<li><a href="#orgda5e960">6.2. Example: uploading bulk GenBank sequences</a></li>
 </ul>
 </li>
 </ul>
@@ -290,8 +290,8 @@ for the JavaScript code in this tag.
 
 
 
-<div id="outline-container-orgdaec996" class="outline-2">
-<h2 id="orgdaec996"><span class="section-number-2">1</span> Uploading Data</h2>
+<div id="outline-container-org5eb82f9" class="outline-2">
+<h2 id="org5eb82f9"><span class="section-number-2">1</span> Uploading Data</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The COVID-19 PubSeq allows you to upload your SARS-Cov-2 strains to a
@@ -301,8 +301,8 @@ gets triggered on upload. Read the <a href="./about">ABOUT</a> page for more inf
 </div>
 </div>
 
-<div id="outline-container-org8472a05" class="outline-2">
-<h2 id="org8472a05"><span class="section-number-2">2</span> Step 1: Upload sequence</h2>
+<div id="outline-container-org9a7f43d" class="outline-2">
+<h2 id="org9a7f43d"><span class="section-number-2">2</span> Step 1: Upload sequence</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 To upload a sequence in the <a href="http://covid19.genenetwork.org/">web upload page</a> hit the browse button and
@@ -330,8 +330,8 @@ an improved pangenome.
 </div>
 </div>
 
-<div id="outline-container-org668a46d" class="outline-2">
-<h2 id="org668a46d"><span class="section-number-2">3</span> Step 2: Add metadata</h2>
+<div id="outline-container-org322f24b" class="outline-2">
+<h2 id="org322f24b"><span class="section-number-2">3</span> Step 2: Add metadata</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 The <a href="./">web upload page</a> contains fields for adding metadata. Metadata is
@@ -357,12 +357,12 @@ the web form. Here we add some extra information.
 </p>
 </div>
 
-<div id="outline-container-orga044bef" class="outline-3">
-<h3 id="orga044bef"><span class="section-number-3">3.1</span> Obligatory fields</h3>
+<div id="outline-container-org7a2c9cd" class="outline-3">
+<h3 id="org7a2c9cd"><span class="section-number-3">3.1</span> Obligatory fields</h3>
 <div class="outline-text-3" id="text-3-1">
 </div>
-<div id="outline-container-org8e17492" class="outline-4">
-<h4 id="org8e17492"><span class="section-number-4">3.1.1</span> Sample ID (sample<sub>id</sub>)</h4>
+<div id="outline-container-orgeb203ec" class="outline-4">
+<h4 id="orgeb203ec"><span class="section-number-4">3.1.1</span> Sample ID (sample<sub>id</sub>)</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 This is a string field that defines a unique sample identifier by the
@@ -380,8 +380,8 @@ Here we add the GenBank ID MT536190.1.
 </div>
 </div>
 
-<div id="outline-container-orgd9805db" class="outline-4">
-<h4 id="orgd9805db"><span class="section-number-4">3.1.2</span> Collection date</h4>
+<div id="outline-container-orga9f28ff" class="outline-4">
+<h4 id="orga9f28ff"><span class="section-number-4">3.1.2</span> Collection date</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <p>
 Estimated collection date. The GenBank page says April 6, 2020.
@@ -389,8 +389,8 @@ Estimated collection date. The GenBank page says April 6, 2020.
 </div>
 </div>
 
-<div id="outline-container-org3bd4901" class="outline-4">
-<h4 id="org3bd4901"><span class="section-number-4">3.1.3</span> Collection location</h4>
+<div id="outline-container-orge64dc86" class="outline-4">
+<h4 id="orge64dc86"><span class="section-number-4">3.1.3</span> Collection location</h4>
 <div class="outline-text-4" id="text-3-1-3">
 <p>
 A search on wikidata says Los Angeles is
@@ -399,8 +399,8 @@ A search on wikidata says Los Angeles is
 </div>
 </div>
 
-<div id="outline-container-org921de27" class="outline-4">
-<h4 id="org921de27"><span class="section-number-4">3.1.4</span> Sequencing technology</h4>
+<div id="outline-container-org8a7bef0" class="outline-4">
+<h4 id="org8a7bef0"><span class="section-number-4">3.1.4</span> Sequencing technology</h4>
 <div class="outline-text-4" id="text-3-1-4">
 <p>
 GenBank entry says Illumina, so we can fill that in
@@ -408,8 +408,8 @@ GenBank entry says Illumina, so we can fill that in
 </div>
 </div>
 
-<div id="outline-container-org39fa678" class="outline-4">
-<h4 id="org39fa678"><span class="section-number-4">3.1.5</span> Authors</h4>
+<div id="outline-container-orgace282c" class="outline-4">
+<h4 id="orgace282c"><span class="section-number-4">3.1.5</span> Authors</h4>
 <div class="outline-text-4" id="text-3-1-5">
 <p>
 GenBank entry says 'Lamers,S., Nolan,D.J., Rose,R., Cross,S., Moraga
@@ -420,16 +420,16 @@ Freehan,A. and Garcia-Diaz,J.', so we can fill that in.
 </div>
 </div>
 
-<div id="outline-container-org5315804" class="outline-3">
-<h3 id="org5315804"><span class="section-number-3">3.2</span> Optional fields</h3>
+<div id="outline-container-org47a9c87" class="outline-3">
+<h3 id="org47a9c87"><span class="section-number-3">3.2</span> Optional fields</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 All other fields are optional. But let's see what we can add.
 </p>
 </div>
 
-<div id="outline-container-orgf2b82d9" class="outline-4">
-<h4 id="orgf2b82d9"><span class="section-number-4">3.2.1</span> Host information</h4>
+<div id="outline-container-orgfb90548" class="outline-4">
+<h4 id="orgfb90548"><span class="section-number-4">3.2.1</span> Host information</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
 Sadly, not much is known about the host from GenBank. A little
@@ -443,8 +443,8 @@ did to the person and what the person was like (say age group).
 </div>
 </div>
 
-<div id="outline-container-org8986ca7" class="outline-4">
-<h4 id="org8986ca7"><span class="section-number-4">3.2.2</span> Collecting institution</h4>
+<div id="outline-container-org35c161b" class="outline-4">
+<h4 id="org35c161b"><span class="section-number-4">3.2.2</span> Collecting institution</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <p>
 We can fill that in.
@@ -452,8 +452,8 @@ We can fill that in.
 </div>
 </div>
 
-<div id="outline-container-orge03eb0c" class="outline-4">
-<h4 id="orge03eb0c"><span class="section-number-4">3.2.3</span> Specimen source</h4>
+<div id="outline-container-orgbb1d8c4" class="outline-4">
+<h4 id="orgbb1d8c4"><span class="section-number-4">3.2.3</span> Specimen source</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <p>
 We have that: nasopharyngeal swab
@@ -461,8 +461,8 @@ We have that: nasopharyngeal swab
 </div>
 </div>
 
-<div id="outline-container-org6815a6e" class="outline-4">
-<h4 id="org6815a6e"><span class="section-number-4">3.2.4</span> Source database accession</h4>
+<div id="outline-container-orgd9dd6a3" class="outline-4">
+<h4 id="orgd9dd6a3"><span class="section-number-4">3.2.4</span> Source database accession</h4>
 <div class="outline-text-4" id="text-3-2-4">
 <p>
 Genbank which is <a href="http://identifiers.org/insdc/MT536190.1#sequence">http://identifiers.org/insdc/MT536190.1#sequence</a>.
@@ -471,8 +471,8 @@ Note we plug in our own identifier MT536190.1.
 </div>
 </div>
 
-<div id="outline-container-org51b37e8" class="outline-4">
-<h4 id="org51b37e8"><span class="section-number-4">3.2.5</span> Strain name</h4>
+<div id="outline-container-orgb792494" class="outline-4">
+<h4 id="orgb792494"><span class="section-number-4">3.2.5</span> Strain name</h4>
 <div class="outline-text-4" id="text-3-2-5">
 <p>
 SARS-CoV-2/human/USA/LA-BIE-070/2020
@@ -482,8 +482,8 @@ SARS-CoV-2/human/USA/LA-BIE-070/2020
 </div>
 </div>
 
-<div id="outline-container-org5778da6" class="outline-2">
-<h2 id="org5778da6"><span class="section-number-2">4</span> Step 3: Submit to COVID-19 PubSeq</h2>
+<div id="outline-container-org13818f4" class="outline-2">
+<h2 id="org13818f4"><span class="section-number-2">4</span> Step 3: Submit to COVID-19 PubSeq</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Once you have the sequence and the metadata together, hit
@@ -493,8 +493,8 @@ submitted and the workflows should kick in!
 </div>
 
 
-<div id="outline-container-orge803d65" class="outline-3">
-<h3 id="orge803d65"><span class="section-number-3">4.1</span> Trouble shooting</h3>
+<div id="outline-container-orgba0200f" class="outline-3">
+<h3 id="orgba0200f"><span class="section-number-3">4.1</span> Trouble shooting</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 We got an error saying: {"stem": "<a href="http://www.wikidata.org/entity/">http://www.wikidata.org/entity/</a>",&#x2026;
@@ -508,8 +508,8 @@ submit button.
 </div>
 </div>
 
-<div id="outline-container-org540cfdf" class="outline-2">
-<h2 id="org540cfdf"><span class="section-number-2">5</span> Step 4: Check output</h2>
+<div id="outline-container-org96f85a0" class="outline-2">
+<h2 id="org96f85a0"><span class="section-number-2">5</span> Step 4: Check output</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 The current pipeline takes 5.5 hours to complete! Once it completes
@@ -520,8 +520,8 @@ in.
 </div>
 </div>
 
-<div id="outline-container-org6c43ab3" class="outline-2">
-<h2 id="org6c43ab3"><span class="section-number-2">6</span> Bulk sequence uploader</h2>
+<div id="outline-container-org272d9f9" class="outline-2">
+<h2 id="org272d9f9"><span class="section-number-2">6</span> Bulk sequence uploader</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Above steps require a manual upload of one sequence with metadata.
@@ -584,8 +584,8 @@ submitter:
 </div>
 </div>
 
-<div id="outline-container-org99bb8b7" class="outline-3">
-<h3 id="org99bb8b7"><span class="section-number-3">6.1</span> Run the uploader (CLI)</h3>
+<div id="outline-container-org55d91d9" class="outline-3">
+<h3 id="org55d91d9"><span class="section-number-3">6.1</span> Run the uploader (CLI)</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 Installing with pip you should be
@@ -620,8 +620,8 @@ The web interface using this exact same script so it should just work
 </div>
 </div>
 
-<div id="outline-container-orga88593f" class="outline-3">
-<h3 id="orga88593f"><span class="section-number-3">6.2</span> Example: uploading bulk GenBank sequences</h3>
+<div id="outline-container-orgda5e960" class="outline-3">
+<h3 id="orgda5e960"><span class="section-number-3">6.2</span> Example: uploading bulk GenBank sequences</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 We also use above script to bulk upload GenBank sequences with a <a href="https://github.com/arvados/bh20-seq-resource/blob/master/scripts/download_genbank_data/from_genbank_to_fasta_and_yaml.py">FASTA
@@ -631,7 +631,8 @@ took above for uploading a GenBank sequence are already automated.
 
 <p>
 The steps are: from the
-<code>bh20-seq-resource/scripts/download_genbank_data/</code> directory
+<code>bh20-seq-resource/scripts/download_genbank_data/</code> directory using the
+<a href="https://github.com/arvados/bh20-seq-resource/tree/master/scripts/download_genbank_data">from<sub>genbank</sub><sub>to</sub><sub>fasta</sub><sub>and</sub><sub>yaml.py</sub></a> script:
 </p>
 
 <div class="org-src-container">
@@ -648,7 +649,7 @@ ls $<span style="color: #ffcc80;">dir_fasta_and_yaml</span>/*.yaml | <span style
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-08-24 Mon 04:31</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-08-24 Mon 04:34</small>.
 </div>
 </body>
 </html>

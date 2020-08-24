@@ -238,7 +238,8 @@ and YAML]] extractor specific for GenBank. This means that the steps we
 took above for uploading a GenBank sequence are already automated.
 
 The steps are: from the
-~bh20-seq-resource/scripts/download_genbank_data/~ directory
+~bh20-seq-resource/scripts/download_genbank_data/~ directory using the
+[[https://github.com/arvados/bh20-seq-resource/tree/master/scripts/download_genbank_data][from_genbank_to_fasta_and_yaml.py]] script:
 
 #+BEGIN_SRC sh
 python3 from_genbank_to_fasta_and_yaml.py

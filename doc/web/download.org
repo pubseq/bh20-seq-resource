@@ -18,6 +18,7 @@
    - [[#phylogenetic-tree][Phylogenetic tree]]
    - [[#protein-prediction][Protein prediction]]
  - [[#source-code][Source code]]
+ - [[#citing-pubseq][Citing PubSeq]]
 
 * Workflow runs
 
@@ -107,3 +108,7 @@ We aim to make protein predictions available.
 All source code for this website and tooling is available
 from
 https://github.com/arvados/bh20-seq-resource
+
+* Citing PubSeq
+
+See the [[./about][FAQ]].

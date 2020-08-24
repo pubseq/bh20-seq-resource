@@ -12,13 +12,21 @@
                   <p>
                     COVID-19 PubSeq is a free and open online
                     bioinformatics public sequence resource with
-                    on-the-fly analysis of sequenced SARS-CoV-2
+                    on-the-fly analysis of
+                    sequenced <a href="https://pubmed.ncbi.nlm.nih.gov/?term=sars-cov-2&sort=date">SARS-CoV-2</a>
                     samples that allows for a quick turnaround in
                     identification of new virus strains. PubSeq allows
                     anyone to upload sequence material in the form of
                     FASTA or FASTQ files with accompanying metadata
-                    through the <a href="/upload">web interface</a> or <a href="/apidoc">REST API</a>. For more information see the <a href="/about">FAQ!</a>.
+                    through the <a href="/upload">web interface</a>
+                    or <a href="/apidoc">REST API</a>. For more
+                    information see the <a href="/about">FAQ!</a>.
                   </p>
+      <section id="map_view" class="map">
+        <div id="mapid"></div>
+      </section>
+
+                  <a href="https://projectredcap.org/"><img class="img-right" src="static/image/REDCap.png" /></a>
                   <p>
                     Make your sequence
                     data <a href="https://en.wikipedia.org/wiki/FAIR_data">FAIR</a>. Upload
@@ -40,9 +48,15 @@
                     a <a href="https://creativecommons.org/licenses/by/4.0/">Creative
                     Commons license</a> You can take the published
                     (GFA/RDF/FASTA) data and store it in a triple
-                    store for further processing.  Clinical data can
+                    store for further processing.
+                    Clinical data can
                     be stored securely
                     at <a href="https://redcap-covid19.elixir-luxembourg.org/redcap/">REDCap</a>.
+                  </p>
+                  <a href="https://nanoporetech.com/"><img class="img-right" src="static/image/oxford-nanopore2.jpg" /></a>
+                  <p>
+                    We give special attention to workflows for the <a href="https://nanoporetech.com/">Oxford Nanopore</a> - see <a href="https://pubmed.ncbi.nlm.nih.gov/?term=sars-cov-2+nanopore&sort=date">pubmed</a> - because it offers an affordable platform that is great
+                    for SARS-CoV-2 sequencing.
                   </p>
                   <p>
                     Note that form fields contain
@@ -54,10 +68,6 @@
                   </p>
                 </div>
         </section>
-
-      <section id="map_view" class="map">
-        <div id="mapid"></div>
-      </section>
 
       {% include 'footer.html' %}
 

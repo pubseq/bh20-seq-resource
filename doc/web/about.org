@@ -18,11 +18,12 @@
  - [[#how-do-i-change-the-work-flows][How do I change the work flows?]]
  - [[#how-do-i-change-the-source-code][How do I change the source code?]]
  - [[#should-i-choose-cc-by-or-cc0][Should I choose CC-BY or CC0?]]
- - [[#are-there-also-variant-in-the-rdf-databases-][Are there also variant in the RDF databases? *]]
+ - [[#are-there-also-variant-in-the-rdf-databases][Are there also variant in the RDF databases?]]
  - [[#how-do-i-deal-with-private-data-and-privacy][How do I deal with private data and privacy?]]
  - [[#do-you-have-any-checks-or-concerns-if-human-sequence-accidentally-submitted-to-your-service-as-part-of-a-fastq-][Do you have any checks or concerns if human sequence accidentally submitted to your service as part of a fastq? *]]
- - [[#does-pubseq-support-only-sars-cov-2-data-][Does PubSeq support only SARS-CoV-2 data? *]]
+ - [[#does-pubseq-support-only-sars-cov-2-data][Does PubSeq support only SARS-CoV-2 data?]]
  - [[#how-do-i-communicate-with-you][How do I communicate with you?]]
+ - [[#citing-pubseq][Citing PubSeq]]
  - [[#who-are-the-sponsors][Who are the sponsors?]]
 
 * What is the 'public sequence resource' about?
@@ -209,7 +210,7 @@ because we know people like the attribution clause.
 
 In all honesty: we prefer both data and software to be free.
 
-* Are there also variant in the RDF databases? *
+* Are there also variant in the RDF databases?
 
 We do output a RDF file with the pangenome built in, and you can parse it because it has variants implicitly.
 
@@ -226,7 +227,7 @@ plan to combine identifiers with clinical data stored securely at
 
 We are planning to remove reads that match the human reference.
 
-* Does PubSeq support only SARS-CoV-2 data? *
+* Does PubSeq support only SARS-CoV-2 data?
 
 To date, PubSeq is a resource specific to SARS-CoV-2, but we are designing it to be able to support other species in the future.
 
@@ -234,6 +235,15 @@ To date, PubSeq is a resource specific to SARS-CoV-2, but we are designing it to
 * How do I communicate with you?
 
 We use a [[https://gitter.im/arvados/pubseq?utm_source=share-link&utm_medium=link&utm_campaign=share-link][gitter channel]] you can join. See also [[./contact][contact]].
+
+* Citing PubSeq
+
+We have two publications in the works. Until we have a DOI please cite
+PubSeq in the following way:
+
+We made use of the COVID-19 public sequence (PubSeq) resources hosted
+at http://covid19.genenetwork.org/.
+
 
 * Who are the sponsors?
 

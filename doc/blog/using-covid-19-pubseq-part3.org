@@ -5,6 +5,7 @@
 # C-c C-t       task rotate
 
 #+HTML_HEAD: <link rel="Blog stylesheet" type="text/css" href="blog.css" />
+#+OPTIONS: ^:nil
 
 
 

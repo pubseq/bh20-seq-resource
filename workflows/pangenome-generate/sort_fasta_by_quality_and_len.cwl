@@ -3,7 +3,7 @@ class: CommandLineTool
 hints:
   ResourceRequirement:
     coresMin: 1
-    ramMin: 1024
+    ramMin: 3000
 inputs:
   readsFA:
     type: File

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-30 Sat 11:50 -->
+<!-- 2020-08-25 Tue 05:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq (part 2)</title>
@@ -252,19 +252,19 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7942167">1. Finding output of workflows</a></li>
-<li><a href="#org0022bbe">2. Introduction</a></li>
-<li><a href="#org3929710">3. The Arvados file interface</a></li>
-<li><a href="#orgc4dba6e">4. Using the Arvados API</a></li>
+<li><a href="#orgd3ae0e5">1. Finding output of workflows</a></li>
+<li><a href="#orgce95d40">2. The Arvados file interface</a></li>
+<li><a href="#org95f2c67">3. The PubSeq Arvados shell</a></li>
+<li><a href="#orgfba95f0">4. Wiring up CWL</a></li>
+<li><a href="#orgdf910f1">5. Using the Arvados API</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7942167" class="outline-2">
-<h2 id="org7942167"><span class="section-number-2">1</span> Finding output of workflows</h2>
+<div id="outline-container-orgd3ae0e5" class="outline-2">
+<h2 id="orgd3ae0e5"><span class="section-number-2">1</span> Finding output of workflows</h2>
 <div class="outline-text-2" id="text-1">
-
- <p>
+<p>
 We are using Arvados to run common workflow language (CWL) pipelines.
 The most recent output is on display on a <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">web page</a> (with time stamp)
 and a full list is generated <a href="https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/">here</a>. It is nice to start up, but for
@@ -274,9 +274,9 @@ want to wade through thousands of output files!
 </div>
 </div>
 
-<div id="outline-container-org3929710" class="outline-2">
-<h2 id="org3929710"><span class="section-number-2">2</span> The Arvados file interface</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orgce95d40" class="outline-2">
+<h2 id="orgce95d40"><span class="section-number-2">2</span> The Arvados file interface</h2>
+<div class="outline-text-2" id="text-2">
 <p>
 Arvados has the web server, but it also has a REST API and associated
 command line tools. We are already using the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/main.py#L27">API</a> to upload data.  If
@@ -322,13 +322,11 @@ Now, this is a public instance so we can use the tokens from
 the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/main.py#L16">uploader</a>.
 </p>
 
-<div class="SOURCE">
-<p>
-export ARVADOS<sub>API</sub><sub>HOST</sub>='lugli.arvadosapi.com'
-export ARVADOS<sub>API</sub><sub>TOKEN</sub>='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #ff8A65;">export</span> <span style="color: #ffcc80;">ARVADOS_API_HOST</span>=<span style="color: #9ccc65;">'lugli.arvadosapi.com'</span>
+<span style="color: #ff8A65;">export</span> <span style="color: #ffcc80;">ARVADOS_API_TOKEN</span>=<span style="color: #9ccc65;">'2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'</span>
 arv-ls lugli-4zz18-z513nlpqm03hpca
-</p>
-
+</pre>
 </div>
 
 <p>
@@ -336,13 +334,11 @@ will list all files (the UUID we got from the Arvados results page). To
 get the UUID of the files
 </p>
 
-<div class="SOURCE">
-<p>
-curl <a href="https://lugli.arvadosapi.com/arvados/v1/config">https://lugli.arvadosapi.com/arvados/v1/config</a> | jq .Users.AnonymousUserToken
-env ARVADOS<sub>API</sub><sub>TOKEN</sub>=5o42qdxpxp5cj15jqjf7vnxx5xduhm4ret703suuoa3ivfglfh \
+<div class="org-src-container">
+<pre class="src src-sh">curl https://lugli.arvadosapi.com/arvados/v1/config | jq .Users.AnonymousUserToken
+env <span style="color: #ffcc80;">ARVADOS_API_TOKEN</span>=5o42qdxpxp5cj15jqjf7vnxx5xduhm4ret703suuoa3ivfglfh <span style="color: #9ccc65;">\</span>
   arv-get lugli-4zz18-z513nlpqm03hpca
-</p>
-
+</pre>
 </div>
 
 <p>
@@ -356,12 +352,123 @@ arv-get 2be6af7b4741f2a5c5f8ff2bc6152d73+1955623+Ab9ad65d7fe958a053b3a57d545839d
 </div>
 </div>
 
-<div id="outline-container-orgc4dba6e" class="outline-2">
-<h2 id="orgc4dba6e"><span class="section-number-2">3</span> TODO Using the Arvados API</h2>
+<div id="outline-container-org95f2c67" class="outline-2">
+<h2 id="org95f2c67"><span class="section-number-2">3</span> The PubSeq Arvados shell</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+When you login to Arvados (you can request permission from us) it is
+possible to upload an ssh key in your profile and get an shell prompt
+with
+</p>
+
+<pre class="example">
+ssh pjotrpbl@shell.lugli.arvadosapi.com
+Linux ip-10-255-0-202 4.19.0-9-cloud-amd64 #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07) x86_64
+</pre>
+
+
+
+<p>
+It is a small Debian VM hosted on AWS somewhere.  The PubSeq material
+is mounted on <code>/data/pubseq</code>. The log is in <code>nohup.out</code>. Update/edit
+the code (bh20-seq-resource git checkout) and restart the service (the
+run script). The log says
+</p>
+
+<pre class="example">
+you should have permission to read the log (nohup.out) update / edit the code (bh20-seq-resource git checkout) and restart the service (the run script)
+</pre>
+
+
+<p>
+which means it will trigger the run on upload. The service is running as a
+Python virtualenv:
+</p>
+
+<pre class="example">
+/data/pubseq/bh20-seq-resource/venv3/bin/python3 /data/pubseq/bh20-seq-resource/venv3/bin/bh20-seq-analyzer --no-start-analysis
+</pre>
+
+
+<p>
+and is restarted by a <code>run</code> script:
+</p>
+
+<pre class="example">
+/data/pubseq/run [options]
+</pre>
+
+
+<p>
+The run script kills the old process, sets up the API tokens, pulls
+the git repo and starts a new run calling into
+/data/pubseq/bh20-seq-resource/venv3/bin/bh20-seq-analyzer which is
+essentially <a href="https://github.com/arvados/bh20-seq-resource/blob/2baa88b766ec540bd34b96599014dd16e393af39/bh20seqanalyzer/main.py#L354">monitoring</a> for uploads.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfba95f0" class="outline-2">
+<h2 id="orgfba95f0"><span class="section-number-2">4</span> Wiring up CWL</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+In above script <code>bh20-seq-analyzer</code> you can see that the <a href="https://www.commonwl.org/">Common
+Workflow Language</a> (CWL) gets <a href="https://github.com/arvados/bh20-seq-resource/blob/2baa88b766ec540bd34b96599014dd16e393af39/bh20seqanalyzer/main.py#L233">triggered</a>; for example <a href="https://github.com/arvados/bh20-seq-resource/tree/master/workflows/fastq2fasta">fastq2fasta</a> which
+is part of the main repo. The actual script is in <a href="https://github.com/arvados/bh20-seq-resource/blob/master/workflows/fastq2fasta/fastq2fasta.cwl">fastq2fasta.cwl</a> and
+runs the following tools in sequence: bwa-mem, samtools-view,
+samtools-sort, and bam2fasta.
+</p>
+
+<p>
+It probably pays to familiarize yourself with CWL and its concepts. We
+believe it has a lot going for it though CWL is some steps removed
+from traditional shell scripts for running work flows. Main thing to
+understand is that CWL is a separation of concerns, i.e.,
+</p>
+
+<ol class="org-ol">
+<li>Data</li>
+<li>Tools</li>
+<li>Flow</li>
+</ol>
+
+<p>
+and each of these are described separately. This contrasts largely
+with shell scripts (though you can invoke shell scripts from CWL).
+Also, CWL is written in JSON/YAML, which means everything can be parsed
+as a tree and you can easily get visualisations such as
+</p>
+
+<p>
+ <a href="https://hpc.guix.info/blog/2019/01/creating-a-reproducible-workflow-with-cwl/">
+<img src="https://hpc.guix.info/static/images/blog/cwl-provenance-graph.png" /></a>
+</p>
+
+<p>
+For more see <a href="https://hpc.guix.info/blog/2019/01/creating-a-reproducible-workflow-with-cwl/">Creating a reproducible workflow with CWL</a> by Pjotr Prins.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdf910f1" class="outline-2">
+<h2 id="orgdf910f1"><span class="section-number-2">5</span> Using the Arvados API</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Arvados provides a rich API for accessing internals of the Cloud
+infrastructure.
+</p>
+
+<p>
+In above script <code>bh20-seq-analyzer</code> there are examples of querying the
+<a href="https://doc.arvados.org/api/index.html">Arvados API</a> using the <a href="https://pypi.org/project/arvados-python-client/">Python Arvados client and libraries</a>. For example
+get a list of <a href="https://github.com/arvados/bh20-seq-resource/blob/2baa88b766ec540bd34b96599014dd16e393af39/bh20seqanalyzer/main.py#L228">projects</a> in Arvados. Main thing is to get the
+<code>ARVADOS-API-HOST</code> and <code>ARVADOS-API-TOKEN</code> right as is shown above.
+</p>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-05-30 Sat 11:50</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-08-25 Tue 04:32</small>.
 </div>
 </body>
 </html>

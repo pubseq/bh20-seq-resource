@@ -11,6 +11,8 @@
 * Table of Contents                                                     :TOC:noexport:
  - [[#finding-output-of-workflows][Finding output of workflows]]
  - [[#the-arvados-file-interface][The Arvados file interface]]
+ - [[#the-pubseq-arvados-shell][The PubSeq Arvados shell]]
+ - [[#wiring-up-cwl][Wiring up CWL]]
  - [[#using-the-arvados-api][Using the Arvados API]]
 
 * Finding output of workflows
@@ -38,24 +40,90 @@ installing Arvados API you'll find the following command line tools
 Now, this is a public instance so we can use the tokens from
 the [[https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/main.py#L16][uploader]].
 
-#+BEGIN_SOURCE sh
+#+BEGIN_SRC sh
 export ARVADOS_API_HOST='lugli.arvadosapi.com'
 export ARVADOS_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
 arv-ls lugli-4zz18-z513nlpqm03hpca
-#+END_SOURCE
+#+END_SRC
 
 will list all files (the UUID we got from the Arvados results page). To
 get the UUID of the files
 
-#+BEGIN_SOURCE sh
+#+BEGIN_SRC sh
 curl https://lugli.arvadosapi.com/arvados/v1/config | jq .Users.AnonymousUserToken
 env ARVADOS_API_TOKEN=5o42qdxpxp5cj15jqjf7vnxx5xduhm4ret703suuoa3ivfglfh \
   arv-get lugli-4zz18-z513nlpqm03hpca
-#+END_SOURCE
+#+END_SRC
 
 and fetch one listed JSON file ~chunk001_bin4000.schematic.json~ with
 its listed UUID:
 
 : arv-get 2be6af7b4741f2a5c5f8ff2bc6152d73+1955623+Ab9ad65d7fe958a053b3a57d545839de18290843a@5ed7f3c5
 
-* TODO Using the Arvados API
+* The PubSeq Arvados shell
+
+When you login to Arvados (you can request permission from us) it is
+possible to upload an ssh key in your profile and get an shell prompt
+with
+
+: ssh pjotrpbl@shell.lugli.arvadosapi.com
+: Linux ip-10-255-0-202 4.19.0-9-cloud-amd64 #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07) x86_64
+
+
+It is a small Debian VM hosted on AWS somewhere.  The PubSeq material
+is mounted on ~/data/pubseq~. The log is in ~nohup.out~. Update/edit
+the code (bh20-seq-resource git checkout) and restart the service (the
+run script). The log says
+
+: you should have permission to read the log (nohup.out) update / edit the code (bh20-seq-resource git checkout) and restart the service (the run script)
+
+which means it will trigger the run on upload. The service is running as a
+Python virtualenv:
+
+: /data/pubseq/bh20-seq-resource/venv3/bin/python3 /data/pubseq/bh20-seq-resource/venv3/bin/bh20-seq-analyzer --no-start-analysis
+
+and is restarted by a ~run~ script:
+
+: /data/pubseq/run [options]
+
+The run script kills the old process, sets up the API tokens, pulls
+the git repo and starts a new run calling into
+/data/pubseq/bh20-seq-resource/venv3/bin/bh20-seq-analyzer which is
+essentially [[https://github.com/arvados/bh20-seq-resource/blob/2baa88b766ec540bd34b96599014dd16e393af39/bh20seqanalyzer/main.py#L354][monitoring]] for uploads.
+
+* Wiring up CWL
+
+In above script ~bh20-seq-analyzer~ you can see that the [[https://www.commonwl.org/][Common
+Workflow Language]] (CWL) gets [[https://github.com/arvados/bh20-seq-resource/blob/2baa88b766ec540bd34b96599014dd16e393af39/bh20seqanalyzer/main.py#L233][triggered]]; for example [[https://github.com/arvados/bh20-seq-resource/tree/master/workflows/fastq2fasta][fastq2fasta]] which
+is part of the main repo. The actual script is in [[https://github.com/arvados/bh20-seq-resource/blob/master/workflows/fastq2fasta/fastq2fasta.cwl][fastq2fasta.cwl]] and
+runs the following tools in sequence: bwa-mem, samtools-view,
+samtools-sort, and bam2fasta.
+
+It probably pays to familiarize yourself with CWL and its concepts. We
+believe it has a lot going for it though CWL is some steps removed
+from traditional shell scripts for running work flows. Main thing to
+understand is that CWL is a separation of concerns, i.e.,
+
+1. Data
+2. Tools
+3. Flow
+
+and each of these are described separately. This contrasts largely
+with shell scripts (though you can invoke shell scripts from CWL).
+Also, CWL is written in JSON/YAML, which means everything can be parsed
+as a tree and you can easily get visualisations such as
+
+@@html: <a href="https://hpc.guix.info/blog/2019/01/creating-a-reproducible-workflow-with-cwl/">
+<img src="https://hpc.guix.info/static/images/blog/cwl-provenance-graph.png" /></a>@@
+
+For more see [[https://hpc.guix.info/blog/2019/01/creating-a-reproducible-workflow-with-cwl/][Creating a reproducible workflow with CWL]] by Pjotr Prins.
+
+* Using the Arvados API
+
+Arvados provides a rich API for accessing internals of the Cloud
+infrastructure.
+
+In above script ~bh20-seq-analyzer~ there are examples of querying the
+[[https://doc.arvados.org/api/index.html][Arvados API]] using the [[https://pypi.org/project/arvados-python-client/][Python Arvados client and libraries]]. For example
+get a list of [[https://github.com/arvados/bh20-seq-resource/blob/2baa88b766ec540bd34b96599014dd16e393af39/bh20seqanalyzer/main.py#L228][projects]] in Arvados. Main thing is to get the
+~ARVADOS-API-HOST~ and ~ARVADOS-API-TOKEN~ right as is shown above.

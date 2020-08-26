@@ -14,7 +14,7 @@ hints:
     dockerPull: "odgi-bash-binutils:latest"
   ResourceRequirement:
     coresMin: 4
-    ramMin: $(7 * 1024)
+    ramMin: $(15 * 1024)
     outdirMin: $(Math.ceil((inputs.inputGFA.size/(1024*1024*1024)+1) * 2))
   InitialWorkDirRequirement:
     # Will fail if input file is not writable (odgi bug)

@@ -1,4 +1,4 @@
-#+TITLE: COVID-19 PubSeq (part 2)
+#+TITLE: COVID-19 PubSeq - Arvados
 #+AUTHOR: Pjotr Prins
 # C-c C-e h h   publish
 # C-c !         insert date (use . for active agenda, C-u C-c ! for date, C-u C-c . for time)
@@ -9,19 +9,24 @@
 #+HTML_HEAD: <link rel="Blog stylesheet" type="text/css" href="blog.css" />
 
 * Table of Contents                                                     :TOC:noexport:
- - [[#finding-output-of-workflows][Finding output of workflows]]
+ - [[#the-arvados-web-server][The Arvados Web Server]]
  - [[#the-arvados-file-interface][The Arvados file interface]]
  - [[#the-pubseq-arvados-shell][The PubSeq Arvados shell]]
  - [[#wiring-up-cwl][Wiring up CWL]]
  - [[#using-the-arvados-api][Using the Arvados API]]
+ - [[#troubleshooting][Troubleshooting]]
 
-* Finding output of workflows
+* The Arvados Web Server
 
 We are using Arvados to run common workflow language (CWL) pipelines.
 The most recent output is on display on a [[https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca][web page]] (with time stamp)
-and a full list is generated [[https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/][here]]. It is nice to start up, but for
-most users we need a dedicated and themed results page.  People don't
-want to wade through thousands of output files!
+and a full output list is generated [[https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/][here]].
+
+Arvados has a web front which allows navigation through input and output data,
+workflows and the output of analysis pipelines (here CWL workflows).
+
+@@html: <img src="static/image/arvados-workflow-output.png" />@@
+
 
 * The Arvados file interface
 
@@ -127,3 +132,13 @@ In above script ~bh20-seq-analyzer~ there are examples of querying the
 [[https://doc.arvados.org/api/index.html][Arvados API]] using the [[https://pypi.org/project/arvados-python-client/][Python Arvados client and libraries]]. For example
 get a list of [[https://github.com/arvados/bh20-seq-resource/blob/2baa88b766ec540bd34b96599014dd16e393af39/bh20seqanalyzer/main.py#L228][projects]] in Arvados. Main thing is to get the
 ~ARVADOS-API-HOST~ and ~ARVADOS-API-TOKEN~ right as is shown above.
+
+* Troubleshooting
+
+When workflows have errors we should check the logs in Arvados.
+
+Go to the [[https://workbench.lugli.arvadosapi.com/projects/lugli-j7d0g-825x3r5vcs41dus][project]] page for 'COVID-19-BH20 Shared Project' -> 'Public
+Sequence Resource'. Click on analysis runs
+https://workbench.lugli.arvadosapi.com/projects/lugli-j7d0g-y4k4uswcqi3ku56
+and 'Subprojects'. Click one of the runs and then on 'Processes' and you'll
+see what parts failed.

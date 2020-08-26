@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-25 Tue 05:55 -->
+<!-- 2020-08-26 Wed 05:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>COVID-19 PubSeq (part 2)</title>
+<title>COVID-19 PubSeq - Arvados</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Pjotr Prins" />
 <style type="text/css">
@@ -247,35 +247,44 @@ for the JavaScript code in this tag.
  |
  <a accesskey="H" href="http://covid19.genenetwork.org"> HOME </a>
 </div><div id="content">
-<h1 class="title">COVID-19 PubSeq (part 2)</h1>
+<h1 class="title">COVID-19 PubSeq - Arvados</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd3ae0e5">1. Finding output of workflows</a></li>
-<li><a href="#orgce95d40">2. The Arvados file interface</a></li>
-<li><a href="#org95f2c67">3. The PubSeq Arvados shell</a></li>
-<li><a href="#orgfba95f0">4. Wiring up CWL</a></li>
-<li><a href="#orgdf910f1">5. Using the Arvados API</a></li>
+<li><a href="#org6501d83">1. The Arvados Web Server</a></li>
+<li><a href="#orgcb7854f">2. The Arvados file interface</a></li>
+<li><a href="#orgc8c3ccd">3. The PubSeq Arvados shell</a></li>
+<li><a href="#org028c1b4">4. Wiring up CWL</a></li>
+<li><a href="#org7cdc8cc">5. Using the Arvados API</a></li>
+<li><a href="#org5961211">6. Troubleshooting</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd3ae0e5" class="outline-2">
-<h2 id="orgd3ae0e5"><span class="section-number-2">1</span> Finding output of workflows</h2>
+<div id="outline-container-org6501d83" class="outline-2">
+<h2 id="org6501d83"><span class="section-number-2">1</span> The Arvados Web Server</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 We are using Arvados to run common workflow language (CWL) pipelines.
 The most recent output is on display on a <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">web page</a> (with time stamp)
-and a full list is generated <a href="https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/">here</a>. It is nice to start up, but for
-most users we need a dedicated and themed results page.  People don't
-want to wade through thousands of output files!
+and a full output list is generated <a href="https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/">here</a>.
+</p>
+
+<p>
+Arvados has a web front which allows navigation through input and output data,
+workflows and the output of analysis pipelines (here CWL workflows).
+</p>
+
+<p>
+ <img src="static/image/arvados-workflow-output.png" />
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgce95d40" class="outline-2">
-<h2 id="orgce95d40"><span class="section-number-2">2</span> The Arvados file interface</h2>
+
+<div id="outline-container-orgcb7854f" class="outline-2">
+<h2 id="orgcb7854f"><span class="section-number-2">2</span> The Arvados file interface</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Arvados has the web server, but it also has a REST API and associated
@@ -352,8 +361,8 @@ arv-get 2be6af7b4741f2a5c5f8ff2bc6152d73+1955623+Ab9ad65d7fe958a053b3a57d545839d
 </div>
 </div>
 
-<div id="outline-container-org95f2c67" class="outline-2">
-<h2 id="org95f2c67"><span class="section-number-2">3</span> The PubSeq Arvados shell</h2>
+<div id="outline-container-orgc8c3ccd" class="outline-2">
+<h2 id="orgc8c3ccd"><span class="section-number-2">3</span> The PubSeq Arvados shell</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 When you login to Arvados (you can request permission from us) it is
@@ -408,8 +417,8 @@ essentially <a href="https://github.com/arvados/bh20-seq-resource/blob/2baa88b76
 </div>
 </div>
 
-<div id="outline-container-orgfba95f0" class="outline-2">
-<h2 id="orgfba95f0"><span class="section-number-2">4</span> Wiring up CWL</h2>
+<div id="outline-container-org028c1b4" class="outline-2">
+<h2 id="org028c1b4"><span class="section-number-2">4</span> Wiring up CWL</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 In above script <code>bh20-seq-analyzer</code> you can see that the <a href="https://www.commonwl.org/">Common
@@ -450,8 +459,8 @@ For more see <a href="https://hpc.guix.info/blog/2019/01/creating-a-reproducible
 </div>
 </div>
 
-<div id="outline-container-orgdf910f1" class="outline-2">
-<h2 id="orgdf910f1"><span class="section-number-2">5</span> Using the Arvados API</h2>
+<div id="outline-container-org7cdc8cc" class="outline-2">
+<h2 id="org7cdc8cc"><span class="section-number-2">5</span> Using the Arvados API</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Arvados provides a rich API for accessing internals of the Cloud
@@ -466,9 +475,26 @@ get a list of <a href="https://github.com/arvados/bh20-seq-resource/blob/2baa88b
 </p>
 </div>
 </div>
+
+<div id="outline-container-org5961211" class="outline-2">
+<h2 id="org5961211"><span class="section-number-2">6</span> Troubleshooting</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+When workflows have errors we should check the logs in Arvados.
+</p>
+
+<p>
+Go to the <a href="https://workbench.lugli.arvadosapi.com/projects/lugli-j7d0g-825x3r5vcs41dus">project</a> page for 'COVID-19-BH20 Shared Project' -&gt; 'Public
+Sequence Resource'. Click on analysis runs
+<a href="https://workbench.lugli.arvadosapi.com/projects/lugli-j7d0g-y4k4uswcqi3ku56">https://workbench.lugli.arvadosapi.com/projects/lugli-j7d0g-y4k4uswcqi3ku56</a>
+and 'Subprojects'. Click one of the runs and then on 'Processes' and you'll
+see what parts failed.
+</p>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-08-25 Tue 04:32</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-08-26 Wed 05:01</small>.
 </div>
 </body>
 </html>

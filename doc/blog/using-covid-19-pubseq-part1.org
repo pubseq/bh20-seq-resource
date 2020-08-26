@@ -1,4 +1,4 @@
-#+TITLE: COVID-19 PubSeq (part 1)
+#+TITLE: COVID-19 PubSeq - query metadata (part 1)
 #+AUTHOR: Pjotr Prins
 # C-c C-e h h   publish
 # C-c !         insert date (use . for active agenda, C-u C-c ! for date, C-u C-c . for time)

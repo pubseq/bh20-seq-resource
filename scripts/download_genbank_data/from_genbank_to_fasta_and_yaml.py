@@ -2,8 +2,9 @@
 
 import argparse
 parser = argparse.ArgumentParser()
+parser.add_argument('--ids-to-ignore', type=str, help='file with ids to ignore in all steps, 1 id per line', required=False)
 parser.add_argument('--skip-request', action='store_true', help='skip metadata and sequence request', required=False)
-parser.add_argument('--only-missing-id', action='store_true', help='download only missing id', required=False)
+parser.add_argument('--only-missing-ids', action='store_true', help='download only missing ids not already downloaded', required=False)
 parser.add_argument('--dict-ontology', type=str, help='where is the ontology',
                     default='../dict_ontology_standardization/',required=False)
 args = parser.parse_args()
@@ -48,17 +49,31 @@ if os.path.exists(dir_metadata):
         sys.exit(-1)
 
 
-accession_already_downloaded_set = []
+accession_to_ignore_set = set()
+
+if args.ids_to_ignore:
+    if not os.path.exists(args.ids_to_ignore):
+        print("\tThe '{}' file doesn't exist.".format(args.ids_to_ignore))
+        sys.exit(-1)
+
+    with open(args.ids_to_ignore) as f:
+        accession_to_ignore_set.update(set([x.split('.')[0] for x in f.read().strip('\n').split('\n')]))
+        print('There are {} accessions to ignore.'.format(len(accession_to_ignore_set)))
+
+
+accession_already_downloaded_set = set()
 
 if os.path.exists(dir_fasta_and_yaml):
     print("The directory '{}' already exists.".format(dir_fasta_and_yaml))
-    if not args.only_missing_id:
-        print("To start the download, delete the directory '{}' or specify --only-missing-id.".format(dir_fasta_and_yaml))
+    if not args.only_missing_ids:
+        print("To start the download, delete the directory '{}' or specify --only-missing-ids.".format(dir_fasta_and_yaml))
         sys.exit(-1)
 
     accession_already_downloaded_set = set([x.split('.yaml')[0].split('.')[0] for x in os.listdir(dir_fasta_and_yaml) if x.endswith('.yaml')])
-    print('There are {} accession already downloaded.'.format(len(accession_already_downloaded_set)))
+    print('There are {} accessions already downloaded.'.format(len(accession_already_downloaded_set)))
 
+
+accession_to_ignore_set.update(accession_already_downloaded_set)
 
 if not os.path.exists(dir_metadata):
     # Take all the ids
@@ -72,13 +87,9 @@ if not os.path.exists(dir_metadata):
         )['IdList']
 
         # Remove mRNAs, ncRNAs, Proteins, and predicted models (more information here: https://en.wikipedia.org/wiki/RefSeq)
-        tmp_list = [x for x in tmp_list if x[:2] not in ['NM', 'NR', 'NP', 'XM', 'XR', 'XP', 'WP']]
-
         # Remove the version in the id
-        tmp_list = [x.split('.')[0] for x in tmp_list]
+        new_ids_set = set([x.split('.')[0] for x in tmp_list if x[:2] not in ['NM', 'NR', 'NP', 'XM', 'XR', 'XP', 'WP']])
 
-        #tmp_list = tmp_list[0:2] # restricting to small run
-        new_ids_set = set([x.split('.')[0] for x in tmp_list])
         new_ids = len(new_ids_set.difference(id_set))
         id_set.update(new_ids_set)
 
@@ -97,9 +108,8 @@ if not os.path.exists(dir_metadata):
 
     print('DB: NCBI Virus', today_date, '-->', new_ids, 'new IDs from', len(tmp_list), '---> Total unique IDs:', len(id_set))
 
-    if len(accession_already_downloaded_set) > 0:
-        id_set = id_set.difference(accession_already_downloaded_set)
-        print('There are {} missing IDs to download.'.format(len(id_set)))
+    id_set = id_set.difference(accession_to_ignore_set)
+    print('There are {} missing IDs to download.'.format(len(id_set)))
 
     os.makedirs(dir_metadata)
     for i, id_x_list in enumerate(chunks(list(id_set), num_ids_for_request)):
@@ -260,17 +270,17 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                                 missing_value_list.append('\t'.join([accession_version, 'host_species', GBQualifier_value_text_list[0]]))
 
                             # Possible cases:
-                            # - Homo sapiens						--> ['Homo sapiens']
-                            # - Homo sapiens; female				--> ['Homo sapiens', 'female']
-                            # - Homo sapiens; female 63				--> ['Homo sapiens', 'female 63']
-                            # - Homo sapiens; female; age 40		--> ['Homo sapiens', 'female', 'age 40']
-                            # - Homo sapiens; gender: F; age: 61	--> ['Homo sapiens', 'gender: F', 'age: 61']
-                            # - Homo sapiens; gender: M; age: 68	--> ['Homo sapiens', 'gender: M', 'age: 68']
-                            # - Homo sapiens; hospitalized patient	--> ['Homo sapiens', 'hospitalized patient']
-                            # - Homo sapiens; male					--> ['Homo sapiens', 'male']
-                            # - Homo sapiens; male; 63				--> ['Homo sapiens', 'male', '63']
-                            # - Homo sapiens; male; age 29			--> ['Homo sapiens', 'male', 'age 29']
-                            # - Homo sapiens; symptomatic			--> ['Homo sapiens', 'symptomatic']
+                            # - Homo sapiens                        --> ['Homo sapiens']
+                            # - Homo sapiens; female                --> ['Homo sapiens', 'female']
+                            # - Homo sapiens; female 63             --> ['Homo sapiens', 'female 63']
+                            # - Homo sapiens; female; age 40        --> ['Homo sapiens', 'female', 'age 40']
+                            # - Homo sapiens; gender: F; age: 61    --> ['Homo sapiens', 'gender: F', 'age: 61']
+                            # - Homo sapiens; gender: M; age: 68    --> ['Homo sapiens', 'gender: M', 'age: 68']
+                            # - Homo sapiens; hospitalized patient  --> ['Homo sapiens', 'hospitalized patient']
+                            # - Homo sapiens; male                  --> ['Homo sapiens', 'male']
+                            # - Homo sapiens; male; 63              --> ['Homo sapiens', 'male', '63']
+                            # - Homo sapiens; male; age 29          --> ['Homo sapiens', 'male', 'age 29']
+                            # - Homo sapiens; symptomatic           --> ['Homo sapiens', 'symptomatic']
                             if len(GBQualifier_value_text_list) > 1:
                                 host_sex = ''
                                 if 'female' in GBQualifier_value_text_list[1]:

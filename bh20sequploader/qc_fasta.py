@@ -25,7 +25,7 @@ def read_fasta(sequence):
             raise ValueError("FASTA file contains multiple entries")
     return label, bases
 
-def qc_fasta(arg_sequence, check_with_clustalw=True):
+def qc_fasta(arg_sequence, check_with_mimimap2=True):
     log.debug("Starting qc_fasta")
     schema_resource = pkg_resources.resource_stream(__name__, "validation/formats")
     with tempfile.NamedTemporaryFile() as tmp:
@@ -54,38 +54,36 @@ def qc_fasta(arg_sequence, check_with_clustalw=True):
         sequence.seek(0)
         sequence.detach()
 
-        if not check_with_clustalw:
-            return ("sequence.fasta"+gz, seqlabel)
+        if check_with_mimimap2:
+            with tempfile.NamedTemporaryFile() as tmp1:
+                with tempfile.NamedTemporaryFile() as tmp2:
+                    refstring = pkg_resources.resource_string(__name__, "SARS-CoV-2-reference.fasta")
+                    tmp1.write(refstring)
+                    tmp1.flush()
+                    tmp2.write(submitlabel.encode("utf8"))
+                    tmp2.write(("".join(submitseq)).encode("utf8"))
+                    tmp2.flush()
+                    subbp = 0
+                    refbp = 0
+                    similarity = 0
+                    try:
+                        cmd = ["minimap2", "-c", tmp1.name, tmp2.name]
+                        logging.info("QC checking similarity to reference")
+                        logging.info(" ".join(cmd))
+                        result = subprocess.run(cmd, stdout=subprocess.PIPE)
+                        result.check_returncode()
+                        res = result.stdout.decode("utf-8")
+                        mm = res.split("\t")
+                        if len(mm) >= 10:
+                            # divide Number of matching bases in the mapping / Target sequence length
+                            similarity = (float(mm[9]) / float(mm[6])) * 100.0
+                        else:
+                            similarity = 0
+                    except Exception as e:
+                        logging.warn("QC against reference sequence using 'minimap2': %s", e, exc_info=e)
 
-        with tempfile.NamedTemporaryFile() as tmp1:
-            with tempfile.NamedTemporaryFile() as tmp2:
-                refstring = pkg_resources.resource_string(__name__, "SARS-CoV-2-reference.fasta")
-                tmp1.write(refstring)
-                tmp1.flush()
-                tmp2.write(submitlabel.encode("utf8"))
-                tmp2.write(("".join(submitseq)).encode("utf8"))
-                tmp2.flush()
-                subbp = 0
-                refbp = 0
-                similarity = 0
-                try:
-                    cmd = ["minimap2", "-c", tmp1.name, tmp2.name]
-                    logging.info("QC checking similarity to reference")
-                    logging.info(" ".join(cmd))
-                    result = subprocess.run(cmd, stdout=subprocess.PIPE)
-                    result.check_returncode()
-                    res = result.stdout.decode("utf-8")
-                    mm = res.split("\t")
-                    if len(mm) >= 10:
-                        # divide Number of matching bases in the mapping / Target sequence length
-                        similarity = (float(mm[9]) / float(mm[6])) * 100.0
-                    else:
-                        similarity = 0
-                except Exception as e:
-                    logging.warn("QC against reference sequence using 'minimap2': %s", e, exc_info=e)
-
-                if similarity < 70.0:
-                    raise ValueError("QC fail: alignment to reference was less than 70%% (was %2.2f%%)" % (similarity))
+                    if similarity < 70.0:
+                        raise ValueError("QC fail: alignment to reference was less than 70%% (was %2.2f%%)" % (similarity))
 
         return ("sequence.fasta"+gz, seqlabel)
     elif seq_type == "text/fastq":

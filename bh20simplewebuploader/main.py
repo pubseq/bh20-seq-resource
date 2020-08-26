@@ -666,7 +666,7 @@ def contact_page():
 ## Dynamic API functions starting here
 ## This is quick and dirty for now, just to get something out and demonstrate the queries
 ## Feel free to rename the functions/endpoints, feel free to process result so we get nicer JSON
-## but most likley you don't want to touch the queries, Cheers.
+## but most likely you don't want to touch the queries, Cheers.
 baseURL='http://sparql.genenetwork.org/sparql/'
 
 @app.route('/api/getCount', methods=['GET'])

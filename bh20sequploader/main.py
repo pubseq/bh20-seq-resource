@@ -38,7 +38,7 @@ def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
     target = []
     try:
         log.debug("FASTA/FASTQ QC" if do_qc else "Limited FASTA/FASTQ QC")
-        target.append(qc_fasta(sequence_p1, check_with_clustalw=do_qc))
+        target.append(qc_fasta(sequence_p1, check_with_mimimap2=do_qc))
         if sequence_p2:
             target.append(qc_fasta(sequence_p2))
             target[0] = ("reads_1."+target[0][0][6:], target[0][1])

@@ -6,5 +6,5 @@ export GUILE_LOAD_COMPILED_PATH=$GUIX_PROFILE/share/guile/site/3.0/
 
 ls $GUILE_LOAD_PATH
 
-env GUIX_PACKAGE_PATH=~/iwrk/opensource/guix/guix-bioinformatics/ $GUIX_PROFILE/bin/guix environment -C guix --ad-hoc git python python-flask python-pyyaml python-pycurl python-magic  nss-certs python-pyshex python-pyyaml --network openssl python-pyshex python-pyshexc clustalw python-schema-salad python-arvados-python-client --share=/export/tmp -- env TMPDIR=/export/tmp FLASK_ENV=development FLASK_RUN_PORT=5067 FLASK_APP=bh20simplewebuploader/main.py flask run
+env GUIX_PACKAGE_PATH=~/iwrk/opensource/guix/guix-bioinformatics/ $GUIX_PROFILE/bin/guix environment -C guix --ad-hoc git python python-flask python-pyyaml python-pycurl python-magic  nss-certs python-pyshex python-pyyaml --network openssl python-pyshex python-pyshexc minimap2 python-schema-salad python-arvados-python-client --share=/export/tmp -- env TMPDIR=/export/tmp FLASK_ENV=development FLASK_RUN_PORT=5067 FLASK_APP=bh20simplewebuploader/main.py flask run
 

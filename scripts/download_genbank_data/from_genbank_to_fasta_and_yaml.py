@@ -145,7 +145,7 @@ for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_x
 if not os.path.exists(dir_fasta_and_yaml):
     os.makedirs(dir_fasta_and_yaml)
 
-min_len_to_count = 27500
+min_len_to_count = 15000
 num_seq_with_len_ge_X_bp = 0
 
 missing_value_list = []
@@ -411,18 +411,17 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                     not_created_accession_dict[accession_version] = []
                 not_created_accession_dict[accession_version].append('host_species not found')
 
-            if accession_version in not_created_accession_dict:
-                continue
+            if len(GBSeq_sequence.text) < min_len_to_count:
+                not_created_accession_dict[accession_version].append('sequence shorter than {} bp'.format(min_len_to_count))
 
-            with open(os.path.join(dir_fasta_and_yaml, '{}.fasta'.format(accession_version)), 'w') as fw:
-                fw.write('>{}\n{}'.format(accession_version, GBSeq_sequence.text.upper()))
-
-            with open(os.path.join(dir_fasta_and_yaml, '{}.yaml'.format(accession_version)), 'w') as fw:
-                json.dump(info_for_yaml_dict, fw, indent=2)
-
-
-            if(len(GBSeq_sequence.text) >= min_len_to_count):
+            if accession_version not in not_created_accession_dict:
                 num_seq_with_len_ge_X_bp += 1
+
+                with open(os.path.join(dir_fasta_and_yaml, '{}.fasta'.format(accession_version)), 'w') as fw:
+                    fw.write('>{}\n{}'.format(accession_version, GBSeq_sequence.text.upper()))
+
+                with open(os.path.join(dir_fasta_and_yaml, '{}.yaml'.format(accession_version)), 'w') as fw:
+                    json.dump(info_for_yaml_dict, fw, indent=2)
         except:
             print("Unexpected error for the ID {}: {}".format(accession_version, sys.exc_info()[0]))
             accession_with_errors_list.append(accession_version)

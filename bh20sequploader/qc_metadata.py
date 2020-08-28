@@ -39,4 +39,4 @@ def qc_metadata(metadatafile):
     if not rslt:
         raise Exception(reason)
 
-    return True
+    return metadata['sample']['sample_id']

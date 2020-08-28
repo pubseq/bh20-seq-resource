@@ -83,12 +83,16 @@ class SeqAnalyzer:
                     if n not in col:
                         continue
                     with col.open(n, 'rb') as qf:
-                        tgt = qc_fasta(qf)[0]
+                        tgt, seqlabel, seq_type = qc_fasta(qf)
                         if tgt != n and tgt != paired.get(n):
                             errors.append("Expected %s but magic says it should be %s", n, tgt)
                         elif tgt in ("reads.fastq", "reads.fastq.gz", "reads_1.fastq", "reads_1.fastq.gz"):
                             self.start_fastq_to_fasta(collection, n, sample_id)
                             return False
+
+                        # If it is a FASTA
+                        if sample_id != seqlabel:
+                            errors.append("Expected sample_id == seqlabel, but %s != %s" % (sample_id, seqlabel))
                 if tgt is None:
                     errors.append("Upload '%s' does not contain sequence.fasta, reads.fastq or reads_1.fastq", collection["name"])
             except Exception as v:

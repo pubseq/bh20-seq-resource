@@ -412,6 +412,8 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                 not_created_accession_dict[accession_version].append('host_species not found')
 
             if len(GBSeq_sequence.text) < min_len_to_count:
+                if accession_version not in not_created_accession_dict:
+                    not_created_accession_dict[accession_version] = []
                 not_created_accession_dict[accession_version].append('sequence shorter than {} bp'.format(min_len_to_count))
 
             if accession_version not in not_created_accession_dict:

@@ -40,7 +40,10 @@ def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
         log.debug("FASTA/FASTQ QC" if do_qc else "Limited FASTA/FASTQ QC")
         target.append(qc_fasta(sequence_p1, check_with_mimimap2=do_qc))
         if sequence_p2:
+            if target[0][2] == 'text/fasta':
+                raise ValueError("It is possible to upload just one FASTA file at a time")
             target.append(qc_fasta(sequence_p2))
+
             target[0] = ("reads_1."+target[0][0][6:], target[0][1])
             target[1] = ("reads_2."+target[1][0][6:], target[0][1])
     except Exception as e:

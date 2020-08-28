@@ -63,8 +63,7 @@ def qc_fasta(arg_sequence, check_with_mimimap2=True):
                     tmp2.write(submitlabel.encode("utf8"))
                     tmp2.write(("".join(submitseq)).encode("utf8"))
                     tmp2.flush()
-                    subbp = 0
-                    refbp = 0
+
                     similarity = 0
                     try:
                         cmd = ["minimap2", "-c", tmp1.name, tmp2.name]
@@ -85,10 +84,10 @@ def qc_fasta(arg_sequence, check_with_mimimap2=True):
                     if similarity < 70.0:
                         raise ValueError("QC fail: alignment to reference was less than 70%% (was %2.2f%%)" % (similarity))
 
-        return ("sequence.fasta"+gz, seqlabel)
+        return ("sequence.fasta"+gz, seqlabel, seq_type)
     elif seq_type == "text/fastq":
         sequence.seek(0)
         sequence.detach()
-        return ("reads.fastq"+gz, seqlabel)
+        return ("reads.fastq"+gz, seqlabel, seq_type)
     else:
         raise ValueError("Sequence file does not look like a DNA FASTA or FASTQ")

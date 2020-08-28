@@ -50,7 +50,7 @@ def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
             target[0] = ("reads_1."+target[0][0][6:], target[0][1])
             target[1] = ("reads_2."+target[1][0][6:], target[0][1])
 
-        if target[0][2] == 'text/fasta' and sample_id != target[0][1]:
+        if do_qc and target[0][2] == 'text/fasta' and sample_id != target[0][1]:
             raise ValueError("The sample_id field in the metadata must be the same as the FASTA header")
 
     except Exception as e:

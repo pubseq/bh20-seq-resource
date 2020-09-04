@@ -328,8 +328,8 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     if accession not in not_created_accession_dict:
         num_yaml_created += 1
 
-        #with open(os.path.join(dir_yaml, '{}.yaml'.format(accession)), 'w') as fw:
-        #    json.dump(info_for_yaml_dict, fw, indent=2)
+        with open(os.path.join(dir_yaml, '{}.yaml'.format(accession)), 'w') as fw:
+            json.dump(info_for_yaml_dict, fw, indent=2)
 
 if len(missing_value_list) > 0:
     path_missing_terms_tsv = 'missing_terms.sra.tsv'

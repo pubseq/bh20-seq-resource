@@ -198,7 +198,7 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                         missing_value_list.append('\t'.join([accession, 'host_sex', VALUE_text]))
             elif TAG_text in ['host_age', 'host age']:
                 if is_integer(VALUE_text):
-                    info_for_yaml_dict['host']['host_age'] = VALUE_text
+                    info_for_yaml_dict['host']['host_age'] = int(VALUE_text)
                     info_for_yaml_dict['host']['host_age_unit'] = 'http://purl.obolibrary.org/obo/UO_0000036'
             elif TAG_text == 'collected_by':
                 if VALUE_text.lower() not in ['not available', 'missing']:

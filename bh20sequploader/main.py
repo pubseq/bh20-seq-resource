@@ -47,8 +47,8 @@ def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
                 raise ValueError("It is possible to upload just one FASTA file at a time")
             target.append(qc_fasta(sequence_p2))
 
-            target[0] = ("reads_1."+target[0][0][6:], target[0][1])
-            target[1] = ("reads_2."+target[1][0][6:], target[0][1])
+            target[0] = ("reads_1."+target[0][0][6:], target[0][1], target[0][2])
+            target[1] = ("reads_2."+target[1][0][6:], target[1][1], target[1][2])
 
         if do_qc and target[0][2] == 'text/fasta' and sample_id != target[0][1]:
             raise ValueError("The sample_id field in the metadata must be the same as the FASTA header")

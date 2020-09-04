@@ -3,6 +3,7 @@
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--ids-to-ignore', type=str, help='file with ids to ignore in all steps, 1 id per line', required=False)
+parser.add_argument('--ids-to-consider', type=str, help='file with ids to consider in all steps, 1 id per line', required=False)
 parser.add_argument('--dict-ontology', type=str, help='where is the ontology',
                     default='../dict_ontology_standardization/', required=False)
 
@@ -45,7 +46,22 @@ if args.ids_to_ignore:
 
     with open(args.ids_to_ignore) as f:
         accession_to_ignore_set.update(set([x.split('.')[0] for x in f.read().strip('\n').split('\n')]))
-        print('There are {} accessions to ignore.'.format(len(accession_to_ignore_set)))
+
+    print('There are {} accessions to ignore.'.format(len(accession_to_ignore_set)))
+
+
+accession_to_consider_set = set()
+
+if args.ids_to_consider:
+    if not os.path.exists(args.ids_to_consider):
+        print("\tThe '{}' file doesn't exist.".format(args.ids_to_consider))
+        sys.exit(-1)
+
+    with open(args.ids_to_consider) as f:
+        accession_to_consider_set.update(set([x.split('.')[0] for x in f.read().strip('\n').split('\n')]))
+
+    if len(accession_to_consider_set) > 0:
+        print('There are {} accessions to consider.'.format(len(accession_to_consider_set)))
 
 
 term_to_uri_dict = {}
@@ -103,8 +119,15 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     RUN_SET = EXPERIMENT_PACKAGE.find('RUN_SET')
     RUN = RUN_SET.find('RUN')
     accession = RUN.attrib['accession']
+
     run_accession_set.add(accession)
     #print(accession)
+
+    if accession in accession_to_ignore_set:
+        continue
+
+    if len(accession_to_consider_set) > 0 and accession not in accession_to_consider_set:
+        continue
 
     info_for_yaml_dict['sample']['sample_id'] = accession
 
@@ -305,8 +328,8 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     if accession not in not_created_accession_dict:
         num_yaml_created += 1
 
-        with open(os.path.join(dir_yaml, '{}.yaml'.format(accession)), 'w') as fw:
-            json.dump(info_for_yaml_dict, fw, indent=2)
+        #with open(os.path.join(dir_yaml, '{}.yaml'.format(accession)), 'w') as fw:
+        #    json.dump(info_for_yaml_dict, fw, indent=2)
 
 if len(missing_value_list) > 0:
     path_missing_terms_tsv = 'missing_terms.sra.tsv'

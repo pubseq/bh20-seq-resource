@@ -58,7 +58,8 @@ if args.ids_to_ignore:
 
     with open(args.ids_to_ignore) as f:
         accession_to_ignore_set.update(set([x.split('.')[0] for x in f.read().strip('\n').split('\n')]))
-        print('There are {} accessions to ignore.'.format(len(accession_to_ignore_set)))
+
+    print('There are {} accessions to ignore.'.format(len(accession_to_ignore_set)))
 
 
 accession_already_downloaded_set = set()

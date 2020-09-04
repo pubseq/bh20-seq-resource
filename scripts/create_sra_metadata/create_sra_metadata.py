@@ -85,6 +85,8 @@ not_created_accession_dict = {}
 run_accession_set = set()
 run_accession_to_downloadble_file_url_dict = {}
 
+num_yaml_created = 0
+
 for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     #print(i, EXPERIMENT_PACKAGE)
 
@@ -209,7 +211,7 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                             info_for_yaml_dict['sample']['additional_collection_information'] += "; The 'collection_date' is estimated (the original date was: {})".format(VALUE_text)
                         else:
                             info_for_yaml_dict['sample']['additional_collection_information'] = "The 'collection_date' is estimated (the original date was: {})".format(VALUE_text)
-            elif TAG_text == 'geo_loc_name':
+            elif TAG_text in ['geo_loc_name', 'geographic location (country and/or sea)', 'geographic location (region and locality)']:
                 if ': ' in VALUE_text:
                     VALUE_text = VALUE_text.replace(': ', ':')
 
@@ -301,6 +303,8 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
         not_created_accession_dict[accession].append('host_species not found')
 
     if accession not in not_created_accession_dict:
+        num_yaml_created += 1
+
         with open(os.path.join(dir_yaml, '{}.yaml'.format(accession)), 'w') as fw:
             json.dump(info_for_yaml_dict, fw, indent=2)
 
@@ -316,4 +320,4 @@ if len(not_created_accession_dict) > 0:
     with open(path_not_created_accession_tsv, 'w') as fw:
         fw.write('\n'.join(['\t'.join([accession_version, ','.join(missing_info_list)]) for accession_version, missing_info_list in not_created_accession_dict.items()]))
 
-
+print('Num. YAML files created: {}'.format(num_yaml_created))

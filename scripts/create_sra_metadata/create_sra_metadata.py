@@ -1,10 +1,19 @@
 #!/usr/bin/env python3
 
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('--ids-to-ignore', type=str, help='file with ids to ignore in all steps, 1 id per line', required=False)
+parser.add_argument('--dict-ontology', type=str, help='where is the ontology',
+                    default='../dict_ontology_standardization/', required=False)
+
+args = parser.parse_args()
+
 import os
 from dateutil.parser import parse
 import xml.etree.ElementTree as ET
 import json
 import gzip
+import sys
 
 dir_yaml = 'yaml'
 
@@ -15,8 +24,29 @@ date = '2020.07.09'
 #         -> Send to -> File -> Full XML -> Create File
 path_sra_metadata_xml = 'SraExperimentPackage.{}.xml.gz'.format(date)
 
-dir_dict_ontology_standardization = '../dict_ontology_standardization/'
+dir_dict_ontology_standardization = args.dict_ontology
 path_sra_study_accessions_txt = 'SRAStudyAccessions.{}.txt'.format(date)
+
+
+def is_integer(string_to_check):
+    try:
+        int(string_to_check)
+        return True
+    except ValueError:
+        return False
+
+
+accession_to_ignore_set = set()
+
+if args.ids_to_ignore:
+    if not os.path.exists(args.ids_to_ignore):
+        print("\tThe '{}' file doesn't exist.".format(args.ids_to_ignore))
+        sys.exit(-1)
+
+    with open(args.ids_to_ignore) as f:
+        accession_to_ignore_set.update(set([x.split('.')[0] for x in f.read().strip('\n').split('\n')]))
+        print('There are {} accessions to ignore.'.format(len(accession_to_ignore_set)))
+
 
 term_to_uri_dict = {}
 
@@ -38,15 +68,10 @@ for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_x
 
             term_to_uri_dict[term] = uri
 
-def is_integer(string_to_check):
-    try:
-        int(string_to_check)
-        return True
-    except ValueError:
-        return False
 
 if not os.path.exists(dir_yaml):
     os.makedirs(dir_yaml)
+
 
 sra_metadata_xml_file = gzip.open(path_sra_metadata_xml, 'r')
 tree = ET.parse(sra_metadata_xml_file)
@@ -55,7 +80,7 @@ sra_metadata_xml_file.close()
 EXPERIMENT_PACKAGE_SET = tree.getroot()
 
 missing_value_list = []
-not_created_accession_list = []
+not_created_accession_dict = {}
 
 run_accession_set = set()
 run_accession_to_downloadble_file_url_dict = {}
@@ -170,7 +195,7 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                         if VALUE_text_list[1].isalpha():
                             date_to_write = parse(VALUE_text).strftime('%Y-%m-%d')
                     elif len(VALUE_text_list) == 2:
-                        date_to_write =  VALUE_text + '-15'
+                        date_to_write = VALUE_text + '-15'
                     else:
                         if int(VALUE_text) < 2020:
                             date_to_write = "{}-12-15".format(VALUE_text)
@@ -247,18 +272,37 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
         info_for_yaml_dict['sample']['collection_date'] = '1970-01-01'
         info_for_yaml_dict['sample']['additional_collection_information'] = "The real 'collection_date' is missing"
 
+
+    # Check if mandatory fields are missing
     if 'sample_sequencing_technology' not in info_for_yaml_dict['technology']:
-        #print(accession, ' - technology not found')
-        not_created_accession_list.append([accession, 'technology not found'])
-        continue
+        # print(accession_version, ' - technology not found')
+        if accession not in not_created_accession_dict:
+            not_created_accession_dict[accession] = []
+        not_created_accession_dict[accession].append('sample_sequencing_technology not found')
+
+    if 'collection_location' not in info_for_yaml_dict['sample']:
+        if accession not in not_created_accession_dict:
+            not_created_accession_dict[accession] = []
+        not_created_accession_dict[accession].append('collection_location not found')
+
+    if 'collection_date' not in info_for_yaml_dict['sample']:
+        if accession not in not_created_accession_dict:
+            not_created_accession_dict[accession] = []
+        not_created_accession_dict[accession].append('collection_date not found')
+
+    if 'authors' not in info_for_yaml_dict['submitter']:
+        if accession not in not_created_accession_dict:
+            not_created_accession_dict[accession] = []
+        not_created_accession_dict[accession].append('authors not found')
 
     if 'host_species' not in info_for_yaml_dict['host']:
-        #print(accession, ' - technology not found')
-        not_created_accession_list.append([accession, 'missing host species'])
-        continue
+        if accession not in not_created_accession_dict:
+            not_created_accession_dict[accession] = []
+        not_created_accession_dict[accession].append('host_species not found')
 
-    with open(os.path.join(dir_yaml, '{}.yaml'.format(accession)), 'w') as fw:
-        json.dump(info_for_yaml_dict, fw, indent=2)
+    if accession not in not_created_accession_dict:
+        with open(os.path.join(dir_yaml, '{}.yaml'.format(accession)), 'w') as fw:
+            json.dump(info_for_yaml_dict, fw, indent=2)
 
 if len(missing_value_list) > 0:
     path_missing_terms_tsv = 'missing_terms.sra.tsv'
@@ -266,9 +310,10 @@ if len(missing_value_list) > 0:
     with open(path_missing_terms_tsv, 'w') as fw:
         fw.write('\n'.join(missing_value_list))
 
-if len(not_created_accession_list) > 0:
+if len(not_created_accession_dict) > 0:
     path_not_created_accession_tsv = 'not_created_accession.sra.tsv'
     print('Written not created accession in {}'.format(path_not_created_accession_tsv))
     with open(path_not_created_accession_tsv, 'w') as fw:
-        fw.write('\n'.join(['\t'.join(x) for x in not_created_accession_list]))
+        fw.write('\n'.join(['\t'.join([accession_version, ','.join(missing_info_list)]) for accession_version, missing_info_list in not_created_accession_dict.items()]))
+
 

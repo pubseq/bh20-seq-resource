@@ -6,7 +6,7 @@ parser.add_argument('--ids-to-ignore', type=str, help='file with ids to ignore i
 parser.add_argument('--skip-request', action='store_true', help='skip metadata and sequence request', required=False)
 parser.add_argument('--only-missing-ids', action='store_true', help='download only missing ids not already downloaded', required=False)
 parser.add_argument('--dict-ontology', type=str, help='where is the ontology',
-                    default='../dict_ontology_standardization/',required=False)
+                    default='../dict_ontology_standardization/', required=False)
 args = parser.parse_args()
 
 from Bio import Entrez

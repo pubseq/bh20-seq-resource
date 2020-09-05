@@ -8,7 +8,7 @@ baseCommand: bcftools
 arguments:
   - view
   - -i
-  - 'QUAL > 1 && GT="a"'
+  - 'QUAL > 10 && GT="a"'
   - -Oz
   - --threads=$(inputs.threads)
   - $(inputs.bcf)

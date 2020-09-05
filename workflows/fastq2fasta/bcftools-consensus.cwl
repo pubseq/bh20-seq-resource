@@ -9,7 +9,7 @@ baseCommand: bcftools
 arguments:
   - consensus
   - -i
-  - 'QUAL > 1 && GT="a"'
+  - 'QUAL > 10 && GT="a"'
   - -Hla
   - -f
   - $(inputs.ref_fasta)

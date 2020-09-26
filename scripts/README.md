@@ -1,4 +1,4 @@
-### Instructions for download and/or prepare the data and/ or the metadata
+### Instructions for download and/or prepare the data and/or the metadata
 
 Just go into the `download_genbank_data` or `download_sra_data` directory and execute the python3 script inside.
 

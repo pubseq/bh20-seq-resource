@@ -1,0 +1,29 @@
+id: placeholder
+
+host:
+    host_species: "$host_species"
+
+sample:
+    sample_id: "$sample_id"
+    collection_date: "$collection_date"
+    collection_location: "$collection_location"
+    specimen_source: ["$specimen_source"]
+
+virus:
+    virus_species: "$virus_species"
+
+technology:
+    sample_sequencing_technology: ["http://www.ebi.ac.uk/efo/EFO_0008632"]
+    sequence_assembly_method: "https://github.com/ESR-NZ/NZ_SARS-CoV-2_genomics"
+    additional_technology_information: "Artic V3 workflow"
+
+submitter:
+    authors: ["Jemma L Geoghegan", "Xiaoyun Ren", "Matthew Storey", "James Hadfield", "Lauren Jelley", "Sarah Jefferies", "Jill Sherwood", "Shevaun Paine", "Sue Huang", "Jordan Douglas", "Fabio K Mendes", "Andrew Sporle", "Michael G Baker", "David R Murdoch", "Nigel French", "Colin R Simpson", "David Welch", "Alexei J Drummond", "Edward C Holmes", "Sebastian Duchene", "Joep de Ligt"]
+    submitter_name: ["Joep de Ligt"]
+    submitter_address: "PO Box 50348,  Porirua 5240, New Zealand"
+    originating_lab: "ESR"
+    submitter_sample_id: "$submitter_sample_id"
+    publication: "https://doi.org/10.1101/2020.08.05.20168930"
+    submitter_orcid: ["https://orcid.org/0000-0003-0970-0153"]
+    additional_submitter_information: "2020-08-20"
+    

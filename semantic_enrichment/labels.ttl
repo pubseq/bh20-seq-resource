@@ -22,7 +22,6 @@
 <http://semanticscience.org/resource/SIO_001014> <http://www.w3.org/2000/01/rdf-schema#label> "ethnicity" .
 <http://purl.obolibrary.org/obo/NCIT_C3833> <http://www.w3.org/2000/01/rdf-schema#label> "Asymptomatic" .
 <http://purl.obolibrary.org/obo/NCIT_C25269> <http://www.w3.org/2000/01/rdf-schema#label> "Symptomatic" .
-
 <http://purl.obolibrary.org/obo/GENEPIO_0002020> <http://www.w3.org/2000/01/rdf-schema#label> "admitted to hospital" .
 <http://purl.obolibrary.org/obo/GENEPIO_0001849> <http://www.w3.org/2000/01/rdf-schema#label> "discharged from hospital" .
 <http://purl.obolibrary.org/obo/NCIT_C28554> <http://www.w3.org/2000/01/rdf-schema#label> "Dead" .
@@ -35,7 +34,7 @@
 <http://www.ebi.ac.uk/efo/EFO_0009173> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina NextSeq 500" .
 <http://www.ebi.ac.uk/efo/EFO_0008565> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina HiSeq 2500" .
 <http://www.ebi.ac.uk/efo/EFO_0008566> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina NextSeq 550" .
-<http://www.ebi.ac.uk/efo/EFO_0008636> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina MiniSeq"
+<http://www.ebi.ac.uk/efo/EFO_0008636> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina MiniSeq" .
 <http://www.ebi.ac.uk/efo/EFO_0008632> <http://www.w3.org/2000/01/rdf-schema#label> "ONT MinION" .
 <http://purl.obolibrary.org/obo/NCIT_C146818> <http://www.w3.org/2000/01/rdf-schema#label> "Oxford Nanopore Sequencing" .
 <http://www.ebi.ac.uk/efo/EFO_0004205> <http://www.w3.org/2000/01/rdf-schema#label> "Illumina MiSeq" .

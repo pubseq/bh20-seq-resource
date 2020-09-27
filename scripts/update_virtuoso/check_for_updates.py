@@ -1,12 +1,13 @@
 #! /usr/bin/env python3
 #
-# Check for updates on Arvados, pull the TTL and
-# push into Virtuoso
+# Check for updates on Arvados, pull the TTL and push into Virtuoso
 #
 # You can run this in a Guix container with
 #
-#  ~/opt/guix/bin/guix environment -C guix --ad-hoc python python-requests curl --network -- python3 ./scripts/update_virtuoso/check_for_updates.py cache.txt dba dba
-
+#    ~/opt/guix/bin/guix environment -C guix --ad-hoc python python-requests curl --network -- python3 ./scripts/update_virtuoso/check_for_updates.py cache.txt dba dba
+#
+# Note you'll need to run from the root dir. Remove the ./cache.txt file if you want to force an update.
+#
 import requests
 import time
 import sys

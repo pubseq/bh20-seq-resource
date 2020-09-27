@@ -369,6 +369,848 @@
     ns1:P30 <http://www.wikidata.org/entity/Q48> ;
     ns1:P625 "Point(108.0 16.0)" .
 
+<http://www.wikidata.org/entity/Q1013317> rdfs:label "Thibodaux" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-90.82 29.7922)" .
+
+<http://www.wikidata.org/entity/Q10313> rdfs:label "Donostia-San Sebastián" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q29> ;
+    ns1:P625 "Point(-1.98 43.32)" .
+
+<http://www.wikidata.org/entity/Q104994> rdfs:label "Los Angeles County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-118.25 34.05)" .
+
+<http://www.wikidata.org/entity/Q1070> rdfs:label "Ahmedabad" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.58 23.03)" .
+
+<http://www.wikidata.org/entity/Q108072> rdfs:label "Monterey County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-121.31 36.24)" .
+
+<http://www.wikidata.org/entity/Q108861> rdfs:label "King County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-121.84 47.47)" .
+
+<http://www.wikidata.org/entity/Q111540> rdfs:label "Kittitas County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-120.68 47.12)" .
+
+<http://www.wikidata.org/entity/Q111904> rdfs:label "Mason County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-123.18 47.35)" .
+
+<http://www.wikidata.org/entity/Q11253> rdfs:label "Lower Manhattan" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-74.0119 40.7078)" .
+
+<http://www.wikidata.org/entity/Q113773> rdfs:label "Thurston County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-122.83 46.93)" .
+
+<http://www.wikidata.org/entity/Q113892> rdfs:label "Skagit County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-121.78 48.48)" .
+
+<http://www.wikidata.org/entity/Q1154> rdfs:label "Jamnagar" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(70.07 22.47)" .
+
+<http://www.wikidata.org/entity/Q1183> rdfs:label "Puerto Rico" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-66.5 18.25)" .
+
+<http://www.wikidata.org/entity/Q11864> rdfs:label "Junagadh" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(70.47 21.52)" .
+
+<http://www.wikidata.org/entity/Q118716> rdfs:label "Franklin County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-118.9 46.54)" .
+
+<http://www.wikidata.org/entity/Q11909> rdfs:label "Vadodara" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(73.2 22.3)" .
+
+<http://www.wikidata.org/entity/Q11910> rdfs:label "Gandhinagar" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.68 23.22)" .
+
+<http://www.wikidata.org/entity/Q1205335> rdfs:label "Ishikawa" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q17> ;
+    ns1:P625 "Point(140.452222222 37.144166666)" .
+
+<http://www.wikidata.org/entity/Q1214> rdfs:label "Wyoming" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-107.5 43.0)" .
+
+<http://www.wikidata.org/entity/Q124739> rdfs:label "Tijuana" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q96> ;
+    ns1:P625 "Point(-117.00371 32.5027)" .
+
+<http://www.wikidata.org/entity/Q1261> rdfs:label "Colorado" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-105.5 39.0)" .
+
+<http://www.wikidata.org/entity/Q1263568> rdfs:label "Dholka" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.47 22.72)" .
+
+<http://www.wikidata.org/entity/Q1266017> rdfs:label "Dhanera" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.02 24.52)" .
+
+<http://www.wikidata.org/entity/Q1282> rdfs:label "Lazio" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q38> ;
+    ns1:P625 "Point(12.716666666 41.9)" .
+
+<http://www.wikidata.org/entity/Q134635> rdfs:label "Saitama" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q17> ;
+    ns1:P625 "Point(139.645277777 35.861666666)" .
+
+<http://www.wikidata.org/entity/Q1354> rdfs:label "Dhaka" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q902> ;
+    ns1:P625 "Point(90.396111111 23.716111111)" .
+
+<http://www.wikidata.org/entity/Q1361> rdfs:label "Hyderabad" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(78.466666666 17.366666666)" .
+
+<http://www.wikidata.org/entity/Q14833> rdfs:label "Heinsberg" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q183> ;
+    ns1:P625 "Point(6.096388888 51.063055555)" .
+
+<http://www.wikidata.org/entity/Q1494> rdfs:label "Mississippi" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-90.0 33.0)" .
+
+<http://www.wikidata.org/entity/Q1509> rdfs:label "Tennessee" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-86.0 36.0)" .
+
+<http://www.wikidata.org/entity/Q1522> rdfs:label "New Mexico" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-106.0 34.0)" .
+
+<http://www.wikidata.org/entity/Q1524> rdfs:label "Athens" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q41> ;
+    ns1:P625 "Point(23.716111111 37.979444444)" .
+
+<http://www.wikidata.org/entity/Q15244505> rdfs:label "Fulay, Bhuj" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(69.79444444 23.39583333)" .
+
+<http://www.wikidata.org/entity/Q1536978> rdfs:label "Gondal" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(70.8 21.97)" .
+
+<http://www.wikidata.org/entity/Q156216> rdfs:label "Benton County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-119.5 46.25)" .
+
+<http://www.wikidata.org/entity/Q156220> rdfs:label "Douglas County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-119.69 47.74)" .
+
+<http://www.wikidata.org/entity/Q156273> rdfs:label "Adams County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-118.56 46.99)" .
+
+<http://www.wikidata.org/entity/Q156276> rdfs:label "Cowlitz County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-122.68 46.19)" .
+
+<http://www.wikidata.org/entity/Q156287> rdfs:label "Clark County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-122.48 45.77)" .
+
+<http://www.wikidata.org/entity/Q156295> rdfs:label "Asotin County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-117.19 46.18)" .
+
+<http://www.wikidata.org/entity/Q156459> rdfs:label "Pierce County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-122.11 47.05)" .
+
+<http://www.wikidata.org/entity/Q156623> rdfs:label "Whatcom County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-121.9 48.83)" .
+
+<http://www.wikidata.org/entity/Q156629> rdfs:label "Yakima County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-120.74 46.46)" .
+
+<http://www.wikidata.org/entity/Q1569520> rdfs:label "Verona" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-89.535555555 42.989722222)" .
+
+<http://www.wikidata.org/entity/Q1603> rdfs:label "Kentucky" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-85.0 37.5)" .
+
+<http://www.wikidata.org/entity/Q1622928> rdfs:label "Una" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(71.03 20.82)" .
+
+<http://www.wikidata.org/entity/Q1649> rdfs:label "Oklahoma" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-98.0 35.5)" .
+
+<http://www.wikidata.org/entity/Q16551> rdfs:label "Vermont" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-72.7 44.0)" .
+
+<http://www.wikidata.org/entity/Q16552> rdfs:label "San Diego" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-117.1625 32.715)" .
+
+<http://www.wikidata.org/entity/Q16635> rdfs:label "Guam" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(144.8 13.5)" .
+
+<http://www.wikidata.org/entity/Q16963> rdfs:label "Jiangsu" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q148> ;
+    ns1:P625 "Point(120.0 33.0)" .
+
+<http://www.wikidata.org/entity/Q16967> rdfs:label "Zhejiang" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q148> ;
+    ns1:P625 "Point(120.15 30.266666666)" .
+
+<http://www.wikidata.org/entity/Q169952> rdfs:label "Imperial County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-115.35 33.04)" .
+
+<http://www.wikidata.org/entity/Q170616> rdfs:label "Chiba" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q17> ;
+    ns1:P625 "Point(140.1 35.6)" .
+
+<http://www.wikidata.org/entity/Q1707463> rdfs:label "Ghogha" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.28 21.68)" .
+
+<http://www.wikidata.org/entity/Q1708155> rdfs:label "Himatnagar" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.95 23.6)",
+        "Point(73.01666667 23.56666667)" .
+
+<http://www.wikidata.org/entity/Q171943> rdfs:label "Nanchang" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q148> ;
+    ns1:P625 "Point(115.887222 28.684167)" .
+
+<http://www.wikidata.org/entity/Q172> rdfs:label "Toronto" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q16> ;
+    ns1:P625 "Point(-79.386666666 43.670277777)" .
+
+<http://www.wikidata.org/entity/Q173> rdfs:label "Alabama" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-86.7 32.7)" .
+
+<http://www.wikidata.org/entity/Q17511495> rdfs:label "Gheens" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-90.4625 29.6794)" .
+
+<http://www.wikidata.org/entity/Q1815245> rdfs:label "Rajkot district" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(70.78 22.3)" .
+
+<http://www.wikidata.org/entity/Q18207676> rdfs:label "Sihanoukville" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q424> ;
+    ns1:P625 "Point(103.5 10.6333)" .
+
+<http://www.wikidata.org/entity/Q1844136> rdfs:label "Killona" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-90.4869 29.9994)" .
+
+<http://www.wikidata.org/entity/Q186518> rdfs:label "Dahod district" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(74.257777777 22.833888888)" .
+
+<http://www.wikidata.org/entity/Q189546> rdfs:label "Bizerte" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q948> ;
+    ns1:P625 "Point(9.873888888 37.274444444)" .
+
+<http://www.wikidata.org/entity/Q1902531> rdfs:label "Marrero" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-90.10972 29.88583)" .
+
+<http://www.wikidata.org/entity/Q1924998> rdfs:label "Mahuva" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(71.8 21.0833)" .
+
+<http://www.wikidata.org/entity/Q194165> rdfs:label "Irbid" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q810> ;
+    ns1:P625 "Point(35.85 32.555555555)" .
+
+<http://www.wikidata.org/entity/Q1990163> rdfs:label "Narayanganj" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q902> ;
+    ns1:P625 "Point(90.5 23.616666666)" .
+
+<http://www.wikidata.org/entity/Q200251> rdfs:label "Kōchi" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q17> ;
+    ns1:P625 "Point(133.533333333 33.566666666)" .
+
+<http://www.wikidata.org/entity/Q202453> rdfs:label "Novi Pazar" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q403> ;
+    ns1:P625 "Point(20.516666666 43.15)" .
+
+<http://www.wikidata.org/entity/Q206317> rdfs:label "Kraljevo" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q403> ;
+    ns1:P625 "Point(20.686975 43.72342)" .
+
+<http://www.wikidata.org/entity/Q209223> rdfs:label "Napoleonville" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-91.0267 29.9378)" .
+
+<http://www.wikidata.org/entity/Q2154341> rdfs:label "Raceland" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-90.6053 29.7225)" .
+
+<http://www.wikidata.org/entity/Q219039> rdfs:label "Nadiad, Gujarat" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.87 22.7)" .
+
+<http://www.wikidata.org/entity/Q2194112> rdfs:label "Lockport" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-90.53925 29.64605)",
+        "Point(-90.54 29.6425)" .
+
+<http://www.wikidata.org/entity/Q22086086> rdfs:label "Boon" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-85.601944444 44.289722222)" .
+
+<http://www.wikidata.org/entity/Q2226176> rdfs:label "Mount Horeb" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-89.734166666 43.006388888)" .
+
+<http://www.wikidata.org/entity/Q2233469> rdfs:label "Mahemdavad" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.77 22.83)" .
+
+<http://www.wikidata.org/entity/Q2239007> rdfs:label "Kodinar" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(70.8 20.86)" .
+
+<http://www.wikidata.org/entity/Q2320097> rdfs:label "Modasa" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(73.3 23.47)" .
+
+<http://www.wikidata.org/entity/Q2320197> rdfs:label "Lacombe" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-89.9314 30.315)" .
+
+<http://www.wikidata.org/entity/Q2341421> rdfs:label "Kapadvanj" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(73.07 23.02)" .
+
+<http://www.wikidata.org/entity/Q243325> rdfs:label "Khulna" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q902> ;
+    ns1:P625 "Point(89.55 22.816666666)" .
+
+<http://www.wikidata.org/entity/Q2491691> rdfs:label "Violet" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-89.8969 29.9011)" .
+
+<http://www.wikidata.org/entity/Q2570216> rdfs:label "Talod" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.953252777 23.351947222)" .
+
+<http://www.wikidata.org/entity/Q2570689> rdfs:label "Mandvi" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(69.36 22.81)" .
+
+<http://www.wikidata.org/entity/Q2656> rdfs:label "Palermo" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q38> ;
+    ns1:P625 "Point(13.361262 38.115658)" .
+
+<http://www.wikidata.org/entity/Q2673176> rdfs:label "Maringouin" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-91.51889 30.49083)",
+        "Point(-91.51955 30.4913)" .
+
+<http://www.wikidata.org/entity/Q2724388> rdfs:label "Prantij" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.857180555 23.438419444)" .
+
+<http://www.wikidata.org/entity/Q2724740> rdfs:label "Kalol" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(73.463 22.606)" .
+
+<http://www.wikidata.org/entity/Q2726258> rdfs:label "Olpad" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.75 21.33333333)" .
+
+<http://www.wikidata.org/entity/Q2726621> rdfs:label "Kadi" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.2 23.18)" .
+
+<http://www.wikidata.org/entity/Q281681> rdfs:label "Grant County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-119.47 47.21)" .
+
+<http://www.wikidata.org/entity/Q3141> rdfs:label "Melbourne" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q408> ;
+    ns1:P625 "Point(144.961388888 -37.820555555)" .
+
+<http://www.wikidata.org/entity/Q3224> rdfs:label "New South Wales" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q408> ;
+    ns1:P625 "Point(147.0 -32.0)" .
+
+<http://www.wikidata.org/entity/Q323432> rdfs:label "Fairfield" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-122.054166666 38.257777777)" .
+
+<http://www.wikidata.org/entity/Q3235> rdfs:label "Northern Territory" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q408> ;
+    ns1:P625 "Point(133.0 -20.0)" .
+
+<http://www.wikidata.org/entity/Q3239690> rdfs:label "Kershaw" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-80.583611111 34.551944444)" .
+
+<http://www.wikidata.org/entity/Q3314115> rdfs:label "Milheeze" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q55> ;
+    ns1:P625 "Point(5.7789 51.5022)" .
+
+<http://www.wikidata.org/entity/Q33405> rdfs:label "Little Rock" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-92.331111111 34.736111111)" .
+
+<http://www.wikidata.org/entity/Q33456378> rdfs:label "Leiden" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q55> ;
+    ns1:P625 "Point(4.49306 52.15833)" .
+
+<http://www.wikidata.org/entity/Q34404> rdfs:label "New Orleans" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-90.07507 29.95465)" .
+
+<http://www.wikidata.org/entity/Q35715> rdfs:label "South Australia" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q408> ;
+    ns1:P625 "Point(135.0 -30.0)" .
+
+<http://www.wikidata.org/entity/Q3572> rdfs:label "Tunis" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q948> ;
+    ns1:P625 "Point(10.18 36.800833333)" .
+
+<http://www.wikidata.org/entity/Q360584> rdfs:label "Fuyang" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q148> ;
+    ns1:P625 "Point(115.80447 32.89856)" .
+
+<http://www.wikidata.org/entity/Q36074> rdfs:label "Queensland" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q408> ;
+    ns1:P625 "Point(143.0 -20.0)" .
+
+<http://www.wikidata.org/entity/Q3616> rdfs:label "Tehran" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q794> ;
+    ns1:P625 "Point(51.416666666 35.7)" .
+
+<http://www.wikidata.org/entity/Q376749> rdfs:label "Chittagong" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q902> ;
+    ns1:P625 "Point(91.8325 22.335)" .
+
+<http://www.wikidata.org/entity/Q3780> rdfs:label "Freetown" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q1044> ;
+    ns1:P625 "Point(-13.233055555 8.483333333)" .
+
+<http://www.wikidata.org/entity/Q3805> rdfs:label "Amman" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q810> ;
+    ns1:P625 "Point(35.933333333 31.95)" .
+
+<http://www.wikidata.org/entity/Q384737> rdfs:label "Jefferson County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-123.58 47.84)" .
+
+<http://www.wikidata.org/entity/Q388503> rdfs:label "Houma" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-90.7161 29.5875)" .
+
+<http://www.wikidata.org/entity/Q3934> rdfs:label "Asturias" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q29> ;
+    ns1:P625 "Point(-6.0 43.333333333)" .
+
+<http://www.wikidata.org/entity/Q43788> rdfs:label "Madison" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-89.384166666 43.074722222)" .
+
+<http://www.wikidata.org/entity/Q4629> rdfs:label "Surat" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.83 21.17)" .
+
+<http://www.wikidata.org/entity/Q46862> rdfs:label "Hubei" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q148> ;
+    ns1:P625 "Point(112.3 31.2)" .
+
+<http://www.wikidata.org/entity/Q485276> rdfs:label "Spokane County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-117.4 47.62)" .
+
+<http://www.wikidata.org/entity/Q485305> rdfs:label "Walla Walla County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-118.48 46.23)" .
+
+<http://www.wikidata.org/entity/Q490744> rdfs:label "Alameda" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-122.256944444 37.763888888)" .
+
+<http://www.wikidata.org/entity/Q49145> rdfs:label "New Haven" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-72.925 41.308333333)" .
+
+<http://www.wikidata.org/entity/Q493222> rdfs:label "Grays Harbor County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-123.83 47.15)" .
+
+<http://www.wikidata.org/entity/Q493236> rdfs:label "Chelan County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-120.64 47.88)" .
+
+<http://www.wikidata.org/entity/Q495105> rdfs:label "Berkeley County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-79.95 33.2)" .
+
+<http://www.wikidata.org/entity/Q495738> rdfs:label "Mobile County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-88.213888888 30.786388888)" .
+
+<http://www.wikidata.org/entity/Q502200> rdfs:label "Dane County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-89.42 43.07)" .
+
+<http://www.wikidata.org/entity/Q504375> rdfs:label "East Feliciana Parish" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-91.05 30.85)" .
+
+<http://www.wikidata.org/entity/Q505993> rdfs:label "Richland County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-80.91 34.03)" .
+
+<http://www.wikidata.org/entity/Q5269024> rdfs:label "Dhansura" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(73.2 23.35)" .
+
+<http://www.wikidata.org/entity/Q55630> rdfs:label "Novi Sad" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q403> ;
+    ns1:P625 "Point(19.831666666 45.264444444)" .
+
+<http://www.wikidata.org/entity/Q582485> rdfs:label "Dahegam" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.82 23.17)" .
+
+<http://www.wikidata.org/entity/Q58691> rdfs:label "Maricopa County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-112.475833333 33.513888888)" .
+
+<http://www.wikidata.org/entity/Q59473> rdfs:label "Užice" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q403> ;
+    ns1:P625 "Point(19.85 43.85)" .
+
+<http://www.wikidata.org/entity/Q6359640> rdfs:label "Kamrej" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.95718 21.13637)" .
+
+<http://www.wikidata.org/entity/Q649> rdfs:label "Moscow" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q159> ;
+    ns1:P625 "Point(37.617777777 55.755833333)" .
+
+<http://www.wikidata.org/entity/Q712003> rdfs:label "Bardoli" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(73.12 21.12)" .
+
+<http://www.wikidata.org/entity/Q720211> rdfs:label "Mansa" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.65739 23.42564)",
+        "Point(72.67 23.43)" .
+
+<http://www.wikidata.org/entity/Q724> rdfs:label "Maine" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-69.0 45.5)" .
+
+<http://www.wikidata.org/entity/Q724951> rdfs:label "Chuda" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(71.68333333 22.48333333)" .
+
+<http://www.wikidata.org/entity/Q7402139> rdfs:label "Saint Rose" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-89.5544 38.6842)" .
+
+<http://www.wikidata.org/entity/Q7428379> rdfs:label "Savli" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(73.21666667 22.56666667)" .
+
+<http://www.wikidata.org/entity/Q747840> rdfs:label "Barisal" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q902> ;
+    ns1:P625 "Point(90.366666666 22.7)" .
+
+<http://www.wikidata.org/entity/Q760153> rdfs:label "Bharuch" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.966666666 21.7)",
+        "Point(72.9805 21.69482)" .
+
+<http://www.wikidata.org/entity/Q775759> rdfs:label "Kheda" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.68 22.75)" .
+
+<http://www.wikidata.org/entity/Q7903> rdfs:label "Casablanca" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q1028> ;
+    ns1:P625 "Point(-7.62 33.599166666)" .
+
+<http://www.wikidata.org/entity/Q79449> rdfs:label "Avondale" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-112.349722222 33.433611111)" .
+
+<http://www.wikidata.org/entity/Q797> rdfs:label "Alaska" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-150.0 64.0)" .
+
+<http://www.wikidata.org/entity/Q816443> rdfs:label "Ben Arous" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q948> ;
+    ns1:P625 "Point(10.218888888 36.753055555)" .
+
+<http://www.wikidata.org/entity/Q856860> rdfs:label "Hammond" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-87.4931 41.6111)" .
+
+<http://www.wikidata.org/entity/Q858162> rdfs:label "Botad" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(71.67 22.17)" .
+
+<http://www.wikidata.org/entity/Q8660> rdfs:label "Karachi" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q843> ;
+    ns1:P625 "Point(67.01 24.86)" .
+
+<http://www.wikidata.org/entity/Q892886> rdfs:label "Bonthe" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q1044> ;
+    ns1:P625 "Point(-12.505 7.526388888)" .
+
+<http://www.wikidata.org/entity/Q9461> rdfs:label "Khedbrahma" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(73.04632 24.0299)" .
+
+<http://www.wikidata.org/entity/Q949907> rdfs:label "Palanpur" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.433333333 24.166666666)" .
+
+<http://www.wikidata.org/entity/Q968713> rdfs:label "Jetpur, Navagadh" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(70.6167 21.7333)",
+        "Point(70.622222222 21.754166666)",
+        "Point(70.62347 21.75482)" .
+
+<http://www.wikidata.org/entity/Q980> rdfs:label "Bavaria" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q183> ;
+    ns1:P625 "Point(11.431111111 48.7775)" .
+
+<http://www.wikidata.org/entity/Q988156> rdfs:label "Slidell" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-89.777777777 30.279166666)" .
+
+<http://www.wikidata.org/entity/Q994514> rdfs:label "Rangpur" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q902> ;
+    ns1:P625 "Point(89.25 25.75)" .
+
+<http://www.wikidata.org/entity/Q1033> rdfs:label "Nigeria" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q1033> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q15> ;
+    ns1:P625 "Point(8.0 9.0)" .
+
+<http://www.wikidata.org/entity/Q114> rdfs:label "Kenya" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q114> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q15> ;
+    ns1:P625 "Point(38.0 0.1)" .
+
+<http://www.wikidata.org/entity/Q117> rdfs:label "Ghana" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q117> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q15> ;
+    ns1:P625 "Point(-0.5 8.0)" .
+
+<http://www.wikidata.org/entity/Q145> rdfs:label "United Kingdom" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q145> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> ;
+    ns1:P625 "Point(-2.0 54.6)" .
+
+<http://www.wikidata.org/entity/Q16> rdfs:label "Canada" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q49> .
+
+<http://www.wikidata.org/entity/Q230> rdfs:label "Georgia" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q230> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46>,
+        <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(43.733330555 42.016669444)" .
+
+<http://www.wikidata.org/entity/Q232> rdfs:label "Kazakhstan" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q232> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46>,
+        <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(68.0 48.0)" .
+
+<http://www.wikidata.org/entity/Q241> rdfs:label "Cuba" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q241> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q49> ;
+    ns1:P625 "Point(-79.5 22.0)" .
+
+<http://www.wikidata.org/entity/Q242> rdfs:label "Belize" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q242> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q49> ;
+    ns1:P625 "Point(-88.7 17.066666666)" .
+
+<http://www.wikidata.org/entity/Q265> rdfs:label "Uzbekistan" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q265> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(66.0 41.0)" .
+
+<http://www.wikidata.org/entity/Q27611> rdfs:label "Central America" .
+
+<http://www.wikidata.org/entity/Q298> rdfs:label "Chile" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q298> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q18> ;
+    ns1:P625 "Point(-71.0 -33.0)" .
+
+<http://www.wikidata.org/entity/Q29999> rdfs:label "Kingdom of the Netherlands" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46>,
+        <http://www.wikidata.org/entity/Q49> .
+
+<http://www.wikidata.org/entity/Q31> rdfs:label "Belgium" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q31> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> ;
+    ns1:P625 "Point(4.668055555 50.641111111)" .
+
+<http://www.wikidata.org/entity/Q36> rdfs:label "Poland" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q36> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> ;
+    ns1:P625 "Point(19.0 52.0)" .
+
+<http://www.wikidata.org/entity/Q39> rdfs:label "Switzerland" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q39> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> ;
+    ns1:P625 "Point(8.231973 46.798562)" .
+
+<http://www.wikidata.org/entity/Q398> rdfs:label "Bahrain" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q398> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(50.551111 26.0675)" .
+
+<http://www.wikidata.org/entity/Q41> rdfs:label "Greece" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> .
+
+<http://www.wikidata.org/entity/Q424> rdfs:label "Cambodia" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> .
+
+<http://www.wikidata.org/entity/Q664> rdfs:label "New Zealand" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q664> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q538> ;
+    ns1:P625 "Point(174.0 -41.2)" .
+
+<http://www.wikidata.org/entity/Q717> rdfs:label "Venezuela" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q717> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q18> ;
+    ns1:P625 "Point(-67.0 8.0)" .
+
+<http://www.wikidata.org/entity/Q766> rdfs:label "Jamaica" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q766> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q49> ;
+    ns1:P625 "Point(-77.4 18.18)" .
+
+<http://www.wikidata.org/entity/Q77> rdfs:label "Uruguay" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q77> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q18> ;
+    ns1:P625 "Point(-56.65 -32.733333333)" .
+
+<http://www.wikidata.org/entity/Q774> rdfs:label "Guatemala" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q774> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q49> ;
+    ns1:P625 "Point(-90.25 15.5)" .
+
+<http://www.wikidata.org/entity/Q794> rdfs:label "Iran" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> .
+
+<http://www.wikidata.org/entity/Q796> rdfs:label "Iraq" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q796> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(43.0 33.0)" .
+
+<http://www.wikidata.org/entity/Q822> rdfs:label "Lebanon" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q822> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(35.766667 33.833333)" .
+
+<http://www.wikidata.org/entity/Q843> rdfs:label "Pakistan" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> .
+
+<http://www.wikidata.org/entity/Q846> rdfs:label "Qatar" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q846> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(51.212767 25.269535)" .
+
+<http://www.wikidata.org/entity/Q851> rdfs:label "Saudi Arabia" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q851> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(44.116667 23.716667)" .
+
+<http://www.wikidata.org/entity/Q869> rdfs:label "Thailand" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q869> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(101.0 14.0)" .
+
+<http://www.wikidata.org/entity/Q953> rdfs:label "Zambia" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q953> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q15> ;
+    ns1:P625 "Point(28.0 -14.0)" .
+
+<http://www.wikidata.org/entity/Q96> rdfs:label "Mexico" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q49> .
+
+<http://www.wikidata.org/entity/Q1028> rdfs:label "Morocco" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q1028> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q15> ;
+    ns1:P625 "Point(-6.0 32.0)" .
+
+<http://www.wikidata.org/entity/Q159> rdfs:label "Russia" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q159> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46>,
+        <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(94.25 66.416666666)" .
+
+<http://www.wikidata.org/entity/Q183> rdfs:label "Germany" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> .
+
+<http://www.wikidata.org/entity/Q29> rdfs:label "Spain" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> .
+
+<http://www.wikidata.org/entity/Q38> rdfs:label "Italy" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> .
+
+<http://www.wikidata.org/entity/Q55> rdfs:label "Netherlands" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q29999> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q27611>,
+        <http://www.wikidata.org/entity/Q46> ;
+    ns1:P625 "Point(5.55 52.316666666)" .
+
+<http://www.wikidata.org/entity/Q810> rdfs:label "Jordan" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> .
+
+<http://www.wikidata.org/entity/Q1044> rdfs:label "Sierra Leone" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q1044> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q15> ;
+    ns1:P625 "Point(-11.916667 8.5)" .
+
+<http://www.wikidata.org/entity/Q17> rdfs:label "Japan" ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> .
+
+<http://www.wikidata.org/entity/Q948> rdfs:label "Tunisia" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q948> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q15> ;
+    ns1:P625 "Point(10.0 34.0)" .
+
+<http://www.wikidata.org/entity/Q403> rdfs:label "Serbia" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q403> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q46> ;
+    ns1:P625 "Point(20.933333333 43.95)" .
+
+<http://www.wikidata.org/entity/Q902> rdfs:label "Bangladesh" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q902> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(89.866667 24.016667)" .
+
 
 <http://www.wikidata.org/entity/Q538> rdfs:label "Oceania" .
 <http://www.wikidata.org/entity/Q49> rdfs:label "North America" .

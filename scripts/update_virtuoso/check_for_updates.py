@@ -28,12 +28,12 @@ def upload(fn):
     # print("DELETE "+fn)
     # cmd = ("curl --digest --user dba:%s --verbose --url -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph -X DELETE" % pwd).split(" ")
 
-    print("UPLOAD "+fn)
-    cmd = ("curl -X PUT --digest -u dba:%s -H Content-Type:text/turtle -T %s -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph/%s" % (pwd, fn, os.path.basename(fn)) ).split(" ")
+    print("UPLOADING "+fn)
+    cmd = ("curl -X PUT --digest -u dba:%s -H Content-Type:text/turtle -T %s -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph/%s" % (pwd, fn, os.path.basename(fn)) )
     print(cmd)
-    p = subprocess.Popen(cmd)
-    output = p.communicate()[0]
-    print(output)
+    p = subprocess.Popen(cmd.split(" "),stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    print(out,err)
     assert(p.returncode == 0)
 
 url = 'https://download.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/_/mergedmetadata.ttl'
@@ -57,7 +57,7 @@ if os.path.isfile(fn):
 
 if stamp != last_modified_str:
     print("Delete graphs")
-    for graph in ["labels.ttl", "metadata.ttl", "countries.ttl" ""]:
+    for graph in ["labels.ttl", "metadata.ttl", "countries.ttl"]:
         cmd = ("curl --digest -u dba:%s --verbose --url http://127.0.0.1:8890/sparql-graph-crud-auth?graph=http://covid-19.genenetwork.org/graph/%s -X DELETE" % (pwd, graph))
         print(cmd)
         p = subprocess.Popen(cmd.split(" "))

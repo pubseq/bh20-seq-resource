@@ -14,7 +14,10 @@ from dateutil.parser import parse
 import xml.etree.ElementTree as ET
 import json
 import gzip
+
 import sys
+sys.path.append('../')
+from utils import is_integer, check_and_get_ontology_dictionaries
 
 dir_yaml = 'yaml'
 
@@ -27,14 +30,6 @@ path_sra_metadata_xml = 'SraExperimentPackage.{}.xml.gz'.format(date)
 
 dir_dict_ontology_standardization = args.dict_ontology
 path_sra_study_accessions_txt = 'SRAStudyAccessions.{}.txt'.format(date)
-
-
-def is_integer(string_to_check):
-    try:
-        int(string_to_check)
-        return True
-    except ValueError:
-        return False
 
 
 accession_to_ignore_set = set()
@@ -64,25 +59,7 @@ if args.ids_to_consider:
         print('There are {} accessions to consider.'.format(len(accession_to_consider_set)))
 
 
-term_to_uri_dict = {}
-
-for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_xxx_csv) for name_xxx_csv in os.listdir(dir_dict_ontology_standardization) if name_xxx_csv.endswith('.csv')]:
-    print('Read {}'.format(path_dict_xxx_csv))
-
-    with open(path_dict_xxx_csv) as f:
-        for line in f:
-            if len(line.split(',')) > 2:
-                term, uri = line.strip('\n').split('",')
-            else:
-                term, uri = line.strip('\n').split(',')
-
-            term = term.strip('"')
-
-            if term in term_to_uri_dict:
-                print('Warning: in the dictionaries there are more entries for the same term ({}).'.format(term))
-                continue
-
-            term_to_uri_dict[term] = uri
+field_to_term_to_uri_dict = check_and_get_ontology_dictionaries(dir_dict_ontology_standardization)
 
 
 if not os.path.exists(dir_yaml):
@@ -151,13 +128,13 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                 if VALUE_text.lower() in ['homo sapien', 'homosapiens']:
                     VALUE_text = 'Homo sapiens'
 
-                if VALUE_text in term_to_uri_dict:
-                    info_for_yaml_dict['host']['host_species'] = term_to_uri_dict[VALUE_text]
+                if VALUE_text in field_to_term_to_uri_dict['ncbi_host_species']:
+                    info_for_yaml_dict['host']['host_species'] = field_to_term_to_uri_dict['ncbi_host_species'][VALUE_text]
                 else:
                     missing_value_list.append('\t'.join([accession, 'host_species', VALUE_text]))
             elif TAG_text in ['host_health_status', 'host health state']:
-                if VALUE_text in term_to_uri_dict:
-                    info_for_yaml_dict['host']['host_health_status'] = term_to_uri_dict[VALUE_text]
+                if VALUE_text in field_to_term_to_uri_dict['ncbi_host_health_status']:
+                    info_for_yaml_dict['host']['host_health_status'] = field_to_term_to_uri_dict['ncbi_host_health_status'][VALUE_text]
                 elif VALUE_text.strip("'") not in ['missing', 'not collected', 'not provided']:
                     missing_value_list.append('\t'.join([accession, 'host_health_status', VALUE_text]))
             elif TAG_text in ['strain', 'isolate']:
@@ -167,27 +144,27 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                     if value_to_insert.lower() in ['homo sapien', 'homosapiens']:
                         value_to_insert = 'Homo sapiens'
 
-                    if value_to_insert in term_to_uri_dict:
-                        value_to_insert = term_to_uri_dict[value_to_insert]
+                    if value_to_insert in field_to_term_to_uri_dict['ncbi_host_species']:
+                        value_to_insert = field_to_term_to_uri_dict['ncbi_host_species'][value_to_insert]
 
                     if 'virus_strain' not in info_for_yaml_dict:
                         info_for_yaml_dict['virus']['virus_strain'] = value_to_insert
                     else:
                         info_for_yaml_dict['virus']['virus_strain'] += '; ' + value_to_insert
             elif TAG_text in ['isolation_source', 'isolation source host-associated']:
-                if VALUE_text in term_to_uri_dict:
-                    info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict[VALUE_text]]
+                if VALUE_text in field_to_term_to_uri_dict['ncbi_speciesman_source']:
+                    info_for_yaml_dict['sample']['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source'][VALUE_text]]
                 else:
                     if VALUE_text.lower() in ['np/op', 'np/op swab', 'np/np swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab', 'combined nasopharyngeal and oropharyngeal swab', 'naso and/or oropharyngeal swab']:
-                        info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal swab'], term_to_uri_dict['oropharyngeal swab']]
+                        info_for_yaml_dict['sample']['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasopharyngeal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['oropharyngeal swab']]
                     elif VALUE_text.lower() in ['nasopharyngeal swab/throat swab', 'nasopharyngeal/throat swab', 'nasopharyngeal swab and throat swab', 'nasal swab and throat swab', 'nasopharyngeal aspirate/throat swab', 'Nasopharyngeal/Throat']:
-                        info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal swab'], term_to_uri_dict['throat swab']]
+                        info_for_yaml_dict['sample']['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasopharyngeal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['throat swab']]
                     elif VALUE_text.lower() in ['nasopharyngeal aspirate & throat swab', 'nasopharyngeal aspirate and throat swab']:
-                        info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasopharyngeal aspirate'], term_to_uri_dict['throat swab']]
+                        info_for_yaml_dict['sample']['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasopharyngeal aspirate'], field_to_term_to_uri_dict['ncbi_speciesman_source']['throat swab']]
                     elif VALUE_text.lower() in ['nasal swab and throat swab']:
-                        info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasal swab'], term_to_uri_dict['throat swab']]
+                        info_for_yaml_dict['sample']['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['throat swab']]
                     elif VALUE_text.lower() in ['nasal-swab and oro-pharyngeal swab']:
-                        info_for_yaml_dict['sample']['specimen_source'] = [term_to_uri_dict['nasal swab'], term_to_uri_dict['oropharyngeal swab']]
+                        info_for_yaml_dict['sample']['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['oropharyngeal swab']]
                     elif VALUE_text.strip("'") not in ['missing', 'not collected', 'unknown', 'not provided', 'not applicable', 'N/A']:
                         missing_value_list.append('\t'.join([accession, 'specimen_source', VALUE_text]))
             elif TAG_text in ['host_sex', 'host sex']:
@@ -238,8 +215,8 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                 if ': ' in VALUE_text:
                     VALUE_text = VALUE_text.replace(': ', ':')
 
-                if VALUE_text in term_to_uri_dict:
-                    info_for_yaml_dict['sample']['collection_location'] = term_to_uri_dict[VALUE_text]
+                if VALUE_text in field_to_term_to_uri_dict['ncbi_countries']:
+                    info_for_yaml_dict['sample']['collection_location'] = field_to_term_to_uri_dict['ncbi_countries'][VALUE_text]
                 elif VALUE_text.lower() not in ['na', 'not applicable']:
                     missing_value_list.append('\t'.join([accession, 'geo_loc_name', VALUE_text]))
             #else:
@@ -255,8 +232,8 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     INSTRUMENT_MODEL = [x.text for x in EXPERIMENT.find('PLATFORM').iter('INSTRUMENT_MODEL')][0]
 
     if INSTRUMENT_MODEL.lower() != 'unspecified':
-        if INSTRUMENT_MODEL in term_to_uri_dict:
-            info_for_yaml_dict['technology']['sample_sequencing_technology'] = [term_to_uri_dict[INSTRUMENT_MODEL]]
+        if INSTRUMENT_MODEL in field_to_term_to_uri_dict['ncbi_sequencing_technology']:
+            info_for_yaml_dict['technology']['sample_sequencing_technology'] = [field_to_term_to_uri_dict['ncbi_sequencing_technology'][INSTRUMENT_MODEL]]
         else:
             missing_value_list.append('\t'.join([accession, 'sample_sequencing_technology', INSTRUMENT_MODEL]))
     #else:

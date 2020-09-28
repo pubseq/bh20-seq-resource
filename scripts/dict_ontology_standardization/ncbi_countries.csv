@@ -30,6 +30,7 @@ Australia:Victoria,http://www.wikidata.org/entity/Q36687
 Australia:Northern Territory,http://www.wikidata.org/entity/Q3235
 Australia:NSW,http://www.wikidata.org/entity/Q3224
 Australia:South Australia,http://www.wikidata.org/entity/Q35715
+Australia:Tasmania,http://www.wikidata.org/entity/Q34366
 Austria,http://www.wikidata.org/entity/Q40
 Azerbaijan,http://www.wikidata.org/entity/Q227
 Bahrain,http://www.wikidata.org/entity/Q398
@@ -88,6 +89,7 @@ China:HuaShang,http://www.wikidata.org/entity/Q148
 China:Hubei,http://www.wikidata.org/entity/Q46862
 "China:Hubei, Wuhan",http://www.wikidata.org/entity/Q11746
 China:Hunan,http://www.wikidata.org/entity/Q45761
+"China:Hunan,Huaihua",http://www.wikidata.org/entity/Q416922
 China:Inner Mongolia,http://www.wikidata.org/entity/Q41079
 China:Jiangsu,http://www.wikidata.org/entity/Q16963
 "China:Jiangsu, Changzhou",http://www.wikidata.org/entity/Q16963
@@ -126,6 +128,7 @@ Dominican Republic,http://www.wikidata.org/entity/Q786
 East Timor,http://www.wikidata.org/entity/Q574
 Ecuador,http://www.wikidata.org/entity/Q736
 Egypt,http://www.wikidata.org/entity/Q79
+Egypt:Cairo,http://www.wikidata.org/entity/Q85
 El Salvador,http://www.wikidata.org/entity/Q792
 Equatorial Guinea,http://www.wikidata.org/entity/Q983
 Eritrea,http://www.wikidata.org/entity/Q986
@@ -137,6 +140,7 @@ Federated States of Micronesia,http://www.wikidata.org/entity/Q702
 Fiji,http://www.wikidata.org/entity/Q712
 Finland,http://www.wikidata.org/entity/Q33
 France,http://www.wikidata.org/entity/Q142
+France:Charente-Maritime,http://www.wikidata.org/entity/Q3278
 Gabon,http://www.wikidata.org/entity/Q1000
 Georgia,http://www.wikidata.org/entity/Q230
 Germany,http://www.wikidata.org/entity/Q183
@@ -160,9 +164,17 @@ Hong Kong,http://www.wikidata.org/entity/Q8646
 Iceland,http://www.wikidata.org/entity/Q189
 Icelandic Commonwealth,http://www.wikidata.org/entity/Q62389
 India,http://www.wikidata.org/entity/Q668
+India:Adajan,http://www.wikidata.org/entity/Q2722074
 "India:Assam, Golaghat",http://www.wikidata.org/entity/Q1708160
 India:Kerala State,http://www.wikidata.org/entity/Q1186
 "India:Ahmedabad",http://www.wikidata.org/entity/Q1070
+India:Dhandhuka,http://www.wikidata.org/entity/Q1259584
+India:Khambhaliya,http://www.wikidata.org/entity/Q2120093
+India:Mehsana,http://www.wikidata.org/entity/Q1922283
+India:Patan,http://www.wikidata.org/entity/Q579702
+India:Siddhpur,http://www.wikidata.org/entity/Q2572203
+India:Uttar Pradesh,http://www.wikidata.org/entity/Q1498
+India:Telangana,http://www.wikidata.org/entity/Q677037
 "India:Gujarat, Ahmedabad",http://www.wikidata.org/entity/Q1070
 "India:Bardoli",http://www.wikidata.org/entity/Q712003
 "India:Gujarat, Bardoli",http://www.wikidata.org/entity/Q712003
@@ -264,11 +276,14 @@ Iraq,http://www.wikidata.org/entity/Q796
 Ireland,http://www.wikidata.org/entity/Q27
 Israel,http://www.wikidata.org/entity/Q801
 Italy,http://www.wikidata.org/entity/Q38
+Italy:Bologna,http://www.wikidata.org/entity/Q1891
 Italy:Cagliari,http://www.wikidata.org/entity/Q1897
 Italy:Lazio,http://www.wikidata.org/entity/Q1282
 Italy:Milan,http://www.wikidata.org/entity/Q490
+Italy:Lombardia, Milan,http://www.wikidata.org/entity/Q490
 Italy:Palermo,http://www.wikidata.org/entity/Q2656
 Italy:Rome,http://www.wikidata.org/entity/Q220
+Italy:Turin,http://www.wikidata.org/entity/Q495
 Ivory Coast,http://www.wikidata.org/entity/Q1008
 Jamaica,http://www.wikidata.org/entity/Q766
 Japan,http://www.wikidata.org/entity/Q17
@@ -301,6 +316,7 @@ Malawi,http://www.wikidata.org/entity/Q1020
 Malaysia,http://www.wikidata.org/entity/Q833
 Maldives,http://www.wikidata.org/entity/Q826
 Malaysia:Kuala Lumpur,http://www.wikidata.org/entity/Q1865
+"Malaysia:Crocker Range National Park, Sabah, Malaysia (Borneo)",http://www.wikidata.org/entity/Q1974550
 Mali,http://www.wikidata.org/entity/Q912
 Malta,http://www.wikidata.org/entity/Q233
 Marshall Islands,http://www.wikidata.org/entity/Q709
@@ -364,6 +380,17 @@ People's Republic of China,http://www.wikidata.org/entity/Q148
 Peru,http://www.wikidata.org/entity/Q419
 Peru:Lima,http://www.wikidata.org/entity/Q2868
 Philippines,http://www.wikidata.org/entity/Q928
+"Philippines:National Capital Region, Makati City",http://www.wikidata.org/entity/Q1508
+"Philippines:NCR, Makati City",http://www.wikidata.org/entity/Q1508
+"Philippines:NCR, Caloocan City",http://www.wikidata.org/entity/Q1478
+"Philippines:NCR, Cavite City",http://www.wikidata.org/entity/Q1482
+"Philippines:NCR, Pasay City",http://www.wikidata.org/entity/Q17189
+"Philippines:NCR, Quezon City",http://www.wikidata.org/entity/Q1475
+"Philippines:NCR, San Juan City",http://www.wikidata.org/entity/Q749283
+"Philippines:NCR, Taguig City",http://www.wikidata.org/entity/Q1643
+"Philippines:Region 3 (Bulacan), San Jose del Monte City",http://www.wikidata.org/entity/Q2193
+"Philippines:Region 4A (Laguna), Calamba City",http://www.wikidata.org/entity/Q75978
+"Philippines:Region 4A (Rizal), Rodriguez",http://www.wikidata.org/entity/Q106825
 Poland,http://www.wikidata.org/entity/Q36
 Portugal,http://www.wikidata.org/entity/Q45
 Principality of Turov and Pinsk,http://www.wikidata.org/entity/Q671362
@@ -458,6 +485,12 @@ USA:AL,http://www.wikidata.org/entity/Q173
 "USA:Avondale, LA",http://www.wikidata.org/entity/Q79449
 "USA:AVONDALE, LA",http://www.wikidata.org/entity/Q79449
 "USA:CA, Alameda",http://www.wikidata.org/entity/Q490744
+"USA:CA, Humboldt County",http://www.wikidata.org/entity/Q109651
+"USA:CA, Marin County",http://www.wikidata.org/entity/Q108117
+"USA:CA, Orange County",http://www.wikidata.org/entity/Q5925
+"USA:CA, San Francisco County",http://www.wikidata.org/entity/Q13188841
+"USA:CA, Santa Clara County",http://www.wikidata.org/entity/Q110739
+"USA:CA, Sonoma County",http://www.wikidata.org/entity/Q108067
 "USA:California, Los Angeles county",http://www.wikidata.org/entity/Q104994
 "USA:California,Los Angeles County",http://www.wikidata.org/entity/Q104994
 "USA:California, San Diego county",http://www.wikidata.org/entity/Q108143
@@ -493,6 +526,7 @@ USA:AL,http://www.wikidata.org/entity/Q173
 "USA:LOCKPORT, LA",http://www.wikidata.org/entity/Q2194112
 "USA:Maringouin, LA",http://www.wikidata.org/entity/Q2673176
 "USA:MARINGOUIN, LA",http://www.wikidata.org/entity/Q2673176
+"USA:Maryland",http://www.wikidata.org/entity/Q1391
 "USA:Marrero, LA",http://www.wikidata.org/entity/Q1902531
 "USA:MARRERO, LA",http://www.wikidata.org/entity/Q1902531
 "USA:Massachusetts, Middlesex county",http://www.wikidata.org/entity/Q54073
@@ -506,10 +540,12 @@ USA:New Hampshire,http://www.wikidata.org/entity/Q759
 "USA:New Jersey, Bergen county",http://www.wikidata.org/entity/Q112915
 "USA:New Jersey, Burlington county",http://www.wikidata.org/entity/Q138141
 "USA:New Jersey, Essex county",http://www.wikidata.org/entity/Q128077
+"USA:Pennsylvania, Philadelphia county",http://www.wikidata.org/entity/Q496900
 "USA:Raceland, LA",http://www.wikidata.org/entity/Q2154341
 "USA:RACELAND, LA",http://www.wikidata.org/entity/Q2154341
 "USA:Saint Rose, LA",http://www.wikidata.org/entity/Q7402139
 "USA:SAINT ROSE, LA",http://www.wikidata.org/entity/Q7402139
+"USA:SC, HORRY",http://www.wikidata.org/entity/Q502288
 "USA:Slidell LA",http://www.wikidata.org/entity/Q988156
 "USA:SLIDELL LA",http://www.wikidata.org/entity/Q988156
 "USA:Snohomish County,WA",http://www.wikidata.org/entity/Q110403

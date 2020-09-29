@@ -3,6 +3,12 @@ import pandas as pd
 from string import Template
 from dateutil.parser import parse
 
+import sys
+
+sys.path.append('../')
+from utils import check_and_get_ontology_dictionaries
+
+# Metadata in tabular format
 path_metadata_xlsx = 'Pathogen.cl.1.0.xlsx'
 
 path_template_yaml = 'template.yaml'
@@ -13,34 +19,16 @@ path_template_yaml = 'template.yaml'
 #    attribution_name: "ESR"
 #    attribution_url: "https://www.esr.cri.nz/"
 
+
+# Read the dictionaries for the ontology
 dir_dict_ontology_standardization = '../dict_ontology_standardization/'
+field_to_term_to_uri_dict = check_and_get_ontology_dictionaries(dir_dict_ontology_standardization)
 
 dir_output = 'yaml'
 suffix = '.consensus'
 
 if not os.path.exists(dir_output):
     os.makedirs(dir_output)
-
-term_to_uri_dict = {}
-
-for path_dict_xxx_csv in [os.path.join(dir_dict_ontology_standardization, name_xxx_csv) for name_xxx_csv in
-                          os.listdir(dir_dict_ontology_standardization) if name_xxx_csv.endswith('.csv')]:
-    print('Read {}'.format(path_dict_xxx_csv))
-
-    with open(path_dict_xxx_csv) as f:
-        for line in f:
-            if len(line.split(',')) > 2:
-                term, uri = line.strip('\n').split('",')
-            else:
-                term, uri = line.strip('\n').split(',')
-
-            term = term.strip('"')
-
-            if term in term_to_uri_dict:
-                print('Warning: in the dictionaries there are more entries for the same term ({}).'.format(term))
-                continue
-
-            term_to_uri_dict[term] = uri
 
 metadata_df = pd.read_excel(path_metadata_xlsx, skiprows=12)
 
@@ -49,8 +37,8 @@ for index, row in metadata_df.iterrows():
     # print(row['*sample_name'])
 
     geo_loc_name = row['*geo_loc_name'].replace(': ', ':')
-    country = ''
-    if not geo_loc_name in term_to_uri_dict:
+
+    if geo_loc_name not in field_to_term_to_uri_dict['ncbi_countries']:
         if geo_loc_name in [
             'New Zealand:Counties Manukau', 'New Zealand:Capital and Coast', 'New Zealand:Southern',
             'New Zealand:Waikato',
@@ -63,14 +51,14 @@ for index, row in metadata_df.iterrows():
             print(geo_loc_name)
             break
 
-    country = term_to_uri_dict[geo_loc_name]
+    country = field_to_term_to_uri_dict['ncbi_countries'][geo_loc_name]
 
     d = {
-        'host_species': term_to_uri_dict[row['*host']],
+        'host_species': field_to_term_to_uri_dict['ncbi_host_species'][row['*host']],
         'sample_id': row['*sample_name'],
         'collection_date': parse(row['*collection_date']).strftime('%Y-%m-%d'),
         'collection_location': country,
-        'specimen_source': term_to_uri_dict[row['*isolation_source']],
+        'specimen_source': field_to_term_to_uri_dict['ncbi_speciesman_source'][row['*isolation_source']],
         'virus_species': 'http://purl.obolibrary.org/obo/NCBITaxon_2697049',
 
         'submitter_sample_id': row['bioproject_accession'],

@@ -21,6 +21,7 @@
  - [[#bulk-sequence-uploader][Bulk sequence uploader]]
    - [[#run-the-uploader-cli][Run the uploader (CLI)]]
    - [[#example-uploading-bulk-genbank-sequences][Example: uploading bulk GenBank sequences]]
+   - [[#example-preparing-metadata][Example: preparing metadata]]
 
 * Uploading Data
 
@@ -232,6 +233,7 @@ Guix package manager).
 The web interface using this exact same script so it should just work
 (TM).
 
+
 ** Example: uploading bulk GenBank sequences
 
 We also use above script to bulk upload GenBank sequences with a [[https://github.com/arvados/bh20-seq-resource/blob/master/scripts/download_genbank_data/from_genbank_to_fasta_and_yaml.py][FASTA
@@ -250,3 +252,17 @@ ls $dir_fasta_and_yaml/*.yaml | while read path_code_yaml; do
    bh20-seq-uploader --skip-qc $path_code_yaml $path_code_fasta
 done
 #+END_SRC
+
+
+** Example: preparing metadata
+
+Usually, metadata are available in tabular format, like spreadsheets. As an example, we provide a script
+[[https://github.com/arvados/bh20-seq-resource/tree/master/scripts/esr_samples][esr_samples.py]] to show you how to parse
+your metadata in YAML files ready for the upload. To execute the script, go in the ~bh20-seq-resource/scripts/esr_samples
+and execute
+
+#+BEGIN_SRC sh
+python3 esr_samples.py
+#+END_SRC
+
+You will find the YAML files in the `yaml` folder which will be created in the same directory.

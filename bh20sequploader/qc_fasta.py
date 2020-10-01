@@ -82,12 +82,15 @@ def qc_fasta(arg_sequence, check_with_mimimap2=True):
                         logging.warn("QC against reference sequence using 'minimap2': %s", e, exc_info=e)
 
                     if similarity < 70.0:
-                        raise ValueError("QC fail: alignment to reference was less than 70%% (was %2.2f%%)" % (similarity))
+                        raise ValueError(
+                            "QC fail for {}: alignment to reference was less than 70%% (was %2.2f%%)".format(
+                                seqlabel, similarity
+                            ))
 
-        return ("sequence.fasta"+gz, seqlabel, seq_type)
+        return "sequence.fasta" + gz, seqlabel, seq_type
     elif seq_type == "text/fastq":
         sequence.seek(0)
         sequence.detach()
-        return ("reads.fastq"+gz, seqlabel, seq_type)
+        return "reads.fastq" + gz, seqlabel, seq_type
     else:
-        raise ValueError("Sequence file does not look like a DNA FASTA or FASTQ")
+        raise ValueError("Sequence file ({}) does not look like a DNA FASTA or FASTQ".format(arg_sequence))

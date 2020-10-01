@@ -66,7 +66,7 @@ def qc_fasta(arg_sequence, check_with_mimimap2=True):
 
                     similarity = 0
                     try:
-                        cmd = ["minimap2", "-c", tmp1.name, tmp2.name]
+                        cmd = ["minimap2", "-c -x asm20", tmp1.name, tmp2.name]
                         logging.info("QC checking similarity to reference")
                         logging.info(" ".join(cmd))
                         result = subprocess.run(cmd, stdout=subprocess.PIPE)

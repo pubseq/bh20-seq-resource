@@ -1,0 +1,5 @@
+version: 1.2
+workflows:
+   - name: Pangenome Generator
+     subclass: CWL
+     primaryDescriptorPath:  /workflows/pangenome-generate/pangenome-generate.cwl

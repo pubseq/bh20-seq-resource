@@ -462,11 +462,16 @@ div.status {
   // margin-top: -40px;
   opacity: 0.5;
   border-radius: 30px;
-  // border: 2px solid #3F51B5;
+  border: 2px solid #3F51B5;
   text-align: center;
   color: black;
   background-color: lightgreen;
-  font-size: 20px;
+  font-weight: bold;
+  font-size: 18px;
+  // left: 0;
+  // right: 0;
+  // margin: -15px 0 0 -45px;
+  // padding: 15px 6px;
 }
 
 .my-custom-icon.my-custom-icon-0 {

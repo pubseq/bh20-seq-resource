@@ -469,7 +469,11 @@ div.status {
   font-size: 20px;
 }
 
+.my-custom-icon.my-custom-icon-0 {
+  background-color: red;
+}
 .my-custom-icon.my-custom-icon-1 {
+  background-color: orange;
 }
 .my-custom-icon.my-custom-icon-2 {
   background-color: #FFFAF0;

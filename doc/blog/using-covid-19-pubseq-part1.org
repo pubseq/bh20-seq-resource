@@ -62,7 +62,7 @@ initiative!
 
 * Fetch sequence data
 
-The latest run of the pipeline can be viewed [[https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca][here]]. Each of these
+The latest run of the pipeline can be viewed [[http://covid19.genenetwork.org/status][here]]. Each of these
 generated files can just be downloaded for your own use and sharing!
 Data is published under a [[https://creativecommons.org/licenses/by/4.0/][Creative Commons 4.0 attribution license]]
 (CC-BY-4.0). This means that, unlike some other 'public' resources,
@@ -241,16 +241,36 @@ select distinct ?sample ?p ?o
 }
 #+end_src
 
-Run [[http://sparql.genenetwork.org/sparql/?default-graph-uri=&query=%0D%0APREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0APREFIX+sio%3A+%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2F%3E%0D%0Aselect+distinct+%3Fsample+%3Fp+%3Fo%0D%0A%7B%0D%0A+++%3Fsample+sio%3ASIO_000115+%22MT326090.1%22+.%0D%0A+++%3Fsample+%3Fp+%3Fo+.%0D%0A%7D&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+][query]].
+Run this [[http://sparql.genenetwork.org/sparql/?default-graph-uri=&query=%0D%0APREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0APREFIX+sio%3A+%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2F%3E%0D%0Aselect+distinct+%3Fsample+%3Fp+%3Fo%0D%0A%7B%0D%0A+++%3Fsample+sio%3ASIO_000115+%22MT326090.1%22+.%0D%0A+++%3Fsample+%3Fp+%3Fo+.%0D%0A%7D&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+][query]].
 
 This query tells us the sample was submitted "2020-03-21" and
 originates from http://www.wikidata.org/entity/Q30, i.e., the USA and
 is a biospecimen collected from the back of the throat by swabbing.
-We can track it back to the original GenBank [[http://identifiers.org/insdc/MT326090.1#sequence][submission]] using the
-http://identifiers.org/insdc/MT326090.1 link.
+We have also added country and label data to make it a bit easier to
+view/query the database and place the sequence on the [[http://covid19.genenetwork.org/][map]].  We use
+wikidata entities for disambiguation. By using 'Q30' for the USA we
+don't have to figure out the different ways people spell the name. To
+get from the wikidata entity to a human readable form we provide a
+country name [[https://github.com/arvados/bh20-seq-resource/blob/72369b2e2e3cd881be2bd648a61e1449ffe34875/semantic_enrichment/countries.ttl#L306][translation]] for convenience. For example when the
+predicate is http://purl.obolibrary.org/obo/GAZ_00000448 we can do
 
-We have also added country and label data to make it a bit easier
-to view/query the database and place the sequence on the [[http://covid19.genenetwork.org/][map]].
+#+begin_src sql
+PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+PREFIX sio: <http://semanticscience.org/resource/>
+select distinct ?sample ?geoname
+{
+   ?sample sio:SIO_000115 "MT326090.1" .
+   ?sample <http://purl.obolibrary.org/obo/GAZ_00000448> ?geo .
+   ?geo rdfs:label ?geoname .
+}
+#+end_src
+
+Which will show the geoname spelled out as 'United States'.
+
+For this sample we can also track it back to the original GenBank
+[[http://identifiers.org/insdc/MT326090.1#sequence][submission]] using the listed http://identifiers.org/insdc/MT326090.1
+link.
+
 
 * Fetch all sequences from Washington state
 
@@ -258,14 +278,31 @@ Now we know how to get at the origin we can do it the other way round
 and fetch all sequences referring to Washington state
 
 #+begin_src sql
-select ?seq ?sample
+select ?date ?name ?identifier ?seq
 {
     ?seq <http://biohackathon.org/bh20-seq-schema#MainSchema/sample> ?sample .
-    ?sample <http://purl.obolibrary.org/obo/GAZ_00000448> <http://www.wikidata.org/entity/Q1223>
-}
+
+    ?sample <http://purl.obolibrary.org/obo/GAZ_00000448> <http://www.wikidata.org/entity/Q1223> .
+    ?sample <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164> ?date .
+    ?sample <http://semanticscience.org/resource/SIO_000115> ?name .
+    ?sample <http://edamontology.org/data_2091> ?identifier .
+} order by ?date
 #+end_src
 
-which lists 300 sequences originating from Washington state! Which in
+Run [[http://sparql.genenetwork.org/sparql/?default-graph-uri=&query=select+%3Fdate+%3Fname+%3Fidentifier+%3Fseq%0D%0A%7B%0D%0A++++%3Fseq+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2Fsample%3E+%3Fsample+.%0D%0A%0D%0A++++%3Fsample+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FGAZ_00000448%3E+%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ1223%3E+.%0D%0A++++%3Fsample+%3Chttp%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23C25164%3E+%3Fdate+.%0D%0A++++%3Fsample+%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2FSIO_000115%3E+%3Fname+.%0D%0A++++%3Fsample+%3Chttp%3A%2F%2Fedamontology.org%2Fdata_2091%3E+%3Fidentifier+.%0D%0A%7D+order+by+%3Fdate&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+][query]]
+
+Which shows the date and links to NCBI and raw sequence data in FASTA format,
+e.g.
+
+#+begin_example
+"date"  "name"  "identifier"  "seq"
+"2020-01-15"  "MT252760.1"  "http://identifiers.org/insdc/MT252760.1#sequence"  "http://collections.lugli.arvadosapi.com/c=0164784cba5e3e39b7ba8d83fdc92649+126/sequence.fasta"
+"2020-01-15"  "MT252720.1"  "http://identifiers.org/insdc/MT252720.1#sequence"  "http://collections.lugli.arvadosapi.com/c=0387a3e47dd8a0c9ea0a4a21931f6308+126/sequence.fasta"
+(...)
+#+end_example
+
+
+The query lists 300 sequences originating from Washington state! Which in
 April was almost half of the set coming out of GenBank.
 
 Likewise to list all sequences from Turkey we can find the wikidata

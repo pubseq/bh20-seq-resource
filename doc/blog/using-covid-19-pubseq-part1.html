@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-26 Wed 05:02 -->
+<!-- 2020-10-26 Mon 05:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq - query metadata (part 1)</title>
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="Blog stylesheet" type="text/css" href="blog.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -248,20 +224,20 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga5382ca">1. What does this mean?</a></li>
-<li><a href="#orgf6c7763">2. Fetch sequence data</a></li>
-<li><a href="#org228a8d5">3. Predicates</a></li>
-<li><a href="#orgfb34172">4. Fetch submitter info and other metadata</a></li>
-<li><a href="#org16f6b8d">5. Fetch all sequences from Washington state</a></li>
-<li><a href="#org2a85986">6. Discussion</a></li>
-<li><a href="#orgcf3645c">7. Acknowledgements</a></li>
+<li><a href="#org8d34f90">1. What does this mean?</a></li>
+<li><a href="#orgc40ff7e">2. Fetch sequence data</a></li>
+<li><a href="#orgc6519bc">3. Predicates</a></li>
+<li><a href="#orgbb4bffc">4. Fetch submitter info and other metadata</a></li>
+<li><a href="#orgae8b515">5. Fetch all sequences from Washington state</a></li>
+<li><a href="#org74c9c22">6. Discussion</a></li>
+<li><a href="#org26808ce">7. Acknowledgements</a></li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-orga5382ca" class="outline-2">
-<h2 id="orga5382ca"><span class="section-number-2">1</span> What does this mean?</h2>
+<div id="outline-container-org8d34f90" class="outline-2">
+<h2 id="org8d34f90"><span class="section-number-2">1</span> What does this mean?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This means that when someone uploads a SARS-CoV-2 sequence using one
@@ -313,11 +289,11 @@ initiative!
 </div>
 </div>
 
-<div id="outline-container-orgf6c7763" class="outline-2">
-<h2 id="orgf6c7763"><span class="section-number-2">2</span> Fetch sequence data</h2>
+<div id="outline-container-orgc40ff7e" class="outline-2">
+<h2 id="orgc40ff7e"><span class="section-number-2">2</span> Fetch sequence data</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-The latest run of the pipeline can be viewed <a href="https://workbench.lugli.arvadosapi.com/collections/lugli-4zz18-z513nlpqm03hpca">here</a>. Each of these
+The latest run of the pipeline can be viewed <a href="http://covid19.genenetwork.org/status">here</a>. Each of these
 generated files can just be downloaded for your own use and sharing!
 Data is published under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons 4.0 attribution license</a>
 (CC-BY-4.0). This means that, unlike some other 'public' resources,
@@ -338,8 +314,8 @@ these identifiers throughout.
 </div>
 </div>
 
-<div id="outline-container-org228a8d5" class="outline-2">
-<h2 id="org228a8d5"><span class="section-number-2">3</span> Predicates</h2>
+<div id="outline-container-orgc6519bc" class="outline-2">
+<h2 id="orgc6519bc"><span class="section-number-2">3</span> Predicates</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 To explore an RDF dataset, the first query we can do is open and gets
@@ -452,8 +428,8 @@ Run this <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=&amp;q
 </div>
 </div>
 
-<div id="outline-container-orgfb34172" class="outline-2">
-<h2 id="orgfb34172"><span class="section-number-2">4</span> Fetch submitter info and other metadata</h2>
+<div id="outline-container-orgbb4bffc" class="outline-2">
+<h2 id="orgbb4bffc"><span class="section-number-2">4</span> Fetch submitter info and other metadata</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 To get datasets with submitters we can do the above
@@ -558,26 +534,94 @@ PREFIX sio: &lt;http://semanticscience.org/resource/"> sio: &lt;http://semantics
 </div>
 
 <p>
-Run <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=&amp;query=%0D%0APREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0APREFIX+sio%3A+%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2F%3E%0D%0Aselect+distinct+%3Fsample+%3Fp+%3Fo%0D%0A%7B%0D%0A+++%3Fsample+sio%3ASIO_000115+%22MT326090.1%22+.%0D%0A+++%3Fsample+%3Fp+%3Fo+.%0D%0A%7D&amp;format=text%2Fhtml&amp;timeout=0&amp;debug=on&amp;run=+Run+Query+">query</a>.
+Run this <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=&amp;query=%0D%0APREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0APREFIX+sio%3A+%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2F%3E%0D%0Aselect+distinct+%3Fsample+%3Fp+%3Fo%0D%0A%7B%0D%0A+++%3Fsample+sio%3ASIO_000115+%22MT326090.1%22+.%0D%0A+++%3Fsample+%3Fp+%3Fo+.%0D%0A%7D&amp;format=text%2Fhtml&amp;timeout=0&amp;debug=on&amp;run=+Run+Query+">query</a>.
 </p>
 
 <p>
 This query tells us the sample was submitted "2020-03-21" and
 originates from <a href="http://www.wikidata.org/entity/Q30">http://www.wikidata.org/entity/Q30</a>, i.e., the USA and
 is a biospecimen collected from the back of the throat by swabbing.
-We can track it back to the original GenBank <a href="http://identifiers.org/insdc/MT326090.1#sequence">submission</a> using the
-<a href="http://identifiers.org/insdc/MT326090.1">http://identifiers.org/insdc/MT326090.1</a> link.
+We have also added country and label data to make it a bit easier to
+view/query the database and place the sequence on the <a href="http://covid19.genenetwork.org/">map</a>.  We use
+wikidata entities for disambiguation. By using 'Q30' for the USA we
+don't have to figure out the different ways people spell the name. To
+get from the wikidata entity to a human readable form we provide a
+country name <a href="https://github.com/arvados/bh20-seq-resource/blob/72369b2e2e3cd881be2bd648a61e1449ffe34875/semantic_enrichment/countries.ttl#L306">translation</a> for convenience. For example when the
+predicate is <a href="http://purl.obolibrary.org/obo/GAZ_00000448">http://purl.obolibrary.org/obo/GAZ_00000448</a> we can do
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">PREFIX</span> pubseq: <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/&gt;
+select distinct ?sample ?geoname
+{
+   ?sample sio:SIO_000115 &quot;MT326090.1&quot; .
+   ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/&gt;
+select distinct ?sample ?geoname
+{
+   ?sample sio:SIO_000115 &quot;MT326090.1&quot; .
+   ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/&gt;
+select distinct ?sample ?geoname
+{
+   ?sample sio:SIO_000115 &quot;MT326090.1&quot; .
+   ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448">#MainSchema/&gt;
+</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/&gt;
+select distinct ?sample ?geoname
+{
+   ?sample sio:SIO_000115 &quot;MT326090.1&quot; .
+   ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448">PREFIX</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/&gt;
+select distinct ?sample ?geoname
+{
+   ?sample sio:SIO_000115 &quot;MT326090.1&quot; .
+   ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448"> sio: &lt;http://semanticscience.org/resource/&gt;
+</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/&gt;
+select distinct ?sample ?geoname
+{
+   ?sample sio:SIO_000115 &quot;MT326090.1&quot; .
+   ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448">select</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/&gt;
+select distinct ?sample ?geoname
+{
+   ?sample sio:SIO_000115 &quot;MT326090.1&quot; .
+   ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448"> </a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/&gt;
+select distinct ?sample ?geoname
+{
+   ?sample sio:SIO_000115 &quot;MT326090.1&quot; .
+   ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448">distinct</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/&gt;
+PREFIX sio: &lt;http://semanticscience.org/resource/&gt;
+select distinct ?sample ?geoname
+{
+   ?sample sio:SIO_000115 &quot;MT326090.1&quot; .
+   ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448"> ?sample ?geoname
+{
+   ?sample sio:SIO_000115 "MT326090.1" .
+   ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt;</a> ?geo .
+   ?geo rdfs:label ?geoname .
+}
+</pre>
+</div>
+
+<p>
+Which will show the geoname spelled out as 'United States'.
 </p>
 
 <p>
-We have also added country and label data to make it a bit easier
-to view/query the database and place the sequence on the <a href="http://covid19.genenetwork.org/">map</a>.
+For this sample we can also track it back to the original GenBank
+<a href="http://identifiers.org/insdc/MT326090.1#sequence">submission</a> using the listed <a href="http://identifiers.org/insdc/MT326090.1">http://identifiers.org/insdc/MT326090.1</a>
+link.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org16f6b8d" class="outline-2">
-<h2 id="org16f6b8d"><span class="section-number-2">5</span> Fetch all sequences from Washington state</h2>
+
+<div id="outline-container-orgae8b515" class="outline-2">
+<h2 id="orgae8b515"><span class="section-number-2">5</span> Fetch all sequences from Washington state</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Now we know how to get at the origin we can do it the other way round
@@ -585,19 +629,72 @@ and fetch all sequences referring to Washington state
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sql"><span style="color: #fff59d;">select</span> ?seq ?sample
+<pre class="src src-sql"><span style="color: #fff59d;">select</span> ?<span style="color: #84ffff;">date</span> ?<span style="color: #fff59d;">name</span> ?identifier ?seq
 {
     ?seq <a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
-    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
-    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
-    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223">#MainSchema/sample&gt; ?sample .
-    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223&gt;</a>
-}
+
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223&gt; .
+    ?sample &lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164&gt; ?date .
+    ?sample &lt;http://semanticscience.org/resource/SIO_000115&gt; ?name .
+    ?sample &lt;http://edamontology.org/data_2091">&lt;http://biohackathon.org/bh20-seq-</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
+
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223&gt; .
+    ?sample &lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164&gt; ?date .
+    ?sample &lt;http://semanticscience.org/resource/SIO_000115&gt; ?name .
+    ?sample &lt;http://edamontology.org/data_2091">schema</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
+
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223&gt; .
+    ?sample &lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164&gt; ?date .
+    ?sample &lt;http://semanticscience.org/resource/SIO_000115&gt; ?name .
+    ?sample &lt;http://edamontology.org/data_2091">#MainSchema/sample&gt; ?sample .
+
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223&gt; .
+    ?sample &lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164&gt; ?</a><span style="color: #84ffff;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
+
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223&gt; .
+    ?sample &lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164&gt; ?date .
+    ?sample &lt;http://semanticscience.org/resource/SIO_000115&gt; ?name .
+    ?sample &lt;http://edamontology.org/data_2091">date</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
+
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223&gt; .
+    ?sample &lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164&gt; ?date .
+    ?sample &lt;http://semanticscience.org/resource/SIO_000115&gt; ?name .
+    ?sample &lt;http://edamontology.org/data_2091"> .
+    ?sample &lt;http://semanticscience.org/resource/SIO_000115&gt; ?</a><span style="color: #fff59d;"><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
+
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223&gt; .
+    ?sample &lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164&gt; ?date .
+    ?sample &lt;http://semanticscience.org/resource/SIO_000115&gt; ?name .
+    ?sample &lt;http://edamontology.org/data_2091">name</a></span><a href="http://biohackathon.org/bh20-seq-schema#MainSchema/sample&gt; ?sample .
+
+    ?sample &lt;http://purl.obolibrary.org/obo/GAZ_00000448&gt; &lt;http://www.wikidata.org/entity/Q1223&gt; .
+    ?sample &lt;http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164&gt; ?date .
+    ?sample &lt;http://semanticscience.org/resource/SIO_000115&gt; ?name .
+    ?sample &lt;http://edamontology.org/data_2091"> .
+    ?sample &lt;http://edamontology.org/data_2091&gt;</a> ?identifier .
+} <span style="color: #fff59d;">order</span> <span style="color: #fff59d;">by</span> ?<span style="color: #84ffff;">date</span>
 </pre>
 </div>
 
 <p>
-which lists 300 sequences originating from Washington state! Which in
+Run <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=&amp;query=select+%3Fdate+%3Fname+%3Fidentifier+%3Fseq%0D%0A%7B%0D%0A++++%3Fseq+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2Fsample%3E+%3Fsample+.%0D%0A%0D%0A++++%3Fsample+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FGAZ_00000448%3E+%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ1223%3E+.%0D%0A++++%3Fsample+%3Chttp%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23C25164%3E+%3Fdate+.%0D%0A++++%3Fsample+%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2FSIO_000115%3E+%3Fname+.%0D%0A++++%3Fsample+%3Chttp%3A%2F%2Fedamontology.org%2Fdata_2091%3E+%3Fidentifier+.%0D%0A%7D+order+by+%3Fdate&amp;format=text%2Fhtml&amp;timeout=0&amp;debug=on&amp;run=+Run+Query+">query</a>
+</p>
+
+<p>
+Which shows the date and links to NCBI and raw sequence data in FASTA format,
+e.g.
+</p>
+
+<pre class="example" id="orgbdf21bd">
+"date"  "name"  "identifier"  "seq"
+"2020-01-15"  "MT252760.1"  "http://identifiers.org/insdc/MT252760.1#sequence"  "http://collections.lugli.arvadosapi.com/c=0164784cba5e3e39b7ba8d83fdc92649+126/sequence.fasta"
+"2020-01-15"  "MT252720.1"  "http://identifiers.org/insdc/MT252720.1#sequence"  "http://collections.lugli.arvadosapi.com/c=0387a3e47dd8a0c9ea0a4a21931f6308+126/sequence.fasta"
+(...)
+</pre>
+
+
+<p>
+The query lists 300 sequences originating from Washington state! Which in
 April was almost half of the set coming out of GenBank.
 </p>
 
@@ -624,8 +721,8 @@ Run <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=&amp;query=
 </div>
 </div>
 
-<div id="outline-container-org2a85986" class="outline-2">
-<h2 id="org2a85986"><span class="section-number-2">6</span> Discussion</h2>
+<div id="outline-container-org74c9c22" class="outline-2">
+<h2 id="org74c9c22"><span class="section-number-2">6</span> Discussion</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 The public sequence uploader collects sequences, raw data and
@@ -636,8 +733,8 @@ referenced in publications and origins are citeable.
 </div>
 </div>
 
-<div id="outline-container-orgcf3645c" class="outline-2">
-<h2 id="orgcf3645c"><span class="section-number-2">7</span> Acknowledgements</h2>
+<div id="outline-container-org26808ce" class="outline-2">
+<h2 id="org26808ce"><span class="section-number-2">7</span> Acknowledgements</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 The overall effort was due to magnificent freely donated input by a
@@ -652,7 +749,7 @@ Garrison this initiative would not have existed!
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-08-26 Wed 05:02</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-10-26 Mon 05:21</small>.
 </div>
 </body>
 </html>

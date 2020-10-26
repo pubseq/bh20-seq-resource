@@ -1,0 +1,41 @@
+id: placeholder
+
+license:
+    license_type: http://creativecommons.org/licenses/by/4.0/
+    title: "SARS-CoV-2 New Zealand"
+    attribution_name: "ESR"
+    attribution_url: https://www.esr.cri.nz/
+
+host:
+    host_species: http://purl.obolibrary.org/obo/NCBITaxon_9606
+    additional_host_information: Optional free text field for additional information
+
+sample:
+    sample_id: "20VR0174"
+    collection_date: "2020-02-26"
+    collection_location: https://www.wikidata.org/wiki/Q37100
+    specimen_source: [http://purl.obolibrary.org/obo/NCIT_C155831]
+    source_database_accession: [http://identifiers.org/insdc/LC522350.1#sequence] ??
+    additional_collection_information: Optional free text field for additional information
+
+virus:
+    virus_species: http://purl.obolibrary.org/obo/NCBITaxon_2697049
+    virus_strain: SARS-CoV-2/human/CHN/HS_8/2020
+
+technology:
+    sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0008632] // Nanopore MinION
+    sequence_assembly_method: https://github.com/ESR-NZ/NZ_SARS-CoV-2_genomics
+    additional_technology_information: "Artic V3 workflow"
+
+submitter:
+    authors: [Jemma L Geoghegan, Xiaoyun Ren, Matthew Storey, James Hadfield, Lauren Jelley, Sarah Jefferies, Jill Sherwood, Shevaun Paine, Sue Huang, Jordan Douglas, Fabio K Mendes, Andrew Sporle, Michael G Baker, David R Murdoch, Nigel French, Colin R Simpson, David Welch, Alexei J Drummond, Edward C Holmes, Sebastian Duchene, Joep de Ligt]
+    submitter_name: [Joep de Ligt]
+    submitter_address: "PO Box 50348,  Porirua 5240, New Zealand"
+    originating_lab: ESR
+    provider_sample_id: "20VR0174"
+    submitter_sample_id: "PRJNA648792"
+    submitted_to: https://www.ncbi.nlm.nih.gov/biosample
+    publication: https://doi.org/10.1101/2020.08.05.20168930
+    public_date: "2020-08-20"
+    submitter_orcid: [https://orcid.org/0000-0003-0970-0153]
+    additional_submitter_information: Optional free text field for additional information

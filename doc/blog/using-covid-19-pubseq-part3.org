@@ -228,7 +228,25 @@ command line
 : python3 bh20sequploader/main.py example/sequence.fasta example/maximum_metadata_example.yaml
 
 after installing dependencies (also described in [[https://github.com/arvados/bh20-seq-resource/blob/master/doc/INSTALL.md][INSTALL]] with the GNU
-Guix package manager).
+Guix package manager). The ~--help~ shows
+
+#+begin_src sh
+Entering sequence uploader
+usage: main.py [-h] [--validate] [--skip-qc] [--trusted] metadata sequence_p1 [sequence_p2]
+
+Upload SARS-CoV-19 sequences for analysis
+
+positional arguments:
+  metadata     sequence metadata json
+  sequence_p1  sequence FASTA/FASTQ
+  sequence_p2  sequence FASTQ pair
+
+optional arguments:
+  -h, --help   show this help message and exit
+  --validate   Dry run, validate only
+  --skip-qc    Skip local qc check
+  --trusted    Trust local validation and add directly to validated project
+#+end_src
 
 The web interface using this exact same script so it should just work
 (TM).

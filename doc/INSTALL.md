@@ -38,7 +38,11 @@ Note that python-pyshex is packaged in
 http://git.genenetwork.org/guix-bioinformatics/guix-bioinformatics
 
 so you'll need it to the GUIX_PACKAGE_PATH - see the README in that
-repository.
+repository. E.g.
+
+```sh
+env GUIX_PACKAGE_PATH=~/iwrk/opensource/guix/guix-bioinformatics/ ~/opt/guix/bin/guix environment -C guix --ad-hoc git python python-flask python-pyyaml python-pycurl python-magic  nss-certs python-pyshex python-pyyaml --network openssl python-pyshex python-pyshexc minimap2 python-schema-salad python-arvados-python-client --share=/export/tmp -- env TMPDIR=/export/tmp python3 bh20sequploader/main.py --help
+```
 
 ### Using the Web Uploader
 

@@ -1,3 +1,11 @@
+# This script is the CLI uploader for http://covid19.genenetwork.org/
+#
+# To upload a sequence with its metadata:
+#
+#   python3 bh20sequploader/main.py example/sequence.fasta example/maximum_metadata_example.yaml
+#
+# Usage: described in http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq-part3
+
 import argparse
 import time
 import arvados
@@ -18,6 +26,7 @@ logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__ )
 log.debug("Entering sequence uploader")
 
+# ---- Tokens for uploading data to Arvados
 ARVADOS_API_HOST='lugli.arvadosapi.com'
 UPLOADER_API_TOKEN='2fbebpmbo3rw3x05ueu2i6nx70zhrsb1p22ycu3ry34m4x4462'
 ANONYMOUS_API_TOKEN='5o42qdxpxp5cj15jqjf7vnxx5xduhm4ret703suuoa3ivfglfh'
@@ -25,6 +34,10 @@ UPLOAD_PROJECT='lugli-j7d0g-n5clictpuvwk8aa'
 VALIDATED_PROJECT='lugli-j7d0g-5ct8p1i1wrgyjvp'
 
 def qc_stuff(metadata, sequence_p1, sequence_p2, do_qc=True):
+    """Quality control. Essentially it checks the RDF schema and the FASTA
+sequence for enough overlap with the reference genome
+
+    """
     failed = False
     sample_id = ''
     try:
@@ -86,6 +99,7 @@ def main():
     else:
         api = arvados.api(host=ARVADOS_API_HOST, token=UPLOADER_API_TOKEN, insecure=True)
 
+    # ---- First the QC
     target = qc_stuff(args.metadata, args.sequence_p1, args.sequence_p2, not args.skip_qc)
     seqlabel = target[0][1]
 
@@ -95,10 +109,12 @@ def main():
 
     col = arvados.collection.Collection(api_client=api)
 
+    # ---- Upload the sequence to Arvados
     upload_sequence(col, target[0], args.sequence_p1)
     if args.sequence_p2:
         upload_sequence(col, target[1], args.sequence_p2)
 
+    # ---- Make sure the metadata YAML is valid
     log.info("Reading metadata")
     with col.open("metadata.yaml", "w") as f:
         r = args.metadata.read(65536)
@@ -107,6 +123,7 @@ def main():
             f.write(r)
             r = args.metadata.read(65536)
 
+    # ---- Get the uploader IP address (gateway) and local user info
     external_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
 
     try:
@@ -121,6 +138,7 @@ def main():
         "upload_user": "%s@%s" % (username, socket.gethostname())
     }
 
+    # ---- Get ready for actual uploading
     api2 = arvados.api(host=ARVADOS_API_HOST, token=ANONYMOUS_API_TOKEN, insecure=True)
     dup = api2.collections().list(filters=[["owner_uuid", "in", [VALIDATED_PROJECT, UPLOAD_PROJECT]],
                                            ["portable_data_hash", "=", col.portable_data_hash()]]).execute()
@@ -135,6 +153,7 @@ def main():
     else:
         owner_uuid = UPLOAD_PROJECT
 
+    # ---- and stream the 'collection' up
     col.save_new(owner_uuid=owner_uuid, name="%s uploaded by %s from %s" %
                  (seqlabel, properties['upload_user'], properties['upload_ip']),
                  properties=properties, ensure_unique_name=True)

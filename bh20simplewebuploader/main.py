@@ -724,22 +724,24 @@ def location():
     """Show country resource"""
     loc = request.args.get('label')
     logging.info(loc)
-    logging.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+    # logging.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
     query = f"""
     PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
     PREFIX sio: <http://semanticscience.org/resource/>
-    select distinct ?name ?date where
+    select distinct ?name ?date ?geoname where
     {{
       ?sample <http://purl.obolibrary.org/obo/GAZ_00000448> <{loc}> .
       ?sample <http://semanticscience.org/resource/SIO_000115> ?name .
       ?sample <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164> ?date .
+      <{loc}> rdfs:label ?geoname .
     }} order by ?name
     """
     payload = {'query': query, 'format': 'json'}
     r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
-    logging.info(result)
-    return render_template('list.html',id=loc,menu='',h=['name','date'],l=result)
+    geoname = result[0]['geoname']['value']
+    # logging.info(result)
+    return render_template('list.html',id=geoname,url=loc,menu='',h=['name','date'],l=result)
 
 ## Dynamic API functions starting here
 ## This is quick and dirty for now, just to get something out and demonstrate the queries

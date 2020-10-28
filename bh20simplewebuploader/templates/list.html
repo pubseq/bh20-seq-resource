@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  {% include 'header.html' %}
+  <body>
+    {% include 'banner.html' %}
+    {% include 'menu.html' %}
+
+    <hr>
+
+    <h1>{{id}}</h1>
+
+    <div class="content">
+    <section class="blog-entries">
+      <div class="blog-table">
+        {% for row in l: %}
+        <div class="blog-table-body">
+          <div class="blog-table-row">
+            {% for col in h: %}
+            <div class="blog-table-cell">
+              {% if col == 'name': %}
+                <a href="/resource/{{row[col]['value']}}">{{ row[col]['value'] }}</a>
+              {% else %}
+                {{ row[col]['value'] }}
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    </div>
+
+    {% include 'footer.html' %}
+
+    <script type="text/javascript">
+      let scriptRoot = {{ request.script_root|tojson|safe }}; // examples
+    </script>
+  </body>
+
+</html>

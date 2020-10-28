@@ -86,7 +86,7 @@ function buildMapMarkers(data) {
             }}});
     // ---- Build the marker list
     for (let i = 0; i < data.length; i++) {
-        let {"count": fastaCount, GPS, LocationLabel: label } = data[i];
+        let {"count": fastaCount, GPS, Location: location, LocationLabel: label } = data[i];
         let countSeq = Number(fastaCount);
 
         let coordinates = GPS.split(" ");
@@ -95,7 +95,7 @@ function buildMapMarkers(data) {
             [lon, lat] = coordinates.map(parseFloat);
             let point = L.point()
             marker = new seqMarker([lat, lon],markerOptions={title: fastaCount+" sequences",sequences: countSeq});
-            marker.bindPopup("<b>" + label + "</b><br/>" + "SARS-CoV-2<br/>sequences: " +fastaCount);
+            marker.bindPopup("<b>" + label + "</b><br/>" + "SARS-CoV-2<br/><a href=\"/location?label="+location+"\">sequences: " +fastaCount + "</a>");
             markers.addLayer(marker);
         }
     }

@@ -66,13 +66,6 @@ function fetchHTMLTable(apiEndPoint) {
         .then(data => {
             console.log(data)
             htmlString="<table>"
-
-            // Depending on what we want to explore we'd have to call a different function ....? But how to Include that?
-            /*
-            for (var i=0; i<data.length;i++) {
-                htmlString=htmlString+"<tr><td><a href='#' onclick='fetchSEQByLocation(\""+data[i]["key"]+"\");'>"+data[i]["label"]+"</a></td><td>"+data[i]["count"]+"<td></tr>"
-            }
-            */
             for (var i=0; i<data.length;i++) {
                 let url = data[i]["key"];
                 let label = data[i]["label"];
@@ -96,7 +89,6 @@ function fetchHTMLTable(apiEndPoint) {
     "seq": "http://collections.lugli.arvadosapi.com/c=5a4c815f3e076ad7760a91864c39dd07+126/sequence.fasta"
   }
 ]
-
 
  */
 let searchGlobal = (toHTML) => {

@@ -668,6 +668,7 @@ def contact_page():
 ##
 sparqlURL='http://sparql.genenetwork.org/sparql/'
 
+
 ##
 # Example http://covid19.genenetwork.org/resource/MT326090.1
 # Example http://host/resource/SRR11621868
@@ -716,6 +717,30 @@ select distinct ?sample ?geoname ?date ?source ?geo ?sampletype ?institute ?sequ
         institute=sample['institute']['value']
     return render_template('permalink.html',id=id,menu='',uri=f"http://covid19.genenetwork.org/resource/{id}",sequenceuri=sequenceuri,locationuri=locationuri,location=location,date=date,source=source,sampletype=sampletype,institute=institute,collectionuri=collectionuri,metauri=metauri)
 
+# http://covid19.genenetwork.org/location?label=http://www.wikidata.org/entity/Q114
+# http://localhost:5067/location?label=http://www.wikidata.org/entity/Q114
+@app.route('/location', methods=['GET'])
+def location():
+    """Show country resource"""
+    loc = request.args.get('label')
+    logging.info(loc)
+    logging.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+    query = f"""
+    PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+    PREFIX sio: <http://semanticscience.org/resource/>
+    select distinct ?name ?date where
+    {{
+      ?sample <http://purl.obolibrary.org/obo/GAZ_00000448> <{loc}> .
+      ?sample <http://semanticscience.org/resource/SIO_000115> ?name .
+      ?sample <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164> ?date .
+    }} order by ?name
+    """
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    logging.info(result)
+    return render_template('list.html',id=loc,menu='',h=['name','date'],l=result)
+
 ## Dynamic API functions starting here
 ## This is quick and dirty for now, just to get something out and demonstrate the queries
 ## Feel free to rename the functions/endpoints, feel free to process result so we get nicer JSON
@@ -753,7 +778,12 @@ def getCountDB():
 
 @app.route('/api/getAllaccessions', methods=['GET'])
 def getAllaccessions():
-    query="""SELECT DISTINCT ?fasta ?value WHERE {?fasta ?x[ <http://edamontology.org/data_2091> ?value ]}"""
+    query="""
+    SELECT DISTINCT ?fasta ?value WHERE
+    {
+      ?fasta ?x[ <http://edamontology.org/data_2091> ?value ]
+    }
+    """
     payload = {'query': query, 'format': 'json'}
     r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
@@ -780,11 +810,13 @@ def getDetailsForSeq():
 # Endpoint should provide all necessary information to draw a map (!)
 @app.route('/api/getCountByGPS', methods=['GET'])
 def getCountByGPS():
-    query="""SELECT DISTINCT ?location ?location_label ?GPS (count(?fasta) as ?fastaCount) WHERE {
-    ?fasta ?x[ <http://purl.obolibrary.org/obo/GAZ_00000448> ?location] .
-    ?location <http://www.wikidata.org/prop/direct/P625> ?GPS .
-    OPTIONAL { ?location rdfs:label ?key_tmp_label }
-    BIND(IF(BOUND(?key_tmp_label),?key_tmp_label, ?location) as ?location_label)
+    query="""
+    SELECT DISTINCT ?location ?location_label ?GPS (count(?fasta) as ?fastaCount) WHERE
+    {
+      ?fasta ?x[ <http://purl.obolibrary.org/obo/GAZ_00000448> ?location] .
+      ?location <http://www.wikidata.org/prop/direct/P625> ?GPS .
+      OPTIONAL { ?location rdfs:label ?key_tmp_label }
+      BIND(IF(BOUND(?key_tmp_label),?key_tmp_label, ?location) as ?location_label)
     }
     GROUP BY ?location ?location_label ?GPS
     """

@@ -119,7 +119,7 @@ p, form, .about, .footer {
 }
 
 form h4 {
-    text-transform: 'uppercase';
+    text-transform: uppercase;
 }
 
 .intro, form, .search {
@@ -190,7 +190,6 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
 }
 
 .about p {
-    // font-weight: 300;
     color: #505050;
 }
 
@@ -300,9 +299,6 @@ footer {
 }
 
 .sponsors a {
-    // flex-grow: 4;
-    // height: 50px;
-    // margin: 10px;
     background: white;
     display: flex;
     flex-direction: column;
@@ -434,7 +430,6 @@ div.status {
 
 .map {
     padding: 20px 32px;
-    // display: inline-block;
 }
 
 .map-marker-cluster {
@@ -458,8 +453,6 @@ div.status {
 .my-custom-icon {
   width: 60px !important;
   height: 40px !important;
-  // margin-left: -12px;
-  // margin-top: -40px;
   opacity: 0.5;
   border-radius: 30px;
   border: 2px solid #3F51B5;
@@ -468,10 +461,6 @@ div.status {
   background-color: lightgreen;
   font-weight: bold;
   font-size: 18px;
-  // left: 0;
-  // right: 0;
-  // margin: -15px 0 0 -45px;
-  // padding: 15px 6px;
 }
 
 .my-custom-icon.my-custom-icon-0 {

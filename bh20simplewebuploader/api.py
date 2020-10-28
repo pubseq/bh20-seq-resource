@@ -5,7 +5,7 @@ import requests
 import sys
 
 from flask import Flask, request, redirect, send_file, send_from_directory, render_template, jsonify
-from bh20simplewebuploader.main import app, baseURL
+from bh20simplewebuploader.main import app, sparqlURL
 
 # Helper functions
 
@@ -31,7 +31,7 @@ def fetch_sample_metadata(id):
     } limit 5
     """ % id
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     return r.json()['results']['bindings']
 
 # Main API routes
@@ -83,7 +83,7 @@ def search():
     } limit 100
     """ % s
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     # metadata = file.name(seq)+"/metadata.yaml"
     print(result)

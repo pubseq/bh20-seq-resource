@@ -663,11 +663,48 @@ def contact_page():
     buf = get_html_body('doc/web/contact.html','https://github.com/arvados/bh20-seq-resource/blob/master/doc/web/contact.org')
     return render_template('about.html',menu='CONTACT',embed=buf)
 
+##
+## Linked data permanent links/resources
+##
+sparqlURL='http://sparql.genenetwork.org/sparql/'
+
+##
+# Example http://host/resource/MT326090.1
+@app.route('/resource/<id>')
+def resource(id):
+    """Get a COVID19 resource using identifier"""
+    query="""
+PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+PREFIX sio: <http://semanticscience.org/resource/>
+select distinct ?sample ?geoname ?date ?source ?geo ?sampletype
+{
+   ?sample sio:SIO_000115 "MT326090.1" .
+   ?sample <http://purl.obolibrary.org/obo/GAZ_00000448> ?geo .
+   ?geo rdfs:label ?geoname .
+   ?sample <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164> ?date .
+   OPTIONAL {?sample <http://edamontology.org/data_2091> ?source }
+   OPTIONAL {?sample <http://purl.obolibrary.org/obo/OBI_0001479> ?sampletype }
+}
+    """
+    payload = {'query': query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    # for now we just take the first one
+    sample = result[0]
+    logging.info(sample)
+    logging.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+    # return jsonify({'sequences': int(result[0]["num"]["value"])})
+    locationuri=sample['geo']['value']
+    location=sample['geoname']['value']
+    date=sample['date']['value']
+    source=sample['source']['value']
+    sampletype=sample['sampletype']['value']
+    return render_template('permalink.html',id=id,menu='',uri=f"http://covid19.genenetwork.org/resource/{id}",locationuri=locationuri,location=location,date=date,source=source,sampletype=sampletype)
+
 ## Dynamic API functions starting here
 ## This is quick and dirty for now, just to get something out and demonstrate the queries
 ## Feel free to rename the functions/endpoints, feel free to process result so we get nicer JSON
 ## but most likely you don't want to touch the queries, Cheers.
-baseURL='http://sparql.genenetwork.org/sparql/'
 
 @app.route('/api/getCount', methods=['GET'])
 def getCount():
@@ -693,7 +730,7 @@ def getCountDB():
     }
     """
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     # [{'num': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '1352'}}]
     # print(result, file=sys.stderr)
@@ -703,7 +740,7 @@ def getCountDB():
 def getAllaccessions():
     query="""SELECT DISTINCT ?fasta ?value WHERE {?fasta ?x[ <http://edamontology.org/data_2091> ?value ]}"""
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return jsonify([{'uri': x['fasta']['value'],
                      'value': x['value']['value']} for x in result])
@@ -720,7 +757,7 @@ def getDetailsForSeq():
     BIND(IF(BOUND(?key_tmp_label),?key_tmp_label, ?key) as ?key_label)}"""
     query=query.replace("placeholder", seq_id)
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return jsonify([{'uri': x['key']['value'], 'key_label': x['key_label']['value'],
                      'value': x['value']['value']} for x in result])
@@ -737,7 +774,7 @@ def getCountByGPS():
     GROUP BY ?location ?location_label ?GPS
     """
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return jsonify([{'count': x['fastaCount']['value'],
                      'Location': x['location']['value'],
@@ -754,7 +791,7 @@ def getSEQCountbytech():
     GROUP BY ?tech ?tech_label ORDER BY DESC (?fastaCount)
     """
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return jsonify([{'count': x['fastaCount']['value'],
                      'key': x['tech']['value'],
@@ -770,7 +807,7 @@ def getSEQbytech():
     tech = request.args.get('tech')
     query=query.replace("placeholder", tech)
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return str(result)
 
@@ -783,7 +820,7 @@ def getSEQbyLocation():
     query=query.replace("placeholder", location)
     print(query)
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return str(result)
 
@@ -797,7 +834,7 @@ def getSEQCountbyLocation():
     GROUP BY ?geoLocation ?geoLocation_label ORDER BY DESC (?fastaCount)
     """
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return jsonify([{'count': x['fastaCount']['value'],
                      'key': x['geoLocation']['value'],
@@ -816,7 +853,7 @@ def getSEQCountbyContinent():
     GROUP BY ?continent ?continent_label
     """
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return jsonify([{'count': x['fastaCount']['value'],
                      'key': x['continent']['value'],
@@ -837,7 +874,7 @@ def getSEQCountbyCountryContinent():
     continent = request.args.get('continent')
     query = query.replace("placeholder", continent)
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return jsonify([{'count': x['fastaCount']['value'],
                      'key': x['location']['value'],
@@ -855,7 +892,7 @@ def getSEQCountbySpecimenSource():
      ORDER BY DESC (?fastaCount)
     """
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return jsonify([{'count': x['fastaCount']['value'],
                      'key': x['specimen_source']['value'],
@@ -871,7 +908,7 @@ def getSEQBySpecimenSource():
     specimen=request.args.get('specimen')
     query = query.replace("placeholder", specimen)
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return str(result)
 
@@ -885,7 +922,7 @@ def getSEQCountbyHostHealthStatus():
     ORDER BY DESC (?fastaCount)
     """
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return str(result)
 
@@ -899,7 +936,7 @@ def getSEQbyLocationAndTech():
     query = query.replace("placeholderTech", tech)
     print(query)
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return str(result)
 
@@ -917,6 +954,6 @@ def getSEQbyLocationAndSpecimenSource():
     query = query.replace("placeholderSpecimen", specimen)
     print(query)
     payload = {'query': query, 'format': 'json'}
-    r = requests.get(baseURL, params=payload)
+    r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return str(result)

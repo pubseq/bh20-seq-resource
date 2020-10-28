@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  {% include 'header.html' %}
+  <body>
+    {% include 'banner.html' %}
+    {% include 'menu.html' %}
+
+    <hr>
+
+    <h1>{{id}}</h1>
+
+    <h2>
+      This is page represents a permanent COVID-19 PubSeq SARS-CoV-2 sequence resource
+    </h2>
+
+    <div class="content">
+    <section class="blog-entries">
+      <div class="blog-table">
+        <div class="blog-table-body">
+          <div class="blog-table-row">
+            <div class="blog-table-cell">
+              Identifier
+            </div>
+            <div class="blog-table-cell">
+              <a href="{{ uri }}">{{id}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="blog-table-body">
+          <div class="blog-table-row">
+            <div class="blog-table-cell">
+              Permanent link
+            </div>
+            <div class="blog-table-cell">
+              <a href="{{ uri }}">{{uri}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="blog-table-body">
+          <div class="blog-table-row">
+            <div class="blog-table-cell">
+              Location
+            </div>
+            <div class="blog-table-cell">
+              <a href="{{ locationuri }}">{{location}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="blog-table-body">
+          <div class="blog-table-row">
+            <div class="blog-table-cell">
+              Sampling date
+            </div>
+            <div class="blog-table-cell">
+              {{ date }}
+            </div>
+          </div>
+        </div>
+        <div class="blog-table-body">
+          <div class="blog-table-row">
+            <div class="blog-table-cell">
+              Sample type
+            </div>
+            <div class="blog-table-cell">
+              <a href="{{ sampletype }}">{{sampletype}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="blog-table-body">
+          <div class="blog-table-row">
+            <div class="blog-table-cell">
+              Source
+            </div>
+            <div class="blog-table-cell">
+              <a href="{{ source }}">{{source}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+
+    {% include 'footer.html' %}
+
+    <script type="text/javascript">
+      let scriptRoot = {{ request.script_root|tojson|safe }}; // examples
+    </script>
+  </body>
+
+</html>

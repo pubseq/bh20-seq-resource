@@ -14,30 +14,31 @@
         the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/paper/paper.md">paper</a>
       </p>
 
+
     </div>
     <div class="sponsors">
-      <a href="static/image/BCC2020_AndreaGuarracino_COVID19PubSeq_Poster.pdf">
-        <img src="static/image/BCC2020_AndreaGuarracino_COVID19PubSeq_Poster.png"  alt="BCC2020 COVID19 PubSeq Poster"/>
+      <a href="{{ url_for('static',filename='image/BCC2020_AndreaGuarracino_COVID19PubSeq_Poster.pdf') }}">
+        <img src="{{ url_for('static', filename='image/BCC2020_AndreaGuarracino_COVID19PubSeq_Poster.png') }}"  alt="BCC2020 COVID19 PubSeq Poster"/>
       </a>
       <h3>OUR SPONSORS</h3>
       <div class="sponsorimg">
         <a href="https://github.com/virtual-biohackathons/covid-19-bh20">
-          <img src="static/image/covid19biohackathon.png"></a>
+          <img src="{{ url_for('static',filename='image/covid19biohackathon.png') }}"></a>
       </div>
       <div class="sponsorimg">
-        <a href="https://www.curii.com/"><img src="static/image/curii.logo.ai.png"></a>
+        <a href="https://www.curii.com/"><img src="{{ url_for('static',filename='image/curii.logo.ai.png') }}"></a>
       </div>
       <div class="sponsorimg">
-        <a href="https://arvados.org/"><img src="static/image/arvados-logo.png"></a>
+        <a href="https://arvados.org/"><img src="{{ url_for('static',filename='image/arvados-logo.png') }}"></a>
       </div>
       <div class="sponsorimg">
-        <a href="https://www.commonwl.org/"><img src="static/image/CWL.png"></a>
+        <a href="https://www.commonwl.org/"><img src="{{ url_for('static',filename='image/CWL.png') }}"></a>
       </div>
       <div class="sponsorimg">
-        <a href="https://uthsc.edu/"><img src="static/image/UTHSC-primary-stacked-logo-4c.png"></a>
+        <a href="https://uthsc.edu/"><img src="{{ url_for('static',filename='image/UTHSC-primary-stacked-logo-4c.png') }}"></a>
       </div>
       <div class="sponsorimg">
-        <a href="https://www.esr.cri.nz/"><img src="static/image/ESR.png"></a>
+        <a href="https://www.esr.cri.nz/"><img src="{{ url_for('static',filename='image/ESR.png')}}"></a>
       </div>
 
     </div>
@@ -64,7 +65,7 @@
           .then((resp) => resp.json())
           .then(function (data) {
               count = data["sequences"];
-              console.log(count);
+              console.log(["Counted: ",count]);
               span = document.getElementById("Counter");
               txt = document.createTextNode(count);
               span.appendChild(txt);

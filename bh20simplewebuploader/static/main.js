@@ -72,9 +72,11 @@ function fetchHTMLTable(apiEndPoint) {
             for (var i=0; i<data.length;i++) {
                 htmlString=htmlString+"<tr><td><a href='#' onclick='fetchSEQByLocation(\""+data[i]["key"]+"\");'>"+data[i]["label"]+"</a></td><td>"+data[i]["count"]+"<td></tr>"
             }
-*/
+            */
             for (var i=0; i<data.length;i++) {
-                htmlString=htmlString+"<tr><td>"+data[i]["label"]+"</td><td>"+data[i]["count"]+"<td></tr>"
+                let url = data[i]["key"];
+                let label = data[i]["label"];
+                htmlString=htmlString+"<tr><td><a href=\""+url+"\">"+label+"</a></td><td>"+data[i]["count"]+"<td></tr>"
             }
             htmlString=htmlString+"</table>"
 
@@ -141,10 +143,6 @@ let fetchAllaccessions = () => {
 let fetchMap = () => {
     fetchAPI("/api/getCountByGPS");
     updateMapMarkers();
-};
-
-let fetchSEQCountbyLocation = () => {
-  fetchHTMLTable("/api/getSEQCountbyLocation");
 };
 
 let fetchSEQByLocation = () => {

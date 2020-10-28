@@ -669,7 +669,7 @@ def contact_page():
 sparqlURL='http://sparql.genenetwork.org/sparql/'
 
 ##
-# Example http://host/resource/MT326090.1
+# Example http://covid19.genenetwork.org/resource/MT326090.1
 # Example http://host/resource/SRR11621868
 @app.route('/resource/<id>')
 def resource(id):
@@ -842,10 +842,13 @@ def getSEQbyLocation():
 
 @app.route('/api/getSEQCountbyLocation', methods=['GET'])
 def getSEQCountbyLocation():
-    query="""SELECT ?geoLocation ?geoLocation_label (count(?fasta) as ?fastaCount)  WHERE
-    {?fasta ?x [<http://purl.obolibrary.org/obo/GAZ_00000448> ?geoLocation] .
-    Optional {?geoLocation <http://www.w3.org/2000/01/rdf-schema#label> ?geoLocation_tmp_label}
-    BIND(IF(BOUND(?geoLocation_tmp_label), ?geoLocation_tmp_label, ?geoLocation) as ?geoLocation_label)}
+    query="""
+    SELECT ?geoLocation ?geoLocation_label (count(?fasta) as ?fastaCount)  WHERE
+    {
+      ?fasta ?x [<http://purl.obolibrary.org/obo/GAZ_00000448> ?geoLocation] .
+      Optional {?geoLocation <http://www.w3.org/2000/01/rdf-schema#label> ?geoLocation_tmp_label}
+      BIND(IF(BOUND(?geoLocation_tmp_label), ?geoLocation_tmp_label, ?geoLocation) as ?geoLocation_label)
+    }
     GROUP BY ?geoLocation ?geoLocation_label ORDER BY DESC (?fastaCount)
     """
     payload = {'query': query, 'format': 'json'}
@@ -878,11 +881,13 @@ def getSEQCountbyContinent():
 
 @app.route('/api/getSEQCountbyCountryContinent', methods=['GET'])
 def getSEQCountbyCountryContinent():
-    query="""SELECT DISTINCT ?location ?location_label (count(?fasta) as ?fastaCount) WHERE {
-    ?fasta ?x[ <http://purl.obolibrary.org/obo/GAZ_00000448> ?location] .
-    ?location <http://www.wikidata.org/prop/direct/P30> <placeholder> .
-    OPTIONAL { ?location rdfs:label ?key_tmp_label }
-    BIND(IF(BOUND(?key_tmp_label),?key_tmp_label, ?location) as ?location_label)
+    query="""
+    SELECT DISTINCT ?location ?location_label (count(?fasta) as ?fastaCount) WHERE
+    {
+      ?fasta ?x[ <http://purl.obolibrary.org/obo/GAZ_00000448> ?location] .
+      ?location <http://www.wikidata.org/prop/direct/P30> <placeholder> .
+      OPTIONAL { ?location rdfs:label ?key_tmp_label }
+      BIND(IF(BOUND(?key_tmp_label),?key_tmp_label, ?location) as ?location_label)
     }
     GROUP BY ?location ?location_label
     """

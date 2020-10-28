@@ -670,21 +670,24 @@ sparqlURL='http://sparql.genenetwork.org/sparql/'
 
 ##
 # Example http://host/resource/MT326090.1
+# Example http://host/resource/SRR11621868
 @app.route('/resource/<id>')
 def resource(id):
     """Get a COVID19 resource using identifier"""
-    query="""
+    query=f"""
 PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
 PREFIX sio: <http://semanticscience.org/resource/>
-select distinct ?sample ?geoname ?date ?source ?geo ?sampletype
-{
-   ?sample sio:SIO_000115 "MT326090.1" .
+select distinct ?sample ?geoname ?date ?source ?geo ?sampletype ?institute ?sequenceuri
+{{
+   ?sample sio:SIO_000115 "{id}" .
+   ?sequenceuri pubseq:sample ?sample .
    ?sample <http://purl.obolibrary.org/obo/GAZ_00000448> ?geo .
    ?geo rdfs:label ?geoname .
    ?sample <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164> ?date .
-   OPTIONAL {?sample <http://edamontology.org/data_2091> ?source }
-   OPTIONAL {?sample <http://purl.obolibrary.org/obo/OBI_0001479> ?sampletype }
-}
+   OPTIONAL {{ ?sample <http://edamontology.org/data_2091> ?source }}
+   OPTIONAL {{ ?sample <http://purl.obolibrary.org/obo/OBI_0001479> ?sampletype }}
+   OPTIONAL {{ ?sample <http://purl.obolibrary.org/obo/NCIT_C41206> ?institute }}
+}}
     """
     payload = {'query': query, 'format': 'json'}
     r = requests.get(sparqlURL, params=payload)
@@ -694,12 +697,24 @@ select distinct ?sample ?geoname ?date ?source ?geo ?sampletype
     logging.info(sample)
     logging.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
     # return jsonify({'sequences': int(result[0]["num"]["value"])})
+    sequenceuri=sample['sequenceuri']['value']
+    collectionuri=sequenceuri.split('sequence.fasta')[0]
+    metauri=collectionuri+'metadata.yaml'
     locationuri=sample['geo']['value']
     location=sample['geoname']['value']
     date=sample['date']['value']
-    source=sample['source']['value']
-    sampletype=sample['sampletype']['value']
-    return render_template('permalink.html',id=id,menu='',uri=f"http://covid19.genenetwork.org/resource/{id}",locationuri=locationuri,location=location,date=date,source=source,sampletype=sampletype)
+    if date == '1970-01-01':
+        date = ''
+    source=''
+    if 'source' in sample:
+        source=sample['source']['value']
+    sampletype=''
+    if 'sampletype' in sample:
+        sampletype=sample['sampletype']['value']
+    institute=''
+    if 'institute' in sample:
+        institute=sample['institute']['value']
+    return render_template('permalink.html',id=id,menu='',uri=f"http://covid19.genenetwork.org/resource/{id}",sequenceuri=sequenceuri,locationuri=locationuri,location=location,date=date,source=source,sampletype=sampletype,institute=institute,collectionuri=collectionuri,metauri=metauri)
 
 ## Dynamic API functions starting here
 ## This is quick and dirty for now, just to get something out and demonstrate the queries

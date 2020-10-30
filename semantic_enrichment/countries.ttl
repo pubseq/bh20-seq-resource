@@ -1211,6 +1211,124 @@
     ns1:P30 <http://www.wikidata.org/entity/Q48> ;
     ns1:P625 "Point(89.866667 24.016667)" .
 
+<http://www.wikidata.org/entity/Q1015672> rdfs:label "Whanganui" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q664> ;
+    ns1:P625 "Point(175.05 -39.933333333)" .
+
+<http://www.wikidata.org/entity/Q108067> rdfs:label "Sonoma County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-122.93 38.51)" .
+
+<http://www.wikidata.org/entity/Q108117> rdfs:label "Marin County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-122.74 38.04)" .
+
+<http://www.wikidata.org/entity/Q109651> rdfs:label "Humboldt County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-123.8 40.8)" .
+
+<http://www.wikidata.org/entity/Q110739> rdfs:label "Santa Clara County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-121.97 37.36)" .
+
+<http://www.wikidata.org/entity/Q1259584> rdfs:label "Dhandhuka" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(71.98 22.37)" .
+
+<http://www.wikidata.org/entity/Q13188841> rdfs:label "San Francisco County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-122.4425 37.778333333)" .
+
+<http://www.wikidata.org/entity/Q140290> rdfs:label "Bay of Plenty" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q664> ;
+    ns1:P625 "Point(176.8 -37.26666667)" .
+
+<http://www.wikidata.org/entity/Q1498> rdfs:label "Uttar Pradesh" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(80.91 26.85)" .
+
+<http://www.wikidata.org/entity/Q1865> rdfs:label "Kuala Lumpur" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q833> ;
+    ns1:P625 "Point(101.695277777 3.147777777)" .
+
+<http://www.wikidata.org/entity/Q2120093> rdfs:label "Khambhalia" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(69.65 22.2)" .
+
+<http://www.wikidata.org/entity/Q25> rdfs:label "Wales" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q145> ;
+    ns1:P625 "Point(-3.633333333 52.35)" .
+
+<http://www.wikidata.org/entity/Q2572203> rdfs:label "Siddhpur" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.37212 23.91783)",
+        "Point(72.3833 23.9167)" .
+
+<http://www.wikidata.org/entity/Q2868> rdfs:label "Lima" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q419> ;
+    ns1:P625 "Point(-77.033333333 -12.05)" .
+
+<http://www.wikidata.org/entity/Q34366> rdfs:label "Tasmania" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q408> ;
+    ns1:P625 "Point(147.0 -42.0)" .
+
+<http://www.wikidata.org/entity/Q37100> rdfs:label "Auckland" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q664> ;
+    ns1:P625 "Point(174.783333333 -36.85)" .
+
+<http://www.wikidata.org/entity/Q416922> rdfs:label "Huaihua" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q148> ;
+    ns1:P625 "Point(109.959167 27.549444)" .
+
+<http://www.wikidata.org/entity/Q491114> rdfs:label "Hayward" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-122.080833333 37.668888888)" .
+
+<http://www.wikidata.org/entity/Q496900> rdfs:label "Philadelphia County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-75.13 40.01)" .
+
+<http://www.wikidata.org/entity/Q502288> rdfs:label "Horry County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-78.98 33.91)" .
+
+<http://www.wikidata.org/entity/Q5083> rdfs:label "Seattle" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-122.33207 47.60621)" .
+
+<http://www.wikidata.org/entity/Q541468> rdfs:label "West Coast Region" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q664> ;
+    ns1:P625 "Point(171.4 -42.6)" .
+
+<http://www.wikidata.org/entity/Q579702> rdfs:label "Patan" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.12 23.83)" .
+
+<http://www.wikidata.org/entity/Q5925> rdfs:label "Orange County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-117.78 33.67)" .
+
+<http://www.wikidata.org/entity/Q602520> rdfs:label "Hamilton" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-114.159722222 46.248333333)" .
+
+<http://www.wikidata.org/entity/Q657004> rdfs:label "Canterbury Region" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q664> ;
+    ns1:P625 "Point(172.0 -43.6)" .
+
+<http://www.wikidata.org/entity/Q674023> rdfs:label "Hutt Valley" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q664> ;
+    ns1:P625 "Point(174.973 -41.1657)" .
+
+<http://www.wikidata.org/entity/Q7059500> rdfs:label "Northland" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q664> ;
+    ns1:P625 "Point(174.759 -41.2814)" .
+
+<http://www.wikidata.org/entity/Q85> rdfs:label "Cairo" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q79> ;
+    ns1:P625 "Point(31.239444444 30.056111111)" .
+
+
 
 <http://www.wikidata.org/entity/Q538> rdfs:label "Oceania" .
 <http://www.wikidata.org/entity/Q49> rdfs:label "North America" .

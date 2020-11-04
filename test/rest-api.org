@@ -166,4 +166,4 @@ To skip confirmations you may also want to set
 
 : (setq org-confirm-babel-evaluate nil)
 
-To see output of the inpreter open then *Python* buffer.
+To see output of the interpreter open then *Python* buffer.

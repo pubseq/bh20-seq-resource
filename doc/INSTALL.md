@@ -67,3 +67,26 @@ penguin2:~/iwrk/opensource/code/vg/bh20-seq-resource$  env GUIX_PACKAGE_PATH=~/i
 ```
 
 Note: see above on GUIX_PACKAGE_PATH.
+
+
+## Run Virtuoso-ose
+
+Guix has a package for virtuoso-ose we use
+
+    guix package -i virtuoso-ose -p ~/opt/virtuoso
+
+Create a data dir
+
+    mkdir -p /export/virtuoso/var/lib/virtuoso/db
+    chown $USER /export/virtuoso/var/lib/virtuoso/db
+
+Add an ini file
+
+    cp ~/opt/virtuoso/var/lib/virtuoso/db/virtuoso.ini .config/
+
+And run from the data dir
+
+    cd /export/virtuoso/var/lib/virtuoso/db
+    guix environment --ad-hoc virtuoso-ose -- virtuoso-t -f
+
+Visit http://localhost:8890/sparql

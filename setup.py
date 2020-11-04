@@ -17,7 +17,7 @@ except ImportError:
 
 install_requires = ["arvados-python-client", "schema-salad",
                     "python-magic", "pyshex", "pyshexc==0.7.0", "py-dateutil"]
-web_requires = ["flask", "pyyaml"]
+web_requires = ["flask", "pyyaml", "redis"]
 
 needs_pytest = {"pytest", "test", "ptr"}.intersection(sys.argv)
 pytest_runner = ["pytest < 6", "pytest-runner < 5"] if needs_pytest else []

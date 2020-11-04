@@ -178,6 +178,11 @@ $graph:
 - name: technologySchema
   type: record
   fields:
+    assembly_method:
+      doc: Assembly method refers to how the reads were assembled into contigs for which either a de novo or mapping (reference based) strategy is used.
+      type: string
+      jsonldPredicate:
+        _id: http://purl.obolibrary.org/obo/GENEPIO_0000090
     sample_sequencing_technology:
       doc: Technology that was used to sequence this sample (e.g Sanger, Nanopor MiniION)
       type: string[]

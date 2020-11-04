@@ -186,7 +186,7 @@ $graph:
         _type: "@id"
         noLinkCheck: true
     sequence_assembly_method:
-      doc: Protocol which provides instructions on the alignment of sequencing reads to reference genome
+      doc: Field for additional information on the pipeline applied to obtain the assembly
       type: string?
       jsonldPredicate:
         _id: http://www.ebi.ac.uk/efo/EFO_0002699

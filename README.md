@@ -40,7 +40,7 @@ Note that you will need to repeat the `. venv/bin/activate` step from this direc
 Install from PyPi:
 
 ```sh
-pip3 bh20-seq-uploader
+pip3 install bh20-seq-uploader
 ```
 
 Install from git:

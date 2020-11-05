@@ -13,8 +13,8 @@
 * PubSeq REST API
 
 Here we document the public REST API that comes with PubSeq. The tests
-run in the amazing emacs [[https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html][org-babel]].  See the bottom of this document
-for running the tests inside emacs.
+run in emacs [[https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html][org-babel]].  See the bottom of this document for running
+the tests inside emacs. See bottom of the page how to run tests.
 
 ** Introduction
 
@@ -36,7 +36,7 @@ The Python3 version is
 
 #+begin_src python :session :exports both
 import requests
-baseURL="http://localhost:5000" # for development
+baseURL="http://localhost:5067" # for development
 # baseURL="http://covid19.genenetwork.org"
 response = requests.get(baseURL+"/api/version")
 response_body = response.json()
@@ -57,7 +57,7 @@ requests.get(baseURL+"/api/search?s=MT533203.1").json()
 #+end_src
 
 #+RESULTS:
-| collection | : | http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126 | fasta | : | http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/sequence.fasta | id | : | MT533203.1 | info | : | http://identifiers.org/insdc/MT533203.1#sequence |
+| collection | : | http://collections.lugli.arvadosapi.com/c=b16901333ea1754a1e0409bf3caf7d22+126 | fasta | : | http://collections.lugli.arvadosapi.com/c=b16901333ea1754a1e0409bf3caf7d22+126/sequence.fasta | id | : | MT533203.1 | info | : | http://identifiers.org/insdc/MT533203.1#sequence |
 
 where collection is the raw uploaded data. The hash value in ~c=~ is
 computed on the contents of the Arvados keep [[https://doc.arvados.org/v2.0/user/tutorials/tutorial-keep-mount-gnu-linux.html][collection]] and effectively
@@ -77,7 +77,7 @@ requests.get(baseURL+"/api/sample/MT533203.1.json").json()
 #+end_src
 
 #+RESULTS:
-| collection | : | http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126 | date | : | 2020-04-27 | fasta | : | http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/sequence.fasta | id | : | MT533203.1 | info | : | http://identifiers.org/insdc/MT533203.1#sequence | mapper | : | minimap v. 2.17 | sequencer | : | http://www.ebi.ac.uk/efo/EFO_0008632 | specimen | : | http://purl.obolibrary.org/obo/NCIT_C155831 |
+| collection | : | http://collections.lugli.arvadosapi.com/c=b16901333ea1754a1e0409bf3caf7d22+126 | date | : | 2020-04-27 | fasta | : | http://collections.lugli.arvadosapi.com/c=b16901333ea1754a1e0409bf3caf7d22+126/sequence.fasta | id | : | MT533203.1 | info | : | http://identifiers.org/insdc/MT533203.1#sequence | mapper | : | minimap v. 2.17 | sequencer | : | http://www.ebi.ac.uk/efo/EFO_0008632 | specimen | : | http://purl.obolibrary.org/obo/NCIT_C155831 |
 
 
 
@@ -148,19 +148,18 @@ requests.get(baseURL+"/api/ebi/sample-MT326090.1.xml").text
 
 * Configure emacs to run tests
 
-Execute a code
-block with C-c C-c. You may need to set
+Execute a code block with C-c C-c. You may need to set
 
 #+begin_src elisp
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((python . t)))
-(setq org-babel-python-command "python3")
-(setq org-babel-eval-verbose t)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t)))
+  (setq org-babel-python-command "python3")
+  (setq org-babel-eval-verbose t)
+  (setq org-confirm-babel-evaluate nil)
 #+end_src
 
 #+RESULTS:
-: python3
 
 To skip confirmations you may also want to set
 

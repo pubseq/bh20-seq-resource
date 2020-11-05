@@ -2,6 +2,10 @@
 # C-c !         insert date (use . for active agenda, C-u C-c ! for date+time, C-u C-c . for time)
 # C-c C-t       task rotate
 # RSS_IMAGE_URL: http://xxxx.xxxx.free.fr/rss_icon.png
+# C-c C-c to run test blocks
+#
+# This page runs tests and the HTML export doubles as documentation on
+# http://covid19.genenetwork.org/apidoc
 
 #+TITLE: PubSeq REST API
 #+AUTHOR: Pjotr Prins

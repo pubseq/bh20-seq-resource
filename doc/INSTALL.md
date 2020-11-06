@@ -31,7 +31,7 @@ arvados-python-client-2.0.1 ciso8601-2.1.3 future-0.18.2 google-api-python-clien
 3. Run the tool directly with
 
 ```sh
-guix environment guix --ad-hoc git python openssl python-pycurl python-magic nss-certs python-pyshex -- python3 bh20sequploader/main.py example/sequence.fasta example/maximum_metadata_example.yaml
+guix environment guix --ad-hoc git python openssl python-pycurl python-magic nss-certs python-pyshex -- python3 bh20sequploader/main.py example/maximum_metadata_example.yaml example/sequence.fasta
 ```
 
 Note that python-pyshex is packaged in
@@ -42,6 +42,12 @@ repository. E.g.
 
 ```sh
 env GUIX_PACKAGE_PATH=~/iwrk/opensource/guix/guix-bioinformatics/ ~/opt/guix/bin/guix environment -C guix --ad-hoc git python python-flask python-pyyaml python-pycurl python-magic  nss-certs python-pyshex python-pyyaml --network openssl python-pyshex python-pyshexc minimap2 python-schema-salad python-arvados-python-client --share=/export/tmp -- env TMPDIR=/export/tmp python3 bh20sequploader/main.py --help
+```
+
+Latest successful Guix run
+
+```sh
+env GUIX_PACKAGE_PATH=~/iwrk/opensource/guix/guix-bioinformatics/ ~/opt/guix/bin/guix environment guix --ad-hoc git python openssl python-pycurl python-magic nss-certs python-pyshex python-arvados-python-client python-schema-salad minimap2 -- python3 bh20sequploader/main.py  scripts/uthsc_samples/yaml/AL_UT14.yaml scripts/uthsc_samples/yaml/AL_UT14.fa
 ```
 
 ### Using the Web Uploader

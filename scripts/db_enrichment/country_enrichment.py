@@ -1,3 +1,12 @@
+# This script by @LLTommy queries the main SPARQL end point to find what
+# collections are missing country information for GPS coordinates, such
+#
+# <http://www.wikidata.org/entity/Q657004> rdfs:label "Canterbury Region" ;
+#    ns1:P17 <http://www.wikidata.org/entity/Q664> ;
+#    ns1:P625 "Point(172.0 -43.6)" .
+#
+# See also the ./readme.md
+
 import requests
 import csv
 from rdflib import Graph, Literal, RDF, URIRef
@@ -30,30 +39,28 @@ def callSPARQL(query):
 
 g = Graph()
 
-
-
 query = """
 construct {
-    ?a wdt:P625 ?c. 
+    ?a wdt:P625 ?c.
     ?a rdfs:label ?label .
-    ?a wdt:P17 ?country.      
-    ?country rdfs:label ?country_label . 
-    ?country wdt:P30 ?continent. 
-    ?continent rdfs:label ?continent_label   
-} WHERE 
-{ 
-    BIND (XXX as ?a) . 
-    ?a wdt:P625 ?c. 
-    ?a rdfs:label ?label .
-    ?a wdt:P17 ?country.      
-    ?country rdfs:label ?country_label .    
-    ?country wdt:P30 ?continent. 
+    ?a wdt:P17 ?country.
+    ?country rdfs:label ?country_label .
+    ?country wdt:P30 ?continent.
     ?continent rdfs:label ?continent_label
-    FILTER (lang(?continent_label)='en')           
+} WHERE
+{
+    BIND (XXX as ?a) .
+    ?a wdt:P625 ?c.
+    ?a rdfs:label ?label .
+    ?a wdt:P17 ?country.
+    ?country rdfs:label ?country_label .
+    ?country wdt:P30 ?continent.
+    ?continent rdfs:label ?continent_label
+    FILTER (lang(?continent_label)='en')
     FILTER (lang(?country_label)='en')
-    FILTER (lang(?label)='en') 
+    FILTER (lang(?label)='en')
 
-}  
+}
 """""
 
 outputFile = 'input_location.csv'
@@ -88,4 +95,4 @@ with open(outputFile, 'r') as csvfile:
             raise
 
 print(g.serialize(format='n3').decode("utf-8"))
-g.serialize(destination='enriched_ouput.txt', format='turtle')
+g.serialize(destination='enriched_output.txt', format='turtle')

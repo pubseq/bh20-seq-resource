@@ -1328,7 +1328,25 @@
     ns1:P17 <http://www.wikidata.org/entity/Q79> ;
     ns1:P625 "Point(31.239444444 30.056111111)" .
 
+<http://www.wikidata.org/entity/Q2145339> rdfs:label "Smithville" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-85.820833333 35.957222222)" .
 
+<http://www.wikidata.org/entity/Q23197> rdfs:label "Nashville" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-86.783888888 36.165)" .
+
+<http://www.wikidata.org/entity/Q3289517> rdfs:label "Pegram" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-87.051666666 36.101666666)" .
+
+<http://www.wikidata.org/entity/Q494755> rdfs:label "Madison County" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-88.84 35.61)" .
+
+<http://www.wikidata.org/entity/Q79663> rdfs:label "Alexander City" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-85.936008 32.933157)" .
 
 <http://www.wikidata.org/entity/Q538> rdfs:label "Oceania" .
 <http://www.wikidata.org/entity/Q49> rdfs:label "North America" .

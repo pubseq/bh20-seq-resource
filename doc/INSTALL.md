@@ -68,6 +68,11 @@ penguin2:~/iwrk/opensource/code/vg/bh20-seq-resource$  env GUIX_PACKAGE_PATH=~/i
 
 Note: see above on GUIX_PACKAGE_PATH.
 
+## Run country semantic enrichment script
+
+    cd bh20-seq-resource/scripts/db_enrichment
+    guix environment guix --ad-hoc git python nss-certs python-rdflib -- python3 country_enrichment.py
+
 ## Run the tests
 
     guix package -i python-requests python-pandas python-jinja2 python -p ~/opt/python-dev

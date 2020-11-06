@@ -39,14 +39,36 @@ def callSPARQL(query):
 
 g = Graph()
 
+test_query="""
+# Use with https://query.wikidata.org/
+SELECT DISTINCT ?a ?label ?country ?continent ?coor WHERE {
+    BIND (XXX as ?a) .
+    OPTIONAL {
+        ?a wdt:P625 ?coor.
+    }
+    ?a rdfs:label ?label .
+    ?a wdt:P17 ?country.
+    ?country rdfs:label ?country_label .
+    OPTIONAL {
+        ?country wdt:P30 ?continent.
+        ?continent rdfs:label ?continent_label
+        FILTER (lang(?continent_label)='en')
+    }
+    FILTER (lang(?country_label)='en')
+    FILTER (lang(?label)='en')
+}
+"""
+
+# wdt:P625 are GEO coordinates
+
 query = """
 construct {
     ?a wdt:P625 ?c.
     ?a rdfs:label ?label .
     ?a wdt:P17 ?country.
     ?country rdfs:label ?country_label .
-    ?country wdt:P30 ?continent.
-    ?continent rdfs:label ?continent_label
+    ?country wdt:P30 ?continent .
+    ?continent rdfs:label ?continent_label .
 } WHERE
 {
     BIND (XXX as ?a) .
@@ -59,7 +81,6 @@ construct {
     FILTER (lang(?continent_label)='en')
     FILTER (lang(?country_label)='en')
     FILTER (lang(?label)='en')
-
 }
 """""
 
@@ -72,6 +93,8 @@ with open(outputFile, 'r') as csvfile:
         counter=counter+1
 
         try:
+            testq = test_query.replace("XXX", "<"+row[0]+">")
+            print(testq)
             tmpquery=query.replace("XXX", "<"+row[0]+">")
             print(tmpquery)
 

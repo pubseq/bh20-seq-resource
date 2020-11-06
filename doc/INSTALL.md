@@ -77,6 +77,7 @@ Note: see above on GUIX_PACKAGE_PATH.
 ## Run country semantic enrichment script
 
     cd bh20-seq-resource/scripts/db_enrichment
+    edit input_location.csv
     guix environment guix --ad-hoc git python nss-certs python-rdflib -- python3 country_enrichment.py
 
 ## Run the tests

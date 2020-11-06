@@ -32,13 +32,13 @@ for index, row in table.iterrows():
           sample_name = sample
           collection_date = parse(str(row['Collection Date'])).strftime('%Y-%m-%d')
           locationx = row['City']+", "+row['State']+", USA"
-          location = "https://www.wikidata.org/wiki/Q16563" # Memphis by default
+          location = "http://www.wikidata.org/enitity/Q16563" # Memphis by default
           map = {
-              "Pegram": "https://www.wikidata.org/wiki/Q3289517",
-              "Alexander": "https://www.wikidata.org/wiki/Q79663",
-              "Smithville": "https://www.wikidata.org/wiki/Q2145339",
-              "Nashville": "https://www.wikidata.org/wiki/Q23197",
-              "Madison": "https://www.wikidata.org/wiki/Q494755"
+              "Pegram": "http://www.wikidata.org/enitity/Q3289517",
+              "Alexander": "http://www.wikidata.org/enitity/Q79663",
+              "Smithville": "http://www.wikidata.org/enitity/Q2145339",
+              "Nashville": "http://www.wikidata.org/enitity/Q23197",
+              "Madison": "http://www.wikidata.org/enitity/Q494755"
               }
 
           for name in map:

@@ -255,7 +255,8 @@ more metadata is yummy when stored in RDF. [[https://yummydata.org/][Yummydata]]
 that many of the terms in above example are URIs, such as
 host_species: http://purl.obolibrary.org/obo/NCBITaxon_9606.  We use
 web ontologies for these to make the data less ambiguous and more
-FAIR. Check out the option fields as defined in the schema. If it is not listed
+FAIR. Check out the option fields as defined in the schema. If it is not listed,
+check the [[https://github.com/arvados/bh20-seq-resource/blob/master/semantic_enrichment/labels.ttl][labels.ttl]] file. Also,
 a little bit of web searching may be required or [[./contact][contact]] us.
 
 ** Run the uploader (CLI)

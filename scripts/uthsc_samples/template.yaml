@@ -1,0 +1,35 @@
+id: placeholder
+
+license:
+    license_type: http://creativecommons.org/licenses/by/4.0/
+    title: "$sample_name - $locationx"
+    attribution_name: "Mariah Taylor, Colleen Jonsson"
+    attribution_url: https://www.uthsc.edu/medicine/molecular-sciences/faculty-directory/jonsson.php
+
+host:
+    host_id: "$sample_id"
+    host_species: http://purl.obolibrary.org/obo/NCBITaxon_9606
+
+sample:
+    sample_id: "$sample_id"
+    specimen_source: [http://purl.obolibrary.org/obo/NCIT_C155831]
+    collection_date: "$collection_date"
+    collection_location: $location
+
+virus:
+    virus_species: http://purl.obolibrary.org/obo/NCBITaxon_2697049
+    virus_strain: "$strain"
+
+technology:
+    sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0008632]
+    sequence_assembly_method: https://bio.tools/BWA#!
+    additional_technology_information: Oxford Nanopore MiniIon RNA long reads
+
+submitter:
+    authors: [Mariah Taylor, Colleen Jonsson]
+    submitter_name: [Mariah Taylor, Colleen B. Jonsson, Pjotr Prins]
+    submitter_address: UTHSC, Memphis, Tennessee 38163, USA
+    originating_lab: Regional Biocontainment Laboratory, Memphis, TN
+    provider_sample_id: $sample_id
+    submitter_sample_id: $sample_id
+    submitter_orcid: [https://orcid.org/0000-0002-2640-7672,https://orcid.org/0000-0002-8021-9162]

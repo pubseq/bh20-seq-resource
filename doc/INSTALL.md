@@ -68,6 +68,11 @@ penguin2:~/iwrk/opensource/code/vg/bh20-seq-resource$  env GUIX_PACKAGE_PATH=~/i
 
 Note: see above on GUIX_PACKAGE_PATH.
 
+## Run the tests
+
+    guix package -i python-requests python-pandas python-jinja2 python -p ~/opt/python-dev
+    . ~/opt/python-dev/etc/profile
+
 
 ## Run Virtuoso-ose
 

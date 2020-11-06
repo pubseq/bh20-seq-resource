@@ -1388,6 +1388,10 @@
     ns1:P17 <http://www.wikidata.org/entity/Q668> ;
     ns1:P625 "Point(73.0 20.8)" .
 
+<http://www.wikidata.org/entity/Q2722074> rdfs:label "Adajan" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.49 21.1)" .
+
 <http://www.wikidata.org/entity/Q2757125> rdfs:label "Choryasi Taluka" ;
     ns1:P17 <http://www.wikidata.org/entity/Q668> ;
     ns1:P625 "Point(73.0 20.8)" .

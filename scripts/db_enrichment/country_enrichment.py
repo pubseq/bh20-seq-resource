@@ -72,7 +72,6 @@ construct {
 } WHERE
 {
     BIND (XXX as ?a) .
-    ?a wdt:P625 ?c.
     ?a rdfs:label ?label .
     ?a wdt:P17 ?country.
     ?country rdfs:label ?country_label .
@@ -81,6 +80,7 @@ construct {
     FILTER (lang(?continent_label)='en')
     FILTER (lang(?country_label)='en')
     FILTER (lang(?label)='en')
+    OPTIONAL { ?a wdt:P625 ?c }
 }
 """""
 

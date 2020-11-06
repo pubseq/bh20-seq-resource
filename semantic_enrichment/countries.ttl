@@ -348,11 +348,6 @@
     ns1:P30 <http://www.wikidata.org/entity/Q538> ;
     ns1:P625 "Point(137.0 -28.0)" .
 
-<http://www.wikidata.org/entity/Q668> rdfs:label "India" ;
-    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
-    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
-    ns1:P625 "Point(83.0 22.8)" .
-
 <http://www.wikidata.org/entity/Q739> rdfs:label "Colombia" ;
     ns1:P17 <http://www.wikidata.org/entity/Q739> ;
     ns1:P30 <http://www.wikidata.org/entity/Q18> ;
@@ -1388,6 +1383,31 @@
     ns1:P17 <http://www.wikidata.org/entity/Q928> ;
     ns1:P30 <http://www.wikidata.org/entity/Q48> ;
     ns1:P625 "Point(123.0 12.0)" .
+
+<http://www.wikidata.org/entity/Q25622187> rdfs:label "Bayad" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(73.0 20.8)" .
+
+<http://www.wikidata.org/entity/Q2757125> rdfs:label "Choryasi Taluka" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(73.0 20.8)" .
+
+<http://www.wikidata.org/entity/Q27684996> rdfs:label "Daskroi" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P625 "Point(72.0 22.0)" .
+
+<http://www.wikidata.org/entity/Q692895> rdfs:label "Wairarapa" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q664> ;
+    ns1:P625 "Point(174.0 -41.2)" .
+
+<http://www.wikidata.org/entity/Q7960498> rdfs:label "Waitemata City" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q664> ;
+    ns1:P625 "Point(174.0 -41.2)" .
+
+<http://www.wikidata.org/entity/Q668> rdfs:label "India" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q668> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q48> ;
+    ns1:P625 "Point(83.0 22.8)" .
 
 <http://www.wikidata.org/entity/Q538> rdfs:label "Oceania" .
 <http://www.wikidata.org/entity/Q49> rdfs:label "North America" .

@@ -12,7 +12,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_schema(self):
         with open("bh20sequploader/bh20seq-schema.yml") as schema_resource:
-            metadata_schema = schema_salad.schema.load_schema("https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-schema.yml")
+            metadata_schema = schema_salad.schema.load_schema("bh20sequploader/bh20seq-schema.yml")
             (document_loader,
              avsc_names,
              schema_metadata,

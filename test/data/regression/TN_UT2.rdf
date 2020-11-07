@@ -1,0 +1,33 @@
+_:Nc519408f538a4bb39ea09f56ce9bb88e <http://semanticscience.org/resource/SIO_000115> "TN_UT2" .
+_:N299826fb66794f11991cebc5f8d8b24a <http://www.ebi.ac.uk/efo/EFO_0002699> "https://bio.tools/BWA#!" .
+_:N982774a13a39474aae39272447a09574 <https://creativecommons.org/ns#attributionURL> "https://www.uthsc.edu/medicine/molecular-sciences/faculty-directory/jonsson.php" .
+_:N7857c4718ab741169bae9fafa9b47c75 <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164> "2020-04-26" .
+_:N708d19e87323455c9f9bb317538f742d <http://semanticscience.org/resource/SIO_000116> "Pjotr Prins" .
+_:N95d4a000e14d4bd99b46d6ec84989aaf <http://semanticscience.org/resource/SIO_010055> "SARS-CoV-2/human/USA/TN_UT2/2020" .
+<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/license> _:N982774a13a39474aae39272447a09574 .
+_:N95d4a000e14d4bd99b46d6ec84989aaf <http://edamontology.org/data_1875> <http://purl.obolibrary.org/obo/NCBITaxon_2697049> .
+_:Nc519408f538a4bb39ea09f56ce9bb88e <http://www.ebi.ac.uk/efo/EFO_0000532> <http://purl.obolibrary.org/obo/NCBITaxon_9606> .
+_:N708d19e87323455c9f9bb317538f742d <http://purl.obolibrary.org/obo/NCIT_C42781> "Colleen Jonsson" .
+_:N982774a13a39474aae39272447a09574 <https://creativecommons.org/ns#attributionName> "Mariah Taylor, Colleen Jonsson" .
+<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/sample> _:N7857c4718ab741169bae9fafa9b47c75 .
+_:N708d19e87323455c9f9bb317538f742d <http://purl.obolibrary.org/obo/NCIT_C37984> "Regional Biocontainment Laboratory, Memphis, TN" .
+_:N299826fb66794f11991cebc5f8d8b24a <http://purl.obolibrary.org/obo/OBI_0600047> <http://www.ebi.ac.uk/efo/EFO_0008632> .
+_:N708d19e87323455c9f9bb317538f742d <http://semanticscience.org/resource/SIO_000172> "UTHSC, Memphis, Tennessee 38163, USA" .
+_:N7857c4718ab741169bae9fafa9b47c75 <http://purl.obolibrary.org/obo/OBI_0001479> <http://purl.obolibrary.org/obo/NCIT_C155831> .
+_:N708d19e87323455c9f9bb317538f742d <http://purl.obolibrary.org/obo/NCIT_C42781> "TN_UT2" .
+_:N7857c4718ab741169bae9fafa9b47c75 <http://semanticscience.org/resource/SIO_000115> "TN_UT2" .
+_:N708d19e87323455c9f9bb317538f742d <http://semanticscience.org/resource/SIO_000115> <https://orcid.org/0000-0002-2640-7672> .
+<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/submitter> _:N708d19e87323455c9f9bb317538f742d .
+<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/technology> _:N299826fb66794f11991cebc5f8d8b24a .
+_:N982774a13a39474aae39272447a09574 <http://purl.org/metadata/dublin_core_elements#Title> "TN_UT2 - Pegram, Tennessee, USA" .
+_:N299826fb66794f11991cebc5f8d8b24a <http://semanticscience.org/resource/SIO_001167> "Oxford Nanopore MiniIon RNA long reads" .
+_:N7857c4718ab741169bae9fafa9b47c75 <http://purl.obolibrary.org/obo/GAZ_00000448> <http://www.wikidata.org/entity/Q3289517> .
+<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/host> _:Nc519408f538a4bb39ea09f56ce9bb88e .
+_:N708d19e87323455c9f9bb317538f742d <http://purl.obolibrary.org/obo/NCIT_C42781> "Mariah Taylor" .
+_:N708d19e87323455c9f9bb317538f742d <http://semanticscience.org/resource/SIO_000115> <https://orcid.org/0000-0002-8021-9162> .
+<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/virus> _:N95d4a000e14d4bd99b46d6ec84989aaf .
+_:N708d19e87323455c9f9bb317538f742d <http://semanticscience.org/resource/SIO_000116> "Colleen B. Jonsson" .
+_:N708d19e87323455c9f9bb317538f742d <http://www.ebi.ac.uk/efo/EFO_0001741> "TN_UT2" .
+_:N982774a13a39474aae39272447a09574 <https://creativecommons.org/ns#License> "http://creativecommons.org/licenses/by/4.0/" .
+_:N708d19e87323455c9f9bb317538f742d <http://semanticscience.org/resource/SIO_000116> "Mariah Taylor" .
+

@@ -1,33 +1,33 @@
-_:N850430bbc537473e8fbab09c300daf2b <https://creativecommons.org/ns#License> <https://creativecommons.org/licenses/by/4.0/> .
-_:Ncab40e8bd4b84431aa6782f7e7480ef3 <http://www.ebi.ac.uk/efo/EFO_0000532> <http://purl.obolibrary.org/obo/NCBITaxon_9606> .
-_:N3c28bc8014134d77823451de114c6085 <http://purl.obolibrary.org/obo/NCIT_C42781> "Mariah Taylor" .
-_:Ncab40e8bd4b84431aa6782f7e7480ef3 <http://semanticscience.org/resource/SIO_000115> "TN_UT2" .
-<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/license> _:N850430bbc537473e8fbab09c300daf2b .
-_:N3c28bc8014134d77823451de114c6085 <http://purl.obolibrary.org/obo/NCIT_C42781> "TN_UT2" .
-_:N850430bbc537473e8fbab09c300daf2b <https://creativecommons.org/ns#attributionURL> <https://www.uthsc.edu/medicine/molecular-sciences/faculty-directory/jonsson.php> .
-_:N3c28bc8014134d77823451de114c6085 <http://semanticscience.org/resource/SIO_000172> "UTHSC, Memphis, Tennessee 38163, USA" .
-_:Nebe62f68542a47d0936e953195cf25d7 <http://purl.obolibrary.org/obo/OBI_0001479> <http://purl.obolibrary.org/obo/NCIT_C155831> .
-_:N3c28bc8014134d77823451de114c6085 <http://semanticscience.org/resource/SIO_000116> "Colleen B. Jonsson" .
-_:N78bfdbe9d12745e99164d619cb125277 <http://edamontology.org/data_1875> <http://purl.obolibrary.org/obo/NCBITaxon_2697049> .
-_:Nbf9e7b47381b4965926a47bf5b34e489 <http://semanticscience.org/resource/SIO_001167> "Oxford Nanopore MiniIon RNA long reads" .
-<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/host> _:Ncab40e8bd4b84431aa6782f7e7480ef3 .
-_:Nbf9e7b47381b4965926a47bf5b34e489 <http://www.ebi.ac.uk/efo/EFO_0002699> "https://bio.tools/BWA#!" .
-_:Nebe62f68542a47d0936e953195cf25d7 <http://semanticscience.org/resource/SIO_000115> "TN_UT2" .
-<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/sample> _:Nebe62f68542a47d0936e953195cf25d7 .
-_:N850430bbc537473e8fbab09c300daf2b <https://creativecommons.org/ns#attributionName> "Mariah Taylor, Colleen Jonsson" .
-_:N78bfdbe9d12745e99164d619cb125277 <http://semanticscience.org/resource/SIO_010055> "SARS-CoV-2/human/USA/TN_UT2/2020" .
-_:N3c28bc8014134d77823451de114c6085 <http://purl.obolibrary.org/obo/NCIT_C42781> "Colleen Jonsson" .
-_:N3c28bc8014134d77823451de114c6085 <http://semanticscience.org/resource/SIO_000115> <https://orcid.org/0000-0002-2640-7672> .
-_:Nebe62f68542a47d0936e953195cf25d7 <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164> "2020-04-26" .
-_:Nebe62f68542a47d0936e953195cf25d7 <http://purl.obolibrary.org/obo/GAZ_00000448> <http://www.wikidata.org/entity/Q3289517> .
-_:N850430bbc537473e8fbab09c300daf2b <http://purl.org/metadata/dublin_core_elements#Title> "TN_UT2 - Pegram, Tennessee, USA" .
-_:Nbf9e7b47381b4965926a47bf5b34e489 <http://purl.obolibrary.org/obo/OBI_0600047> <http://www.ebi.ac.uk/efo/EFO_0008632> .
-_:N3c28bc8014134d77823451de114c6085 <http://semanticscience.org/resource/SIO_000116> "Mariah Taylor" .
-_:N3c28bc8014134d77823451de114c6085 <http://www.ebi.ac.uk/efo/EFO_0001741> "TN_UT2" .
-_:N3c28bc8014134d77823451de114c6085 <http://semanticscience.org/resource/SIO_000116> "Pjotr Prins" .
-<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/submitter> _:N3c28bc8014134d77823451de114c6085 .
-_:N3c28bc8014134d77823451de114c6085 <http://semanticscience.org/resource/SIO_000115> <https://orcid.org/0000-0002-8021-9162> .
-<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/virus> _:N78bfdbe9d12745e99164d619cb125277 .
-_:N3c28bc8014134d77823451de114c6085 <http://purl.obolibrary.org/obo/NCIT_C37984> "Regional Biocontainment Laboratory, Memphis, TN" .
-<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/technology> _:Nbf9e7b47381b4965926a47bf5b34e489 .
+_:N76e90938195c463c9dd2af9dadcf3d56 <http://semanticscience.org/resource/SIO_000115> <https://orcid.org/0000-0002-8021-9162> .
+_:N14a259ceba1446a389be1076f7090540 <http://www.ebi.ac.uk/efo/EFO_0000532> <http://purl.obolibrary.org/obo/NCBITaxon_9606> .
+<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/host> _:N14a259ceba1446a389be1076f7090540 .
+<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/license> _:N1421ab28904c425faf6c308f77800e08 .
+_:N76e90938195c463c9dd2af9dadcf3d56 <http://purl.obolibrary.org/obo/NCIT_C42781> "Colleen Jonsson" .
+<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/sample> _:Na3153e61734c4cd1b7c4a11bb64b76cc .
+_:N1421ab28904c425faf6c308f77800e08 <https://creativecommons.org/ns#attributionURL> <https://www.uthsc.edu/medicine/molecular-sciences/faculty-directory/jonsson.php> .
+_:N17d644aee0054862ab8beb6cdf5cb4d6 <http://www.ebi.ac.uk/efo/EFO_0002699> "https://bio.tools/BWA#!" .
+_:N76e90938195c463c9dd2af9dadcf3d56 <http://purl.obolibrary.org/obo/NCIT_C42781> "TN_UT2" .
+_:N69368ab7984c4659bcfa493bdca2d5f1 <http://semanticscience.org/resource/SIO_010055> "SARS-CoV-2/human/USA/TN_UT2/2020" .
+_:Na3153e61734c4cd1b7c4a11bb64b76cc <http://purl.obolibrary.org/obo/OBI_0001479> <http://purl.obolibrary.org/obo/NCIT_C155831> .
+_:N76e90938195c463c9dd2af9dadcf3d56 <http://semanticscience.org/resource/SIO_000116> "Colleen B. Jonsson" .
+_:N76e90938195c463c9dd2af9dadcf3d56 <http://semanticscience.org/resource/SIO_000115> <https://orcid.org/0000-0002-2640-7672> .
+<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/submitter> _:N76e90938195c463c9dd2af9dadcf3d56 .
+_:N1421ab28904c425faf6c308f77800e08 <http://purl.org/metadata/dublin_core_elements#Title> "TN_UT2 - Pegram, Tennessee, USA" .
+_:N1421ab28904c425faf6c308f77800e08 <https://creativecommons.org/ns#attributionName> "Mariah Taylor, Colleen Jonsson" .
+_:N76e90938195c463c9dd2af9dadcf3d56 <http://purl.obolibrary.org/obo/NCIT_C42781> "Mariah Taylor" .
+_:N76e90938195c463c9dd2af9dadcf3d56 <http://semanticscience.org/resource/SIO_000116> "Mariah Taylor" .
+_:N76e90938195c463c9dd2af9dadcf3d56 <http://purl.obolibrary.org/obo/NCIT_C37984> "Regional Biocontainment Laboratory, Memphis, TN" .
+_:N14a259ceba1446a389be1076f7090540 <http://semanticscience.org/resource/SIO_000115> "TN_UT2" .
+_:Na3153e61734c4cd1b7c4a11bb64b76cc <http://purl.obolibrary.org/obo/GAZ_00000448> <http://www.wikidata.org/entity/Q3289517> .
+<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/technology> _:N17d644aee0054862ab8beb6cdf5cb4d6 .
+_:N1421ab28904c425faf6c308f77800e08 <https://creativecommons.org/ns#License> <https://creativecommons.org/licenses/by/4.0/> .
+_:N76e90938195c463c9dd2af9dadcf3d56 <http://semanticscience.org/resource/SIO_000116> "Pjotr Prins" .
+_:N76e90938195c463c9dd2af9dadcf3d56 <http://semanticscience.org/resource/SIO_000172> "UTHSC, Memphis, Tennessee 38163, USA" .
+_:N17d644aee0054862ab8beb6cdf5cb4d6 <http://semanticscience.org/resource/SIO_001167> "Oxford Nanopore MiniIon RNA long reads" .
+_:N69368ab7984c4659bcfa493bdca2d5f1 <http://edamontology.org/data_1875> <http://purl.obolibrary.org/obo/NCBITaxon_2697049> .
+_:Na3153e61734c4cd1b7c4a11bb64b76cc <http://semanticscience.org/resource/SIO_000115> "TN_UT2" .
+_:N76e90938195c463c9dd2af9dadcf3d56 <http://www.ebi.ac.uk/efo/EFO_0001741> "TN_UT2" .
+<file:///export/local/home/wrk/iwrk/opensource/code/vg/bh20-seq-resource/test/data/input/placeholder> <http://biohackathon.org/bh20-seq-schema#MainSchema/virus> _:N69368ab7984c4659bcfa493bdca2d5f1 .
+_:N17d644aee0054862ab8beb6cdf5cb4d6 <http://purl.obolibrary.org/obo/OBI_0600047> <http://www.ebi.ac.uk/efo/EFO_0008632> .
+_:Na3153e61734c4cd1b7c4a11bb64b76cc <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164> "2020-04-26" .
 

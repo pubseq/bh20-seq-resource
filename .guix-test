@@ -8,4 +8,4 @@ export GUILE_LOAD_COMPILED_PATH=$GUIX_PROFILE/share/guile/site/3.0/
 
 ls $GUILE_LOAD_PATH
 
-env GUIX_PACKAGE_PATH=~/iwrk/opensource/guix/guix-bioinformatics/ $GUIX_PROFILE/bin/guix environment -C guix --ad-hoc git python python-flask python-pyyaml python-pycurl python-magic  nss-certs python-pyshex python-pyyaml openssl python-pyshex python-pyshexc minimap2 python-schema-salad python-arvados-python-client -- python3 test/test_shex.py
+env GUIX_PACKAGE_PATH=~/iwrk/opensource/guix/guix-bioinformatics/ $GUIX_PROFILE/bin/guix environment -C guix --ad-hoc git python python-flask python-pyyaml python-pycurl python-magic  nss-certs python-pyshex python-pyyaml openssl python-pyshex python-pyshexc minimap2 python-schema-salad python-arvados-python-client -- python3 test/runner.py

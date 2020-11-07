@@ -1,14 +1,12 @@
+# Run with python3 test/test_shex.py
+
 import schema_salad.schema
 import schema_salad.ref_resolver
 import schema_salad.jsonld_context
-# import pkg_resources
-import logging
-# import traceback
-# from rdflib import Graph, Namespace
 from pyshex.evaluate import evaluate
 import unittest
 
-class TestStringMethods(unittest.TestCase):
+class TestShexMethods(unittest.TestCase):
 
     def test_schema(self):
         with open("bh20sequploader/bh20seq-schema.yml") as schema_resource:

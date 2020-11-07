@@ -24,6 +24,7 @@ class TestStringMethods(unittest.TestCase):
             print(doc)
             g = schema_salad.jsonld_context.makerdf("workflow", doc, document_loader.ctx)
             shex = pkg_resources.resource_stream(__name__, "../bh20sequploader/bh20seq-shex.rdf").read().decode("utf-8")
+            # Note the https link simply acts as a URI descriptor (it does not fetch)
             rslt, reason = evaluate(g, shex, doc["id"], "https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh20sequploader/bh20seq-shex.rdf#submissionShape")
 
             g.serialize(format="ntriples")

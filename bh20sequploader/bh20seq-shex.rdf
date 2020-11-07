@@ -2,6 +2,7 @@ PREFIX : <https://raw.githubusercontent.com/arvados/bh20-seq-resource/master/bh2
 PREFIX MainSchema: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
 PREFIX hostSchema: <http://biohackathon.org/bh20-seq-schema#hostSchema/>
 PREFIX cc:  <https://creativecommons.org/ns#>
+PREFIX cclicenses:  <https://creativecommons.org/licenses/>
 PREFIX dc:  <http://purl.org/metadata/dublin_core_elements#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
@@ -71,9 +72,9 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
 }
 
 :licenseShape{
-    cc:License xsd:string ;
+    cc:License [ cclicenses:~ ] ;
     dc:Title xsd:string ?;
     cc:attributionName xsd:string ?;
-    cc:attributionURL xsd:string ?;
+    cc:attributionURL /^http/ ;
     cc:attributionSource xsd:string ?;
 }

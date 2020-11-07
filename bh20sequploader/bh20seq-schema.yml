@@ -1,6 +1,6 @@
 $base: http://biohackathon.org/bh20-seq-schema
 $namespaces:
-  cc:  http://creativecommons.org/ns#
+  cc:  https://creativecommons.org/ns#
   dc:  http://purl.org/metadata/dublin_core_elements#
   sch: https://schema.org/
   efo: http://www.ebi.ac.uk/efo/
@@ -19,6 +19,8 @@ $graph:
       type: string
       jsonldPredicate:
           _id: https://creativecommons.org/ns#License
+          _type: "@id"
+          noLinkCheck: true
     title:
       doc: Attribution title related to data license
       type: string?
@@ -34,11 +36,15 @@ $graph:
       type: string?
       jsonldPredicate:
           _id: https://creativecommons.org/ns#attributionURL
+          _type: "@id"
+          noLinkCheck: true
     attribution_source:
       doc: Attribution source URL related to data license
       type: string?
       jsonldPredicate:
           _id: https://creativecommons.org/ns#attributionSource
+          _type: "@id"
+          noLinkCheck: true
 
 - name: hostSchema
   type: record

@@ -1,9 +1,9 @@
 id: placeholder
 
 license:
-    license_type: http://creativecommons.org/licenses/by/4.0/
-    title: "$sample_name - $locationx"
-    attribution_name: "Mariah Taylor, Colleen Jonsson"
+    license_type: https://creativecommons.org/licenses/by/4.0/
+    title: "$strain"
+    attribution_name: "Mariah Taylor, Colleen B. Jonsson"
     attribution_url: https://www.uthsc.edu/medicine/molecular-sciences/faculty-directory/jonsson.php
 
 host:
@@ -23,10 +23,10 @@ virus:
 technology:
     sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0008632]
     sequence_assembly_method: https://bio.tools/BWA#!
-    additional_technology_information: Oxford Nanopore MiniIon RNA long reads
+    additional_technology_information: "Oxford Nanopore MiniIon RNA long reads"
 
 submitter:
-    authors: [Mariah Taylor, Colleen Jonsson]
+    authors: [Mariah Taylor, Colleen B. Jonsson]
     submitter_name: [Mariah Taylor, Colleen B. Jonsson, Pjotr Prins]
     submitter_address: UTHSC, Memphis, Tennessee 38163, USA
     originating_lab: Regional Biocontainment Laboratory, Memphis, TN

@@ -55,3 +55,5 @@ for index, row in table.iterrows():
                                    locationx=locationx,
                                    strain=strain
                                    ))
+
+          print(f"Run: python3 bh20sequploader/main.py scripts/uthsc_samples/yaml/{sample}.yaml scripts/uthsc_samples/yaml/{sample}.fa")

@@ -713,8 +713,9 @@ union
     logging.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
     # return jsonify({'sequences': int(result[0]["num"]["value"])})
     sequenceuri=sample['sequenceuri']['value']
-    collectionuri=sequenceuri.split('sequence.fasta')[0]
-    metauri=collectionuri+'metadata.yaml'
+    m = re.match(r"http://collections.lugli.arvadosapi.com/c=([^/]*)/sequence.fasta|http://covid19.genenetwork.org/resource/(.*)", sequenceuri)
+    fastauri = "http://collections.lugli.arvadosapi.com/c=%s/sequence.fasta" % m.group(1)
+    metauri = "http://collections.lugli.arvadosapi.com/c=%s/metadata.yaml" % m.group(1)
     locationuri=sample['geo']['value']
     location=sample['geoname']['value']
     date=sample['date']['value']
@@ -729,7 +730,18 @@ union
     institute=''
     if 'institute' in sample:
         institute=sample['institute']['value']
-    return render_template('permalink.html',id=id,menu='',uri=f"http://covid19.genenetwork.org/resource/{id}",sequenceuri=sequenceuri,locationuri=locationuri,location=location,date=date,source=source,sampletype=sampletype,institute=institute,collectionuri=collectionuri,metauri=metauri)
+    return render_template('permalink.html',
+                           id=id,
+                           menu='',
+                           uri=f"http://covid19.genenetwork.org/resource/{id}",
+                           sequenceuri=fastauri,
+                           locationuri=locationuri,
+                           location=location,
+                           date=date,
+                           source=source,
+                           sampletype=sampletype,
+                           institute=institute,
+                           metauri=metauri)
 
 # http://covid19.genenetwork.org/location?label=http://www.wikidata.org/entity/Q114
 # http://localhost:5067/location?label=http://www.wikidata.org/entity/Q114

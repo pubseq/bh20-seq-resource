@@ -675,13 +675,27 @@ sparqlURL='http://sparql.genenetwork.org/sparql/'
 @app.route('/resource/<id>')
 def resource(id):
     """Get a COVID19 resource using identifier"""
+
     query=f"""
 PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
 PREFIX sio: <http://semanticscience.org/resource/>
 select distinct ?sample ?geoname ?date ?source ?geo ?sampletype ?institute ?sequenceuri
+where {{
 {{
    ?sample sio:SIO_000115 "{id}" .
    ?sequenceuri pubseq:sample ?sample .
+}}
+union
+{{
+   <http://collections.lugli.arvadosapi.com/c={id}/sequence.fasta> pubseq:sample ?sample .
+   ?sequenceuri pubseq:sample ?sample .
+}}
+union
+{{
+   <http://covid19.genenetwork.org/resource/{id}> pubseq:sample ?sample .
+   ?sequenceuri pubseq:sample ?sample .
+}}
+
    ?sample <http://purl.obolibrary.org/obo/GAZ_00000448> ?geo .
    ?geo rdfs:label ?geoname .
    ?sample <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164> ?date .
@@ -699,8 +713,9 @@ select distinct ?sample ?geoname ?date ?source ?geo ?sampletype ?institute ?sequ
     logging.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
     # return jsonify({'sequences': int(result[0]["num"]["value"])})
     sequenceuri=sample['sequenceuri']['value']
-    collectionuri=sequenceuri.split('sequence.fasta')[0]
-    metauri=collectionuri+'metadata.yaml'
+    m = re.match(r"http://collections.lugli.arvadosapi.com/c=([^/]*)/sequence.fasta|http://covid19.genenetwork.org/resource/(.*)", sequenceuri)
+    fastauri = "http://collections.lugli.arvadosapi.com/c=%s/sequence.fasta" % m.group(1)
+    metauri = "http://collections.lugli.arvadosapi.com/c=%s/metadata.yaml" % m.group(1)
     locationuri=sample['geo']['value']
     location=sample['geoname']['value']
     date=sample['date']['value']
@@ -715,7 +730,18 @@ select distinct ?sample ?geoname ?date ?source ?geo ?sampletype ?institute ?sequ
     institute=''
     if 'institute' in sample:
         institute=sample['institute']['value']
-    return render_template('permalink.html',id=id,menu='',uri=f"http://covid19.genenetwork.org/resource/{id}",sequenceuri=sequenceuri,locationuri=locationuri,location=location,date=date,source=source,sampletype=sampletype,institute=institute,collectionuri=collectionuri,metauri=metauri)
+    return render_template('permalink.html',
+                           id=id,
+                           menu='',
+                           uri=f"http://covid19.genenetwork.org/resource/{id}",
+                           sequenceuri=fastauri,
+                           locationuri=locationuri,
+                           location=location,
+                           date=date,
+                           source=source,
+                           sampletype=sampletype,
+                           institute=institute,
+                           metauri=metauri)
 
 # http://covid19.genenetwork.org/location?label=http://www.wikidata.org/entity/Q114
 # http://localhost:5067/location?label=http://www.wikidata.org/entity/Q114

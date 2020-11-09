@@ -25,7 +25,7 @@ inputs:
   src_project:
     type: string
     inputBinding: {position: 2}
-  schema:
+  metadataSchema:
     type: File
     inputBinding: {position: 3}
   exclude:

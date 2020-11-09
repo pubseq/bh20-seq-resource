@@ -215,7 +215,7 @@ class SeqAnalyzer:
         most_recent_analysis = self.api.groups().list(filters=[['owner_uuid', '=', self.pangenome_analysis_project]],
                                                       order="created_at desc").execute()
         for m in most_recent_analysis["items"]:
-            wf = self.get_workflow_output_from_project(m["uuid"], "arv-main.cwl")
+            wf = self.get_workflow_output_from_project(m["uuid"], "collect-seqs.cwl")
             if wf is None:
                 continue
             src = self.api.collections().get(uuid=wf["output_uuid"]).execute()

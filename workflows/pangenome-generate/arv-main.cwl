@@ -36,7 +36,7 @@ steps:
     run: collect-seqs.cwl
     in:
       src_project: src_project
-      schema: metadataSchema
+      metadataSchema: metadataSchema
       exclude: exclude
     out: [relabeledSeqs, mergedMetadata]
   pangenome-generate:

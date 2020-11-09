@@ -675,13 +675,27 @@ sparqlURL='http://sparql.genenetwork.org/sparql/'
 @app.route('/resource/<id>')
 def resource(id):
     """Get a COVID19 resource using identifier"""
+
     query=f"""
 PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
 PREFIX sio: <http://semanticscience.org/resource/>
 select distinct ?sample ?geoname ?date ?source ?geo ?sampletype ?institute ?sequenceuri
+where {{
 {{
    ?sample sio:SIO_000115 "{id}" .
    ?sequenceuri pubseq:sample ?sample .
+}}
+union
+{{
+   <http://collections.lugli.arvadosapi.com/c={id}/sequence.fasta> pubseq:sample ?sample .
+   ?sequenceuri pubseq:sample ?sample .
+}}
+union
+{{
+   <http://covid19.genenetwork.org/resource/{id}> pubseq:sample ?sample .
+   ?sequenceuri pubseq:sample ?sample .
+}}
+
    ?sample <http://purl.obolibrary.org/obo/GAZ_00000448> ?geo .
    ?geo rdfs:label ?geoname .
    ?sample <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164> ?date .

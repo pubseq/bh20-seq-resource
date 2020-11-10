@@ -107,3 +107,9 @@ And run from the data dir
     guix environment --ad-hoc virtuoso-ose -- virtuoso-t -f
 
 Visit http://localhost:8890/sparql
+
+To update the turtle files do
+
+    guix environment -C guix --ad-hoc python python-requests raptor2 curl --network -- python3 ./scripts/update_virtuoso/check_for_updates.py cache.txt dba dba
+
+where dba is the default password.

@@ -664,17 +664,6 @@ def blog_page():
         buf = get_html_body('doc/blog/'+blog_content+'.html',"https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/"+blog_content+".org")
     return render_template('blog.html',menu='BLOG',embed=buf,blog=blog_content)
 
-@app.route('/feed', methods=['GET'])
-def feed():
-    redis_client = redis.Redis(host=os.environ.get('HOST', 'localhost'),
-                               port=os.environ.get('PORT', 6379),
-                               db=os.environ.get('REDIS_DB', 0))
-    tweets = [redis_client.hgetall(tweet_id)
-              for tweet_id in redis_client.zrevrange('bh20-tweet-score:',
-                                                     0, -1)]
-    return render_template('feed.html',
-                           menu='FEED',
-                           tweets=tweets)
 
 @app.route('/about')
 def about_page():

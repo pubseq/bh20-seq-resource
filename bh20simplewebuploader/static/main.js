@@ -68,6 +68,12 @@ function fetchHTMLTable(apiEndPoint) {
             htmlString="<table>"
             for (var i=0; i<data.length;i++) {
                 let url = data[i]["key"];
+                continents = ["Q538", "Q48", "Q49", "Q18", "Q15", "Q27611" ];
+                node = url.split("/").pop();
+                console.log(continents.includes(node));
+                if (url.includes("wikidata") && !continents.includes(node)) {
+                    url = "http://covid19.genenetwork.org/location?label="+url ;
+                }
                 let label = data[i]["label"];
                 htmlString=htmlString+"<tr><td><a href=\""+url+"\">"+label+"</a></td><td>"+data[i]["count"]+"<td></tr>"
             }

@@ -22,9 +22,27 @@
                     or <a href="/apidoc">REST API</a>. For more
                     information see the <a href="/about">FAQ!</a>.
                   </p>
-      <section id="map_view" class="map">
-        <div id="mapid"></div>
-      </section>
+
+                  <section class="flex-container">
+                      <div id="map_view" class="map">
+                          <div id="mapid"></div>
+                      </div>
+                      <div id="twitter-feed">
+                          <ul>
+                              {% for tweet in tweets|sort(reverse=true, attribute="timeposted")%}
+                              <li>
+                                  <p class="tweet">
+                                      {{ tweet.tweet|urlize(40, target="_blank") }} <br/>
+                                      by {{ tweet.author }}
+                                  </p>
+                                  <small class="timeposted">
+                                      {{ tweet.timeposted }}
+                                  </small>
+                              </li>
+                              {% endfor %}
+                          </ul>
+                      </div>
+                  </section>
 
                   <a href="https://projectredcap.org/"><img class="img-right" src="static/image/REDCap.png" /></a>
                   <p>
@@ -76,7 +94,8 @@
                     use, see the <a href="/blog">docs</a>.
                   </p>
                 </div>
-        </section>
+              </section>
+
 
       {% include 'footer.html' %}
 

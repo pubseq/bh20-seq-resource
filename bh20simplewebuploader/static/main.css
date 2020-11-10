@@ -506,3 +506,30 @@ div.status {
     font-size: 16px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+#twitter-feed {
+    background-color: #f5f8fa;
+    max-height: 440px;
+    max-width: 500px;
+    overflow-y: auto;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+#twitter-feed ul {
+    list-style-type: none;
+}
+
+#twitter-feed ul li {
+    border-bottom: 2px solid white;
+    padding-bottom: 20px;
+}

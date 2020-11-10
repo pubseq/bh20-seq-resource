@@ -36,11 +36,14 @@ if len(sys.argv) > 3:
 
 for item in validated:
     pdh = item["portable_data_hash"]
+    uuid = item["uuid"]
     with arvados.collection.CollectionReader(pdh, api_client=api, keep_client=keepclient) as col:
         with col.open("sequence.fasta", "rt") as fa:
-            subject = "http://covid19.genenetwork.org/resource/%s" % pdh
+            subject = "http://covid19.genenetwork.org/resource/%s" % uuid
             label = fa.readline().strip()
             merged_metadata.write("<%s> <http://biohackathon.org/bh20-seq-schema/original_fasta_label> \"%s\" .\n" % (subject, label[1:].replace('"', '\\"')))
+            merged_metadata.write("<%s> <http://biohackathon.org/bh20-seq-schema/collection_pdh> \"%s\" .\n" % (subject, pdh))
+            merged_metadata.write("<%s> <http://biohackathon.org/bh20-seq-schema/collection_version> \"%s\" .\n" % (subject, item["version"]))
             skip = (subject in blacklist or label[1:] in blacklist)
             if skip:
                 merged_metadata.write("<%s> <http://biohackathon.org/bh20-seq-schema/excluded_from_graph> \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean> .\n" % subject)

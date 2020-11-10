@@ -707,6 +707,11 @@ union
    <http://covid19.genenetwork.org/resource/{id}> pubseq:sample ?sample .
    ?sequenceuri pubseq:sample ?sample .
 }}
+union
+{{
+   ?sequenceuri <http://biohackathon.org/bh20-seq-schema/collection_pdh> "{id}" .
+   ?sequenceuri pubseq:sample ?sample .
+}}
 
    ?sample <http://purl.obolibrary.org/obo/GAZ_00000448> ?geo .
    ?geo rdfs:label ?geoname .

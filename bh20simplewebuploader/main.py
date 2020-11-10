@@ -257,7 +257,7 @@ def send_home():
                                port=os.environ.get('PORT', 6379),
                                db=os.environ.get('REDIS_DB', 0))
     tweets = []
-    for tweet_id in redis_client.zrevrange('gn2-tweet-score:',
+    for tweet_id in redis_client.zrevrange('bh20-tweet-score:',
                                            0, -1):
         tweets.append(
             {k.decode("utf-8"): v.decode("utf-8") for k, v in

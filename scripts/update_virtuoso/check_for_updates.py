@@ -56,13 +56,14 @@ url = 'https://download.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/_/mer
 #  curl --head https://download.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/_/mergedmetadata.ttl
 r = requests.head(url)
 print(r.headers)
-print(r.headers['Last-Modified'])
+if not no_cache:
+  print(r.headers['Last-Modified'])
 
-# --- Convert/validate time stamp
-# ValueError: time data 'Tue, 21 Apr 2020 23:47:43 GMT' does not match format '%a %b %d %H:%M:%S %Y'
-last_modified_str = r.headers['Last-Modified']
-t_stamp = time.strptime(last_modified_str,"%a, %d %b %Y %H:%M:%S %Z" )
-print(t_stamp)
+  # --- Convert/validate time stamp
+  # ValueError: time data 'Tue, 21 Apr 2020 23:47:43 GMT' does not match format '%a %b %d %H:%M:%S %Y'
+  last_modified_str = r.headers['Last-Modified']
+  t_stamp = time.strptime(last_modified_str,"%a, %d %b %Y %H:%M:%S %Z" )
+  print(t_stamp)
 
 # OK, it works, now check last stored value in the cache
 stamp = None

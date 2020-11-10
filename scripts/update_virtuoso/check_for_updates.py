@@ -4,7 +4,7 @@
 #
 # You can run this in a Guix container with
 #
-#    ~/opt/guix/bin/guix environment -C guix --ad-hoc python python-requests curl --network -- python3 ./scripts/update_virtuoso/check_for_updates.py cache.txt dba dba
+#    ~/opt/guix/bin/guix environment -C guix --ad-hoc raptor2 python python-requests curl --network -- python3 ./scripts/update_virtuoso/check_for_updates.py cache.txt dba dba
 #
 # Note you'll need to run from the root dir. Remove the ./cache.txt file if you want to force an update.
 #
@@ -19,6 +19,11 @@ fn = sys.argv[1]
 user = sys.argv[2]
 pwd = sys.argv[3]
 
+no_cache = False
+if fn == "--no-cache":
+  no_cache = True
+  print("Skipping cache check and download of metadata.ttl")
+
 scriptdir = os.path.dirname(os.path.realpath(__file__))
 print(scriptdir)
 basedir = os.path.dirname(os.path.dirname(scriptdir))
@@ -28,6 +33,15 @@ def upload(fn):
     # cmd = "curl -X PUT --digest -u dba:dba -H Content-Type:text/turtle -T metadata.ttl -G http://localhost:8890/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph".split(" ")
     # print("DELETE "+fn)
     # cmd = ("curl --digest --user dba:%s --verbose --url -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph -X DELETE" % pwd).split(" ")
+
+    print("VALIDATE "+fn)
+    cmd = f"rapper -i turtle {fn}"
+    print(cmd)
+    p = subprocess.Popen(cmd.split(" "),stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    if p.returncode != 0:
+      print(out,err)
+    assert(p.returncode == 0)
 
     print("UPLOADING "+fn)
     cmd = ("curl -X PUT --digest -u dba:%s -H Content-Type:text/turtle -T %s -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph/%s" % (pwd, fn, os.path.basename(fn)) )
@@ -39,6 +53,7 @@ def upload(fn):
 
 url = 'https://download.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/_/mergedmetadata.ttl'
 # --- Fetch headers from TTL file on Arvados
+#  curl --head https://download.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/_/mergedmetadata.ttl
 r = requests.head(url)
 print(r.headers)
 print(r.headers['Last-Modified'])
@@ -49,14 +64,14 @@ last_modified_str = r.headers['Last-Modified']
 t_stamp = time.strptime(last_modified_str,"%a, %d %b %Y %H:%M:%S %Z" )
 print(t_stamp)
 
-# OK, it works, now check last stored value
+# OK, it works, now check last stored value in the cache
 stamp = None
 if os.path.isfile(fn):
     file = open(fn,"r")
     stamp = file.read()
     file.close
 
-if stamp != last_modified_str:
+if no_cache or stamp != last_modified_str:
     print("Delete graphs")
     for graph in ["labels.ttl", "metadata.ttl", "countries.ttl"]:
         cmd = ("curl --digest -u dba:%s --verbose --url http://127.0.0.1:8890/sparql-graph-crud-auth?graph=http://covid-19.genenetwork.org/graph/%s -X DELETE" % (pwd, graph))
@@ -69,12 +84,13 @@ if stamp != last_modified_str:
     upload(basedir+"/semantic_enrichment/labels.ttl")
     upload(basedir+"/semantic_enrichment/countries.ttl")
 
-    print("Fetch metadata TTL")
-    r = requests.get(url)
-    assert(r.status_code == 200)
-    with open("metadata.ttl", "w") as f:
-        f.write(r.text)
-        f.close
+    if not no_cache:
+        print("Fetch metadata TTL")
+        r = requests.get(url)
+        assert(r.status_code == 200)
+        with open("metadata.ttl", "w") as f:
+            f.write(r.text)
+            f.close
     upload("metadata.ttl")
     with open(fn,"w") as f:
         f.write(last_modified_str)

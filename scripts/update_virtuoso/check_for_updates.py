@@ -93,7 +93,8 @@ if no_cache or stamp != last_modified_str:
             f.write(r.text)
             f.close
     upload("metadata.ttl")
-    with open(fn,"w") as f:
-        f.write(last_modified_str)
+    if not no_cache:
+        with open(fn,"w") as f:
+            f.write(last_modified_str)
 else:
     print("Metadata is up to date")

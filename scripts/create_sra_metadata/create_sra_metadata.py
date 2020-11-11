@@ -270,12 +270,18 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     if Organization_Address is not None:
         info_for_yaml_dict['submitter']['lab_address'] = '; '.join([x.text for x in Organization_Address] + ['Postal code ' + Organization_Address.attrib['postal_code']])
 
-    if 'collection_date' not in info_for_yaml_dict['sample']:
-        info_for_yaml_dict['sample']['collection_date'] = '1970-01-01'
-        info_for_yaml_dict['sample']['additional_collection_information'] = "The real 'collection_date' is missing"
-
+    # Do not trick the quality control!
+    #if 'collection_date' not in info_for_yaml_dict['sample']:
+    #    info_for_yaml_dict['sample']['collection_date'] = '1970-01-01'
+    #    info_for_yaml_dict['sample']['additional_collection_information'] = "The real 'collection_date' is missing"
 
     # Check if mandatory fields are missing
+    if 'collection_date' not in info_for_yaml_dict['sample']:
+        # print(accession_version, ' - collection_date not found')
+        if accession not in not_created_accession_dict:
+            not_created_accession_dict[accession] = []
+        not_created_accession_dict[accession].append('collection_date not found')
+
     if 'sample_sequencing_technology' not in info_for_yaml_dict['technology']:
         # print(accession_version, ' - technology not found')
         if accession not in not_created_accession_dict:

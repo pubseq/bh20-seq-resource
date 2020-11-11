@@ -688,6 +688,9 @@ sparqlURL='http://sparql.genenetwork.org/sparql/'
 
 ##
 # Example http://covid19.genenetwork.org/resource/MT326090.1
+#         http://localhost:5067/resource/lugli-4zz18-oixhf5jl3lqlegz
+#         http://localhost:5067/resource/MT326090.1
+#
 # Example http://host/resource/SRR11621868
 @app.route('/resource/<id>')
 def resource(id):
@@ -735,9 +738,11 @@ union
     logging.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
     # return jsonify({'sequences': int(result[0]["num"]["value"])})
     sequenceuri=sample['sequenceuri']['value']
+    # http://covid19.genenetwork.org/resource/lugli-4zz18-gx0ifousk9yu0ql
     m = re.match(r"http://collections.lugli.arvadosapi.com/c=([^/]*)/sequence.fasta|http://covid19.genenetwork.org/resource/(.*)", sequenceuri)
-    fastauri = "http://collections.lugli.arvadosapi.com/c=%s/sequence.fasta" % m.group(1)
-    metauri = "http://collections.lugli.arvadosapi.com/c=%s/metadata.yaml" % m.group(1)
+    collection = m.group(1) or m.group(2)
+    fastauri = f"http://collections.lugli.arvadosapi.com/c={collection}/sequence.fasta"
+    metauri = f"http://collections.lugli.arvadosapi.com/c={collection}/metadata.yaml"
     locationuri=sample['geo']['value']
     location=sample['geoname']['value']
     date=sample['date']['value']

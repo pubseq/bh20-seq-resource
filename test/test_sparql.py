@@ -4,12 +4,11 @@ import unittest
 import requests
 import logging
 
-
-
 class TestSPARQL(unittest.TestCase):
 
     def test_sparql(self):
-        sparqlURL='http://sparql.genenetwork.org/sparql/'
+        # sparqlURL='http://sparql.genenetwork.org/sparql/'
+        sparqlURL='http://127.0.0.1:8890//sparql/'
         id = "http://collections.lugli.arvadosapi.com/c=0002e93b86ad77824620bf938b97e134+126/sequence.fasta"
         id = "MT800005.1"
         query=f"""

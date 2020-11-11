@@ -30,7 +30,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
     efo:EFO_0000727 xsd:string ?;
     obo:VO_0000002 xsd:string {0,10};
     sio:SIO_001167 xsd:string ?;
-    sio:SIO_001014 [ obo:HANCESTRO_~ ] ? ; #ethnicity
+    sio:SIO_001014 [ obo:HANCESTRO_~ ] ? ; #ethnicity from obo:HANCESTRO
 }
 
 :sampleShape  {
@@ -39,7 +39,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
     obo:GAZ_00000448 [wikidata:~] ;
     obo:OBI_0001895 xsd:string ?;
     obo:NCIT_C41206 xsd:string ?;
-    obo:OBI_0001479 IRI {0,2};
+    obo:OBI_000147 [ obo:NCIT_~ ] ? ;    #specimen source from obo:NCIT
     obo:OBI_0001472 xsd:string ?;
     sio:SIO_001167 xsd:string ?;
     edam:data_2091 IRI {0,3};

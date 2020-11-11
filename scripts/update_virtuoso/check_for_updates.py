@@ -14,6 +14,8 @@ import sys
 import os.path
 import subprocess
 
+HOST="http://127.0.0.1:8890/"
+
 assert(len(sys.argv)==4)
 fn = sys.argv[1]
 user = sys.argv[2]
@@ -36,7 +38,7 @@ def upload(fn):
     # Upload into Virtuoso using CURL
     # cmd = "curl -X PUT --digest -u dba:dba -H Content-Type:text/turtle -T metadata.ttl -G http://localhost:8890/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph".split(" ")
     # print("DELETE "+fn)
-    # cmd = ("curl --digest --user dba:%s --verbose --url -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph -X DELETE" % pwd).split(" ")
+    # cmd = ("curl --digest --user dba:%s --verbose --url -G http://xsparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph -X DELETE" % pwd).split(" ")
 
     print("VALIDATE "+fn)
     cmd = f"rapper -i turtle {fn}"
@@ -48,7 +50,7 @@ def upload(fn):
     assert(p.returncode == 0)
 
     print("UPLOADING "+fn)
-    cmd = ("curl -X PUT --digest -u dba:%s -H Content-Type:text/turtle -T %s -G http://sparql.genenetwork.org/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph/%s" % (pwd, fn, os.path.basename(fn)) )
+    cmd = (f"curl -X PUT --digest -u dba:%s -H Content-Type:text/turtle -T %s -G {HOST}/sparql-graph-crud-auth --data-urlencode graph=http://covid-19.genenetwork.org/graph/%s" % (pwd, fn, os.path.basename(fn)) )
     print(cmd)
     p = subprocess.Popen(cmd.split(" "),stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     out, err = p.communicate()
@@ -79,7 +81,7 @@ if os.path.isfile(fn):
 if force or no_cache or stamp != last_modified_str:
     print("Delete graphs")
     for graph in ["labels.ttl", "metadata.ttl", "countries.ttl"]:
-        cmd = ("curl --digest -u dba:%s --verbose --url http://127.0.0.1:8890/sparql-graph-crud-auth?graph=http://covid-19.genenetwork.org/graph/%s -X DELETE" % (pwd, graph))
+        cmd = (f"curl --digest -u dba:%s --verbose --url {HOST}/sparql-graph-crud-auth?graph=http://covid-19.genenetwork.org/graph/%s -X DELETE" % (pwd, graph))
         print(cmd)
         p = subprocess.Popen(cmd.split(" "))
         output = p.communicate()[0]

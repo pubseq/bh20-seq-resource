@@ -257,12 +257,16 @@ def send_home():
                                port=os.environ.get('PORT', 6379),
                                db=os.environ.get('REDIS_DB', 0))
     tweets = []
-    for tweet_id in redis_client.zrevrange('bh20-tweet-score:',
-                                           0, -1):
-        tweets.append(
-            {k.decode("utf-8"): v.decode("utf-8") for k, v in
-             redis_client.hgetall(tweet_id).items()}
-        )
+    try:
+        for tweet_id in redis_client.zrevrange('bh20-tweet-score:',
+                                               0, -1):
+            tweets.append(
+                {k.decode("utf-8"): v.decode("utf-8") for k, v in
+                 redis_client.hgetall(tweet_id).items()}
+            )
+    except redis.exceptions.ConnectionError as e:
+        logging.warning(e)
+        pass
     return render_template('home.html', menu='HOME',
                            tweets=tweets,
                            load_map=True)

@@ -1052,7 +1052,6 @@
     ns1:P30 <http://www.wikidata.org/entity/Q48> ;
     ns1:P625 "Point(66.0 41.0)" .
 
-<http://www.wikidata.org/entity/Q27611> rdfs:label "Central America" .
 
 <http://www.wikidata.org/entity/Q298> rdfs:label "Chile" ;
     ns1:P17 <http://www.wikidata.org/entity/Q298> ;
@@ -1415,8 +1414,8 @@
 
 <http://www.wikidata.org/entity/Q538> rdfs:label "Oceania" .
 <http://www.wikidata.org/entity/Q49> rdfs:label "North America" .
+<http://www.wikidata.org/entity/Q27611> rdfs:label "Central America" .
 <http://www.wikidata.org/entity/Q18> rdfs:label "South America" .
 <http://www.wikidata.org/entity/Q46> rdfs:label "Europe" .
 <http://www.wikidata.org/entity/Q48> rdfs:label "Asia" .
 <http://www.wikidata.org/entity/Q15> rdfs:label "Africa" .
-

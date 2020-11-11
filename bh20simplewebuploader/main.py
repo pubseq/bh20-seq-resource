@@ -265,7 +265,7 @@ def send_home():
                  redis_client.hgetall(tweet_id).items()}
             )
     except redis.exceptions.ConnectionError as e:
-        logging.warning(e)
+        logging.warning(f"redis connect failed {e}")
         pass
     return render_template('home.html', menu='HOME',
                            tweets=tweets,
@@ -683,6 +683,7 @@ def contact_page():
 ## Linked data permanent links/resources
 ##
 sparqlURL='http://sparql.genenetwork.org/sparql/'
+# sparqlURL='http://127.0.0.1:8890//sparql/'
 
 
 ##

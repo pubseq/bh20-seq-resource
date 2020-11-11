@@ -2,6 +2,7 @@ import sys
 import arvados
 import json
 import shutil
+import logging
 import arvados.collection
 import ruamel.yaml
 import schema_salad.schema
@@ -37,34 +38,38 @@ if len(sys.argv) > 3:
 for item in validated:
     pdh = item["portable_data_hash"]
     uuid = item["uuid"]
-    with arvados.collection.CollectionReader(pdh, api_client=api, keep_client=keepclient) as col:
-        with col.open("sequence.fasta", "rt") as fa:
-            subject = "http://covid19.genenetwork.org/resource/%s" % uuid
-            label = fa.readline().strip()
-            merged_metadata.write("<%s> <http://biohackathon.org/bh20-seq-schema/original_fasta_label> \"%s\" .\n" % (subject, label[1:].replace('"', '\\"')))
-            merged_metadata.write("<%s> <http://biohackathon.org/bh20-seq-schema/collection_pdh> \"%s\" .\n" % (subject, pdh))
-            merged_metadata.write("<%s> <http://biohackathon.org/bh20-seq-schema/collection_version> \"%s\" .\n" % (subject, item["version"]))
-            skip = (subject in blacklist or label[1:] in blacklist)
-            if skip:
-                merged_metadata.write("<%s> <http://biohackathon.org/bh20-seq-schema/excluded_from_graph> \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean> .\n" % subject)
-            if not skip:
-                relabeled_fasta.write(">"+subject+"\n")
-            data = fa.read(8096)
-            while data:
-                if not skip:
-                    relabeled_fasta.write(data)
-                endswithnewline = data.endswith("\n")
-                data = fa.read(8096)
-            if not skip and not endswithnewline:
-                relabeled_fasta.write("\n")
+    try:
+        subject = "http://covid19.genenetwork.org/resource/%s" % uuid
+        with arvados.collection.CollectionReader(pdh, api_client=api, keep_client=keepclient) as col:
+            with col.open("metadata.yaml", "rt") as md:
+                metadata_content = ruamel.yaml.round_trip_load(md)
+                metadata_content["id"] = subject
+                add_lc_filename(metadata_content, metadata_content["id"])
+                doc, metadata = schema_salad.schema.load_and_validate(document_loader, avsc_names, metadata_content, False, False)
+                g = schema_salad.jsonld_context.makerdf(subject, doc, document_loader.ctx)
 
-        with col.open("metadata.yaml", "rt") as md:
-            metadata_content = ruamel.yaml.round_trip_load(md)
-        metadata_content["id"] = subject
-        add_lc_filename(metadata_content, metadata_content["id"])
-        doc, metadata = schema_salad.schema.load_and_validate(document_loader, avsc_names, metadata_content, False, False)
-        g = schema_salad.jsonld_context.makerdf(subject, doc, document_loader.ctx)
-        merged_metadata.write(g.serialize(format="ntriples").decode("utf-8"))
+            with col.open("sequence.fasta", "rt") as fa:
+                label = fa.readline().strip()
+                merged_metadata.write("<%s> <http://biohackathon.org/bh20-seq-schema/original_fasta_label> \"%s\" .\n" % (subject, label[1:].replace('"', '\\"')))
+                merged_metadata.write("<%s> <http://biohackathon.org/bh20-seq-schema/collection_pdh> \"%s\" .\n" % (subject, pdh))
+                merged_metadata.write("<%s> <http://biohackathon.org/bh20-seq-schema/collection_version> \"%s\" .\n" % (subject, item["version"]))
+                skip = (subject in blacklist or label[1:] in blacklist)
+                if skip:
+                    merged_metadata.write("<%s> <http://biohackathon.org/bh20-seq-schema/excluded_from_graph> \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean> .\n" % subject)
+                if not skip:
+                    relabeled_fasta.write(">"+subject+"\n")
+                data = fa.read(8096)
+                while data:
+                    if not skip:
+                        relabeled_fasta.write(data)
+                    endswithnewline = data.endswith("\n")
+                    data = fa.read(8096)
+                if not skip and not endswithnewline:
+                    relabeled_fasta.write("\n")
+
+            merged_metadata.write(g.serialize(format="ntriples").decode("utf-8"))
+    except Exception as e:
+        logging.exception("Error processing collection %s" % uuid)
 
 
 shutil.rmtree(".cache")

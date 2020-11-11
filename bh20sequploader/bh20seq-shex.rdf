@@ -21,54 +21,57 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
   MainSchema:license @:licenseShape ?;
 }
 
+## documentation: #(name of option in yaml), ontology label, mandatory|optional, type
+## entries marked with ?????? need review
+
 :hostShape  {
-    efo:EFO_0000532 [ obo:NCBITaxon_~ ] ;
-    sio:SIO_000115 xsd:string ?;
-    obo:PATO_0000047 [ obo:PATO_0000384 obo:PATO_0000383 obo:PATO_0001340] ?;
-    obo:PATO_0000011 xsd:integer ?;
-    obo:NCIT_C42574 [ obo:UO_~ ] ?;
-	obo:NCIT_C25688 [obo:NCIT_C115935 obo:NCIT_C3833 obo:NCIT_C25269 obo:GENEPIO_0002020 obo:GENEPIO_0001849 obo:NCIT_C28554 obo:NCIT_C37987 ] ? ;
-    efo:EFO_0000727 xsd:string ?;
-    obo:VO_0000002 xsd:string {0,10};
-    sio:SIO_001167 xsd:string ?;
-    sio:SIO_001014 [ obo:HANCESTRO_~ ] ? ; #ethnicity from obo:HANCESTRO
+    efo:EFO_0000532 [ obo:NCBITaxon_~ ] ;   #(host_species host), mandatory field, from namespace obo:NCBITaxon
+    sio:SIO_000115 xsd:string ?;            #(host_id), identifier, optional string
+    obo:PATO_0000047 [ obo:PATO_0000384 obo:PATO_0000383 obo:PATO_0001340] ?;   #(host_sex) biological sex, optional, one selected value
+    obo:PATO_0000011 xsd:integer ?;         #(host_age) age, optional integer
+    obo:NCIT_C42574 [ obo:UO_~ ] ?;         #host_age_unit, optional from namespace obo:UO
+	obo:NCIT_C25688 [obo:NCIT_C115935 obo:NCIT_C3833 obo:NCIT_C25269 obo:GENEPIO_0002020 obo:GENEPIO_0001849 obo:NCIT_C28554 obo:NCIT_C37987 ] ? ; #(host_health_status) status, optional, one selected value
+    efo:EFO_0000727 xsd:string ?;           #(host_treatment), treatment, optional
+    obo:VO_0000002 xsd:string {0,10};       #(host_vaccination), vaccination, optional list of String 0-10
+    sio:SIO_001014 [ obo:HANCESTRO_~ ] ? ;  #(ethnicity), ethnicity from obo:HANCESTRO
+    sio:SIO_001167 xsd:string ?;            #(additional_host_information), comment, optional, string
 }
 
 :sampleShape  {
-    sio:SIO_000115 xsd:string;
-    evs:C25164 xsd:string;
-    obo:GAZ_00000448 [wikidata:~] ;
-    obo:OBI_0001895 xsd:string ?;
-    obo:NCIT_C41206 xsd:string ?;
-    obo:OBI_000147 [ obo:NCIT_~ ] ? ;    #specimen source from obo:NCIT
-    obo:OBI_0001472 xsd:string ?;
-    sio:SIO_001167 xsd:string ?;
-    edam:data_2091 IRI {0,3};
+    sio:SIO_000115 xsd:string;          #(sampleId), identifier, mandatory string
+    evs:C25164 xsd:string;              #(collection_date), date, mandatory, string but should be date
+    obo:GAZ_00000448 [wikidata:~] ;     #(collection_location), geographic location, mandatory, from wikidata namespace
+    obo:OBI_0001895 xsd:string ?;       #(collector_name), specimen collector, optional string
+    obo:NCIT_C41206 xsd:string ?;       #(collecting_institution) Institute, optional string
+    obo:OBI_0001479 [ obo:NCIT_~ ] ? ;  #(specimen_source), specimen from organism, optional, from obo:NCIT
+    obo:OBI_0001472 xsd:string ?;       #(sample_storage_conditions), specimen with known storage state, optional string
+    sio:SIO_001167 xsd:string ?;        #(additional_collection_information), comment, optional, string
+    edam:data_2091 IRI {0,3};           #(source_database_accession), Accession, optional, IRI 0-3
 }
 
 :submitterShape {
-    obo:NCIT_C42781 xsd:string + ;
-    sio:SIO_000116 xsd:string *;
-    sio:SIO_000172 xsd:string ?;
-    obo:NCIT_C37984 xsd:string ?;
-    obo:NCIT_C37900 xsd:string ?;
-    efo:EFO_0001741 xsd:string ?;
-    obo:NCIT_C42781 xsd:string ?;
-    obo:NCIT_C19026 xsd:string ?;
-    sio:SIO_000115 /https:\u002F\u002Forcid.org\u002F.{4}-.{4}-.{4}-.{4}/ {0,10};
-    sio:SIO_001167 xsd:string ?;
+    obo:NCIT_C42781 xsd:string + ;      #(authors), Author, mandatory, list 1-*
+    sio:SIO_000116 xsd:string *;        #(submitter_name), name, optional 0-*
+    sio:SIO_000172 xsd:string ?;        #(submitter_address), address, optional, string
+    obo:NCIT_C37984 xsd:string ?;       #(originating_lab) Laboratory, optional, string
+    obo:NCIT_C37900 xsd:string ?;       #(lab address), Provider, optional, string
+    efo:EFO_0001741 xsd:string ?;       #(provider_sample_id), submitter, optional ????????????????????
+    obo:NCIT_C42781 xsd:string ?;       #(submitter_sample_id), Author, optional string ????????????????????
+    obo:NCIT_C19026 xsd:string ?;       #(publication), Scientific Publication, optional string
+    sio:SIO_000115 /https:\u002F\u002Forcid.org\u002F.{4}-.{4}-.{4}-.{4}/ {0,10};   #(submitter_orcid) identifier, optional but given regular expression
+    sio:SIO_001167 xsd:string ?;        #(additional_submitter_information), comment, optional string
 }
 
 :technologyShape {
-    obo:OBI_0600047 IRI {0,3} ;
-    efo:EFO_0002699 xsd:string ?;
-    obo:FLU_0000848 xsd:double OR xsd:integer {0,3};
-    sio:SIO_001167 xsd:string ?;
+    obo:OBI_0600047 IRI {0,3} ;        #(sample_sequencing_technology) sequencing assay, optional ????????????
+    efo:EFO_0002699 xsd:string ?;      #(sequence_assembly_method) high throughput sequencer, optional    ?????????????
+    obo:FLU_0000848 xsd:double OR xsd:integer {0,3};    #(sequence coverage) sequence coverage, optional
+    sio:SIO_001167 xsd:string ?;       #(additional_technology_information), comment, optional, string
 }
 
 :virusShape{
-    edam:data_1875 [ obo:NCBITaxon_~ ] ;
-    sio:SIO_010055 xsd:string ?;
+    edam:data_1875 [ obo:NCBITaxon_~ ] ;    # (virus_species) NCBI taxon, mandatory, from namespace obo:NCBITaxon_
+    sio:SIO_010055 xsd:string ?;            # (virus_strain) strain, optional string
 }
 
 :licenseShape{

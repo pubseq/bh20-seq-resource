@@ -52,23 +52,23 @@ sequence for enough overlap with the reference genome
         failed = True # continue with the FASTA checker
 
     target = []
-    try:
-        log.debug("FASTA/FASTQ QC" if do_qc else "Limited FASTA/FASTQ QC")
-        target.append(qc_fasta(sequence_p1, check_with_mimimap2=do_qc))
-        if sequence_p2:
-            if target[0][2] == 'text/fasta':
-                raise ValueError("It is possible to upload just one FASTA file at a time")
-            target.append(qc_fasta(sequence_p2))
+    if sequence_p1:
+        try:
+            log.debug("FASTA/FASTQ QC" if do_qc else "Limited FASTA/FASTQ QC")
+            target.append(qc_fasta(sequence_p1, check_with_mimimap2=do_qc))
+            if sequence_p2:
+                if target[0][2] == 'text/fasta':
+                    raise ValueError("It is possible to upload just one FASTA file at a time")
+                target.append(qc_fasta(sequence_p2))
 
-            target[0] = ("reads_1."+target[0][0][6:], target[0][1], target[0][2])
-            target[1] = ("reads_2."+target[1][0][6:], target[1][1], target[1][2])
+                target[0] = ("reads_1."+target[0][0][6:], target[0][1], target[0][2])
+                target[1] = ("reads_2."+target[1][0][6:], target[1][1], target[1][2])
 
-        if do_qc and target[0][2] == 'text/fasta' and sample_id != target[0][1]:
-            raise ValueError(f"The sample_id field in the metadata ({sample_id}) must be the same as the FASTA header ({target[0][1]})")
-
-    except Exception as e:
-        log.exception("Failed sequence QC")
-        failed = True
+            if do_qc and target[0][2] == 'text/fasta' and sample_id != target[0][1]:
+                raise ValueError(f"The sample_id field in the metadata ({sample_id}) must be the same as the FASTA header ({target[0][1]})")
+        except Exception as e:
+            log.exception("Failed sequence QC")
+            failed = True
 
     if failed:
         log.debug("Bailing out!")
@@ -87,7 +87,7 @@ def upload_sequence(col, target, sequence):
 def main():
     parser = argparse.ArgumentParser(description='Upload SARS-CoV-19 sequences for analysis')
     parser.add_argument('metadata', type=argparse.FileType('r'), help='sequence metadata json')
-    parser.add_argument('sequence_p1', type=argparse.FileType('rb'), help='sequence FASTA/FASTQ')
+    parser.add_argument('sequence_p1', type=argparse.FileType('rb'), default=None, nargs='?', help='sequence FASTA/FASTQ')
     parser.add_argument('sequence_p2', type=argparse.FileType('rb'), default=None, nargs='?', help='sequence FASTQ pair')
     parser.add_argument("--validate", action="store_true", help="Dry run, validate only")
     parser.add_argument("--skip-qc", action="store_true", help="Skip local qc check")
@@ -102,7 +102,10 @@ def main():
 
     # ---- First the QC
     target = qc_stuff(args.metadata, args.sequence_p1, args.sequence_p2, not args.skip_qc)
-    seqlabel = target[0][1]
+    if target:
+        seqlabel = target[0][1]
+    else:
+        seqlabel = ""
 
     if args.validate:
         log.info("Valid")
@@ -111,9 +114,10 @@ def main():
     col = arvados.collection.Collection(api_client=api)
 
     # ---- Upload the sequence to Arvados
-    upload_sequence(col, target[0], args.sequence_p1)
-    if args.sequence_p2:
-        upload_sequence(col, target[1], args.sequence_p2)
+    if args.sequence_p1:
+        upload_sequence(col, target[0], args.sequence_p1)
+        if args.sequence_p2:
+            upload_sequence(col, target[1], args.sequence_p2)
 
     # ---- Make sure the metadata YAML is valid
     log.info("Reading metadata")

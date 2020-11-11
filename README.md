@@ -40,7 +40,7 @@ Note that you will need to repeat the `. venv/bin/activate` step from this direc
 Install from PyPi:
 
 ```sh
-pip3 bh20-seq-uploader
+pip3 install bh20-seq-uploader
 ```
 
 Install from git:
@@ -146,8 +146,10 @@ For running/developing the uploader with GNU Guix see [INSTALL.md](./doc/INSTALL
 Run the uploader with a FASTA or FASTQ file and accompanying metadata file in JSON or YAML:
 
 ```sh
-bh20-seq-uploader example/sequence.fasta example/metadata.yaml
+bh20-seq-uploader example/metadata.yaml example/sequence.fasta
 ```
+
+If the sample_id of your upload matches a sample already in PubSeq, it will be considered a new version and supercede the existing entry.
 
 ## Workflow for Generating a Pangenome
 

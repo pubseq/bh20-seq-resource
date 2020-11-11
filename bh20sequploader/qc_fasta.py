@@ -66,7 +66,8 @@ def qc_fasta(arg_sequence, check_with_mimimap2=True):
 
                     similarity = 0
                     try:
-                        cmd = ["minimap2", "-c -x asm20", tmp1.name, tmp2.name]
+                        log.debug("Trying to run minimap2")
+                        cmd = ["minimap2", "-c", "-x", "asm20", tmp1.name, tmp2.name]
                         logging.info("QC checking similarity to reference")
                         logging.info(" ".join(cmd))
                         result = subprocess.run(cmd, stdout=subprocess.PIPE)
@@ -83,9 +84,7 @@ def qc_fasta(arg_sequence, check_with_mimimap2=True):
 
                     if similarity < 70.0:
                         raise ValueError(
-                            "QC fail for {}: alignment to reference was less than 70%% (was %2.2f%%)".format(
-                                seqlabel, similarity
-                            ))
+                            f"QC fail for {seqlabel}: alignment to reference was less than 70% (was {similarity})")
 
         return "sequence.fasta" + gz, seqlabel, seq_type
     elif seq_type == "text/fastq":
@@ -93,4 +92,6 @@ def qc_fasta(arg_sequence, check_with_mimimap2=True):
         sequence.detach()
         return "reads.fastq" + gz, seqlabel, seq_type
     else:
+        log.debug(seqlabel)
+        log.debug(seq_type)
         raise ValueError("Sequence file ({}) does not look like a DNA FASTA or FASTQ".format(arg_sequence))

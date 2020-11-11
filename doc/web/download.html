@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-24 Mon 03:08 -->
+<!-- 2020-11-05 Thu 05:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Download</title>
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -194,50 +194,26 @@
   /*]]>*/-->
 </style>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -247,35 +223,35 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc7d7db3">1. Workflow runs</a></li>
-<li><a href="#org3b6bb40">2. FASTA files</a></li>
-<li><a href="#orgef20a06">3. Metadata</a></li>
-<li><a href="#orgaabb9da">4. Pangenome</a>
+<li><a href="#orgf894fd0">1. Workflow runs</a></li>
+<li><a href="#org51b7162">2. FASTA files</a></li>
+<li><a href="#org572ed1f">3. Metadata</a></li>
+<li><a href="#org6b6b3d3">4. Pangenome</a>
 <ul>
-<li><a href="#org1171db3">4.1. Pangenome GFA format</a></li>
-<li><a href="#orgfc74439">4.2. Pangenome in ODGI format</a></li>
-<li><a href="#orge6bb923">4.3. Pangenome RDF format</a></li>
-<li><a href="#org5978f5c">4.4. Pangenome Browser format</a></li>
+<li><a href="#org9f4caf2">4.1. Pangenome GFA format</a></li>
+<li><a href="#org110286f">4.2. Pangenome in ODGI format</a></li>
+<li><a href="#orgc83e017">4.3. Pangenome RDF format</a></li>
+<li><a href="#org8b1948b">4.4. Pangenome Browser format</a></li>
 </ul>
 </li>
-<li><a href="#orgae23127">5. Log of workflow output</a></li>
-<li><a href="#org88613e5">6. All files</a></li>
-<li><a href="#org97e0327">7. Planned</a>
+<li><a href="#org3848ad3">5. Log of workflow output</a></li>
+<li><a href="#org3ecd561">6. All files</a></li>
+<li><a href="#orga83843e">7. Planned</a>
 <ul>
-<li><a href="#org35758f9">7.1. Raw sequence data</a></li>
-<li><a href="#orgab1c848">7.2. Multiple Sequence Alignment (MSA)</a></li>
-<li><a href="#orgadb7ade">7.3. Phylogenetic tree</a></li>
-<li><a href="#org3ec62c4">7.4. Protein prediction</a></li>
+<li><a href="#orgcdeb8a1">7.1. Raw sequence data</a></li>
+<li><a href="#org25b78b5">7.2. Multiple Sequence Alignment (MSA)</a></li>
+<li><a href="#org02f524d">7.3. Phylogenetic tree</a></li>
+<li><a href="#org78366fa">7.4. Protein prediction</a></li>
 </ul>
 </li>
-<li><a href="#orga430457">8. Source code</a></li>
-<li><a href="#org768f91e">9. Citing PubSeq</a></li>
+<li><a href="#org3344c28">8. Source code</a></li>
+<li><a href="#orgdd54c12">9. Citing PubSeq</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc7d7db3" class="outline-2">
-<h2 id="orgc7d7db3"><span class="section-number-2">1</span> Workflow runs</h2>
+<div id="outline-container-orgf894fd0" class="outline-2">
+<h2 id="orgf894fd0"><span class="section-number-2">1</span> Workflow runs</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The last runs can be viewed <a href="https://workbench.lugli.arvadosapi.com/projects/lugli-j7d0g-y4k4uswcqi3ku56#Subprojects">here</a>. If you click on a run you can see
@@ -286,8 +262,8 @@ is listed under <code>Data collections</code>. All current data is listed
 </div>
 </div>
 
-<div id="outline-container-org3b6bb40" class="outline-2">
-<h2 id="org3b6bb40"><span class="section-number-2">2</span> FASTA files</h2>
+<div id="outline-container-org51b7162" class="outline-2">
+<h2 id="org51b7162"><span class="section-number-2">2</span> FASTA files</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The <b>public sequence resource</b> provides all uploaded sequences as
@@ -297,15 +273,15 @@ also provide a single file <a href="https://collections.lugli.arvadosapi.com/c=l
 </div>
 </div>
 
-<div id="outline-container-orgef20a06" class="outline-2">
-<h2 id="orgef20a06"><span class="section-number-2">3</span> Metadata</h2>
+<div id="outline-container-org572ed1f" class="outline-2">
+<h2 id="org572ed1f"><span class="section-number-2">3</span> Metadata</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Metadata can be downloaded as <a href="https://www.w3.org/TR/turtle/">Turtle RDF</a> as a <a href="https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/mergedmetadata.ttl">mergedmetadat.ttl</a> which
 can be loaded into any RDF triple-store. We provide a Virtuoso SPARQL
 endpoint ourselves which can be queried from
 <a href="http://sparql.genenetwork.org/sparql/">http://sparql.genenetwork.org/sparql/</a>. Query examples can be found in
-our <a href="https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part1.org">BLOG</a>.
+the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part1.org">DOCS</a>
 </p>
 
 <p>
@@ -320,8 +296,8 @@ graph can be downloaded from below Pangenome RDF format.
 </div>
 </div>
 
-<div id="outline-container-orgaabb9da" class="outline-2">
-<h2 id="orgaabb9da"><span class="section-number-2">4</span> Pangenome</h2>
+<div id="outline-container-org6b6b3d3" class="outline-2">
+<h2 id="org6b6b3d3"><span class="section-number-2">4</span> Pangenome</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Pangenome data is made available in multiple guises. Variation graphs
@@ -329,8 +305,8 @@ Pangenome data is made available in multiple guises. Variation graphs
 </p>
 </div>
 
-<div id="outline-container-org1171db3" class="outline-3">
-<h3 id="org1171db3"><span class="section-number-3">4.1</span> Pangenome GFA format</h3>
+<div id="outline-container-org9f4caf2" class="outline-3">
+<h3 id="org9f4caf2"><span class="section-number-3">4.1</span> Pangenome GFA format</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 <a href="https://github.com/GFA-spec/GFA-spec">GFA</a> is a standard for graphical fragment assembly and consumed
@@ -339,8 +315,8 @@ by tools such as <a href="https://github.com/vgteam/vg">vgtools</a>.
 </div>
 </div>
 
-<div id="outline-container-orgfc74439" class="outline-3">
-<h3 id="orgfc74439"><span class="section-number-3">4.2</span> Pangenome in ODGI format</h3>
+<div id="outline-container-org110286f" class="outline-3">
+<h3 id="org110286f"><span class="section-number-3">4.2</span> Pangenome in ODGI format</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 <a href="https://github.com/vgteam/odgi">ODGI</a> is a format that supports an optimised dynamic genome/graph
@@ -349,8 +325,8 @@ implementation.
 </div>
 </div>
 
-<div id="outline-container-orge6bb923" class="outline-3">
-<h3 id="orge6bb923"><span class="section-number-3">4.3</span> Pangenome RDF format</h3>
+<div id="outline-container-orgc83e017" class="outline-3">
+<h3 id="orgc83e017"><span class="section-number-3">4.3</span> Pangenome RDF format</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 An RDF file that includes the sequences themselves in a variation
@@ -361,8 +337,8 @@ graph can be downloaded from
 </div>
 
 
-<div id="outline-container-org5978f5c" class="outline-3">
-<h3 id="org5978f5c"><span class="section-number-3">4.4</span> Pangenome Browser format</h3>
+<div id="outline-container-org8b1948b" class="outline-3">
+<h3 id="org8b1948b"><span class="section-number-3">4.4</span> Pangenome Browser format</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 The many JSON files that are named as
@@ -373,8 +349,8 @@ Pangenome browser.
 </div>
 </div>
 
-<div id="outline-container-orgae23127" class="outline-2">
-<h2 id="orgae23127"><span class="section-number-2">5</span> Log of workflow output</h2>
+<div id="outline-container-org3848ad3" class="outline-2">
+<h2 id="org3848ad3"><span class="section-number-2">5</span> Log of workflow output</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Including in below link is a log file of the last workflow runs.
@@ -382,8 +358,8 @@ Including in below link is a log file of the last workflow runs.
 </div>
 </div>
 
-<div id="outline-container-org88613e5" class="outline-2">
-<h2 id="org88613e5"><span class="section-number-2">6</span> All files</h2>
+<div id="outline-container-org3ecd561" class="outline-2">
+<h2 id="org3ecd561"><span class="section-number-2">6</span> All files</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <a href="https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/">https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/</a>
@@ -391,16 +367,16 @@ Including in below link is a log file of the last workflow runs.
 </div>
 </div>
 
-<div id="outline-container-org97e0327" class="outline-2">
-<h2 id="org97e0327"><span class="section-number-2">7</span> Planned</h2>
+<div id="outline-container-orga83843e" class="outline-2">
+<h2 id="orga83843e"><span class="section-number-2">7</span> Planned</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 We are planning the add the following output (see also
 </p>
 </div>
 
-<div id="outline-container-org35758f9" class="outline-3">
-<h3 id="org35758f9"><span class="section-number-3">7.1</span> Raw sequence data</h3>
+<div id="outline-container-orgcdeb8a1" class="outline-3">
+<h3 id="orgcdeb8a1"><span class="section-number-3">7.1</span> Raw sequence data</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 See <a href="https://github.com/arvados/bh20-seq-resource/issues/16">fastq tracker</a> and <a href="https://github.com/arvados/bh20-seq-resource/issues/63">BAM tracker</a>.
@@ -408,8 +384,8 @@ See <a href="https://github.com/arvados/bh20-seq-resource/issues/16">fastq track
 </div>
 </div>
 
-<div id="outline-container-orgab1c848" class="outline-3">
-<h3 id="orgab1c848"><span class="section-number-3">7.2</span> Multiple Sequence Alignment (MSA)</h3>
+<div id="outline-container-org25b78b5" class="outline-3">
+<h3 id="org25b78b5"><span class="section-number-3">7.2</span> Multiple Sequence Alignment (MSA)</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 See <a href="https://github.com/arvados/bh20-seq-resource/issues/11">MSA tracker</a>.
@@ -417,8 +393,8 @@ See <a href="https://github.com/arvados/bh20-seq-resource/issues/11">MSA tracker
 </div>
 </div>
 
-<div id="outline-container-orgadb7ade" class="outline-3">
-<h3 id="orgadb7ade"><span class="section-number-3">7.3</span> Phylogenetic tree</h3>
+<div id="outline-container-org02f524d" class="outline-3">
+<h3 id="org02f524d"><span class="section-number-3">7.3</span> Phylogenetic tree</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 See <a href="https://github.com/arvados/bh20-seq-resource/issues/43">Phylo tracker</a>.
@@ -426,8 +402,8 @@ See <a href="https://github.com/arvados/bh20-seq-resource/issues/43">Phylo track
 </div>
 </div>
 
-<div id="outline-container-org3ec62c4" class="outline-3">
-<h3 id="org3ec62c4"><span class="section-number-3">7.4</span> Protein prediction</h3>
+<div id="outline-container-org78366fa" class="outline-3">
+<h3 id="org78366fa"><span class="section-number-3">7.4</span> Protein prediction</h3>
 <div class="outline-text-3" id="text-7-4">
 <p>
 We aim to make protein predictions available.
@@ -436,8 +412,8 @@ We aim to make protein predictions available.
 </div>
 </div>
 
-<div id="outline-container-orga430457" class="outline-2">
-<h2 id="orga430457"><span class="section-number-2">8</span> Source code</h2>
+<div id="outline-container-org3344c28" class="outline-2">
+<h2 id="org3344c28"><span class="section-number-2">8</span> Source code</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 All source code for this website and tooling is available
@@ -447,8 +423,8 @@ from
 </div>
 </div>
 
-<div id="outline-container-org768f91e" class="outline-2">
-<h2 id="org768f91e"><span class="section-number-2">9</span> Citing PubSeq</h2>
+<div id="outline-container-orgdd54c12" class="outline-2">
+<h2 id="orgdd54c12"><span class="section-number-2">9</span> Citing PubSeq</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 See the <a href="./about">FAQ</a>.
@@ -457,7 +433,7 @@ See the <a href="./about">FAQ</a>.
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-08-24 Mon 03:07</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-11-05 Thu 05:26</small>.
 </div>
 </body>
 </html>

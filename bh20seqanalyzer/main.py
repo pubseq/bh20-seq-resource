@@ -42,10 +42,10 @@ class SeqAnalyzer:
         self.schema_ref = None
 
     def validate_upload(self, collection, revalidate):
-        col = arvados.collection.Collection(collection["uuid"], api_client=self.api, keep_client=self.keepclient)
-
         if not revalidate and collection["properties"].get("status") in ("validated", "rejected"):
             return False
+
+        col = arvados.collection.Collection(collection["uuid"], api_client=self.api, keep_client=self.keepclient)
 
         # validate the collection here.  Check metadata, etc.
         logging.info("Validating upload '%s' (%s)" % (collection["name"], collection["uuid"]))
@@ -98,19 +98,7 @@ class SeqAnalyzer:
             except Exception as v:
                 errors.append(str(v))
 
-
-        if not errors:
-            # Move it to the "validated" project to be included in the next analysis
-            if "errors" in collection["properties"]:
-                del collection["properties"]["errors"]
-            collection["properties"]["status"] = "validated"
-            self.api.collections().update(uuid=collection["uuid"], body={
-                "owner_uuid": self.validated_project,
-                "name": "%s (%s)" % (collection["name"], time.asctime(time.gmtime())),
-                "properties": collection["properties"]}).execute()
-            logging.info("Added '%s' to validated sequences" % collection["name"])
-            return True
-        else:
+        if errors:
             # It is invalid
             logging.warn("'%s' (%s) has validation errors: %s" % (
                 collection["name"], collection["uuid"], "\n".join(errors)))
@@ -118,6 +106,38 @@ class SeqAnalyzer:
             collection["properties"]["errors"] = errors
             self.api.collections().update(uuid=collection["uuid"], body={"properties": collection["properties"]}).execute()
             return False
+
+        existing = self.api.collections().list(filters=[["owner_uuid", "=", self.validated_project],
+                                                        ["properties.sequence_label", "=", sample_id]]).execute()
+
+        update_from = None
+        if existing["items"]:
+            # "collection" is the newly uploaded one we're looking at
+            update_from = collection
+            collection = existing["items"][0]
+            collection["properties"] = update_from["properties"]
+
+        if "errors" in collection["properties"]:
+            del collection["properties"]["errors"]
+        collection["properties"]["status"] = "validated"
+        collection["properties"]["sequence_label"] = sample_id
+
+        if update_from:
+            self.api.collections().update(uuid=collection["uuid"], body={
+                "properties": collection["properties"],
+                "manifest_text": col.manifest_text()
+            }).execute()
+            self.api.collections().delete(uuid=update_from["uuid"]).execute()
+            logging.info("Updated '%s' in validated sequences" % collection["name"])
+        else:
+            # Move it to the "validated" project to be included in the next analysis
+            self.api.collections().update(uuid=collection["uuid"], body={
+                "owner_uuid": self.validated_project,
+                "name": "%s (%s)" % (collection["name"], time.asctime(time.gmtime())),
+                "properties": collection["properties"]}).execute()
+            logging.info("Added '%s' to validated sequences" % collection["name"])
+
+        return True
 
 
     def run_workflow(self, parent_project, workflow_uuid, name, inputobj):
@@ -215,7 +235,7 @@ class SeqAnalyzer:
         most_recent_analysis = self.api.groups().list(filters=[['owner_uuid', '=', self.pangenome_analysis_project]],
                                                       order="created_at desc").execute()
         for m in most_recent_analysis["items"]:
-            wf = self.get_workflow_output_from_project(m["uuid"], "arv-main.cwl")
+            wf = self.get_workflow_output_from_project(m["uuid"], "collect-seqs.cwl")
             if wf is None:
                 continue
             src = self.api.collections().get(uuid=wf["output_uuid"]).execute()

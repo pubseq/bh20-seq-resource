@@ -1,4 +1,6 @@
 #! /bin/sh
+#
+# This script runs the web server in a Guix container
 
 GUIX_PROFILE=~/.config/guix/current
 export GUILE_LOAD_PATH=$GUIX_PROFILE/share/guile/site/3.0/

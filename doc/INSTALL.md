@@ -31,7 +31,7 @@ arvados-python-client-2.0.1 ciso8601-2.1.3 future-0.18.2 google-api-python-clien
 3. Run the tool directly with
 
 ```sh
-guix environment guix --ad-hoc git python openssl python-pycurl python-magic nss-certs python-pyshex -- python3 bh20sequploader/main.py example/sequence.fasta example/maximum_metadata_example.yaml
+guix environment guix --ad-hoc git python openssl python-pycurl python-magic nss-certs python-pyshex -- python3 bh20sequploader/main.py example/maximum_metadata_example.yaml example/sequence.fasta
 ```
 
 Note that python-pyshex is packaged in
@@ -42,6 +42,12 @@ repository. E.g.
 
 ```sh
 env GUIX_PACKAGE_PATH=~/iwrk/opensource/guix/guix-bioinformatics/ ~/opt/guix/bin/guix environment -C guix --ad-hoc git python python-flask python-pyyaml python-pycurl python-magic  nss-certs python-pyshex python-pyyaml --network openssl python-pyshex python-pyshexc minimap2 python-schema-salad python-arvados-python-client --share=/export/tmp -- env TMPDIR=/export/tmp python3 bh20sequploader/main.py --help
+```
+
+Latest successful Guix run
+
+```sh
+env GUIX_PACKAGE_PATH=~/iwrk/opensource/guix/guix-bioinformatics/ ~/opt/guix/bin/guix environment guix --ad-hoc git python openssl python-pycurl python-magic nss-certs python-pyshex python-arvados-python-client python-schema-salad minimap2 -- python3 bh20sequploader/main.py  scripts/uthsc_samples/yaml/AL_UT14.yaml scripts/uthsc_samples/yaml/AL_UT14.fa
 ```
 
 ### Using the Web Uploader
@@ -67,3 +73,43 @@ penguin2:~/iwrk/opensource/code/vg/bh20-seq-resource$  env GUIX_PACKAGE_PATH=~/i
 ```
 
 Note: see above on GUIX_PACKAGE_PATH.
+
+## Run country semantic enrichment script
+
+    cd bh20-seq-resource/scripts/db_enrichment
+    edit input_location.csv
+    guix environment guix --ad-hoc git python nss-certs python-rdflib -- python3 country_enrichment.py
+
+## Run the tests
+
+    guix package -i python-requests python-pandas python-jinja2 python -p ~/opt/python-dev
+    . ~/opt/python-dev/etc/profile
+
+
+## Run Virtuoso-ose
+
+Guix has a package for virtuoso-ose we use
+
+    guix package -i virtuoso-ose -p ~/opt/virtuoso
+
+Create a data dir
+
+    mkdir -p /export/virtuoso/var/lib/virtuoso/db
+    chown $USER /export/virtuoso/var/lib/virtuoso/db
+
+Add an ini file
+
+    cp ~/opt/virtuoso/var/lib/virtuoso/db/virtuoso.ini .config/
+
+And run from the data dir
+
+    cd /export/virtuoso/var/lib/virtuoso/db
+    guix environment --ad-hoc virtuoso-ose -- virtuoso-t -f
+
+Visit http://localhost:8890/sparql
+
+To update the turtle files do
+
+    guix environment -C guix --ad-hoc python python-requests raptor2 curl --network -- python3 ./scripts/update_virtuoso/check_for_updates.py cache.txt dba dba
+
+where dba is the default password.

@@ -39,7 +39,7 @@ Metadata can be downloaded as [[https://www.w3.org/TR/turtle/][Turtle RDF]] as a
 can be loaded into any RDF triple-store. We provide a Virtuoso SPARQL
 endpoint ourselves which can be queried from
 http://sparql.genenetwork.org/sparql/. Query examples can be found in
-our [[https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part1.org][BLOG]].
+the [[https://github.com/arvados/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part1.org][DOCS]]
 
 The Swiss Institute of Bioinformatics has included this data in
 https://covid-19-sparql.expasy.org/ and made it part of [[https://www.uniprot.org/][Uniprot]].

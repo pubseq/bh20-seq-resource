@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-21 Tue 05:38 -->
+<!-- 2020-11-05 Thu 05:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PubSeq REST API</title>
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="Blog stylesheet" type="text/css" href="blog.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -252,31 +228,31 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc76638c">1. PubSeq REST API</a>
+<li><a href="#org2e7d6bb">1. PubSeq REST API</a>
 <ul>
-<li><a href="#org247cf63">1.1. Introduction</a></li>
-<li><a href="#orgcc2b1b0">1.2. Search for an entry</a></li>
-<li><a href="#org0ef2d2f">1.3. Fetch metadata</a></li>
-<li><a href="#org82c693c">1.4. Fetch EBI XML</a></li>
+<li><a href="#orgc61d641">1.1. Introduction</a></li>
+<li><a href="#org368b8a5">1.2. Search for an entry</a></li>
+<li><a href="#org2cb1511">1.3. Fetch metadata</a></li>
+<li><a href="#orgd3ad7fd">1.4. Fetch EBI XML</a></li>
 </ul>
 </li>
-<li><a href="#org49153e2">2. Configure emacs to run tests</a></li>
+<li><a href="#org77f889e">2. Configure emacs to run tests</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc76638c" class="outline-2">
-<h2 id="orgc76638c"><span class="section-number-2">1</span> PubSeq REST API</h2>
+<div id="outline-container-org2e7d6bb" class="outline-2">
+<h2 id="org2e7d6bb"><span class="section-number-2">1</span> PubSeq REST API</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Here we document the public REST API that comes with PubSeq. The tests
-run in the amazing emacs <a href="https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html">org-babel</a>.  See the bottom of this document
-for running the tests inside emacs.
+run in emacs <a href="https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html">org-babel</a>.  See the bottom of this document for running
+the tests inside emacs. See bottom of the page how to run tests.
 </p>
 </div>
 
-<div id="outline-container-org247cf63" class="outline-3">
-<h3 id="org247cf63"><span class="section-number-3">1.1</span> Introduction</h3>
+<div id="outline-container-orgc61d641" class="outline-3">
+<h3 id="orgc61d641"><span class="section-number-3">1.1</span> Introduction</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 We built a REST API for COVID-19 PubSeq. The API source code can be
@@ -290,8 +266,8 @@ found in <a href="https://github.com/arvados/bh20-seq-resource/tree/master/bh20s
 
 <div class="org-src-container">
 <pre class="src src-js">{
-  "service": "PubSeq",
-  "version": 0.1
+  <span style="color: #9ccc65;">"service"</span>: <span style="color: #9ccc65;">"PubSeq"</span>,
+  <span style="color: #9ccc65;">"version"</span>: 0.1
 }
 </pre>
 </div>
@@ -301,12 +277,12 @@ The Python3 version is
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">import requests
-baseURL="http://localhost:5000" # for development
-# baseURL="http://covid19.genenetwork.org"
-response = requests.get(baseURL+"/api/version")
-response_body = response.json()
-assert response_body["service"] == "PubSeq", "PubSeq API not found"
+<pre class="src src-python"><span style="color: #fff59d;">import</span> requests
+<span style="color: #ffcc80;">baseURL</span>=<span style="color: #9ccc65;">"http://localhost:5067"</span> <span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">for development</span>
+<span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">baseURL="http://covid19.genenetwork.org"</span>
+<span style="color: #ffcc80;">response</span> = requests.get(baseURL+<span style="color: #9ccc65;">"/api/version"</span>)
+<span style="color: #ffcc80;">response_body</span> = response.json()
+<span style="color: #fff59d;">assert</span> response_body[<span style="color: #9ccc65;">"service"</span>] == <span style="color: #9ccc65;">"PubSeq"</span>, <span style="color: #9ccc65;">"PubSeq API not found"</span>
 response_body
 </pre>
 </div>
@@ -341,8 +317,8 @@ response_body
 </div>
 </div>
 
-<div id="outline-container-orgcc2b1b0" class="outline-3">
-<h3 id="orgcc2b1b0"><span class="section-number-3">1.2</span> Search for an entry</h3>
+<div id="outline-container-org368b8a5" class="outline-3">
+<h3 id="org368b8a5"><span class="section-number-3">1.2</span> Search for an entry</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 When you use the search box on PubSeq it queries the REST end point
@@ -350,7 +326,7 @@ for information on the search items. For example
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">requests.get(baseURL+"/api/search?s=MT533203.1").json()
+<pre class="src src-python">requests.get(baseURL+<span style="color: #9ccc65;">"/api/search?s=MT533203.1"</span>).json()
 </pre>
 </div>
 
@@ -386,10 +362,10 @@ for information on the search items. For example
 <tr>
 <td class="org-left">collection</td>
 <td class="org-left">:</td>
-<td class="org-left"><a href="http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126">http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126</a></td>
+<td class="org-left"><a href="http://collections.lugli.arvadosapi.com/c=b16901333ea1754a1e0409bf3caf7d22+126">http://collections.lugli.arvadosapi.com/c=b16901333ea1754a1e0409bf3caf7d22+126</a></td>
 <td class="org-left">fasta</td>
 <td class="org-left">:</td>
-<td class="org-left"><a href="http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/sequence.fasta">http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/sequence.fasta</a></td>
+<td class="org-left"><a href="http://collections.lugli.arvadosapi.com/c=b16901333ea1754a1e0409bf3caf7d22+126/sequence.fasta">http://collections.lugli.arvadosapi.com/c=b16901333ea1754a1e0409bf3caf7d22+126/sequence.fasta</a></td>
 <td class="org-left">id</td>
 <td class="org-left">:</td>
 <td class="org-left">MT533203.1</td>
@@ -408,8 +384,8 @@ acts as a deduplication uuid.
 </div>
 </div>
 
-<div id="outline-container-org0ef2d2f" class="outline-3">
-<h3 id="org0ef2d2f"><span class="section-number-3">1.3</span> Fetch metadata</h3>
+<div id="outline-container-org2cb1511" class="outline-3">
+<h3 id="org2cb1511"><span class="section-number-3">1.3</span> Fetch metadata</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 Using above collection link you can fetch the metadata in JSON as it
@@ -423,7 +399,7 @@ because is does a bit more in terms of expansion
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">requests.get(baseURL+"/api/sample/MT533203.1.json").json()
+<pre class="src src-python">requests.get(baseURL+<span style="color: #9ccc65;">"/api/sample/MT533203.1.json"</span>).json()
 </pre>
 </div>
 
@@ -483,13 +459,13 @@ because is does a bit more in terms of expansion
 <tr>
 <td class="org-left">collection</td>
 <td class="org-left">:</td>
-<td class="org-left"><a href="http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126">http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126</a></td>
+<td class="org-left"><a href="http://collections.lugli.arvadosapi.com/c=b16901333ea1754a1e0409bf3caf7d22+126">http://collections.lugli.arvadosapi.com/c=b16901333ea1754a1e0409bf3caf7d22+126</a></td>
 <td class="org-left">date</td>
 <td class="org-left">:</td>
 <td class="org-right">2020-04-27</td>
 <td class="org-left">fasta</td>
 <td class="org-left">:</td>
-<td class="org-left"><a href="http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/sequence.fasta">http://collections.lugli.arvadosapi.com/c=0015b0d65dfd2e82bb3cee4436bf2893+126/sequence.fasta</a></td>
+<td class="org-left"><a href="http://collections.lugli.arvadosapi.com/c=b16901333ea1754a1e0409bf3caf7d22+126/sequence.fasta">http://collections.lugli.arvadosapi.com/c=b16901333ea1754a1e0409bf3caf7d22+126/sequence.fasta</a></td>
 <td class="org-left">id</td>
 <td class="org-left">:</td>
 <td class="org-left">MT533203.1</td>
@@ -513,8 +489,8 @@ because is does a bit more in terms of expansion
 
 
 
-<div id="outline-container-org82c693c" class="outline-3">
-<h3 id="org82c693c"><span class="section-number-3">1.4</span> Fetch EBI XML</h3>
+<div id="outline-container-orgd3ad7fd" class="outline-3">
+<h3 id="orgd3ad7fd"><span class="section-number-3">1.4</span> Fetch EBI XML</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 PubSeq provides an API that is used to export formats that are
@@ -523,11 +499,11 @@ documented <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python">requests.get(baseURL+"/api/ebi/sample-MT326090.1.xml").text
+<pre class="src src-python">requests.get(baseURL+<span style="color: #9ccc65;">"/api/ebi/sample-MT326090.1.xml"</span>).text
 </pre>
 </div>
 
-<pre class="example">
+<pre class="example" id="orgb2d805a">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;SAMPLE_SET&gt;
   &lt;SAMPLE alias="MT326090.1" center_name="COVID-19 PubSeq"&gt;
@@ -584,20 +560,20 @@ documented <a href="http://covid19.genenetwork.org/blog?id=using-covid-19-pubseq
 </div>
 </div>
 
-<div id="outline-container-org49153e2" class="outline-2">
-<h2 id="org49153e2"><span class="section-number-2">2</span> Configure emacs to run tests</h2>
+<div id="outline-container-org77f889e" class="outline-2">
+<h2 id="org77f889e"><span class="section-number-2">2</span> Configure emacs to run tests</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-Execute a code
-block with C-c C-c. You may need to set
+Execute a code block with C-c C-c. You may need to set
 </p>
 
 <div class="org-src-container">
 <pre class="src src-elisp">(org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)))
-(setq org-babel-python-command "python3")
-(setq org-babel-eval-verbose t)
+(<span style="color: #fff59d;">setq</span> org-babel-python-command <span style="color: #9ccc65;">"python3"</span>)
+(<span style="color: #fff59d;">setq</span> org-babel-eval-verbose t)
+(<span style="color: #fff59d;">setq</span> org-confirm-babel-evaluate nil)
 </pre>
 </div>
 
@@ -617,7 +593,7 @@ To see output of the inpreter open then <b>Python</b> buffer.
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-07-21 Tue 05:38</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-11-05 Thu 05:21</small>.
 </div>
 </body>
 </html>

@@ -96,6 +96,27 @@ the git repo and starts a new run calling into
 /data/pubseq/bh20-seq-resource/venv3/bin/bh20-seq-analyzer which is
 essentially [[https://github.com/arvados/bh20-seq-resource/blob/2baa88b766ec540bd34b96599014dd16e393af39/bh20seqanalyzer/main.py#L354][monitoring]] for uploads.
 
+On ~run --help~
+
+#+begin_example
+optional arguments:
+  -h, --help            show this help message and exit
+  --uploader-project UPLOADER_PROJECT
+  --pangenome-analysis-project PANGENOME_ANALYSIS_PROJECT
+  --fastq-project FASTQ_PROJECT
+  --validated-project VALIDATED_PROJECT
+  --workflow-def-project WORKFLOW_DEF_PROJECT
+  --pangenome-workflow-uuid PANGENOME_WORKFLOW_UUID
+  --fastq-workflow-uuid FASTQ_WORKFLOW_UUID
+  --exclude-list EXCLUDE_LIST
+  --latest-result-collection LATEST_RESULT_COLLECTION
+  --kickoff
+  --no-start-analysis
+  --once
+  --print-status PRINT_STATUS
+  --revalidate
+#+end_example
+
 * Wiring up CWL
 
 In above script ~bh20-seq-analyzer~ you can see that the [[https://www.commonwl.org/][Common

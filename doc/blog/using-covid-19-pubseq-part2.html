@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-26 Wed 05:01 -->
+<!-- 2020-11-10 Tue 05:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq - Arvados</title>
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="Blog stylesheet" type="text/css" href="blog.css" />
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -252,18 +228,18 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6501d83">1. The Arvados Web Server</a></li>
-<li><a href="#orgcb7854f">2. The Arvados file interface</a></li>
-<li><a href="#orgc8c3ccd">3. The PubSeq Arvados shell</a></li>
-<li><a href="#org028c1b4">4. Wiring up CWL</a></li>
-<li><a href="#org7cdc8cc">5. Using the Arvados API</a></li>
-<li><a href="#org5961211">6. Troubleshooting</a></li>
+<li><a href="#org10ef830">1. The Arvados Web Server</a></li>
+<li><a href="#orgb6a7a42">2. The Arvados file interface</a></li>
+<li><a href="#org0c7b94e">3. The PubSeq Arvados shell</a></li>
+<li><a href="#org756005d">4. Wiring up CWL</a></li>
+<li><a href="#orgf30b46f">5. Using the Arvados API</a></li>
+<li><a href="#org3af3122">6. Troubleshooting</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6501d83" class="outline-2">
-<h2 id="org6501d83"><span class="section-number-2">1</span> The Arvados Web Server</h2>
+<div id="outline-container-org10ef830" class="outline-2">
+<h2 id="org10ef830"><span class="section-number-2">1</span> The Arvados Web Server</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 We are using Arvados to run common workflow language (CWL) pipelines.
@@ -283,8 +259,8 @@ workflows and the output of analysis pipelines (here CWL workflows).
 </div>
 
 
-<div id="outline-container-orgcb7854f" class="outline-2">
-<h2 id="orgcb7854f"><span class="section-number-2">2</span> The Arvados file interface</h2>
+<div id="outline-container-orgb6a7a42" class="outline-2">
+<h2 id="orgb6a7a42"><span class="section-number-2">2</span> The Arvados file interface</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Arvados has the web server, but it also has a REST API and associated
@@ -361,8 +337,8 @@ arv-get 2be6af7b4741f2a5c5f8ff2bc6152d73+1955623+Ab9ad65d7fe958a053b3a57d545839d
 </div>
 </div>
 
-<div id="outline-container-orgc8c3ccd" class="outline-2">
-<h2 id="orgc8c3ccd"><span class="section-number-2">3</span> The PubSeq Arvados shell</h2>
+<div id="outline-container-org0c7b94e" class="outline-2">
+<h2 id="org0c7b94e"><span class="section-number-2">3</span> The PubSeq Arvados shell</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 When you login to Arvados (you can request permission from us) it is
@@ -414,11 +390,34 @@ the git repo and starts a new run calling into
 /data/pubseq/bh20-seq-resource/venv3/bin/bh20-seq-analyzer which is
 essentially <a href="https://github.com/arvados/bh20-seq-resource/blob/2baa88b766ec540bd34b96599014dd16e393af39/bh20seqanalyzer/main.py#L354">monitoring</a> for uploads.
 </p>
+
+<p>
+On <code>run --help</code>
+</p>
+
+<pre class="example" id="org93c3a8a">
+optional arguments:
+  -h, --help            show this help message and exit
+  --uploader-project UPLOADER_PROJECT
+  --pangenome-analysis-project PANGENOME_ANALYSIS_PROJECT
+  --fastq-project FASTQ_PROJECT
+  --validated-project VALIDATED_PROJECT
+  --workflow-def-project WORKFLOW_DEF_PROJECT
+  --pangenome-workflow-uuid PANGENOME_WORKFLOW_UUID
+  --fastq-workflow-uuid FASTQ_WORKFLOW_UUID
+  --exclude-list EXCLUDE_LIST
+  --latest-result-collection LATEST_RESULT_COLLECTION
+  --kickoff
+  --no-start-analysis
+  --once
+  --print-status PRINT_STATUS
+  --revalidate
+</pre>
 </div>
 </div>
 
-<div id="outline-container-org028c1b4" class="outline-2">
-<h2 id="org028c1b4"><span class="section-number-2">4</span> Wiring up CWL</h2>
+<div id="outline-container-org756005d" class="outline-2">
+<h2 id="org756005d"><span class="section-number-2">4</span> Wiring up CWL</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 In above script <code>bh20-seq-analyzer</code> you can see that the <a href="https://www.commonwl.org/">Common
@@ -459,8 +458,8 @@ For more see <a href="https://hpc.guix.info/blog/2019/01/creating-a-reproducible
 </div>
 </div>
 
-<div id="outline-container-org7cdc8cc" class="outline-2">
-<h2 id="org7cdc8cc"><span class="section-number-2">5</span> Using the Arvados API</h2>
+<div id="outline-container-orgf30b46f" class="outline-2">
+<h2 id="orgf30b46f"><span class="section-number-2">5</span> Using the Arvados API</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Arvados provides a rich API for accessing internals of the Cloud
@@ -476,8 +475,8 @@ get a list of <a href="https://github.com/arvados/bh20-seq-resource/blob/2baa88b
 </div>
 </div>
 
-<div id="outline-container-org5961211" class="outline-2">
-<h2 id="org5961211"><span class="section-number-2">6</span> Troubleshooting</h2>
+<div id="outline-container-org3af3122" class="outline-2">
+<h2 id="org3af3122"><span class="section-number-2">6</span> Troubleshooting</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 When workflows have errors we should check the logs in Arvados.
@@ -494,7 +493,7 @@ see what parts failed.
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-08-26 Wed 05:01</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-11-09 Mon 01:20</small>.
 </div>
 </body>
 </html>

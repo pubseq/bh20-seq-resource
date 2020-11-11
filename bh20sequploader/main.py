@@ -49,7 +49,7 @@ sequence for enough overlap with the reference genome
                 failed = True
     except Exception as e:
         log.exception("Failed metadata QC")
-        failed = True
+        failed = True # continue with the FASTA checker
 
     target = []
     try:
@@ -64,13 +64,14 @@ sequence for enough overlap with the reference genome
             target[1] = ("reads_2."+target[1][0][6:], target[1][1], target[1][2])
 
         if do_qc and target[0][2] == 'text/fasta' and sample_id != target[0][1]:
-            raise ValueError("The sample_id field in the metadata must be the same as the FASTA header")
+            raise ValueError(f"The sample_id field in the metadata ({sample_id}) must be the same as the FASTA header ({target[0][1]})")
 
     except Exception as e:
         log.exception("Failed sequence QC")
         failed = True
 
     if failed:
+        log.debug("Bailing out!")
         exit(1)
 
     return target

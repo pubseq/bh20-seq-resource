@@ -1023,7 +1023,9 @@
     ns1:P625 "Point(-2.0 54.6)" .
 
 <http://www.wikidata.org/entity/Q16> rdfs:label "Canada" ;
-    ns1:P30 <http://www.wikidata.org/entity/Q49> .
+    ns1:P17 <http://www.wikidata.org/entity/Q16> ;
+    ns1:P30 <http://www.wikidata.org/entity/Q49> ;
+    ns1:P625 "Point(-109.0 56.0)" .
 
 <http://www.wikidata.org/entity/Q230> rdfs:label "Georgia" ;
     ns1:P17 <http://www.wikidata.org/entity/Q230> ;
@@ -1311,6 +1313,10 @@
 <http://www.wikidata.org/entity/Q2145339> rdfs:label "Smithville" ;
     ns1:P17 <http://www.wikidata.org/entity/Q30> ;
     ns1:P625 "Point(-85.820833333 35.957222222)" .
+
+<http://www.wikidata.org/entity/Q16563> rdfs:label "Memphis" ;
+    ns1:P17 <http://www.wikidata.org/entity/Q30> ;
+    ns1:P625 "Point(-89.971111111 35.1175)" .
 
 <http://www.wikidata.org/entity/Q23197> rdfs:label "Nashville" ;
     ns1:P17 <http://www.wikidata.org/entity/Q30> ;

@@ -19,6 +19,10 @@ fn = sys.argv[1]
 user = sys.argv[2]
 pwd = sys.argv[3]
 
+force = False
+if fn== "--force":
+  force = True
+
 no_cache = False
 if fn == "--no-cache":
   no_cache = True
@@ -51,12 +55,12 @@ def upload(fn):
     print(out,err)
     assert(p.returncode == 0)
 
-url = 'https://download.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/_/mergedmetadata.ttl'
+url = 'https://collections.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/mergedMetadata.ttl'
 # --- Fetch headers from TTL file on Arvados
 #  curl --head https://download.lugli.arvadosapi.com/c=lugli-4zz18-z513nlpqm03hpca/_/mergedmetadata.ttl
 r = requests.head(url)
 print(r.headers)
-if not no_cache:
+if not force and not no_cache:
   print(r.headers['Last-Modified'])
 
   # --- Convert/validate time stamp
@@ -72,7 +76,7 @@ if os.path.isfile(fn):
     stamp = file.read()
     file.close
 
-if no_cache or stamp != last_modified_str:
+if force or no_cache or stamp != last_modified_str:
     print("Delete graphs")
     for graph in ["labels.ttl", "metadata.ttl", "countries.ttl"]:
         cmd = ("curl --digest -u dba:%s --verbose --url http://127.0.0.1:8890/sparql-graph-crud-auth?graph=http://covid-19.genenetwork.org/graph/%s -X DELETE" % (pwd, graph))
@@ -85,7 +89,7 @@ if no_cache or stamp != last_modified_str:
     upload(basedir+"/semantic_enrichment/labels.ttl")
     upload(basedir+"/semantic_enrichment/countries.ttl")
 
-    if not no_cache:
+    if force or not no_cache:
         print("Fetch metadata TTL")
         r = requests.get(url)
         assert(r.status_code == 200)
@@ -93,7 +97,7 @@ if no_cache or stamp != last_modified_str:
             f.write(r.text)
             f.close
     upload("metadata.ttl")
-    if not no_cache:
+    if not force and not no_cache:
         with open(fn,"w") as f:
             f.write(last_modified_str)
 else:

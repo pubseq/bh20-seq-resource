@@ -191,11 +191,16 @@ $graph:
         _id: http://purl.obolibrary.org/obo/OBI_0600047
         _type: "@id"
         noLinkCheck: true
-    sequence_assembly_method:
+    alignment_protocol:
       doc: Field for additional information on the pipeline applied to obtain the assembly
       type: string?
       jsonldPredicate:
-        _id: http://www.ebi.ac.uk/efo/EFO_0002699
+        _id: http://www.ebi.ac.uk/efo/EFO_0004917
+    assembly_method:
+      doc: Assembly method refers to how the reads were assembled into contigs for which either a de novo (http://purl.obolibrary.org/obo/GENEPIO_0001628) or mapping/reference based (http://purl.obolibrary.org/obo/GENEPIO_0002028) strategy is used.
+      type: string?
+      jsonldPredicate:
+        _id: http://purl.obolibrary.org/obo/GENEPIO_0000090
     sequencing_coverage:
       doc: Sequence coverage defined as the average number of reads representing a given nucleotide (e.g. [100]) - if multiple technologies were used multiple float values can be submitted e.g. [100, 20]
       type: double[]?

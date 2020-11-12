@@ -12,7 +12,7 @@ PREFIX evs: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
 PREFIX edam: <http://edamontology.org/>
 PREFIX wikidata: <http://www.wikidata.org/entity/>
 
-:submissionShape {
+:submissionShape CLOSED {
   MainSchema:host   @:hostShape ;
   MainSchema:sample @:sampleShape ;
   MainSchema:submitter @:submitterShape ;
@@ -24,7 +24,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
 ## documentation: #(name of option in yaml), ontology label, mandatory|optional, type
 ## entries marked with ?????? need review
 
-:hostShape  {
+:hostShape  CLOSED {
     efo:EFO_0000532 [ obo:NCBITaxon_~ ] ;   #(host_species host), mandatory field, from namespace obo:NCBITaxon
     sio:SIO_000115 xsd:string ?;            #(host_id), identifier, optional string
     obo:PATO_0000047 [ obo:PATO_0000384 obo:PATO_0000383 obo:PATO_0001340] ?;   #(host_sex) biological sex, optional, one selected value
@@ -37,7 +37,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
     sio:SIO_001167 xsd:string ?;            #(additional_host_information), comment, optional, string
 }
 
-:sampleShape  {
+:sampleShape CLOSED {
     sio:SIO_000115 xsd:string;          #(sampleId), identifier, mandatory string
     evs:C25164 xsd:string;              #(collection_date), date, mandatory, string but should be date
     obo:GAZ_00000448 [wikidata:~] ;     #(collection_location), geographic location, mandatory, from wikidata namespace
@@ -49,7 +49,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
     edam:data_2091 IRI {0,3};           #(source_database_accession), Accession, optional, IRI 0-3
 }
 
-:submitterShape {
+:submitterShape CLOSED {
     obo:NCIT_C42781 xsd:string + ;      #(authors), Author, mandatory, list 1-*
     sio:SIO_000116 xsd:string *;        #(submitter_name), name, optional 0-*
     sio:SIO_000172 xsd:string ?;        #(submitter_address), address, optional, string
@@ -62,7 +62,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
     sio:SIO_001167 xsd:string ?;        #(additional_submitter_information), comment, optional string
 }
 
-:technologyShape {
+:technologyShape CLOSED {
     obo:OBI_0600047 IRI {1,3} ;         #(sample_sequencing_technology), sequencing assay, optional
     obo:GENEPIO_0000090 [obo:GENEPIO_0001628 obo:GENEPIO_0002028 ] ;    #(assembly method), assembly method, mandatory, one of the two
     efo:EFO_0004917 xsd:string ?;        #(alignment_protocol), high throughput sequence alignment protocol, optional
@@ -70,12 +70,12 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
     sio:SIO_001167 xsd:string ?;        #(additional_technology_information), comment, optional, string
 }
 
-:virusShape{
+:virusShape CLOSED {
     edam:data_1875 [ obo:NCBITaxon_~ ] ;    # (virus_species) NCBI taxon, mandatory, from namespace obo:NCBITaxon_
     sio:SIO_010055 xsd:string ?;            # (virus_strain) strain, optional string
 }
 
-:licenseShape{
+:licenseShape CLOSED {
     cc:License [ cclicenses:~ ] ;
     dc:Title xsd:string ?;
     cc:attributionName xsd:string ?;

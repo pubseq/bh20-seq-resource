@@ -179,6 +179,8 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                         else:
                             info_for_yaml_dict['submitter']['additional_submitter_information'] = GBReference_journal.text
 
+            # This script download and prepare data and metadata for assemblies samples
+            info_for_yaml_dict['technology']['assembly_method'] = 'http://purl.obolibrary.org/obo/GENEPIO_0001628'
 
             GBSeq_comment = GBSeq.find('GBSeq_comment')
             if GBSeq_comment is not None and 'Assembly-Data' in GBSeq_comment.text:

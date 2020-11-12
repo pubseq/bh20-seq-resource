@@ -227,6 +227,8 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     taxon_id = SAMPLE.find('SAMPLE_NAME').find('TAXON_ID').text
     info_for_yaml_dict['virus']['virus_species'] = "http://purl.obolibrary.org/obo/NCBITaxon_"+taxon_id
 
+    # This script download and prepare data and metadata for samples that will be mapepd againg a referenceT
+    info_for_yaml_dict['technology']['assembly_method'] = 'http://purl.obolibrary.org/obo/GENEPIO_0002028'
 
     EXPERIMENT = EXPERIMENT_PACKAGE.find('EXPERIMENT')
     INSTRUMENT_MODEL = [x.text for x in EXPERIMENT.find('PLATFORM').iter('INSTRUMENT_MODEL')][0]

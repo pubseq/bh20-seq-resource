@@ -236,6 +236,7 @@ a more elaborate example (note most fields are optional) may look like
       sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0009173,http://www.ebi.ac.uk/efo/EFO_0009173]
       alignment_protocol: Protocol used for assembly
       sequencing_coverage: [70.0, 100.0]
+      assembly_method: "http://purl.obolibrary.org/obo/GENEPIO_0001628"
       additional_technology_information: Optional free text field for additional information
 
   submitter:

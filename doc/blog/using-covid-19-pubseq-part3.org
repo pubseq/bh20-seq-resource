@@ -234,7 +234,7 @@ a more elaborate example (note most fields are optional) may look like
 
   technology:
       sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0009173,http://www.ebi.ac.uk/efo/EFO_0009173]
-      sequence_assembly_method: Protocol used for assembly
+      alignment_protocol: Protocol used for assembly
       sequencing_coverage: [70.0, 100.0]
       additional_technology_information: Optional free text field for additional information
 

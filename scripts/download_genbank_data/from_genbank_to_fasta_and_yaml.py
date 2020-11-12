@@ -190,7 +190,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
 
                 for info_to_check, field_in_yaml in zip(
                     ['Assembly Method', 'Coverage', 'Sequencing Technology'],
-                    ['sequence_assembly_method', 'sequencing_coverage', 'sample_sequencing_technology']
+                    ['alignment_protocol', 'sequencing_coverage', 'sample_sequencing_technology']
                 ):
                     if info_to_check in GBSeq_comment_text:
                         tech_info_to_parse = GBSeq_comment_text.split('{} :: '.format(info_to_check))[1].split(' ;')[0]

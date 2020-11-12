@@ -24,7 +24,7 @@ virus:
 
 technology:
     sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0008632] // Nanopore MinION
-    sequence_assembly_method: guppy
+    alignment_protocol: guppy
     additional_technology_information: Optional free text field for additional information
 
 submitter:

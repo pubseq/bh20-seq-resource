@@ -14,7 +14,7 @@ virus:
 
 technology:
     sample_sequencing_technology: ["http://www.ebi.ac.uk/efo/EFO_0008632"]
-    sequence_assembly_method: "https://github.com/ESR-NZ/NZ_SARS-CoV-2_genomics"
+    alignment_protocol: "https://github.com/ESR-NZ/NZ_SARS-CoV-2_genomics"
     additional_technology_information: "Artic V3 workflow"
 
 submitter:

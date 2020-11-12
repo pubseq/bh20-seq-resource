@@ -22,7 +22,7 @@ virus:
 
 technology:
     sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0008632]
-    sequence_assembly_method: https://bio.tools/BWA#!
+    alignment_protocol: https://bio.tools/BWA#!
     additional_technology_information: Oxford Nanopore MiniIon RNA long reads
 
 submitter:

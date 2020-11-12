@@ -191,16 +191,16 @@ $graph:
         _id: http://purl.obolibrary.org/obo/OBI_0600047
         _type: "@id"
         noLinkCheck: true
+    assembly_method:
+      doc: Assembly method refers to how the reads were assembled into contigs for which either a de novo (http://purl.obolibrary.org/obo/GENEPIO_0001628) or mapping/reference based (http://purl.obolibrary.org/obo/GENEPIO_0002028) strategy is used.
+      type: string
+      jsonldPredicate:
+        _id: http://purl.obolibrary.org/obo/GENEPIO_0000090
     alignment_protocol:
       doc: Field for additional information on the pipeline applied to obtain the assembly
       type: string?
       jsonldPredicate:
         _id: http://www.ebi.ac.uk/efo/EFO_0004917
-    assembly_method:
-      doc: Assembly method refers to how the reads were assembled into contigs for which either a de novo (http://purl.obolibrary.org/obo/GENEPIO_0001628) or mapping/reference based (http://purl.obolibrary.org/obo/GENEPIO_0002028) strategy is used.
-      type: string?
-      jsonldPredicate:
-        _id: http://purl.obolibrary.org/obo/GENEPIO_0000090
     sequencing_coverage:
       doc: Sequence coverage defined as the average number of reads representing a given nucleotide (e.g. [100]) - if multiple technologies were used multiple float values can be submitted e.g. [100, 20]
       type: double[]?
@@ -231,23 +231,25 @@ $graph:
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000172
     originating_lab:
-      doc: Name of the laboratory that took the sample
+      doc: Laboratory where the sample originates from sample
       type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C37984
     lab_address:
-      doc: Address of the laboratory where the sample was taken
+      doc: Address of the laboratory
+      type: string?
+      jsonldPredicate:
+          _id: http://purl.obolibrary.org/obo/NCIT_C25407
+    provider:
+      doc: Provider of the sample
       type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C37900
-    provider_sample_id:
-      type: string?
-      jsonldPredicate:
-          _id: http://www.ebi.ac.uk/efo/EFO_0001741
     submitter_sample_id:
+      doc: Identifer given to the sample by the submitter
       type: string?
       jsonldPredicate:
-          _id: http://purl.obolibrary.org/obo/NCIT_C42781
+          _id: http://purl.obolibrary.org/obo/NCIT_C25364
     publication:
       doc: Reference to publication of this sample (e.g. DOI, pubmed ID, ...)
       type: string?

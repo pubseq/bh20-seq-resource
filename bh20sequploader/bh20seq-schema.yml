@@ -196,6 +196,7 @@ $graph:
       type: string
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/GENEPIO_0000090
+        _type: "@id"
     alignment_protocol:
       doc: Field for additional information on the pipeline applied to obtain the assembly
       type: string?

@@ -185,10 +185,10 @@ $graph:
   type: record
   fields:
     sample_sequencing_technology:
-      doc: Technology that was used to sequence this sample (e.g Sanger, Nanopor MiniION)
+      doc: Technology device that was used to sequence the sample (e.g Sanger, Nanopore MiniION)
       type: string[]
       jsonldPredicate:
-        _id: http://purl.obolibrary.org/obo/OBI_0600047
+        _id: http://purl.obolibrary.org/obo/NCIT_C153598
         _type: "@id"
         noLinkCheck: true
     assembly_method:
@@ -198,7 +198,7 @@ $graph:
         _id: http://purl.obolibrary.org/obo/GENEPIO_0000090
         _type: "@id"
     alignment_protocol:
-      doc: Field for additional information on the pipeline applied to obtain the assembly
+      doc: Protocol which provides detailed instructions to obtain the assembly
       type: string?
       jsonldPredicate:
         _id: http://www.ebi.ac.uk/efo/EFO_0004917
@@ -217,42 +217,42 @@ $graph:
   type: record
   fields:
     authors:
-      doc: Name(s) of the author(s)
+      doc: Name(s) of the author(s) of the sequence data in the scientific publication
       type: string[]
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C42781
     submitter_name:
-      doc: Name of the submitter(s)
+      doc: Name of the submitter(s) of the sequence data
       type: string[]?
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000116
     submitter_address:
-      doc: Address of the submitter
+      doc: Address of the submitter of the sequence data
       type: string?
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_000172
     originating_lab:
-      doc: Laboratory where the sample originates from sample
+      doc: Laboratory name or identifier where the sample to sequence was produced
       type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C37984
     lab_address:
-      doc: Address of the laboratory
+      doc: Address of the laboratory where the sample was produced
       type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C25407
     provider:
-      doc: Provider of the sample
+      doc: Name or identifier of the provider of the sample
       type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C37900
     submitter_sample_id:
-      doc: Identifer given to the sample by the submitter
+      doc: Identifier given to the sample by the submitter
       type: string?
       jsonldPredicate:
-          _id: http://purl.obolibrary.org/obo/NCIT_C25364
+          _id: http://purl.obolibrary.org/obo/NCIT_C164332
     publication:
-      doc: Reference to publication of this sample (e.g. DOI, pubmed ID, ...)
+      doc: Reference to the scientifc publication of the sequence (e.g. DOI, pubmed ID, ...)
       type: string?
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/NCIT_C19026
@@ -260,7 +260,7 @@ $graph:
       doc: ORCID of the submitter as a full URI, e.g. https://orcid.org/0000-0002-1825-0097
       type: string[]?
       jsonldPredicate:
-          _id: http://semanticscience.org/resource/SIO_000115
+          _id: http://purl.obolibrary.org/obo/APOLLO_SV_00000496
           _type: "@id"
           noLinkCheck: true
     additional_submitter_information:

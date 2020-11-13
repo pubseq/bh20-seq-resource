@@ -56,14 +56,14 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
     obo:NCIT_C37984 xsd:string ?;       #(originating_lab) Laboratory, optional, string
     obo:NCIT_C25407  xsd:string ?;      #(lab address), Address, optional, string
     obo:NCIT_C37900 xsd:string ?;       #(provider), Provider, optional, string
-    obo:NCIT_C25364 xsd:string ?;       #(submitter_sample_id), identifier, optional, string
+    obo:NCIT_C164332 xsd:string ?;       #(submitter_sample_id), Sample identifier, optional, string
     obo:NCIT_C19026 xsd:string ?;       #(publication), Scientific Publication, optional string
-    sio:SIO_000115 /https:\u002F\u002Forcid.org\u002F.{4}-.{4}-.{4}-.{4}/ {0,10};   #(submitter_orcid) identifier, optional but given regular expression
+    obo:APOLLO_SV_00000496 /https:\u002F\u002Forcid.org\u002F.{4}-.{4}-.{4}-.{4}/ {0,10};   #(submitter_orcid) identifier, optional but given regular expression
     sio:SIO_001167 xsd:string ?;        #(additional_submitter_information), comment, optional string
 }
 
 :technologyShape CLOSED {
-    obo:OBI_0600047 IRI {1,3} ;         #(sample_sequencing_technology), sequencing assay, optional
+    obo:NCIT_C153598 IRI {1,3} ;         #(sample_sequencing_technology), DNA Sequencing, mandatory
     obo:GENEPIO_0000090 [obo:GENEPIO_0001628 obo:GENEPIO_0002028 ] ;    #(assembly method), assembly method, mandatory, one of the two
     efo:EFO_0004917 xsd:string ?;        #(alignment_protocol), high throughput sequence alignment protocol, optional
     obo:FLU_0000848 xsd:double OR xsd:integer {0,3};    #(sequence coverage) sequence coverage, optional

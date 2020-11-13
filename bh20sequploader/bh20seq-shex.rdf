@@ -43,7 +43,7 @@ PREFIX wikidata: <http://www.wikidata.org/entity/>
     obo:GAZ_00000448 [wikidata:~] ;     #(collection_location), geographic location, mandatory, from wikidata namespace
     obo:OBI_0001895 xsd:string ?;       #(collector_name), specimen collector, optional string
     obo:NCIT_C41206 xsd:string ?;       #(collecting_institution) Institute, optional string
-    obo:OBI_0001479 [ obo:NCIT_~ ] ? ;  #(specimen_source), specimen from organism, optional, from obo:NCIT
+    obo:OBI_0001479 [ obo:NCIT_~ ] {0,2} ;  #(specimen_source), specimen from organism, optional, from obo:NCIT
     obo:OBI_0001472 xsd:string ?;       #(sample_storage_conditions), specimen with known storage state, optional string
     sio:SIO_001167 xsd:string ?;        #(additional_collection_information), comment, optional, string
     edam:data_2091 IRI {0,3};           #(source_database_accession), Accession, optional, IRI 0-3

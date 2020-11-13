@@ -409,7 +409,6 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                 year, month, day = [int(x) for x in info_for_yaml_dict['sample']['collection_date'].split('-')]
 
                 collection_date_in_yaml = datetime(year, month, day)
-
                 if collection_date_in_yaml < min_acceptable_collection_date:
                     if accession_version not in not_created_accession_dict:
                         not_created_accession_dict[accession_version] = []

@@ -290,10 +290,10 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
         year, month, day = [int(x) for x in info_for_yaml_dict['sample']['collection_date'].split('-')]
 
         collection_date_in_yaml = datetime(year, month, day)
-
-        if accession not in not_created_accession_dict:
-            not_created_accession_dict[accession] = []
-        not_created_accession_dict[accession].append('collection_date too early')
+        if collection_date_in_yaml < min_acceptable_collection_date:
+            if accession not in not_created_accession_dict:
+                not_created_accession_dict[accession] = []
+            not_created_accession_dict[accession].append('collection_date too early')
 
     if 'sample_sequencing_technology' not in info_for_yaml_dict['technology']:
         # print(accession_version, ' - technology not found')

@@ -3,6 +3,7 @@
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--ids-to-ignore', type=str, help='file with ids to ignore in all steps, 1 id per line', required=False)
+parser.add_argument('--ids-to-consider', type=str, help='file with ids to consider in all steps, 1 id per line', required=False)
 parser.add_argument('--skip-request', action='store_true', help='skip metadata and sequence request', required=False)
 parser.add_argument('--only-missing-ids', action='store_true', help='download only missing ids not already downloaded', required=False)
 parser.add_argument('--dict-ontology', type=str, help='where is the ontology',
@@ -73,6 +74,21 @@ if os.path.exists(dir_fasta_and_yaml):
 
 accession_to_ignore_set.update(accession_already_downloaded_set)
 
+
+accession_to_consider_set = set()
+
+if args.ids_to_consider:
+    if not os.path.exists(args.ids_to_consider):
+        print("\tThe '{}' file doesn't exist.".format(args.ids_to_consider))
+        sys.exit(-1)
+
+    with open(args.ids_to_consider) as f:
+        accession_to_consider_set.update(set([x.split('.')[0] for x in f.read().strip('\n').split('\n')]))
+
+    if len(accession_to_consider_set) > 0:
+        print('There are {} accessions to consider.'.format(len(accession_to_consider_set)))
+
+
 if not os.path.exists(dir_metadata):
     # Take all the ids
     id_set = set()
@@ -87,6 +103,9 @@ if not os.path.exists(dir_metadata):
         # Remove mRNAs, ncRNAs, Proteins, and predicted models (more information here: https://en.wikipedia.org/wiki/RefSeq)
         # Remove the version in the id
         new_ids_set = set([x.split('.')[0] for x in tmp_list if x[:2] not in ['NM', 'NR', 'NP', 'XM', 'XR', 'XP', 'WP']])
+
+        if len(accession_to_consider_set) > 0:
+            new_ids_set = new_ids_set.intersection(accession_to_consider_set)
 
         new_ids = len(new_ids_set.difference(id_set))
         id_set.update(new_ids_set)

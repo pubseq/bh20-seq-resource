@@ -200,7 +200,7 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                         if VALUE_text_list[1].isalpha():
                             date_to_write = parse(VALUE_text).strftime('%Y-%m-%d')
                     elif len(VALUE_text_list) == 2:
-                        date_to_write = VALUE_text + '-15'
+                        date_to_write = parse(VALUE_text).strftime('%Y-%m') + '-15'
                     else:
                         if int(VALUE_text) < 2020:
                             date_to_write = "{}-12-15".format(VALUE_text)

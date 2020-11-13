@@ -358,7 +358,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                             else:
                                 info_for_yaml_dict['sample']['additional_collection_information'] = "The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
                         elif len(GBQualifier_value_text.split('-')) == 2:
-                            date_to_write += '-15'
+                            date_to_write = parse(GBQualifier_value_text).strftime('%Y-%m') + '-15'
 
                             if 'additional_collection_information' in info_for_yaml_dict['sample']:
                                 info_for_yaml_dict['sample']['additional_collection_information'] += "; The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)

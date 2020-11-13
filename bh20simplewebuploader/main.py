@@ -949,8 +949,8 @@ def getSEQCountbyLocation():
 @app.route('/api/getSEQCountbyContinent', methods=['GET'])
 def getSEQCountbyContinent():
     query="""SELECT DISTINCT ?continent ?continent_label (count(?fasta) as ?fastaCount) WHERE {
-    ?fasta ?x[ <http://purl.obolibrary.org/obo/GAZ_00000448> ?location] .
-   ?location <http://www.wikidata.org/prop/direct/P17> ?country .
+    ?fasta ?x [ <http://purl.obolibrary.org/obo/GAZ_00000448> ?location] .
+    ?location <http://www.wikidata.org/prop/direct/P17> ?country .
     ?country <http://www.wikidata.org/prop/direct/P30> ?continent .
     OPTIONAL { ?continent rdfs:label ?key_tmp_label }
     BIND(IF(BOUND(?key_tmp_label),?key_tmp_label, ?location) as ?continent_label)
@@ -1064,3 +1064,210 @@ def getSEQbyLocationAndSpecimenSource():
     r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
     return str(result)
+
+
+################## SPARQL PLAYGORUND API function ################
+
+@app.route('/api/demoGetSEQCountbySpecimenSource', methods=['GET'])
+def demoGetSEQCountbySpecimenSource():
+    prefix="""PREFIX obo: <http://purl.obolibrary.org/obo/> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"""
+
+    query="""SELECT ?specimen_source ?specimen_source_label (count(?seq) as ?seqCount)  WHERE
+    {
+        ?seq ?x [obo:OBI_0001479  ?specimen_source] .
+        ?specimen_source rdfs:label ?specimen_source_label
+    }
+    GROUP BY ?specimen_source ?specimen_source_label
+    ORDER BY DESC (?seqCount)
+    """
+
+    description="Get the count of all sequences, grouped by specimen source and specimen label (This is a 1-to-1 relationship). In addition we want to order by the sequence count descending."
+    payload = {'query': prefix+query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+
+    return jsonify([{'description' : description},{'prefix' : prefix}, {'query': query}],[{'count': x['seqCount']['value'],
+                     'key': x['specimen_source']['value'],
+                     'label': x['specimen_source_label']['value']} for x in result])
+
+
+@app.route('/api/demoGetSEQCountbyLocation', methods=['GET'])
+def demoGetSEQCountbyLocation():
+    prefix="""PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"""
+
+    query="""
+    SELECT ?geoLocation ?geoLocation_label (count(?seq) as ?seqCount)  WHERE
+    {
+      ?seq ?x [obo:GAZ_00000448 ?geoLocation] .
+      ?geoLocation rdfs:label ?geoLocation_label
+    }
+    GROUP BY ?geoLocation ?geoLocation_label 
+    """
+    description = "Get count of all sequences grouped by geoLocation and geoLocation_label (1-to-1 relationship)"
+    payload = {'query': prefix+query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description' : description},{'prefix' : prefix}, {'query': query}],[{'count': x['seqCount']['value'],
+                     'key': x['geoLocation']['value'],
+                     'label': x['geoLocation_label']['value']} for x in result])
+
+
+
+@app.route('/api/demoGetAuthors', methods=['GET'])
+def demoGetAuthors():
+    prefix="""PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wiki: <http://www.wikidata.org/prop/direct/>"""
+
+    query = """SELECT DISTINCT ?author ?country_label ?continent_label WHERE {
+     ?fasta ?x [ obo:GAZ_00000448 ?location] .
+     ?fasta ?y [ obo:NCIT_C42781 ?author] .
+     
+     ?location wiki:P17 ?country .
+     ?country wiki:P30 ?continent .
+     ?country rdfs:label ?country_label .
+     ?continent rdfs:label ?continent_label
+    }
+    ORDER BY ?author
+    LIMIT 500
+     """
+
+    description = "Get all autors (obo:NCIT_C42781) that are in the DB and the country/continent where their samples were taken. The result is limited to 500."
+    payload = {'query': prefix+query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description' : description},{'prefix' : prefix}, {'query': query}],[{'author': x['author']['value'],
+                     'country_label': x['country_label']['value'],
+                     'continent_label': x['continent_label']['value']} for x in result])
+
+
+@app.route('/api/demoInstitutesPublications', methods=['GET'])
+def demoInstitutesPublications():
+    prefix="PREFIX obo: <http://purl.obolibrary.org/obo/>"
+    query="""  
+    SELECT DISTINCT ?originating_lab ?publication WHERE {
+     ?seq ?x [ obo:NCIT_C37984 ?originating_lab] .
+     ?seq ?y [ obo:NCIT_C19026 ?publication] .
+    }
+    """
+
+    description = "List institutes (originating_lab, obo:NCIT_C37984) associated their publications in the DB"
+    payload = {'query': prefix+query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description' : description},{'prefix' : prefix}, {'query': query}],[{'originating_lab': x['originating_lab']['value'],
+                     'publication': x['publication']['value']} for x in result])
+
+
+
+@app.route('/api/demoGetSEQCountbytechContinent', methods=['GET'])
+def demoGetSEQCountbytechContinent():
+    prefix="""PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX wiki: <http://www.wikidata.org/prop/direct/> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"""
+
+    query="""SELECT DISTINCT ?continent_label ?tech_label (count(?seq) as ?seqCount) WHERE
+    {
+      ?seq ?x [ obo:OBI_0600047  ?tech] .
+      ?seq ?y [ obo:GAZ_00000448 ?location] .
+
+      ?tech rdfs:label ?tech_label .
+     
+      ?location wiki:P17 ?country .
+      ?country wiki:P30 ?continent .
+      ?continent rdfs:label ?continent_label
+    }   
+
+  GROUP BY ?tech_label ?continent_label
+  ORDER BY ?continent_label ?seqCount
+    """
+
+    description = "List institutes (originating_lab, obo:NCIT_C37984) and their associated publications in the DB"
+    payload = {'query': prefix+query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description' : description},{'prefix' : prefix}, {'query': query}],[{'continent_label': x['continent_label']['value'],
+                     'tech_label': x['tech_label']['value'], 'seqCount': x['seqCount']['value']} for x in result])
+
+
+@app.route('/api/demoGetSEQCountbytech', methods=['GET'])
+def dempGetSEQCountbytech():
+    prefix="""PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"""
+
+    query="""SELECT ?tech ?tech_label (count(?seq) as ?seqCount) WHERE
+    {
+        ?seq ?x [obo:OBI_0600047  ?tech] .
+        ?tech rdfs:label ?tech_label  
+    }
+    GROUP BY ?tech ?tech_label ORDER BY DESC (?seqCount)
+    """
+    description = "Show count per sequence technology"
+    payload = {'query': prefix + query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description': description}, {'prefix': prefix}, {'query': query}],
+                   [{'tech_label': x['tech_label']['value'],
+                     'tech': x['tech']['value'], 'seqCount': x['seqCount']['value']} for x in result])
+
+
+@app.route('/api/demoGetSequencePerDate', methods=['GET'])
+def demoGetSequencePerDate():
+    prefix=""
+    query="""SELECT ?seq ?date WHERE {
+    ?seq ?a [<http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164> ?date]
+    FILTER ( xsd:date(?date) < xsd:date("2020-03-01") )
+    }
+    ORDER BY ?date"""
+    description = "Show all sequences with a submission date before 2020-03-01! To accomplish this a FILTER expression is used. Since date is a string, we cast xsd:date(...)"
+    payload = {'query': prefix + query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description': description}, {'prefix': prefix}, {'query': query}],
+                   [{'seq': x['seq']['value'],
+                     'date': x['date']['value']} for x in result])
+
+@app.route('/api/demoLocationGps', methods=['GET'])
+def demoLocationGps():
+    prefix="""PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX wiki: <http://www.wikidata.org/prop/direct/>"""
+
+    query="""SELECT distinct ?location ?GPS WHERE {
+	?seq ?a [ obo:GAZ_00000448 ?location] .
+    ?location wiki:P625 ?GPS
+    }    
+    """
+    description = "Show all locations with their GPS coordinates that we have in the database. GPS coordinates are encoded as Point tuple."
+    payload = {'query': prefix + query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description': description}, {'prefix': prefix}, {'query': query}],
+                   [{'location': x['location']['value'],
+                     'GPS': x['GPS']['value']} for x in result])
+
+@app.route('/api/getNYsamples', methods=['GET'])
+def getNYsamples():
+    prefix="""PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX wikiE: <http://www.wikidata.org/entity/>"""
+
+    query="""SELECT DISTINCT ?seq ?key_label ?key ?value_label ?value WHERE {
+        ?seq ?x [ obo:GAZ_00000448 wikiE:Q1384] .
+        ?seq ?y [?key ?value] .
+        
+        ?key rdfs:label ?key_label .
+        ?value rdfs:label ?value_label
+        }
+        ORDER BY ?seq"""
+
+    description = "Get all samples and their information (key, values) that were taken in New York (Q1384)!"
+    payload = {'query': prefix + query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description': description}, {'prefix': prefix}, {'query': query}],
+                   [{'seq': x['seq']['value'],
+                     'key_label': x['key_label']['value'],
+                     'key': x['key']['value'],
+                     'value_label': x['value_label']['value'],
+                     'value': x['value']['value']} for x in result])

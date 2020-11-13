@@ -533,3 +533,21 @@ div.status {
     border-bottom: 2px solid white;
     padding-bottom: 20px;
 }
+
+
+
+/* SPARQL playground CSS*/
+#playground {
+margin-left: 20px;
+}
+
+#playground table{
+border: 1px solid black;
+min-height: 400px;
+}
+
+#playground td{
+border: 1px solid black;
+padding-left:10px;
+padding-right:10px;
+}

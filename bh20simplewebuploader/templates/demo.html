@@ -5,7 +5,7 @@
     {% include 'banner.html' %}
     {% include 'menu.html' %}
 
-    <p>The Virtuoso database contains <span id="CounterDB"></span> public sequences! The examples here should provide a starting point to explore our data in our public <a href="http://sparql.genenetwork.org/sparql">SPARQL endpoint</a> or via <a href="https://covid-19-sparql.expasy.org/">SIB COVID-19 Integrated Knowledgebase</a>. See also our documentation <a href="http://127.0.0.1:5000/blog?id=using-covid-19-pubseq-part1">here</a> for more information!</p>
+    <p>The Virtuoso database contains <span id="CounterDB"></span> public sequences! The examples here should provide a starting point to explore our data in our public <a href="http://sparql.genenetwork.org/sparql">SPARQL endpoint</a> or via <a href="https://covid-19-sparql.expasy.org/">SIB COVID-19 Integrated Knowledgebase</a>. See also our documentation <a href="http://covid-19.genenetwork.org/blog?id=using-covid-19-pubseq-part1">here</a> for more information!</p>
     <!--
     <div class="search">
       <input id="search-input" type="search" placeholder="FASTA uri" required>
@@ -21,11 +21,21 @@
     <section class="search-section">
       <div class="filter-options" action="#">
         <div>
-          <button class="button" onclick="fetchSEQCountBySpecimen()">Count by Specimen source</button>
           <button class="button" onclick="fetchSEQCountByLocation()">Count by Location</button>
-          <button class="button" onclick="fetchSEQCountByTech()">Count by Sequencer</button>
-          <!-- <button class="button" onclick="fetchAllaccessions()">Show All accessions</button> -->
-          <button class="button" onclick="fetchSEQCountbyContinent()">Count by Continent</button>
+          <button class="button" onclick="demoGetSEQCountbytech()">Count by Sequencer</button>
+          <button class="button" onclick="fetchInstitutesPublications()">Get list of publications</button>
+          <button class="button" onclick="fetchSEQCountBySpecimen()">Count by Specimen source</button>
+          <button class="button" onclick="demoGetSEQCountbytechContinent()">Sequence Technologies used by continent</button>
+          <button class="button" onclick="getNYsamples()">Get all NY samples</button>
+          <button class="button" onclick="fetchAuthors()">Get authors</button>
+          <button class="button" onclick="demoGetSequencePerDate()">Show Sequences before submission date</button>
+          <button class="button" onclick="demoLocationGps()">Locations and their GPS</button>
+
+
+
+
+          <!-- <button class="button" onclick="fetchAllaccessions()">Show All accessions</button>
+          <button class="button" onclick="fetchSEQCountbyContinent()">Count by Continent</button>-->
         </div>
 
       </div>
@@ -36,7 +46,7 @@
 
 
     <section>
-      <div id="table"></div>
+      <div id="playground"></div>
     </section>
 
  {% include 'footer.html' %}

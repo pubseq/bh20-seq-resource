@@ -83,6 +83,48 @@ function fetchHTMLTable(apiEndPoint) {
         });
 }
 
+
+
+// changing access for Demo page
+function demofetchHTMLTable(apiEndPoint) {
+    fetch(scriptRoot + apiEndPoint)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            htmlString="<h3>Description</h3><p>"+data[0][0]["description"]+"</p>"
+            prefix=data[0][1]["prefix"].replaceAll("<","&lt;")
+            htmlString+="<h4>Namespace</h4><pre>"+prefix+"</pre>"//prefix to construct correct query @data[0][1]["prefix"]
+            htmlString+="<h3>SPARQL query</h3><pre>"+data[0][2]["query"]+"</pre>"
+            htmlString+="<h3>SPARQL results table</h3><table>"
+
+            keys=Object.keys(data[1][0])
+           // Add keys as table headers
+            htmlString+="<tr>"
+            for (var j=0; j<keys.length;j++){
+                    htmlString+="<td style='font-weight: bold;'>"+keys[j]+"</bold></td>"
+                }
+
+            //Go through the results set given the keys and fill the tail of the table
+            for (var i=0; i<data[1].length;i++) {
+                htmlString+="</tr><tr>"
+                for (var j=0; j<keys.length;j++){
+                    htmlString+="<td>"+data[1][i][keys[j]]+"</td>"
+                }
+                htmlString+="</tr>"
+            }
+            htmlString=htmlString+"</table>"
+
+            //Something like this would be nice, hm
+            //htmlString+="Execute this query <a href='http://sparql.genenetwork.org/sparql?query='"+encodeURIComponent(encodeURIComponent(data[0][1]["prefix"]+data[0][2]["query"]))+"'>here</a>"
+
+            document.getElementById("playground").innerHTML = htmlString
+        });
+}
+
+
+
+
 /* Fetch record info using a 'global search'. Returns for example
 
 [
@@ -122,14 +164,50 @@ let fetchCountDB = () => {
   fetchAPI("/api/getCountDB");
 }
 
-let fetchSEQCountBySpecimen = () => {
-  fetchHTMLTable("/api/getSEQCountbySpecimenSource");
+
+//****** SPARQL playground functions // keep old functionality as comments for now, might be transfered elsewhere
+let fetchSEQCountBySpecimen = (toHTML) => {
+  //fetchHTMLTable("/api/getSEQCountbySpecimenSource");
+  demofetchHTMLTable("/api/demoGetSEQCountbySpecimenSource")
 }
 
 let fetchSEQCountByLocation = () => {
-  fetchHTMLTable("/api/getSEQCountbyLocation");
+  //fetchHTMLTable("/api/getSEQCountbyLocation");
+  demofetchHTMLTable("/api/demoGetSEQCountbyLocation")
 }
 
+//Get authors and there country/contitent where they come from
+let fetchAuthors = () => {
+    demofetchHTMLTable("/api/demoGetAuthors")
+}
+
+// Fetch all institutes/originating labs and their associeted publications
+let fetchInstitutesPublications = () => {
+    demofetchHTMLTable("/api/demoInstitutesPublications")
+}
+
+//Fetch seqeenctechnologies used by continent
+let demoGetSEQCountbytechContinent = () => {
+    demofetchHTMLTable("/api/demoGetSEQCountbytechContinent")
+}
+
+let demoGetSEQCountbytech = () => {
+    demofetchHTMLTable("/api/demoGetSEQCountbytech")
+}
+
+let demoGetSequencePerDate = () => {
+    demofetchHTMLTable('/api/demoGetSequencePerDate')
+}
+
+let demoLocationGps = () => {
+    demofetchHTMLTable("/api/demoLocationGps")
+}
+
+let getNYsamples = () => {
+    demofetchHTMLTable("/api/getNYsamples")
+}
+
+//old/unused functions
 let fetchSEQCountByTech = () => {
   fetchHTMLTable("/api/getSEQCountbytech");
 }

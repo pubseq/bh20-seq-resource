@@ -120,8 +120,12 @@ if not os.path.exists(dir_metadata):
     with open(path_ncbi_virus_accession) as f:
         tmp_list = [line.strip('\n') for line in f]
 
-    new_ids = len(set(tmp_list).difference(id_set))
-    id_set.update(tmp_list)
+    new_ids_set = set(tmp_list)
+    if len(accession_to_consider_set) > 0:
+        new_ids_set = new_ids_set.intersection(accession_to_consider_set)
+
+    new_ids = len(new_ids_set.difference(id_set))
+    id_set.update(new_ids_set)
 
     print('DB: NCBI Virus', today_date, '-->', new_ids, 'new IDs from', len(tmp_list), '---> Total unique IDs:', len(id_set))
 

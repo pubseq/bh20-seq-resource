@@ -14,6 +14,7 @@ from dateutil.parser import parse
 import xml.etree.ElementTree as ET
 import json
 import gzip
+from datetime import datetime
 
 import sys
 sys.path.append('../')
@@ -22,6 +23,8 @@ from utils import is_integer, check_and_get_ontology_dictionaries
 dir_yaml = 'yaml'
 
 date = '2020.07.09'
+
+min_acceptable_collection_date = datetime(2019, 12, 1)
 
 # Query on SRA: 'txid2697049[Organism]' (https://www.ncbi.nlm.nih.gov/sra/?term=txid2697049%5BOrganism%5D)
 # Query on SRA: 'txid2697049[Organism:noexp] NOT 0[Mbases ' (https://www.ncbi.nlm.nih.gov/sra/?term=txid2697049%5BOrganism:noexp%5D%20NOT%200[Mbases)
@@ -283,6 +286,14 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
         if accession not in not_created_accession_dict:
             not_created_accession_dict[accession] = []
         not_created_accession_dict[accession].append('collection_date not found')
+    else:
+        year, month, day = [int(x) for x in info_for_yaml_dict['sample']['collection_date'].split('-')]
+
+        collection_date_in_yaml = datetime(year, month, day)
+
+        if accession not in not_created_accession_dict:
+            not_created_accession_dict[accession] = []
+        not_created_accession_dict[accession].append('collection_date too early')
 
     if 'sample_sequencing_technology' not in info_for_yaml_dict['technology']:
         # print(accession_version, ' - technology not found')

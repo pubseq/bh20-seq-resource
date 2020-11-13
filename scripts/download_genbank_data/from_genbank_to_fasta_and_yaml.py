@@ -18,7 +18,7 @@ import json
 import os
 import requests
 
-from datetime import date
+from datetime import date, datetime
 from dateutil.parser import parse
 
 import sys
@@ -27,6 +27,7 @@ from utils import is_integer, chunks, check_and_get_ontology_dictionaries
 
 
 num_ids_for_request = 100
+min_acceptable_collection_date = datetime(2019, 12, 1)
 
 dir_metadata = 'metadata_from_nuccore'
 dir_fasta_and_yaml = 'fasta_and_yaml'
@@ -404,6 +405,15 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                 if accession_version not in not_created_accession_dict:
                     not_created_accession_dict[accession_version] = []
                 not_created_accession_dict[accession_version].append('collection_date not found')
+            else:
+                year, month, day = [int(x) for x in info_for_yaml_dict['sample']['collection_date'].split('-')]
+
+                collection_date_in_yaml = datetime(year, month, day)
+
+                if collection_date_in_yaml < min_acceptable_collection_date:
+                    if accession_version not in not_created_accession_dict:
+                        not_created_accession_dict[accession_version] = []
+                    not_created_accession_dict[accession_version].append('collection_date too early')
 
             if 'authors' not in info_for_yaml_dict['submitter']:
                 if accession_version not in not_created_accession_dict:

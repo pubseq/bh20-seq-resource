@@ -1261,7 +1261,7 @@ PREFIX wikiE: <http://www.wikidata.org/entity/>"""
         }
         ORDER BY ?seq"""
 
-    description = "Get all samples and their information (key, values) that were taken in New York (Q1384)!"
+    description = "Get all sequences and all sequence information (key, values) that were taken in New York (Q1384)!"
     payload = {'query': prefix + query, 'format': 'json'}
     r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
@@ -1320,3 +1320,71 @@ Order by ?age
                [{'seq': x['seq']['value'],
                  'gender': x['gender']['value'],
                  'age': x['age']['value']} for x in result])
+
+
+@app.route('/api/demoGetSeqIllumina', methods=['GET'])
+def demoGetSeqIllumina():
+    prefix = """PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX efo: <http://www.ebi.ac.uk/efo/>"""
+    ##TODO adjust OBI_0600047 to NCIT_C153598 once new schema is live
+    query="""SELECT DISTINCT ?seq WHERE {
+?seq ?technologySchema [obo:OBI_0600047 efo:EFO_0008635 ]
+}"""
+
+
+    description = "List all sequences that have as 'sample_sequencing_technology' (NCIT_C153598) Illumina iSeq 100 (EFO_0008635)"
+    payload = {'query': prefix + query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description': description}, {'prefix': prefix}, {'query': query}],
+               [{'seq': x['seq']['value']} for x in result])
+
+
+
+
+@app.route('/api/demoGetSeqWithStrain', methods=['GET'])
+def demoGetSeqWithStrain():
+    prefix = """PREFIX SIO: <http://semanticscience.org/resource/>"""
+    query="""SELECT DISTINCT  ?strain ?seq WHERE {
+?seq ?virusSchema [SIO:SIO_010055 ?strain] 
+}"""
+
+    description = "List all sequences with data in 'virus_strain'. Show the strain and the relevant identifer!"
+    payload = {'query': prefix + query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description': description}, {'prefix': prefix}, {'query': query}],
+               [{'strain': x['strain']['value'],
+                'seq': x['seq']['value']} for x in result])
+
+
+
+@app.route('/api/demoGetContinentSpecimentSeqCount', methods=['GET'])
+def demoGetContinentSpecimentSeqCount():
+    prefix = """PREFIX obo: <http://purl.obolibrary.org/obo/> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wiki: <http://www.wikidata.org/prop/direct/>"""
+    query="""SELECT ?continent_label ?specimen_source_label (count(?seq) as ?seqCount)  WHERE
+    {
+        ?seq ?x [obo:OBI_0001479  ?specimen_source] .
+        ?seq ?y [ obo:GAZ_00000448 ?location] .
+        
+        ?location wiki:P17 ?country .
+        ?location wiki:P30 ?continent .
+
+        ?specimen_source rdfs:label ?specimen_source_label .
+        ?continent rdfs:label ?continent_label.
+    }
+
+    GROUP BY ?specimen_source ?specimen_source_label ?continent_label
+    ORDER BY ?continent_label DESC(?seqCount)"""
+
+    description = "Show a count of sequences by continent and specimen_source. For readability the labels for specimen_source and ?continent are retrieved."
+    payload = {'query': prefix + query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description': description}, {'prefix': prefix}, {'query': query}],
+               [{'continent_label': x['continent_label']['value'],
+                'specimen_source_label': x['specimen_source_label']['value'],
+                'seqCount': x['seqCount']['value']} for x in result])
+

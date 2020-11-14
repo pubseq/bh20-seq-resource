@@ -238,7 +238,16 @@ let demoGetSeqByAgeGender = () => {
     demofetchHTMLTable("/api/demoGetSeqByAgeGender")
 }
 
+let demoGetSeqIllumina = () => {
+    demofetchHTMLTable("/api/demoGetSeqIllumina")
+}
+let demoGetSeqWithStrain = () => {
+    demofetchHTMLTable("/api/demoGetSeqWithStrain")
+}
 
+let demoGetContinentSpecimentSeqCount = () => {
+    demofetchHTMLTable("/api/demoGetContinentSpecimentSeqCount")
+}
 
 ////****** SPARQL playground functions ***************////
 

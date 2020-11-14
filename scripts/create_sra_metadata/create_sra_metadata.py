@@ -178,8 +178,10 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
                         missing_value_list.append('\t'.join([accession, 'host_sex', VALUE_text]))
             elif TAG_text in ['host_age', 'host age']:
                 if is_integer(VALUE_text):
-                    info_for_yaml_dict['host']['host_age'] = int(VALUE_text)
-                    info_for_yaml_dict['host']['host_age_unit'] = 'http://purl.obolibrary.org/obo/UO_0000036'
+                    host_age = is_integer(VALUE_text)
+                    if host_age > 0 and host_age < 110:
+                        info_for_yaml_dict['host']['host_age'] = host_age
+                        info_for_yaml_dict['host']['host_age_unit'] = 'http://purl.obolibrary.org/obo/UO_0000036'
             elif TAG_text == 'collected_by':
                 if VALUE_text.lower() not in ['not available', 'missing']:
                     name = VALUE_text in ['Dr. Susie Bartlett', 'Ahmed Babiker', 'Aisi Fu', 'Brandi Williamson', 'George Taiaroa', 'Natacha Ogando', 'Tim Dalebout', 'ykut Ozdarendeli']

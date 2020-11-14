@@ -311,7 +311,7 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                                 elif len(GBQualifier_value_text_list) > 2 and is_integer(GBQualifier_value_text_list[2].split(' ')[-1]):
                                     host_age = int(GBQualifier_value_text_list[2].split(' ')[-1])
 
-                                if host_age > -1:
+                                if host_age > 0 and host_age < 110:
                                     info_for_yaml_dict['host']['host_age'] = host_age
                                     info_for_yaml_dict['host']['host_age_unit'] = 'http://purl.obolibrary.org/obo/UO_0000036'
                                 elif len(GBQualifier_value_text_list) > 2:

@@ -1066,7 +1066,7 @@ def getSEQbyLocationAndSpecimenSource():
     return str(result)
 
 
-################## SPARQL PLAYGORUND API function ################
+########################## SPARQL PLAYGORUND API function ####################
 
 @app.route('/api/demoGetSEQCountbySpecimenSource', methods=['GET'])
 def demoGetSEQCountbySpecimenSource():
@@ -1193,7 +1193,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"""
 
 
 @app.route('/api/demoGetSEQCountbytech', methods=['GET'])
-def dempGetSEQCountbytech():
+def demoGetSEQCountbytech():
     prefix="""PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"""
 
@@ -1221,7 +1221,7 @@ def demoGetSequencePerDate():
     FILTER ( xsd:date(?date) < xsd:date("2020-03-01") )
     }
     ORDER BY ?date"""
-    description = "Show all sequences with a submission date before 2020-03-01! To accomplish this a FILTER expression is used. Since date is a string, we cast xsd:date(...)"
+    description = "Show all sequences with a collection date before 2020-03-01! To accomplish this a FILTER expression is used. Since date is a string, we cast xsd:date(...)"
     payload = {'query': prefix + query, 'format': 'json'}
     r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']
@@ -1229,8 +1229,8 @@ def demoGetSequencePerDate():
                    [{'seq': x['seq']['value'],
                      'date': x['date']['value']} for x in result])
 
-@app.route('/api/demoLocationGps', methods=['GET'])
-def demoLocationGps():
+@app.route('/api/demoGetLocationGps', methods=['GET'])
+def demoGetLocationGps():
     prefix="""PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX wiki: <http://www.wikidata.org/prop/direct/>"""
 
@@ -1247,8 +1247,8 @@ PREFIX wiki: <http://www.wikidata.org/prop/direct/>"""
                    [{'location': x['location']['value'],
                      'GPS': x['GPS']['value']} for x in result])
 
-@app.route('/api/getNYsamples', methods=['GET'])
-def getNYsamples():
+@app.route('/api/demoGetNYsamples', methods=['GET'])
+def demoGetNYsamples():
     prefix="""PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX wikiE: <http://www.wikidata.org/entity/>"""
 
@@ -1271,3 +1271,30 @@ PREFIX wikiE: <http://www.wikidata.org/entity/>"""
                      'key': x['key']['value'],
                      'value_label': x['value_label']['value'],
                      'value': x['value']['value']} for x in result])
+
+
+@app.route('/api/demoGetSouthAmericaSeq', methods=['GET'])
+def demoGetSouthAmericaSeq():
+    prefix = """PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX wiki: <http://www.wikidata.org/prop/direct/> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+"""
+
+    query = """SELECT DISTINCT ?country_label ?seq WHERE
+    {
+      ?seq ?y [ obo:GAZ_00000448 ?location] .
+      ?location wiki:P17 ?country .
+      ?country rdfs:label ?country_label .
+      ?country wiki:P30 <http://www.wikidata.org/entity/Q18> .
+    }   
+ORDER BY ?country_label
+"""
+
+    description = "Show all sequences that are on the continent (P30) South America (Q18)! List the sequence identifiers and the country they belong too."
+    payload = {'query': prefix + query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description': description}, {'prefix': prefix}, {'query': query}],
+                   [{'seq': x['seq']['value'],
+                     'country_label': x['country_label']['value']} for x in result])
+

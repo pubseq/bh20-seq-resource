@@ -164,50 +164,7 @@ let fetchCountDB = () => {
   fetchAPI("/api/getCountDB");
 }
 
-
-//****** SPARQL playground functions // keep old functionality as comments for now, might be transfered elsewhere
-let fetchSEQCountBySpecimen = (toHTML) => {
-  //fetchHTMLTable("/api/getSEQCountbySpecimenSource");
-  demofetchHTMLTable("/api/demoGetSEQCountbySpecimenSource")
-}
-
-let fetchSEQCountByLocation = () => {
-  //fetchHTMLTable("/api/getSEQCountbyLocation");
-  demofetchHTMLTable("/api/demoGetSEQCountbyLocation")
-}
-
-//Get authors and there country/contitent where they come from
-let fetchAuthors = () => {
-    demofetchHTMLTable("/api/demoGetAuthors")
-}
-
-// Fetch all institutes/originating labs and their associeted publications
-let fetchInstitutesPublications = () => {
-    demofetchHTMLTable("/api/demoInstitutesPublications")
-}
-
-//Fetch seqeenctechnologies used by continent
-let demoGetSEQCountbytechContinent = () => {
-    demofetchHTMLTable("/api/demoGetSEQCountbytechContinent")
-}
-
-let demoGetSEQCountbytech = () => {
-    demofetchHTMLTable("/api/demoGetSEQCountbytech")
-}
-
-let demoGetSequencePerDate = () => {
-    demofetchHTMLTable('/api/demoGetSequencePerDate')
-}
-
-let demoLocationGps = () => {
-    demofetchHTMLTable("/api/demoLocationGps")
-}
-
-let getNYsamples = () => {
-    demofetchHTMLTable("/api/getNYsamples")
-}
-
-//old/unused functions
+//////  old API functions, some might no be used //
 let fetchSEQCountByTech = () => {
   fetchHTMLTable("/api/getSEQCountbytech");
 }
@@ -228,6 +185,59 @@ let fetchSEQByLocation = () => {
 let fetchSEQCountbyContinent = () => {
   fetchHTMLTable("/api/getSEQCountbyContinent");
 }
+/////////////////////////////////// End "old" function
+
+
+////****** SPARQL playground functions ***************////
+let demoFetchSEQCountBySpecimen = (toHTML) => {
+  //fetchHTMLTable("/api/getSEQCountbySpecimenSource");
+  demofetchHTMLTable("/api/demoGetSEQCountbySpecimenSource")
+}
+
+let demoFetchSEQCountByLocation = () => {
+  //fetchHTMLTable("/api/getSEQCountbyLocation");
+  demofetchHTMLTable("/api/demoGetSEQCountbyLocation")
+}
+
+//Get authors and there country/contitent where they come from
+let demoGetAuthors = () => {
+    demofetchHTMLTable("/api/demoGetAuthors")
+}
+
+// Fetch all institutes/originating labs and their associeted publications
+let demoFetchInstitutesPublications = () => {
+    demofetchHTMLTable("/api/demoInstitutesPublications")
+}
+
+// Fetch sequence technology used by continent
+let demoGetSEQCountbytechContinent = () => {
+    demofetchHTMLTable("/api/demoGetSEQCountbytechContinent")
+}
+
+let demoGetSEQCountbytech = () => {
+    demofetchHTMLTable("/api/demoGetSEQCountbytech")
+}
+
+let demoGetSequencePerDate = () => {
+    demofetchHTMLTable('/api/demoGetSequencePerDate')
+}
+
+let demoGetLocationGps = () => {
+    demofetchHTMLTable("/api/demoGetLocationGps")
+}
+
+let demoGetNYsamples = () => {
+    demofetchHTMLTable("/api/demoGetNYsamples")
+}
+
+let demoGetSouthAmericaSeq = () => {
+    demofetchHTMLTable("/api/demoGetSouthAmericaSeq")
+}
+
+
+
+
+////****** SPARQL playground functions ***************////
 
 
 /*

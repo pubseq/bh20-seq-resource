@@ -228,7 +228,7 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
 
 
     taxon_id = SAMPLE.find('SAMPLE_NAME').find('TAXON_ID').text
-    info_for_yaml_dict['virus']['virus_species'] = "http://purl.obolibrary.org/obo/NCBITaxon_"+taxon_id
+    info_for_yaml_dict['virus']['virus_species'] = "http://purl.obolibrary.org/obo/NCBITaxon_" + taxon_id
 
     # This script download and prepare data and metadata for samples that will be mapepd againg a referenceT
     info_for_yaml_dict['technology']['assembly_method'] = 'http://purl.obolibrary.org/obo/GENEPIO_0002028'
@@ -244,22 +244,25 @@ for i, EXPERIMENT_PACKAGE in enumerate(EXPERIMENT_PACKAGE_SET):
     #else:
     #    print(accession, 'Missing INSTRUMENT_MODEL', info_for_yaml_dict)
     LIBRARY_DESCRIPTOR = EXPERIMENT.find('DESIGN').find('LIBRARY_DESCRIPTOR')
-    if LIBRARY_DESCRIPTOR.text not in ['OTHER']:
+    if LIBRARY_DESCRIPTOR.text not in ['', 'OTHER']:
         info_for_yaml_dict['technology']['additional_technology_information'] = 'LIBRARY_STRATEGY: {};'.format(LIBRARY_DESCRIPTOR.find('LIBRARY_STRATEGY').text)
 
     SUBMISSION = EXPERIMENT_PACKAGE.find('SUBMISSION')
-    info_for_yaml_dict['submitter']['submitter_sample_id'] = SUBMISSION.attrib['accession']
+    if SUBMISSION.attrib['accession']:
+        info_for_yaml_dict['submitter']['submitter_sample_id'] = SUBMISSION.attrib['accession']
 
-    if SUBMISSION.attrib['lab_name'].lower() not in ['na']:
+    if SUBMISSION.attrib['lab_name'].lower() not in ['', 'na']:
         info_for_yaml_dict['submitter']['originating_lab'] = SUBMISSION.attrib['lab_name']
 
     STUDY = EXPERIMENT_PACKAGE.find('STUDY')
-    info_for_yaml_dict['submitter']['publication'] = STUDY.attrib['alias']
+    if STUDY.attrib['alias']:
+        info_for_yaml_dict['submitter']['publication'] = STUDY.attrib['alias']
 
 
     Organization = EXPERIMENT_PACKAGE.find('Organization')
     Organization_Name = Organization.find('Name')
-    info_for_yaml_dict['submitter']['authors'] = [Organization_Name.text]
+    if Organization_Name.text:
+        info_for_yaml_dict['submitter']['authors'] = [Organization_Name.text]
 
     Organization_Contact = Organization.find('Contact')
     if Organization_Contact is not None:

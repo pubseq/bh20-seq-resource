@@ -234,6 +234,9 @@ let demoGetSouthAmericaSeq = () => {
     demofetchHTMLTable("/api/demoGetSouthAmericaSeq")
 }
 
+let demoGetSeqByAgeGender = () => {
+    demofetchHTMLTable("/api/demoGetSeqByAgeGender")
+}
 
 
 

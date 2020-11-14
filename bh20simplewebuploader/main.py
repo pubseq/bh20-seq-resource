@@ -1298,3 +1298,25 @@ ORDER BY ?country_label
                    [{'seq': x['seq']['value'],
                      'country_label': x['country_label']['value']} for x in result])
 
+
+
+@app.route('/api/demoGetSeqByAgeGender', methods=['GET'])
+def demoGetSeqByAgeGender():
+    prefix = """PREFIX obo: <http://purl.obolibrary.org/obo/>
+"""
+    query="""SELECT DISTINCT ?seq ?gender ?age WHERE {
+    ?seq ?hostSchema [ obo:PATO_0000047 ?sex] .
+    ?seq ?hostSchema [ obo:PATO_0000011 ?age ] .
+    ?sex rdfs:label ?gender .
+}
+Order by ?age 
+"""
+
+    description = "List all sequences that have an entry in the field 'host_sex' and 'host_age'. Instead of the IRI we want to show the human readable label and order results by age"
+    payload = {'query': prefix + query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description': description}, {'prefix': prefix}, {'query': query}],
+               [{'seq': x['seq']['value'],
+                 'gender': x['gender']['value'],
+                 'age': x['age']['value']} for x in result])

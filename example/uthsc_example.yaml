@@ -33,7 +33,7 @@ submitter:
     submitter_name: [Mariah Taylor]
     submitter_address: UTHSC, Memphis, Tennessee 38163, USA
     originating_lab: Regional Biocontainment Laboratory
-    provider_sample_id: XXX1
+    provider: XXX1
     submitter_sample_id: XXX2
     publication: PMID00001113
     submitter_orcid: [https://orcid.org/0000-0000-0000-0000,https://orcid.org/0000-0000-0000-0001]

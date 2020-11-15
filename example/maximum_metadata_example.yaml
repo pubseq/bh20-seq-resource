@@ -45,7 +45,7 @@ submitter:
     submitter_address: John Doe's address
     originating_lab: John Doe kitchen
     lab_address: John Doe's address
-    provider_sample_id: XXX1
+    provider: XXX1
     submitter_sample_id: XXX2
     publication: PMID00001113
     submitter_orcid: [https://orcid.org/0000-0000-0000-0000,https://orcid.org/0000-0000-0000-0001]

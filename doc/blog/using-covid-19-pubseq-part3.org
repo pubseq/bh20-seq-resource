@@ -83,8 +83,8 @@ the web form. Here we add some extra information.
 
 This is a string field that defines a unique sample identifier by the
 submitter. In addition to sample_id we also have host_id,
-provider_sample_id and submitter_sample_id where host is the host the
-sample came from, provider sample is the institution sample id and
+provider and submitter_sample_id where host is the host the
+sample came from, provider sample is the institution id and
 submitter is the submitting individual id. host_id is important when
 multiple sequences come from the same host. Make sure not to have
 spaces in the sample_id.
@@ -245,7 +245,7 @@ a more elaborate example (note most fields are optional) may look like
       submitter_address: John Doe's address
       originating_lab: John Doe kitchen
       lab_address: John Doe's address
-      provider_sample_id: XXX1
+      provider: XXX1
       submitter_sample_id: XXX2
       publication: PMID00001113
       submitter_orcid: [https://orcid.org/0000-0000-0000-0000,https://orcid.org/0000-0000-0000-0001]

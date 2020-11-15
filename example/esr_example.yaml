@@ -33,7 +33,6 @@ submitter:
     submitter_name: [Joep de Ligt]
     submitter_address: "PO Box 50348,  Porirua 5240, New Zealand"
     originating_lab: ESR
-    provider_sample_id: "20VR0174"
     submitter_sample_id: "PRJNA648792"
     submitted_to: https://www.ncbi.nlm.nih.gov/biosample
     publication: https://doi.org/10.1101/2020.08.05.20168930

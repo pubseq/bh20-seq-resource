@@ -225,7 +225,8 @@ for path_metadata_xxx_xml in [os.path.join(dir_metadata, name_metadata_xxx_xml) 
                             # A regular expression would be better!
                             try:
                                 info_for_yaml_dict['technology'][field_in_yaml] = [
-                                    float(tech_info_to_parse.strip('(average)').strip("reads/nt").strip('(average for 6 sequences)').replace(',', '.').strip(' xX>'))
+                                    float(tech_info_to_parse.replace('(average)', '').replace("reads/nt", '').
+                                          replace('(average for 6 sequences)', '').replace(',', '.').strip(' xX>'))
                                 ]
                             except ValueError:
                                 print(accession_version, "Couldn't make sense of Coverage '%s'" % tech_info_to_parse)

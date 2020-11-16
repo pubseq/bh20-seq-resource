@@ -92,8 +92,9 @@ function demofetchHTMLTable(apiEndPoint) {
             return response.json();
         })
         .then(data => {
+            console.log(data);
             htmlString="<h3>Description</h3><p>"+data[0][0]["description"]+"</p>"
-            prefix=data[0][1]["prefix"].replaceAll("<","&lt;")
+            prefix=data[0][1]["prefix"].replace(/</g,"&lt;");
             htmlString+="<h4>Namespace</h4><pre>"+prefix+"</pre>"//prefix to construct correct query @data[0][1]["prefix"]
             htmlString+="<h3>SPARQL query</h3><pre>"+data[0][2]["query"]+"</pre>"
             htmlString+="<h3>SPARQL results table</h3><table>"

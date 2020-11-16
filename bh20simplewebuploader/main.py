@@ -653,7 +653,7 @@ def export_page():
 
 @app.route('/demo')
 def demo_page():
-    return render_template('demo.html',menu='DEMO',load_map=True)
+    return render_template('demo.html',menu='DEMO',load_map=False)
 
 @app.route('/apidoc')
 def apidoc_page():
@@ -1070,7 +1070,7 @@ def getSEQbyLocationAndSpecimenSource():
 
 @app.route('/api/demoGetSEQCountbySpecimenSource', methods=['GET'])
 def demoGetSEQCountbySpecimenSource():
-    prefix="""PREFIX obo: <http://purl.obolibrary.org/obo/> 
+    prefix="""PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"""
 
     query="""SELECT ?specimen_source ?specimen_source_label (count(?seq) as ?seqCount)  WHERE
@@ -1103,7 +1103,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"""
       ?seq ?x [obo:GAZ_00000448 ?geoLocation] .
       ?geoLocation rdfs:label ?geoLocation_label
     }
-    GROUP BY ?geoLocation ?geoLocation_label 
+    GROUP BY ?geoLocation ?geoLocation_label
     """
     description = "Get count of all sequences grouped by geoLocation and geoLocation_label (1-to-1 relationship)"
     payload = {'query': prefix+query, 'format': 'json'}
@@ -1124,7 +1124,7 @@ PREFIX wiki: <http://www.wikidata.org/prop/direct/>"""
     query = """SELECT DISTINCT ?author ?country_label ?continent_label WHERE {
      ?fasta ?x [ obo:GAZ_00000448 ?location] .
      ?fasta ?y [ obo:NCIT_C42781 ?author] .
-     
+
      ?location wiki:P17 ?country .
      ?country wiki:P30 ?continent .
      ?country rdfs:label ?country_label .
@@ -1146,7 +1146,7 @@ PREFIX wiki: <http://www.wikidata.org/prop/direct/>"""
 @app.route('/api/demoInstitutesPublications', methods=['GET'])
 def demoInstitutesPublications():
     prefix="PREFIX obo: <http://purl.obolibrary.org/obo/>"
-    query="""  
+    query="""
     SELECT DISTINCT ?originating_lab ?publication WHERE {
      ?seq ?x [ obo:NCIT_C37984 ?originating_lab] .
      ?seq ?y [ obo:NCIT_C19026 ?publication] .
@@ -1165,7 +1165,7 @@ def demoInstitutesPublications():
 @app.route('/api/demoGetSEQCountbytechContinent', methods=['GET'])
 def demoGetSEQCountbytechContinent():
     prefix="""PREFIX obo: <http://purl.obolibrary.org/obo/>
-PREFIX wiki: <http://www.wikidata.org/prop/direct/> 
+PREFIX wiki: <http://www.wikidata.org/prop/direct/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"""
 
     query="""SELECT DISTINCT ?continent_label ?tech_label (count(?seq) as ?seqCount) WHERE
@@ -1174,11 +1174,11 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"""
       ?seq ?y [ obo:GAZ_00000448 ?location] .
 
       ?tech rdfs:label ?tech_label .
-     
+
       ?location wiki:P17 ?country .
       ?country wiki:P30 ?continent .
       ?continent rdfs:label ?continent_label
-    }   
+    }
 
   GROUP BY ?tech_label ?continent_label
   ORDER BY ?continent_label ?seqCount
@@ -1200,7 +1200,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"""
     query="""SELECT ?tech ?tech_label (count(?seq) as ?seqCount) WHERE
     {
         ?seq ?x [obo:OBI_0600047  ?tech] .
-        ?tech rdfs:label ?tech_label  
+        ?tech rdfs:label ?tech_label
     }
     GROUP BY ?tech ?tech_label ORDER BY DESC (?seqCount)
     """
@@ -1237,7 +1237,7 @@ PREFIX wiki: <http://www.wikidata.org/prop/direct/>"""
     query="""SELECT distinct ?location ?GPS WHERE {
 	?seq ?a [ obo:GAZ_00000448 ?location] .
     ?location wiki:P625 ?GPS
-    }    
+    }
     """
     description = "Show all locations with their GPS coordinates that we have in the database. GPS coordinates are encoded as Point tuple."
     payload = {'query': prefix + query, 'format': 'json'}
@@ -1255,7 +1255,7 @@ PREFIX wikiE: <http://www.wikidata.org/entity/>"""
     query="""SELECT DISTINCT ?seq ?key_label ?key ?value_label ?value WHERE {
         ?seq ?x [ obo:GAZ_00000448 wikiE:Q1384] .
         ?seq ?y [?key ?value] .
-        
+
         ?key rdfs:label ?key_label .
         ?value rdfs:label ?value_label
         }
@@ -1276,7 +1276,7 @@ PREFIX wikiE: <http://www.wikidata.org/entity/>"""
 @app.route('/api/demoGetSouthAmericaSeq', methods=['GET'])
 def demoGetSouthAmericaSeq():
     prefix = """PREFIX obo: <http://purl.obolibrary.org/obo/>
-PREFIX wiki: <http://www.wikidata.org/prop/direct/> 
+PREFIX wiki: <http://www.wikidata.org/prop/direct/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 """
 
@@ -1286,7 +1286,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       ?location wiki:P17 ?country .
       ?country rdfs:label ?country_label .
       ?country wiki:P30 <http://www.wikidata.org/entity/Q18> .
-    }   
+    }
 ORDER BY ?country_label
 """
 
@@ -1309,7 +1309,7 @@ def demoGetSeqByAgeGender():
     ?seq ?hostSchema [ obo:PATO_0000011 ?age ] .
     ?sex rdfs:label ?gender .
 }
-Order by ?age 
+Order by ?age
 """
 
     description = "List all sequences that have an entry in the field 'host_sex' and 'host_age'. Instead of the IRI we want to show the human readable label and order results by age"
@@ -1346,7 +1346,7 @@ PREFIX efo: <http://www.ebi.ac.uk/efo/>"""
 def demoGetSeqWithStrain():
     prefix = """PREFIX SIO: <http://semanticscience.org/resource/>"""
     query="""SELECT DISTINCT  ?strain ?seq WHERE {
-?seq ?virusSchema [SIO:SIO_010055 ?strain] 
+?seq ?virusSchema [SIO:SIO_010055 ?strain]
 }"""
 
     description = "List all sequences with data in 'virus_strain'. Show the strain and the relevant identifer!"
@@ -1361,14 +1361,14 @@ def demoGetSeqWithStrain():
 
 @app.route('/api/demoGetContinentSpecimentSeqCount', methods=['GET'])
 def demoGetContinentSpecimentSeqCount():
-    prefix = """PREFIX obo: <http://purl.obolibrary.org/obo/> 
+    prefix = """PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX wiki: <http://www.wikidata.org/prop/direct/>"""
     query="""SELECT ?continent_label ?specimen_source_label (count(?seq) as ?seqCount)  WHERE
     {
         ?seq ?x [obo:OBI_0001479  ?specimen_source] .
         ?seq ?y [ obo:GAZ_00000448 ?location] .
-        
+
         ?location wiki:P17 ?country .
         ?location wiki:P30 ?continent .
 
@@ -1387,4 +1387,3 @@ PREFIX wiki: <http://www.wikidata.org/prop/direct/>"""
                [{'continent_label': x['continent_label']['value'],
                 'specimen_source_label': x['specimen_source_label']['value'],
                 'seqCount': x['seqCount']['value']} for x in result])
-

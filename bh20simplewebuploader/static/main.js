@@ -110,7 +110,11 @@ function demofetchHTMLTable(apiEndPoint) {
             for (var i=0; i<data[1].length;i++) {
                 htmlString+="</tr><tr>"
                 for (var j=0; j<keys.length;j++){
-                    htmlString+="<td>"+data[1][i][keys[j]]+"</td>"
+                    content = data[1][i][keys[j]];
+                    if (content.startsWith("http://")) {
+                        content = "<a href=\""+content+"\">"+content+"</a>";
+                    }
+                    htmlString+="<td>"+content+"</td>"
                 }
                 htmlString+="</tr>"
             }

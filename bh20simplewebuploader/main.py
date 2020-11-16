@@ -1103,9 +1103,9 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"""
       ?seq ?x [obo:GAZ_00000448 ?geoLocation] .
       ?geoLocation rdfs:label ?geoLocation_label
     }
-    GROUP BY ?geoLocation ?geoLocation_label
+    GROUP BY ?geoLocation ?geoLocation_label ORDER BY DESC (?seqCount)
     """
-    description = "Get count of all sequences grouped by geoLocation and geoLocation_label (1-to-1 relationship)"
+    description = "Get count of all sequences grouped by geoLocation and geoLocation_label (1-to-1 relationship) - spot the champions of open data!"
     payload = {'query': prefix+query, 'format': 'json'}
     r = requests.get(sparqlURL, params=payload)
     result = r.json()['results']['bindings']

@@ -22,7 +22,7 @@
  - [[#how-do-i-deal-with-private-data-and-privacy][How do I deal with private data and privacy?]]
  - [[#do-you-have-any-checks-or-concerns-if-human-sequence-accidentally-submitted-to-your-service-as-part-of-a-fastq-][Do you have any checks or concerns if human sequence accidentally submitted to your service as part of a fastq? *]]
  - [[#does-pubseq-support-only-sars-cov-2-data][Does PubSeq support only SARS-CoV-2 data?]]
- - [[#how-do-i-communicate-with-you][How do I communicate with you?]]
+ - [[#contact-how-do-i-communicate-with-you][Contact: how do I communicate with you?]]
  - [[#citing-pubseq][Citing PubSeq]]
  - [[#who-are-the-sponsors][Who are the sponsors?]]
 
@@ -232,7 +232,7 @@ We are planning to remove reads that match the human reference.
 To date, PubSeq is a resource specific to SARS-CoV-2, but we are designing it to be able to support other species in the future.
 
 
-* How do I communicate with you?
+* Contact: how do I communicate with you?
 
 We use a [[https://gitter.im/arvados/pubseq?utm_source=share-link&utm_medium=link&utm_campaign=share-link][gitter channel]] you can join. See also [[./contact][contact]].
 

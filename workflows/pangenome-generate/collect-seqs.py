@@ -3,6 +3,7 @@ import arvados
 import json
 import shutil
 import logging
+import subprocess
 import arvados.collection
 import ruamel.yaml
 import schema_salad.schema
@@ -71,5 +72,6 @@ for item in validated:
     except Exception as e:
         logging.exception("Error processing collection %s" % uuid)
 
+subprocess.run(["samtools", "faidx", "relabeledSeqs.fasta"])
 
 shutil.rmtree(".cache")

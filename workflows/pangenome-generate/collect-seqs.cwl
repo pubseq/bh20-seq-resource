@@ -8,7 +8,7 @@ requirements:
   arv:RuntimeConstraints:
     outputDirType: keep_output_dir
   DockerRequirement:
-    dockerPull: arvados/jobs:2.0.3
+    dockerImageId: arvados-and-samtools
   WorkReuse:
     enableReuse: false
   ResourceRequirement:
@@ -36,6 +36,7 @@ outputs:
     type: File
     outputBinding:
       glob: relabeledSeqs.fasta
+    secondaryFiles: [.fai]
   mergedMetadata:
     type: File
     outputBinding:

@@ -19,15 +19,15 @@ outputs:
   odgiGraph:
     type: File
     outputSource: buildGraph/odgiGraph
-#  odgiPNG:
-#    type: File
-#    outputSource: vizGraph/graph_image
+ odgiPNG:
+   type: File
+   outputSource: vizGraph/graph_image
   spoaGFA:
     type: File
     outputSource: induceGraph/spoaGFA
-  odgiRDF:
-    type: File
-    outputSource: odgi2rdf/rdf
+#  odgiRDF:
+#    type: File
+#    outputSource: odgi2rdf/rdf
   readsMergeDedupSortedByQualAndLen:
     type: File
     outputSource: dedup_and_sort_by_quality_and_len/sortedReadsFA
@@ -54,27 +54,27 @@ steps:
     in: {inputGFA: induceGraph/spoaGFA}
     out: [odgiGraph]
     run: odgi-build-from-spoa-gfa.cwl
-  # vizGraph:
-  #   in:
-  #     sparse_graph_index: buildGraph/odgiGraph
-  #     width:
-  #       default: 50000
-  #     height:
-  #       default: 500
-  #     path_per_row:
-  #       default: true
-  #     path_height:
-  #       default: 4
-  #   out: [graph_image]
-  #   requirements:
-  #     ResourceRequirement:
-  #       ramMin: $(15 * 1024)
-  #       outdirMin: 10
-  #   run: ../tools/odgi/odgi_viz.cwl
-  odgi2rdf:
-    in: {odgi: buildGraph/odgiGraph}
-    out: [rdf]
-    run: odgi_to_rdf.cwl
+  vizGraph:
+    in:
+      sparse_graph_index: buildGraph/odgiGraph
+      width:
+        default: 50000
+      height:
+        default: 500
+      path_per_row:
+        default: true
+      path_height:
+        default: 4
+    out: [graph_image]
+    requirements:
+      ResourceRequirement:
+        ramMin: $(15 * 1024)
+        outdirMin: 10
+    run: ../tools/odgi/odgi_viz.cwl
+  # odgi2rdf:
+  #  in: {odgi: buildGraph/odgiGraph}
+  #  out: [rdf]
+  #  run: odgi_to_rdf.cwl
   dups2metadata:
     in:
       metadata: metadata

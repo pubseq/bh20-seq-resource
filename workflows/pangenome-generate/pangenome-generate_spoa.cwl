@@ -19,7 +19,7 @@ outputs:
   odgiGraph:
     type: File
     outputSource: buildGraph/odgiGraph
- odgiPNG:
+  odgiPNG:
    type: File
    outputSource: vizGraph/graph_image
   spoaGFA:

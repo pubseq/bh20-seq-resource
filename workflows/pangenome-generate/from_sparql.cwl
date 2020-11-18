@@ -6,6 +6,8 @@ requirements:
       FROM debian:10
       RUN apt-get update && apt-get -yq --no-install-recommends install samtools python3-rdflib
     dockerImageId: rdflib-and-samtools
+  ResourceRequirement:
+    ramMin: 1024
 inputs:
   script:
     type: File

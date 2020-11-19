@@ -254,6 +254,10 @@ let demoGetContinentSpecimentSeqCount = () => {
     demofetchHTMLTable("/api/demoGetContinentSpecimentSeqCount")
 }
 
+let demoGetSampleSchema= () => {
+    demofetchHTMLTable("/api/demoGetSampleSchema")
+}
+
 ////****** SPARQL playground functions ***************////
 
 

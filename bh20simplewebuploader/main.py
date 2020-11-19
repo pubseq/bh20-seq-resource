@@ -1387,3 +1387,22 @@ PREFIX wiki: <http://www.wikidata.org/prop/direct/>"""
                [{'continent_label': x['continent_label']['value'],
                 'specimen_source_label': x['specimen_source_label']['value'],
                 'seqCount': x['seqCount']['value']} for x in result])
+
+
+@app.route('/api/demoGetSampleSchema', methods=['GET'])
+def demoGetSampleSchema():
+    prefix = """PREFIX bh:<http://biohackathon.org/bh20-seq-schema#MainSchema/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"""
+    query="""Select distinct ?key ?key_label WHERE {
+    ?seq bh:sample [?key ?value ] .
+    ?key rdfs:label ?key_label
+}
+"""
+
+    description = "Show the sample meta data schema. Displays the keys as well as their labels. By simple replacing bh:sample e.g. bh:technology the user could retrieve other parts of the meta data schema"
+    payload = {'query': prefix + query, 'format': 'json'}
+    r = requests.get(sparqlURL, params=payload)
+    result = r.json()['results']['bindings']
+    return jsonify([{'description': description}, {'prefix': prefix}, {'query': query}],
+                   [{'key': x['key']['value'],
+                     'key_label': x['key_label']['value']} for x in result])

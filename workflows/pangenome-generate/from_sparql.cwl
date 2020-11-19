@@ -1,5 +1,7 @@
 cwlVersion: v1.1
 class: CommandLineTool
+$namespaces:
+  arv: "http://arvados.org/cwl#"
 requirements:
   DockerRequirement:
     dockerFile: |
@@ -7,7 +9,10 @@ requirements:
       RUN apt-get update && apt-get -yq --no-install-recommends install samtools python3-rdflib
     dockerImageId: rdflib-and-samtools
   ResourceRequirement:
-    ramMin: 1024
+    ramMin: 768
+  arv:RuntimeConstraints:
+    keep_cache: 2048
+    outputDirType: keep_output_dir
 inputs:
   script:
     type: File

@@ -17,7 +17,7 @@ inputs:
     doc: Cells per file on component_segmentation
   reversed_sort:
     type: string
-    default: "true"
+    default: "false"
 outputs:
   odgiGraph:
     type: File

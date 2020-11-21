@@ -42,7 +42,7 @@ outputs:
 #    outputSource: segment_components/colinear_components
 steps:
   dedup_and_sort_by_quality_and_len:
-    in: {readsFA: seqs}
+    in: {readsFA: seqs, reversed_sorting: 'true'}
     out: [sortedReadsFA, dups]
     run: sort_fasta_by_quality_and_len.cwl
   induceGraph:

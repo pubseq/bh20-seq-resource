@@ -7,14 +7,16 @@ import os
 import sys
 import gzip
 
-#import xxhash # Faster library
+# import xxhash # Faster library
 import hashlib
+
 
 def open_gzipsafe(path_file):
     if path_file.endswith('.gz'):
-    	return gzip.open(path_file, 'rt')
+        return gzip.open(path_file, 'rt')
     else:
         return open(path_file)
+
 
 path_fasta = sys.argv[1]
 
@@ -28,7 +30,7 @@ with open_gzipsafe(path_fasta) as f:
         header = fasta.strip('\n').split('\n')[0]
         sequence = ''.join(fasta.strip('\n').split('\n')[1:])
 
-        ##hash = xxhash.xxh64(sequence).hexdigest() # Faster library
+        # hash = xxhash.xxh64(sequence).hexdigest() # Faster library
         hash = hashlib.md5(sequence.encode('utf-8')).hexdigest()
 
         if hash not in hash_to_count_and_headers_dict:
@@ -38,15 +40,18 @@ with open_gzipsafe(path_fasta) as f:
             header_to_seq_dict[header] = sequence
 
             seq_len = len(sequence)
-            header_percCalledBases_seqLength_list.append([header, (seq_len - sequence.count('N'))/seq_len, seq_len])
+            header_percCalledBases_seqLength_list.append([header, (seq_len - sequence.count('N')) / seq_len, seq_len])
 
         hash_to_count_and_headers_dict[hash][0] += 1
         hash_to_count_and_headers_dict[hash][1].append(header)
-
 
 with open('dups.txt', 'w') as fw:
     for count, header_list in hash_to_count_and_headers_dict.values():
         fw.write('\t'.join([str(count), ', '.join(header_list)]) + '\n')
 
-for header, percCalledBases, seqLength_list in sorted(header_percCalledBases_seqLength_list, key=lambda x: (x[-2], x[-1]), reverse = True):
+reversed_sorting = True if len(sys.argv) > 2 and sys.argv[2].lower() == 'true' else False
+
+for header, percCalledBases, seqLength_list in sorted(
+        header_percCalledBases_seqLength_list, key=lambda x: (x[-2], x[-1]), reverse=reversed_sorting
+):
     sys.stdout.write('>{}\n{}\n'.format(header, header_to_seq_dict[header]))

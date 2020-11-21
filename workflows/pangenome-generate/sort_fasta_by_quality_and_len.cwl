@@ -5,6 +5,8 @@ hints:
     coresMin: 1
     ramMin: 3000
 inputs:
+    reversed_sorting:
+    inputBinding: {position: 3}
   readsFA:
     type: File
     inputBinding: {position: 2}

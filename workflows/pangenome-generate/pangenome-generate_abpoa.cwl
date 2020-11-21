@@ -25,9 +25,9 @@ outputs:
   odgiPNG:
    type: File
    outputSource: vizGraph/graph_image
-  spoaGFA:
+  abpoaGFA:
     type: File
-    outputSource: induceGraph/spoaGFA
+    outputSource: induceGraph/abpoaGFA
 #  odgiRDF:
 #    type: File
 #    outputSource: odgi2rdf/rdf
@@ -51,10 +51,10 @@ steps:
   induceGraph:
     in:
       readsFA: dedup_and_sort_by_quality_and_len/sortedReadsFA
-    out: [spoaGFA]
-    run: spoa.cwl
+    out: [abpoaGFA]
+    run: abpoa.cwl
   buildGraph:
-    in: {inputGFA: induceGraph/spoaGFA}
+    in: {inputGFA: induceGraph/abpoaGFA}
     out: [odgiGraph]
     run: odgi-build-from-xpoa-gfa.cwl
   vizGraph:

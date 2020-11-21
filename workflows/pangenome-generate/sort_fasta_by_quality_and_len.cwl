@@ -1,3 +1,4 @@
+
 cwlVersion: v1.1
 class: CommandLineTool
 hints:
@@ -5,7 +6,8 @@ hints:
     coresMin: 1
     ramMin: 3000
 inputs:
-    reversed_sorting:
+  reversed_sorting:
+    type: string
     inputBinding: {position: 3}
   readsFA:
     type: File
@@ -25,3 +27,4 @@ requirements:
   InlineJavascriptRequirement: {}
   ShellCommandRequirement: {}
 baseCommand: [python]
+

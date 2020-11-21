@@ -15,6 +15,9 @@ inputs:
     type: int
     default: 100
     doc: Cells per file on component_segmentation
+  reversed_sort:
+    type: string
+    default: "true"
 outputs:
   odgiGraph:
     type: File
@@ -42,7 +45,7 @@ outputs:
 #    outputSource: segment_components/colinear_components
 steps:
   dedup_and_sort_by_quality_and_len:
-    in: {readsFA: seqs, reversed_sorting: 'true'}
+    in: {readsFA: seqs, reversed_sorting: reversed_sort}
     out: [sortedReadsFA, dups]
     run: sort_fasta_by_quality_and_len.cwl
   induceGraph:

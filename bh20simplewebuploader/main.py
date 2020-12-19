@@ -259,11 +259,15 @@ def send_home():
     tweets = []
     try:
         for tweet_id in redis_client.zrevrange('bh20-tweet-score:',
-                                               0, -1):
-            tweets.append(
-                {k.decode("utf-8"): v.decode("utf-8") for k, v in
-                 redis_client.hgetall(tweet_id).items()}
-            )
+                                               0, 9):
+            # Ensure the dict always has a value; otherwise a key
+            # error will be thrown by jinja
+            tweet_dict = redis_client.hgetall(tweet_id)
+            if tweet_dict:
+                tweets.append(
+                    {k.decode("utf-8"): v.decode("utf-8") for k, v in
+                     tweet_dict.items()})
+
     except redis.exceptions.ConnectionError as e:
         logging.warning(f"redis connect failed {e}")
         pass

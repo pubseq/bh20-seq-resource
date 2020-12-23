@@ -272,9 +272,12 @@ def send_home():
     """
     Send the front page.
     """
-    return render_template('home.html', menu='HOME',
-                           tweets=get_feed_items("bh20-tweet-score:"),
-                           load_map=True)
+    return render_template(
+        'home.html', menu='HOME',
+        tweets=get_feed_items("bh20-tweet-score:"),
+        commits=get_feed_items("bh20-commit-score:"),
+        pubmed_articles=get_feed_items("bh20-pubmed-score:"),
+        load_map=True)
 
 
 @app.route('/upload')

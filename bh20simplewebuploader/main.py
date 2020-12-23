@@ -263,7 +263,7 @@ def send_home():
             # Ensure the dict always has a value; otherwise a key
             # error will be thrown by jinja
             tweet_dict = redis_client.hgetall(tweet_id)
-            if tweet_dict:
+            if tweet_dict and int(tweet_dict.get(b'score', "0")) > 0:
                 tweets.append(
                     {k.decode("utf-8"): v.decode("utf-8") for k, v in
                      tweet_dict.items()})

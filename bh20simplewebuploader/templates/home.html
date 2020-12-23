@@ -39,7 +39,7 @@
                               Pubmed content
                           </ul>
                           <ul class="tab content-tweets">
-                              {% for tweet in tweets|sort(reverse=true, attribute="timeposted")%}
+                              {% for tweet in tweets|sort(reverse=true, attribute="score")%}
                               <li>
                                   <p class="tweet">
                                       {{ tweet.tweet|urlize(40, target="_blank") }} <br/>

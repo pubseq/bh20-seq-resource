@@ -27,8 +27,18 @@
                       <div id="map_view" class="map">
                           <div id="mapid"></div>
                       </div>
-                      <div id="twitter-feed">
-                          <ul>
+
+                      <div id="feed">
+                          <input name="feed-tabs" type="radio" id="tab-pubmed-articles" checked/>
+                          <label for="tab-pubmed-articles">Pubmed Articles</label>
+                          <input name="feed-tabs" type="radio" id="tab-tweets"/>
+                          <label for="tab-tweets">Tweets</label>
+                          <input name="feed-tabs" type="radio" id="tab-commits"/>
+                          <label for="tab-commits">Commits</label>
+                          <ul class="tab content-pubmed-articles">
+                              Pubmed content
+                          </ul>
+                          <ul class="tab content-tweets">
                               {% for tweet in tweets|sort(reverse=true, attribute="timeposted")%}
                               <li>
                                   <p class="tweet">
@@ -40,6 +50,9 @@
                                   </small>
                               </li>
                               {% endfor %}
+                          </ul>
+                          <ul class="tab content-commits">
+                              Commits
                           </ul>
                       </div>
                   </section>

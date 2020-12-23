@@ -248,31 +248,32 @@ def load_schema_generate_form():
 
 FORM_ITEMS = load_schema_generate_form()
 
+
+def get_feed_items(name, start=0, stop=9):
+    redis_client = redis.Redis(host=os.environ.get('HOST', 'localhost'),
+                               port=os.environ.get('PORT', 6379),
+                               db=os.environ.get('REDIS_DB', 0))    
+    feed_items = []
+    try:
+        for el in redis_client.zrevrange(name, start, stop):
+            feed_dict = redis_client.hgetall(el)
+            if feed_dict and int(feed_dict.get(b"score", "0")) > 0:
+                feed_items.append(
+                    {k.decode("utf-8"): v.decode("utf-8") for k, v in
+                     feed_dict.items()})
+        return feed_items
+    except redis.exceptions.ConnectionError as e:
+        logging.warning(f"redis connect failed {e}")
+        pass
+
+
 @app.route('/')
 def send_home():
     """
     Send the front page.
     """
-    redis_client = redis.Redis(host=os.environ.get('HOST', 'localhost'),
-                               port=os.environ.get('PORT', 6379),
-                               db=os.environ.get('REDIS_DB', 0))
-    tweets = []
-    try:
-        for tweet_id in redis_client.zrevrange('bh20-tweet-score:',
-                                               0, 9):
-            # Ensure the dict always has a value; otherwise a key
-            # error will be thrown by jinja
-            tweet_dict = redis_client.hgetall(tweet_id)
-            if tweet_dict and int(tweet_dict.get(b'score', "0")) > 0:
-                tweets.append(
-                    {k.decode("utf-8"): v.decode("utf-8") for k, v in
-                     tweet_dict.items()})
-
-    except redis.exceptions.ConnectionError as e:
-        logging.warning(f"redis connect failed {e}")
-        pass
     return render_template('home.html', menu='HOME',
-                           tweets=tweets,
+                           tweets=get_feed_items("bh20-tweet-score:"),
                            load_map=True)
 
 

@@ -17,11 +17,6 @@ h1 {
     text-align: center;
 }
 
-.intro {
-    color: #505050;
-    // font-weight: 300;
-}
-
 .header {
     background-color: white;
     margin: 0 auto;
@@ -202,6 +197,7 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
 }
 
 .intro {
+    color: #505050;
     grid-area: a;
 }
 

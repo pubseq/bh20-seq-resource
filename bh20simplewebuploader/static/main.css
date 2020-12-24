@@ -17,11 +17,6 @@ h1 {
     text-align: center;
 }
 
-.intro {
-    color: #505050;
-    // font-weight: 300;
-}
-
 .header {
     background-color: white;
     margin: 0 auto;
@@ -202,6 +197,7 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
 }
 
 .intro {
+    color: #505050;
     grid-area: a;
 }
 
@@ -514,7 +510,7 @@ div.status {
     justify-content: space-evenly;
 }
 
-#twitter-feed {
+#feed {
     background-color: #f5f8fa;
     max-height: 440px;
     max-width: 500px;
@@ -525,11 +521,11 @@ div.status {
 }
 
 
-#twitter-feed ul {
+#feed ul {
     list-style-type: none;
 }
 
-#twitter-feed ul li {
+#feed ul li {
     border-bottom: 2px solid white;
     padding-bottom: 20px;
 }
@@ -555,4 +551,41 @@ padding-right:10px;
 #playgroundButtonBox
 {
 max-width: 80%;
+}
+
+/** Tabbed feed **/
+input[name="feed-tabs"] {
+    display: none;
+}
+
+input[name="feed-tabs"] + label {
+    display: inline-block;
+}
+
+input[name="feed-tabs"] ~ .tab {
+    display: none;
+}
+
+#tab-pubmed-articles:checked ~ .tab.content-pubmed-articles,
+#tab-tweets:checked ~ .tab.content-tweets,
+#tab-commits:checked ~ .tab.content-commits {
+    display: block;
+}
+
+input[name="feed-tabs"] + label {
+  border: 1px solid #999;
+  background: #EEE;
+  padding: 4px 12px;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  top: 1px;
+}
+
+input[name="feed-tabs"]:checked + label {
+  background: #FFF;
+  border-bottom: 1px solid transparent;
+}
+input[name="feed-tabs"] ~ .tab {          /* grey line between tab and contents */
+  border-top: 1px solid #999;
+  padding: 12px;
 }

@@ -27,9 +27,34 @@
                       <div id="map_view" class="map">
                           <div id="mapid"></div>
                       </div>
-                      <div id="twitter-feed">
-                          <ul>
-                              {% for tweet in tweets|sort(reverse=true, attribute="timeposted")%}
+
+                      <div id="feed">
+                          <input name="feed-tabs" type="radio" id="tab-pubmed-articles" checked/>
+                          <label for="tab-pubmed-articles">Pubmed Articles</label>
+                          <input name="feed-tabs" type="radio" id="tab-tweets"/>
+                          <label for="tab-tweets">Tweets</label>
+                          <input name="feed-tabs" type="radio" id="tab-commits"/>
+                          <label for="tab-commits">Commits</label>
+                          <ul class="tab content-pubmed-articles">
+                              {% if pubmed_articles %}
+                              {% for article in pubmed_articles|sort(reverse=true, attribute="score")%}
+                              <li>
+                                  <p><a href="https://pubmed.ncbi.nlm.nih.gov/{{article['docsum-pmid']}}"><b>Summary:</b> {{ article['summary'] }}</a></p>
+                                  <p><b>Full Authors:</b> {{ article['full-authors'] }}</p>
+                                  <p><b>Short Authors:</b> {{ article['short-authors'] }}</p>
+                                  <p><b>Citation:</b> {{ article['citation'] }}</p>
+                                  <p><b>Short Journal Citation:</b> {{ article['short-journal-citation'] }}</p>
+                              </li>
+                              {% endfor %}
+                              {% else %}
+
+                              There are no articles to display :(
+
+                              {% endif %}
+                          </ul>
+                          <ul class="tab content-tweets">
+                              {% if tweets %}
+                              {% for tweet in tweets|sort(reverse=true, attribute="score")%}
                               <li>
                                   <p class="tweet">
                                       {{ tweet.tweet|urlize(40, target="_blank") }} <br/>
@@ -40,6 +65,32 @@
                                   </small>
                               </li>
                               {% endfor %}
+
+                              {% else %}
+
+                              There are no tweets to display :(
+
+                              {% endif %}
+                          </ul>
+                          <ul class="tab content-commits">
+                              {% if commits %}                              
+                              {% for commit in commits|sort(reverse=true, attribute="score")%}
+                              <li>
+                                  <p class="commit">
+                                      <a href="{{commit.url}}" target="_blank">
+                                          {{ commit.hash.split(":")[-1][:7] }}:{{ commit.content}}
+                                      </a>
+                                      
+                                  </p>
+                                  <small class="timeposted">
+                                      <a href="{{ commit['repository-url']}}" target="_blank">{{ commit.author }}/{{ commit.repository }}</a>
+                                       on {{ commit.timeposted}}
+                                  </small>
+                              </li>
+                              {% endfor %}
+                              {% else %}
+                              There are no commits to be displayed.
+                              {%  endif %}
                           </ul>
                       </div>
                   </section>

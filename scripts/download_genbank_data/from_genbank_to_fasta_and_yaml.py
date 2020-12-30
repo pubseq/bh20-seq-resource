@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+#
+# - bulk download genbank data and matadata, preparing the FASTA and
+#   the YAML files
+#
+# See .guix-run python3 from_genbank_to_fasta_and_yaml.py
 
 import argparse
 parser = argparse.ArgumentParser()
@@ -61,21 +66,34 @@ if args.ids_to_ignore:
     print('There are {} accessions to ignore.'.format(len(accession_to_ignore_set)))
 
 
+# ----------------------------------------------------------------------
+"""
+With --only-missing-ids only download accessions that we do not yet have!
+"""
 accession_already_downloaded_set = set()
 
 if os.path.exists(dir_fasta_and_yaml):
+    """
+    If the fasta_and_yaml directory exists and --only-missing-ids was set
+    we make a list of all downloaded accessions:
+    """
     print("The directory '{}' already exists.".format(dir_fasta_and_yaml))
     if not args.only_missing_ids:
         print("To start the download, delete the directory '{}' or specify --only-missing-ids.".format(dir_fasta_and_yaml))
         sys.exit(-1)
 
+    """
+    Fetch all YAML filenames and load `accession_already_downloaded_set`
+    """
     accession_already_downloaded_set = set([x.split('.yaml')[0].split('.')[0] for x in os.listdir(dir_fasta_and_yaml) if x.endswith('.yaml')])
     print('There are {} accessions already downloaded.'.format(len(accession_already_downloaded_set)))
 
-
 accession_to_ignore_set.update(accession_already_downloaded_set)
 
-
+# ----------------------------------------------------------------------
+"""
+Check for --ids-to-consider
+"""
 accession_to_consider_set = set()
 
 if args.ids_to_consider:
@@ -89,6 +107,10 @@ if args.ids_to_consider:
     if len(accession_to_consider_set) > 0:
         print('There are {} accessions to consider.'.format(len(accession_to_consider_set)))
 
+# ----------------------------------------------------------------------
+"""
+Download section for genbank XML
+"""
 
 if not os.path.exists(dir_metadata):
     # Take all the ids
@@ -143,10 +165,14 @@ if not os.path.exists(dir_metadata):
                 Entrez.efetch(db='nuccore', id=id_x_list, retmode='xml').read()
             )
 
+# ----------------------------------------------------------------------
+"""
+Generate metadata (YAML) and FASTA files for each accession
+"""
+
 
 if not os.path.exists(dir_fasta_and_yaml):
     os.makedirs(dir_fasta_and_yaml)
-
 
 min_len_to_count = 15000
 num_seq_with_len_ge_X_bp = 0

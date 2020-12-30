@@ -1,0 +1,5 @@
+#!/bin/sh
+# Runner
+
+echo python3 from_genbank_to_fasta_and_yaml.py
+guix environment guix --ad-hoc python python-biopython python-requests python-dateutil

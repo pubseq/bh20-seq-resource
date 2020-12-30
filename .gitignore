@@ -24,3 +24,6 @@ env.bak/
 venv.bak/
 
 relabeledSeqs*
+
+# Generated dirs/files
+metadata_from_nuccore/

@@ -29,12 +29,30 @@
                       </div>
 
                       <div id="feed">
-                          <input name="feed-tabs" type="radio" id="tab-pubmed-articles" checked/>
-                          <label for="tab-pubmed-articles">Pubmed Articles</label>
+                          <input name="feed-tabs" type="radio" id="tab-arxiv-articles" checked/>
+                          <label for="tab-arxiv-articles">Arxiv</label>
+                          <input name="feed-tabs" type="radio" id="tab-pubmed-articles"/>
+                          <label for="tab-pubmed-articles">Pubmed</label>
                           <input name="feed-tabs" type="radio" id="tab-tweets"/>
                           <label for="tab-tweets">Tweets</label>
                           <input name="feed-tabs" type="radio" id="tab-commits"/>
                           <label for="tab-commits">Commits</label>
+                          <ul class="tab content-arxiv-articles">
+                              {% if arxiv_articles %}
+                              {% for article in arxiv_articles|sort(reverse=true, attribute="score")%}
+                              <li>
+                                  <p><a href="{{article['url']}}">{{ article['title'] }}</a></p>
+                                  <p><b>Authors:</b> {{ article['authors'] }}</p>
+                                  <p><b>Abstract:</b> {{ article['abstract']}}...</p>
+                                  <p><b>Submitted:</b> {{ article['submission']}}</p>
+                              </li>
+                              {% endfor %}
+                              {% else %}
+
+                              There are no articles to display :(
+
+                              {% endif %}
+                          </ul>
                           <ul class="tab content-pubmed-articles">
                               {% if pubmed_articles %}
                               {% for article in pubmed_articles|sort(reverse=true, attribute="score")%}

@@ -523,6 +523,7 @@ div.status {
 
 #feed ul {
     list-style-type: none;
+    width: 30em;
 }
 
 #feed ul li {
@@ -567,6 +568,7 @@ input[name="feed-tabs"] ~ .tab {
 }
 
 #tab-pubmed-articles:checked ~ .tab.content-pubmed-articles,
+#tab-arxiv-articles:checked ~ .tab.content-arxiv-articles,
 #tab-tweets:checked ~ .tab.content-tweets,
 #tab-commits:checked ~ .tab.content-commits {
     display: block;

@@ -277,6 +277,7 @@ def send_home():
         tweets=get_feed_items("bh20-tweet-score:"),
         commits=get_feed_items("bh20-commit-score:"),
         pubmed_articles=get_feed_items("bh20-pubmed-score:"),
+        arxiv_articles=get_feed_items("bh20-arxiv-score:"),
         load_map=True)
 
 

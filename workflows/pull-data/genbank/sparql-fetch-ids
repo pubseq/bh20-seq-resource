@@ -30,6 +30,10 @@ def sparql q, transform = nil
   vars = data['head']['vars']
   results = data['results']['bindings']
   results.map { |rec|
+    # return results after transforming to a Hash and applying the
+    # optional transform lambda. Note the transform can not only
+    # reduce results, or create an array, but also may transform into
+    # an OpenStruct.
     res = {}
     vars.each { |name|
       res[name.to_sym] = rec[name]['value']

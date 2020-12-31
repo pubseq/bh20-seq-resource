@@ -1,8 +1,11 @@
+#!/usr/bin/env python3
+#
+# Create a single YAML/FASTA from genbank XML
+
 # ----------------------------------------------------------------------
 """
 Generate metadata (YAML) and FASTA files for each accession
 """
-
 
 if not os.path.exists(dir_fasta_and_yaml):
     os.makedirs(dir_fasta_and_yaml)

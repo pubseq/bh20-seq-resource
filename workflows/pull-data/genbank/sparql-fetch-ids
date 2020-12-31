@@ -1,4 +1,9 @@
 #!/usr/bin/env ruby
+#
+# Use a SPARQL query to fetch all IDs in the PubSeq database
+#
+#   sparql-fetch-ids > pubseq_ids.txt
+#
 
 require 'net/http'
 require 'json'
@@ -13,7 +18,8 @@ prefix schema: <https://schema.org/>
 PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
 "
 
-# Build a SPARQL query, submit and return results. Apply transform lambda
+# Build a SPARQL query, submit and return results. Apply transform
+# lambda when passed in
 
 def sparql q, transform = nil
   q = SPARQL_HEADER+q
@@ -42,16 +48,18 @@ start = 0
 num = MAX
 begin
   query = "
-select distinct ?id where {
+SELECT DISTINCT ?id
+FROM <http://covid-19.genenetwork.org/graph/metadata.ttl>
+WHERE {
 
-?arvid <http://biohackathon.org/bh20-seq-schema/original_fasta_label> ?id .
+  ?arvid <http://biohackathon.org/bh20-seq-schema/original_fasta_label> ?id .
 
-} limit #{num} offset #{start}
+} LIMIT #{num} OFFSET #{start}
 "
   list = sparql(query, lambda { |rec| rec[:id] })
   list.each do | l |
     print(l,"\n")
   end
+  $stderr.print("#{start}-#{start+list.size}:#{list.first}\n") # show progress
   start += num
-  $stderr.print(start,":",list.first,"\n")
 end while list.size == MAX

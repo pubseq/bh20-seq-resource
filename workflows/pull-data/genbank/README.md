@@ -1,4 +1,4 @@
-Pipeline:
+# pipeline
 
 ```sh
 # --- get list of IDs already in PubSeq
@@ -11,3 +11,7 @@ genbank-fetch-ids --dir ~/tmp/pubseq > genbank_ids.txt
 for id in genbank_ids.txt:
   transform-genbank-xml2yamlfa --dir ~/tmp/genbank id --outdir ~/tmp/pubseq
 ```
+
+# TODO
+
+- [ ] Add id for GenBank accession - i.e. how can we tell a record is from GenBank

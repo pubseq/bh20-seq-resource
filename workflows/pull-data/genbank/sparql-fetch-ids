@@ -1,0 +1,57 @@
+#!/usr/bin/env ruby
+
+require 'net/http'
+require 'json'
+require 'ostruct'
+require 'erb'
+
+SPARQL_HEADER="
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix dc: <http://purl.org/dc/terms/>
+prefix schema: <https://schema.org/>
+PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
+"
+
+# Build a SPARQL query, submit and return results. Apply transform lambda
+
+def sparql q, transform = nil
+  q = SPARQL_HEADER+q
+  api_url = "http://sparql.genenetwork.org/sparql/?default-graph-uri=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on&run=+Run+Query+&query=#{ERB::Util.url_encode(q)}"
+
+  response = Net::HTTP.get_response(URI.parse(api_url))
+  data = JSON.parse(response.body)
+  vars = data['head']['vars']
+  results = data['results']['bindings']
+  results.map { |rec|
+    res = {}
+    vars.each { |name|
+      res[name.to_sym] = rec[name]['value']
+    }
+    if transform
+      transform.call(res)
+    else
+      res
+    end
+  }
+end
+
+MAX=5_000
+
+start = 0
+num = MAX
+begin
+  query = "
+select distinct ?id where {
+
+?arvid <http://biohackathon.org/bh20-seq-schema/original_fasta_label> ?id .
+
+} limit #{num} offset #{start}
+"
+  list = sparql(query, lambda { |rec| rec[:id] })
+  list.each do | l |
+    print(l,"\n")
+  end
+  start += num
+  $stderr.print(start,":",list.first,"\n")
+end while list.size == MAX

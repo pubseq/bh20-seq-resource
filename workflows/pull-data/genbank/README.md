@@ -2,11 +2,11 @@
 
 ```sh
 # --- get list of IDs already in PubSeq
-sparql-fetch-ids > pubseq_ids.txt
+./sparql-fetch-ids > pubseq_ids.txt
 # --- get list of missing genbank IDs
-genbank-fetch-ids.py --skip pubseq_ids.txt > genbank_ids.txt
+./genbank-fetch-ids.py --skip pubseq_ids.txt > genbank_ids.txt
 # --- fetch XML
-update-from-genbank.py --ids genbank_ids.txt --out ~/tmp/genbank
+python3 update-from-genbank.py --ids genbank_ids.txt --out ~/tmp/genbank
 # --- Transform to YAML and FASTA
 transform-genbank-xml2yamlfa --dir ~/tmp/genbank id --outdir ~/tmp/pubseq
 ```

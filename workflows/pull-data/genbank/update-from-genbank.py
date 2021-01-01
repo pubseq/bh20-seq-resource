@@ -8,6 +8,7 @@
 # See also directory .guix-run and README.md
 
 import argparse
+import gzip
 import os
 import sys
 from utils import chunks
@@ -35,9 +36,9 @@ if not os.path.exists(dir):
 
 request_num = min(BATCH,args.max)
 for i, idsx in enumerate(chunks(list(ids), request_num)):
-    xmlfn = os.path.join(dir, f"metadata_{i}.xml")
+    xmlfn = os.path.join(dir, f"metadata_{i}.xml.gz")
     print(f"Fetching {xmlfn} ({i*request_num})",file=sys.stderr)
-    with open(xmlfn, 'w') as f:
-        f.write(Entrez.efetch(db='nuccore', id=idsx, retmode='xml').read())
+    with gzip.open(xmlfn, 'w') as f:
+        f.write((Entrez.efetch(db='nuccore', id=idsx, retmode='xml').read()).encode())
     if i*request_num >= args.max:
         break

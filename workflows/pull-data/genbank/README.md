@@ -6,7 +6,7 @@ sparql-fetch-ids > pubseq_ids.txt
 # --- get list of missing genbank IDs
 genbank-fetch-ids.py --skip pubseq_ids.txt > genbank_ids.txt
 # --- fetch XML
-update-from-genbank.py --ids genbank_ids.txt --outdir ~/tmp/genbank
+update-from-genbank.py --ids genbank_ids.txt --out ~/tmp/genbank
 # --- Transform to YAML and FASTA
 transform-genbank-xml2yamlfa --dir ~/tmp/genbank id --outdir ~/tmp/pubseq
 ```

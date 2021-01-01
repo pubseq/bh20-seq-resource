@@ -3,7 +3,7 @@
 # - bulk download genbank data and matadata, preparing the FASTA and
 #   the YAML files
 #
-# See .guix-run python3 from_genbank_to_fasta_and_yaml.py
+# See .guix-run
 
 import argparse
 parser = argparse.ArgumentParser()

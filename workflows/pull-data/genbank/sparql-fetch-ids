@@ -4,11 +4,15 @@
 #
 #   sparql-fetch-ids > pubseq_ids.txt
 #
+# Note: requires Ruby 3.x. Older Ruby gives a syntax error
 
 require 'net/http'
 require 'json'
 require 'ostruct'
 require 'erb'
+require 'pp'
+
+MAX=5_000
 
 SPARQL_HEADER="
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -20,24 +24,20 @@ PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
 
 # Build a SPARQL query, submit and return results. Apply transform
 # lambda when passed in
-
-def sparql q, transform = nil
-  q = SPARQL_HEADER+q
-  api_url = "http://sparql.genenetwork.org/sparql/?default-graph-uri=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on&run=+Run+Query+&query=#{ERB::Util.url_encode(q)}"
+def sparql query, transform = nil
+  api_url = "http://sparql.genenetwork.org/sparql/?default-graph-uri=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on&run=+Run+Query+&query=#{ERB::Util.url_encode(SPARQL_HEADER + query)}"
 
   response = Net::HTTP.get_response(URI.parse(api_url))
-  data = JSON.parse(response.body)
-  vars = data['head']['vars']
-  results = data['results']['bindings']
+  data = JSON.parse(response.body,symbolize_names: true)
+  data => { head: { vars: }, results: { bindings: results} }
+  vars = vars.map { |v| v.to_sym }
   results.map { |rec|
     # return results after transforming to a Hash and applying the
     # optional transform lambda. Note the transform can not only
     # reduce results, or create an array, but also may transform into
     # an OpenStruct.
     res = {}
-    vars.each { |name|
-      res[name.to_sym] = rec[name]['value']
-    }
+    vars.each { |name| res[name] = rec[name][:value] }
     if transform
       transform.call(res)
     else
@@ -45,8 +45,6 @@ def sparql q, transform = nil
     end
   }
 end
-
-MAX=5_000
 
 start = 0
 num = MAX

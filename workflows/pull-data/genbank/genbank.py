@@ -1,7 +1,13 @@
 # Genbank XML parser
 
+from collections import namedtuple
+import dateutil
+from dateutil.parser import parse as dateparse
+from dateutil.tz import gettz
 import os
+import re
 import sys
+import types
 import xml.etree.ElementTree as ET
 
 class GBError(Exception):
@@ -47,8 +53,62 @@ Example of an output JSON:
 }
 """
 
-def get_metadata(id, gb):
-    return True,None
+def get_metadata(id, gbseq):
+    host = types.SimpleNamespace()
+    sample = types.SimpleNamespace()
+    submitter = types.SimpleNamespace()
+    warnings = []
+
+    def warn(msg):
+        print(f"WARNING: {msg}",file=sys.stderr)
+        warnings.append(msg)
+
+    host.host_species = "http://purl.obolibrary.org/obo/NCBITaxon_9606"
+    sample.sample_id = id
+    sample.database = "https://www.ncbi.nlm.nih.gov/genbank/"
+    sample.source_database_accession = f"http://identifiers.org/insdc/{id}#sequence"
+    # <GBQualifier>
+    #   <GBQualifier_name>country</GBQualifier_name>
+    #   <GBQualifier_value>USA: Cruise_Ship_1, California</GBQualifier_value>
+    # </GBQualifier>
+    sample.collection_location = "FIXME"
+
+    # --- Handling dates ---
+    # <GBSeq_create-date>29-JUL-2020</GBSeq_create-date>
+    n = gbseq.find("./GBSeq_create-date")
+    creation_date = dateparse(n.text).date()
+
+    # <GBSeq_update-date>30-JUL-2020</GBSeq_update-date>
+    n = gbseq.find("./GBSeq_update-date")
+    update_date = dateparse(n.text).date()
+
+    # <GBQualifier>
+    #   <GBQualifier_name>collection_date</GBQualifier_name>
+    #   <GBQualifier_value>2020-04-01</GBQualifier_value>
+    # </GBQualifier>
+    n = gbseq.find(".//GBQualifier/GBQualifier_name/[.='collection_date']/../GBQualifier_value")
+    try:
+        date = dateparse(n.text).date()
+        sample.collection_date = str(date)
+    except dateutil.parser._parser.ParserError as e:
+        warn(str(e))
+        sample.collection_date = str(creation_date)
+    except AttributeError:
+        warn("Missing collection_date - used creation_date instead")
+        sample.collection_date = str(creation_date)
+
+    info = {
+        'id': 'placeholder',
+        'update_date': str(update_date),
+        'host': host,
+        'sample': sample,
+        #'virus': virus,
+        #'technology': technology,
+        'submitter': submitter,
+        'warnings': warnings,
+        }
+    print(info)
+    return True,info
 
 def get_sequence(id, gbseq):
     seq = None
@@ -62,6 +122,8 @@ def get_sequence(id, gbseq):
         if len(seq) < 20_000:
             raise GBError(f"Sequence too short")
         return seq
+
+# ---- BELOW IS JUST FOR REFERENCE ----
 
 min_len_to_count = 15000
 num_seq_with_len_ge_X_bp = 0
@@ -78,7 +140,7 @@ if None:
         accession_version = GBSeq.find('GBSeq_accession-version').text
 
         try:
-            info_for_yaml_dict = {
+            info = {
                 'id': 'placeholder',
                 'host': {},
                 'sample': {},
@@ -342,7 +404,7 @@ if None:
                 #    fw.write('>{}\n{}'.format(accession_version, GBSeq_sequence.text.upper()))
 
                 with open(os.path.join(dir_fasta_and_yaml, '{}.yaml'.format(accession_version)), 'w') as fw:
-                    json.dump(info_for_yaml_dict, fw, indent=2)
+                    json.dump(info, fw, indent=2)
         except:
             print("Unexpected error for the ID {}: {}".format(accession_version, sys.exc_info()[0]))
             accession_with_errors_list.append(accession_version)

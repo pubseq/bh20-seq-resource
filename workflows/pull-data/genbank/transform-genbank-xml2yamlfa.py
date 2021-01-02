@@ -40,6 +40,7 @@ for xmlfn in args.files:
         for gb in tree.findall('./GBSeq'):
             valid = None
             error = None
+            meta = {}
             id = gb.find("GBSeq_locus").text
             basename = dir+"/"+id
             print(f"    parsing {id}")
@@ -54,14 +55,15 @@ for xmlfn in args.files:
                         f2.write(seq)
                     # print(seq)
             except genbank.GBError as e:
-                print(f"OS error: {e}")
+                error = f"{e} for {id}"
+                print(error,file=sys.stderr)
                 valid = False
-                error = str(e)
             state = {}
-            if not valid:
-                state['valid'] = False
+            state['valid'] = valid
             if error:
                 state['error'] = error
+            if meta['warnings']:
+                state['warnings'] = meta['warnings']
             states[id] = state
 
 print(states)

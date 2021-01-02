@@ -7,6 +7,46 @@ import xml.etree.ElementTree as ET
 class GBError(Exception):
     pass
 
+"""
+Example of an output JSON:
+
+{
+  "id": "placeholder",
+  "host": {
+    "host_species": "http://purl.obolibrary.org/obo/NCBITaxon_9606"
+  },
+  "sample": {
+    "sample_id": "MT890462.1",
+    "source_database_accession": [
+      "http://identifiers.org/insdc/MT890462.1#sequence"
+    ],
+    "collection_location": "http://www.wikidata.org/entity/Q649",
+    "collection_date": "2020-04-17",
+    "collecting_institution": "N.A.Kovtun Clinical Hospital 1 of Departament of President Affairs"
+  },
+  "virus": {
+    "virus_strain": "SARS-CoV-2/human/RUS/20200417_10/2020",
+    "virus_species": "http://purl.obolibrary.org/obo/NCBITaxon_2697049"
+  },
+  "technology": {
+    "assembly_method": "http://purl.obolibrary.org/obo/GENEPIO_0001628",
+    "alignment_protocol": "bowtie2 v. 2.3.4",
+    "sample_sequencing_technology": [
+      "http://purl.obolibrary.org/obo/OBI_0000759"
+    ]
+  },
+  "submitter": {
+    "authors": [
+      "Blagodatskikh,K.A."
+    ],
+    "submitter_name": [
+      "R&D"
+    ],
+    "submitter_address": "Pirogov Russian National Research Medical University, Ostrovityanova 1, Moscow 117997, Russia"
+  }
+}
+"""
+
 def get_metadata(id, gb):
     return True,None
 
@@ -37,15 +77,7 @@ if None:
     for GBSeq in GBSet:
         accession_version = GBSeq.find('GBSeq_accession-version').text
 
-        GBSeq_sequence = GBSeq.find('GBSeq_sequence')
-        if GBSeq_sequence is None:
-            print(accession_version, ' - sequence not found')
-            continue
-
         try:
-            # print(path_metadata_xxx_xml, accession_version)
-
-            # A general default-empty yaml could be read from the definitive one
             info_for_yaml_dict = {
                 'id': 'placeholder',
                 'host': {},
@@ -55,17 +87,15 @@ if None:
                 'submitter': {}
             }
 
-
-            info_for_yaml_dict['sample']['sample_id'] = accession_version
-            info_for_yaml_dict['sample']['source_database_accession'] = ["http://identifiers.org/insdc/"+accession_version+"#sequence"] #accession is turned into resolvable URL/URI now
-
+            sample['sample_id'] = accession_version
+            sample['source_database_accession'] = ["http://identifiers.org/insdc/"+accession_version+"#sequence"] #accession is turned into resolvable URL/URI now
 
             # submitter info
             GBSeq_references = GBSeq.find('GBSeq_references')
             if GBSeq_references is not None:
                 author_list = ["{}".format(x.text) for x in GBSeq_references.iter('GBAuthor')]
                 if len(author_list) > 0:
-                    info_for_yaml_dict['submitter']['authors'] = author_list
+                    submitter['authors'] = author_list
 
                 GBReference = GBSeq_references.find('GBReference')
                 if GBReference is not None:
@@ -73,13 +103,13 @@ if None:
 
                     if GBReference_journal is not None and GBReference_journal.text != 'Unpublished':
                         if 'Submitted' in GBReference_journal.text:
-                            info_for_yaml_dict['submitter']['submitter_name'] = ["{}".format(GBReference_journal.text.split(') ')[1].split(',')[0].strip())]
-                            info_for_yaml_dict['submitter']['submitter_address'] = ','.join(GBReference_journal.text.split(') ')[1].split(',')[1:]).strip()
+                            submitter['submitter_name'] = ["{}".format(GBReference_journal.text.split(') ')[1].split(',')[0].strip())]
+                            submitter['submitter_address'] = ','.join(GBReference_journal.text.split(') ')[1].split(',')[1:]).strip()
                         else:
-                            info_for_yaml_dict['submitter']['additional_submitter_information'] = GBReference_journal.text
+                            submitter['additional_submitter_information'] = GBReference_journal.text
 
             # This script download and prepare data and metadata for assemblies samples
-            info_for_yaml_dict['technology']['assembly_method'] = 'http://purl.obolibrary.org/obo/GENEPIO_0001628'
+            technology['assembly_method'] = 'http://purl.obolibrary.org/obo/GENEPIO_0001628'
 
             GBSeq_comment = GBSeq.find('GBSeq_comment')
             if GBSeq_comment is not None and 'Assembly-Data' in GBSeq_comment.text:
@@ -99,7 +129,7 @@ if None:
                         if field_in_yaml == 'sequencing_coverage':
                             # A regular expression would be better!
                             try:
-                                info_for_yaml_dict['technology'][field_in_yaml] = [
+                                technology[field_in_yaml] = [
                                     float(tech_info_to_parse.replace('(average)', '').replace("reads/nt", '').
                                           replace('(average for 6 sequences)', '').replace(',', '.').strip(' xX>'))
                                 ]
@@ -117,9 +147,9 @@ if None:
                                     missing_value_list.append('\t'.join([accession_version, 'sample_sequencing_technology', seq_tec]))
 
                             if len(new_seq_tec_list) > 0:
-                                info_for_yaml_dict['technology']['sample_sequencing_technology'] = [x for x in new_seq_tec_list]
+                                technology['sample_sequencing_technology'] = [x for x in new_seq_tec_list]
                         else:
-                            info_for_yaml_dict['technology'][field_in_yaml] = tech_info_to_parse
+                            technology[field_in_yaml] = tech_info_to_parse
 
 
             for GBFeature in GBSeq.iter('GBFeature'):
@@ -138,15 +168,15 @@ if None:
                         GBQualifier_value_text = GBQualifier_value_text.split(';')[0] # For case like Homo sapiens;sex:female
                         if GBQualifier_value_text in field_to_term_to_uri_dict['ncbi_host_species']:
                             # Cases like 'Felis catus; Domestic Shorthair'
-                            info_for_yaml_dict['host']['host_species'] = field_to_term_to_uri_dict['ncbi_host_species'][GBQualifier_value_text]
+                            host['host_species'] = field_to_term_to_uri_dict['ncbi_host_species'][GBQualifier_value_text]
                         else:
                             GBQualifier_value_text_list = GBQualifier_value_text.split('; ')
 
                             if GBQualifier_value_text_list[0] in field_to_term_to_uri_dict['ncbi_host_species']:
-                                info_for_yaml_dict['host']['host_species'] = field_to_term_to_uri_dict['ncbi_host_species'][GBQualifier_value_text_list[0]]
+                                host['host_species'] = field_to_term_to_uri_dict['ncbi_host_species'][GBQualifier_value_text_list[0]]
                             elif GBQualifier_value_text_list[0] and ('MT215193' in accession_version or 'MT270814' in accession_version):
                                 # Information checked manually from NCBI Virus
-                                info_for_yaml_dict['host']['host_species'] = field_to_term_to_uri_dict['ncbi_host_species']['Canis lupus familiaris']
+                                host['host_species'] = field_to_term_to_uri_dict['ncbi_host_species']['Canis lupus familiaris']
                             else:
                                 missing_value_list.append('\t'.join([accession_version, 'host_species', GBQualifier_value_text_list[0]]))
 
@@ -174,9 +204,9 @@ if None:
                                         host_sex = 'female' if host_sex_one_lecter == 'F' else 'male'
 
                                 if host_sex in ['male', 'female']:
-                                    info_for_yaml_dict['host']['host_sex'] = "http://purl.obolibrary.org/obo/PATO_0000384" if host_sex == 'male' else "http://purl.obolibrary.org/obo/PATO_0000383"
+                                    host['host_sex'] = "http://purl.obolibrary.org/obo/PATO_0000384" if host_sex == 'male' else "http://purl.obolibrary.org/obo/PATO_0000383"
                                 elif GBQualifier_value_text_list[1] in field_to_term_to_uri_dict['ncbi_host_health_status']:
-                                    info_for_yaml_dict['host']['host_health_status'] = field_to_term_to_uri_dict['ncbi_host_health_status'][GBQualifier_value_text_list[1]]
+                                    host['host_health_status'] = field_to_term_to_uri_dict['ncbi_host_health_status'][GBQualifier_value_text_list[1]]
                                 else:
                                     missing_value_list.append('\t'.join([accession_version, 'host_sex or host_health_status', GBQualifier_value_text_list[1]]))
 
@@ -188,15 +218,15 @@ if None:
                                     host_age = int(GBQualifier_value_text_list[2].split(' ')[-1])
 
                                 if host_age >= 0 and host_age < 110:
-                                    info_for_yaml_dict['host']['host_age'] = host_age
-                                    info_for_yaml_dict['host']['host_age_unit'] = 'http://purl.obolibrary.org/obo/UO_0000036'
+                                    host['host_age'] = host_age
+                                    host['host_age_unit'] = 'http://purl.obolibrary.org/obo/UO_0000036'
                                 elif len(GBQualifier_value_text_list) > 2:
                                     missing_value_list.append('\t'.join([accession_version, 'host_age', GBQualifier_value_text_list[2]]))
                     elif GBQualifier_name_text == 'collected_by':
                         if any([x in GBQualifier_value_text.lower() for x in ['institute', 'hospital', 'city', 'center']]):
-                            info_for_yaml_dict['sample']['collecting_institution'] = GBQualifier_value_text
+                            sample['collecting_institution'] = GBQualifier_value_text
                         else:
-                            info_for_yaml_dict['sample']['collector_name'] = GBQualifier_value_text
+                            sample['collector_name'] = GBQualifier_value_text
                     elif GBQualifier_name_text == 'isolation_source':
                         if GBQualifier_value_text.upper() in field_to_term_to_uri_dict['ncbi_speciesman_source']:
                             GBQualifier_value_text = GBQualifier_value_text.upper()  # For example, in case of 'usa: wa'
@@ -205,18 +235,18 @@ if None:
                         GBQualifier_value_text = GBQualifier_value_text.strip("/'")
 
                         if GBQualifier_value_text in field_to_term_to_uri_dict['ncbi_speciesman_source']:
-                            info_for_yaml_dict['sample']['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source'][GBQualifier_value_text]]
+                            sample['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source'][GBQualifier_value_text]]
                         else:
                             if GBQualifier_value_text.lower() in ['np/op', 'np-op', 'np/op swab', 'np/np swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab', 'combined nasopharyngeal and oropharyngeal swab', 'naso and/or oropharyngeal swab']:
-                                info_for_yaml_dict['sample']['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasopharyngeal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['oropharyngeal swab']]
+                                sample['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasopharyngeal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['oropharyngeal swab']]
                             elif GBQualifier_value_text.lower() in ['nasopharyngeal swab/throat swab', 'nasopharyngeal/throat swab', 'nasopharyngeal swab and throat swab', 'nasal swab and throat swab', 'nasopharyngeal aspirate/throat swab', 'Nasopharyngeal/Throat']:
-                                info_for_yaml_dict['sample']['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasopharyngeal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['throat swab']]
+                                sample['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasopharyngeal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['throat swab']]
                             elif GBQualifier_value_text.lower() in ['nasopharyngeal aspirate & throat swab', 'nasopharyngeal aspirate and throat swab']:
-                                info_for_yaml_dict['sample']['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasopharyngeal aspirate'], field_to_term_to_uri_dict['ncbi_speciesman_source']['throat swab']]
+                                sample['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasopharyngeal aspirate'], field_to_term_to_uri_dict['ncbi_speciesman_source']['throat swab']]
                             elif GBQualifier_value_text.lower() in ['nasal swab and throat swab']:
-                                info_for_yaml_dict['sample']['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['throat swab']]
+                                sample['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['throat swab']]
                             elif GBQualifier_value_text.lower() in ['nasal-swab and oro-pharyngeal swab']:
-                                info_for_yaml_dict['sample']['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['oropharyngeal swab']]
+                                sample['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['oropharyngeal swab']]
                             else:
                                 missing_value_list.append('\t'.join([accession_version, 'specimen_source', GBQualifier_value_text]))
                     elif GBQualifier_name_text == 'collection_date':
@@ -229,60 +259,60 @@ if None:
                             else:
                                 date_to_write = "{}-01-15".format(GBQualifier_value_text)
 
-                            if 'additional_collection_information' in info_for_yaml_dict['sample']:
-                                info_for_yaml_dict['sample']['additional_collection_information'] += "; The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
+                            if 'additional_collection_information' in sample:
+                                sample['additional_collection_information'] += "; The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
                             else:
-                                info_for_yaml_dict['sample']['additional_collection_information'] = "The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
+                                sample['additional_collection_information'] = "The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
                         elif len(GBQualifier_value_text.split('-')) == 2:
                             date_to_write = parse(GBQualifier_value_text).strftime('%Y-%m') + '-15'
 
-                            if 'additional_collection_information' in info_for_yaml_dict['sample']:
-                                info_for_yaml_dict['sample']['additional_collection_information'] += "; The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
+                            if 'additional_collection_information' in sample:
+                                sample['additional_collection_information'] += "; The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
                             else:
-                                info_for_yaml_dict['sample']['additional_collection_information'] = "The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
+                                sample['additional_collection_information'] = "The 'collection_date' is estimated (the original date was: {})".format(GBQualifier_value_text)
                         elif len(GBQualifier_value_text.split('-')) == 3:
                             GBQualifier_value_text_list = GBQualifier_value_text.split('-')
 
                             if GBQualifier_value_text_list[1].isalpha():
                                 date_to_write = parse(GBQualifier_value_text).strftime('%Y-%m-%d')
 
-                        info_for_yaml_dict['sample']['collection_date'] = date_to_write
+                        sample['collection_date'] = date_to_write
                     elif GBQualifier_name_text in ['lat_lon', 'country']:
                         if GBQualifier_name_text == 'country' and ': ' in GBQualifier_value_text:
                             GBQualifier_value_text = GBQualifier_value_text.replace(': ', ':')
 
                         if GBQualifier_value_text in field_to_term_to_uri_dict['ncbi_countries']:
-                            info_for_yaml_dict['sample']['collection_location'] = field_to_term_to_uri_dict['ncbi_countries'][GBQualifier_value_text]
+                            sample['collection_location'] = field_to_term_to_uri_dict['ncbi_countries'][GBQualifier_value_text]
                         else:
                             missing_value_list.append('\t'.join([accession_version, GBQualifier_name_text, GBQualifier_value_text]))
                     elif GBQualifier_name_text == 'note':
-                        if 'additional_collection_information' in info_for_yaml_dict['sample']:
-                            info_for_yaml_dict['sample']['additional_collection_information'] += '; ' + GBQualifier_value_text
+                        if 'additional_collection_information' in sample:
+                            sample['additional_collection_information'] += '; ' + GBQualifier_value_text
                         else:
-                            info_for_yaml_dict['sample']['additional_collection_information'] = GBQualifier_value_text
+                            sample['additional_collection_information'] = GBQualifier_value_text
                     elif GBQualifier_name_text == 'isolate':
-                        info_for_yaml_dict['virus']['virus_strain'] = GBQualifier_value_text
+                        virus['virus_strain'] = GBQualifier_value_text
                     elif GBQualifier_name_text == 'db_xref':
-                        info_for_yaml_dict['virus']['virus_species'] = "http://purl.obolibrary.org/obo/NCBITaxon_"+GBQualifier_value_text.split('taxon:')[1]
+                        virus['virus_species'] = "http://purl.obolibrary.org/obo/NCBITaxon_"+GBQualifier_value_text.split('taxon:')[1]
 
             # Check if mandatory fields are missing
-            if 'sample_sequencing_technology' not in info_for_yaml_dict['technology']:
+            if 'sample_sequencing_technology' not in technology:
                 # print(accession_version, ' - technology not found')
                 if accession_version not in not_created_accession_dict:
                     not_created_accession_dict[accession_version] = []
                 not_created_accession_dict[accession_version].append('sample_sequencing_technology not found')
 
-            if 'collection_location' not in info_for_yaml_dict['sample']:
+            if 'collection_location' not in sample:
                 if accession_version not in not_created_accession_dict:
                     not_created_accession_dict[accession_version] = []
                 not_created_accession_dict[accession_version].append('collection_location not found')
 
-            if 'collection_date' not in info_for_yaml_dict['sample']:
+            if 'collection_date' not in sample:
                 if accession_version not in not_created_accession_dict:
                     not_created_accession_dict[accession_version] = []
                 not_created_accession_dict[accession_version].append('collection_date not found')
             else:
-                year, month, day = [int(x) for x in info_for_yaml_dict['sample']['collection_date'].split('-')]
+                year, month, day = [int(x) for x in sample['collection_date'].split('-')]
 
                 collection_date_in_yaml = datetime(year, month, day)
                 if collection_date_in_yaml < min_acceptable_collection_date:
@@ -290,12 +320,12 @@ if None:
                         not_created_accession_dict[accession_version] = []
                     not_created_accession_dict[accession_version].append('collection_date too early')
 
-            if 'authors' not in info_for_yaml_dict['submitter']:
+            if 'authors' not in submitter:
                 if accession_version not in not_created_accession_dict:
                     not_created_accession_dict[accession_version] = []
                 not_created_accession_dict[accession_version].append('authors not found')
 
-            if 'host_species' not in info_for_yaml_dict['host']:
+            if 'host_species' not in host:
                 if accession_version not in not_created_accession_dict:
                     not_created_accession_dict[accession_version] = []
                 not_created_accession_dict[accession_version].append('host_species not found')

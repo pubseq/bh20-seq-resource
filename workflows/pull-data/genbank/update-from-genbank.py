@@ -22,6 +22,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--max', type=int, help='Max queries', required=False)
 parser.add_argument('--ids', type=str, help='File with ids to fetch, 1 id per line', required=True)
 parser.add_argument('--out', type=str, help='Directory to write to', required=True)
+
 args = parser.parse_args()
 
 ids = set()

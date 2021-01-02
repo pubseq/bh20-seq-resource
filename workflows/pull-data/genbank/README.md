@@ -8,7 +8,7 @@
 # --- fetch XML
 python3 update-from-genbank.py --ids genbank_ids.txt --out ~/tmp/genbank
 # --- Transform to YAML and FASTA
-transform-genbank-xml2yamlfa --dir ~/tmp/genbank id --outdir ~/tmp/pubseq
+python3 transform-genbank-xml2yamlfa --out ~/tmp/pubseq file(s)
 ```
 
 # TODO

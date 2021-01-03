@@ -52,18 +52,28 @@ Example of an output JSON:
   }
 }
 
-Note: missing data should be None! Do not fill in other data by
-'guessing'.
-
-When data is malformed an warning should be issued.
 
 """
 
 def get_metadata(id, gbseq):
+    """This is a minimal data parser from genbank XML records. Inference
+    on, for example geo location, is not allowed in this function and
+    happens downstream.
+
+    That is to keep the parsing simple.
+
+    Important: missing data should be missing or None! Do not fill in
+    data by 'guessing'.
+
+    When data is malformed a warning should be logged and added to the
+    warning list.
+
+    """
     host = types.SimpleNamespace()
     sample = types.SimpleNamespace()
     submitter = types.SimpleNamespace()
     technology = types.SimpleNamespace()
+    virus = types.SimpleNamespace()
     warnings = []
 
     def warn(msg):
@@ -81,13 +91,14 @@ def get_metadata(id, gbseq):
     sample.sample_id = id
     sample.database = "https://www.ncbi.nlm.nih.gov/genbank/"
     sample.source_database_accession = f"http://identifiers.org/insdc/{id}#sequence"
-    # <GBQualifier>
-    #   <GBQualifier_name>country</GBQualifier_name>
     #   <GBQualifier_value>USA: Cruise_Ship_1, California</GBQualifier_value>
-    # </GBQualifier>
-    sample.collection_location = "FIXME"
+    n = fetch("host_species", ".//GBQualifier/GBQualifier_name/[.='country']/../GBQualifier_value")
+    if n: sample.collection_location = n
+    else: warn("Missing collection_location")
 
     submitter.authors = [n.text for n in gbseq.findall(".//GBAuthor")]
+    if not len(submitter.authors): warn("Missing authors")
+
     # <GBReference_journal>Submitted (28-OCT-2020) MDU-PHL, The Peter
     #   Doherty Institute for Infection and Immunity, 792 Elizabeth
     #   Street, Melbourne, Vic 3000, Australia
@@ -103,7 +114,6 @@ def get_metadata(id, gbseq):
         pass
     except ValueError:
         submitter.additional_submitter_information = n
-        pass
 
     try:
         n = gbseq.find("./GBSeq_comment").text
@@ -122,6 +132,7 @@ def get_metadata(id, gbseq):
         p = re.compile(r'.*Sequencing Technology :: ([^;]+).*')
         m = p.match(n)
         if m: technology.sample_sequencing_technology = m.group(1).strip()
+        else: warn("Missing sample_sequencing_technology")
 
     # --- Dates
     n = gbseq.find("./GBSeq_create-date")
@@ -171,13 +182,18 @@ def get_metadata(id, gbseq):
                 host.host_age = int(m.group(1))
                 host.host_age_unit = 'http://purl.obolibrary.org/obo/UO_0000036'
         # sys.exit(1)
+    n = fetch("virus_strain", ".//GBQualifier/GBQualifier_name/[.='isolate']/../GBQualifier_value")
+    if n: virus.virus_strain = n
+    n = fetch("virus_species", ".//GBQualifier/GBQualifier_name/[.='db_xref']/../GBQualifier_value")
+    if n: virus.virus_species = "http://purl.obolibrary.org/obo/NCBITaxon_"+n.split('taxon:')[1]
+
 
     info = {
         'id': 'placeholder',
         'update_date': str(update_date),
         'host': host.__dict__,
         'sample': sample.__dict__,
-        #'virus': virus,
+        'virus': virus.__dict__,
         'technology': technology.__dict__,
         'submitter': submitter.__dict__,
         'warnings': warnings,

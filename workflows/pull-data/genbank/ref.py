@@ -1,16 +1,5 @@
 # ---- BELOW IS JUST FOR REFERENCE ----
 
-                GBReference = GBSeq_references.find('GBReference')
-                if GBReference is not None:
-                    GBReference_journal = GBReference.find('GBReference_journal')
-
-                    if GBReference_journal is not None and GBReference_journal.text != 'Unpublished':
-                        if 'Submitted' in GBReference_journal.text:
-                            submitter['submitter_name'] = ["{}".format(GBReference_journal.text.split(') ')[1].split(',')[0].strip())]
-                            submitter['submitter_address'] = ','.join(GBReference_journal.text.split(') ')[1].split(',')[1:]).strip()
-                        else:
-                            submitter['additional_submitter_information'] = GBReference_journal.text
-
             # This script download and prepare data and metadata for assemblies samples
             technology['assembly_method'] = 'http://purl.obolibrary.org/obo/GENEPIO_0001628'
 

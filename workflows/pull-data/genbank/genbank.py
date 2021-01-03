@@ -78,6 +78,22 @@ def get_metadata(id, gbseq):
     sample.collection_location = "FIXME"
 
     submitter.authors = [n.text for n in gbseq.findall(".//GBAuthor")]
+    # <GBReference_journal>Submitted (28-OCT-2020) MDU-PHL, The Peter
+    #   Doherty Institute for Infection and Immunity, 792 Elizabeth
+    #   Street, Melbourne, Vic 3000, Australia
+    # </GBReference_journal>
+    try:
+        n = gbseq.find(".//GBReference_journal").text
+        # print(n,file=sys.stderr)
+        if n != 'Unpublished':
+            institute,address = n.split(',',1)
+            submitter.submitter_name = institute.split(') ')[1]
+            submitter.submitter_address = address.strip()
+    except AttributeError:
+        pass
+    except ValueError:
+        submitter.additional_submitter_information = n
+        pass
 
     # --- Dates
     n = gbseq.find("./GBSeq_create-date")

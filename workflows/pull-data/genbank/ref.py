@@ -1,40 +1,5 @@
 # ---- BELOW IS JUST FOR REFERENCE ----
 
-
-min_len_to_count = 15000
-num_seq_with_len_ge_X_bp = 0
-
-missing_value_list = []
-not_created_accession_dict = {}
-accession_with_errors_list = []
-if None:
-
-    tree = ET.parse(path_metadata_xxx_xml)
-    GBSet = tree.getroot()
-
-    for GBSeq in GBSet:
-        accession_version = GBSeq.find('GBSeq_accession-version').text
-
-        try:
-            info = {
-                'id': 'placeholder',
-                'host': {},
-                'sample': {},
-                'virus': {},
-                'technology': {},
-                'submitter': {}
-            }
-
-            sample['sample_id'] = accession_version
-            sample['source_database_accession'] = ["http://identifiers.org/insdc/"+accession_version+"#sequence"] #accession is turned into resolvable URL/URI now
-
-            # submitter info
-            GBSeq_references = GBSeq.find('GBSeq_references')
-            if GBSeq_references is not None:
-                author_list = ["{}".format(x.text) for x in GBSeq_references.iter('GBAuthor')]
-                if len(author_list) > 0:
-                    submitter['authors'] = author_list
-
                 GBReference = GBSeq_references.find('GBReference')
                 if GBReference is not None:
                     GBReference_journal = GBReference.find('GBReference_journal')

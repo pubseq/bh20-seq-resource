@@ -51,6 +51,10 @@ Example of an output JSON:
     "submitter_address": "Pirogov Russian National Research Medical University, Ostrovityanova 1, Moscow 117997, Russia"
   }
 }
+
+Note: missing data should be None! Do not fill in other data by
+'guessing'.
+
 """
 
 def get_metadata(id, gbseq):
@@ -73,29 +77,23 @@ def get_metadata(id, gbseq):
     # </GBQualifier>
     sample.collection_location = "FIXME"
 
-    # --- Handling dates ---
-    # <GBSeq_create-date>29-JUL-2020</GBSeq_create-date>
+    submitter.authors = [n.text for n in gbseq.findall(".//GBAuthor")]
+
+    # --- Dates
     n = gbseq.find("./GBSeq_create-date")
     creation_date = dateparse(n.text).date()
-
-    # <GBSeq_update-date>30-JUL-2020</GBSeq_update-date>
     n = gbseq.find("./GBSeq_update-date")
     update_date = dateparse(n.text).date()
-
-    # <GBQualifier>
-    #   <GBQualifier_name>collection_date</GBQualifier_name>
-    #   <GBQualifier_value>2020-04-01</GBQualifier_value>
-    # </GBQualifier>
     n = gbseq.find(".//GBQualifier/GBQualifier_name/[.='collection_date']/../GBQualifier_value")
     try:
         date = dateparse(n.text).date()
         sample.collection_date = str(date)
     except dateutil.parser._parser.ParserError as e:
-        warn(str(e))
-        sample.collection_date = str(creation_date)
+        warn("No collection_date: ",str(e))
+        sample.collection_date = None
     except AttributeError:
-        warn("Missing collection_date - used creation_date instead")
-        sample.collection_date = str(creation_date)
+        warn("Missing collection_date")
+        sample.collection_date = None
 
     info = {
         'id': 'placeholder',

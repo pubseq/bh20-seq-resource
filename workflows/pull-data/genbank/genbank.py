@@ -28,7 +28,8 @@ Example of an output JSON:
     ],
     "collection_location": "http://www.wikidata.org/entity/Q649",
     "collection_date": "2020-04-17",
-    "collecting_institution": "N.A.Kovtun Clinical Hospital 1 of Departament of President Affairs"
+    "collecting_institution": "N.A.Kovtun Clinical Hospital 1 of Departament of President Affairs",
+    "specimen_source": ["http://purl.obolibrary.org/obo/NCIT_C155831"]
   },
   "virus": {
     "virus_strain": "SARS-CoV-2/human/RUS/20200417_10/2020",
@@ -145,10 +146,8 @@ def get_metadata(id, gbseq):
         sample.collection_date = str(date)
     except dateutil.parser._parser.ParserError as e:
         warn("No collection_date: ",str(e))
-        sample.collection_date = None
     except AttributeError:
         warn("Missing collection_date")
-        sample.collection_date = None
 
     # --- Host info
     # - Homo sapiens
@@ -186,7 +185,8 @@ def get_metadata(id, gbseq):
     if n: virus.virus_strain = n
     n = fetch("virus_species", ".//GBQualifier/GBQualifier_name/[.='db_xref']/../GBQualifier_value")
     if n: virus.virus_species = "http://purl.obolibrary.org/obo/NCBITaxon_"+n.split('taxon:')[1]
-
+    n = fetch("specimen_source", ".//GBQualifier/GBQualifier_name/[.='isolation_source']/../GBQualifier_value")
+    if n: sample.specimen_source = n
 
     info = {
         'id': 'placeholder',

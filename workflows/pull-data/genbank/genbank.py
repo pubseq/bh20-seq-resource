@@ -70,6 +70,13 @@ def get_metadata(id, gbseq):
         print(f"WARNING: {msg}",file=sys.stderr)
         warnings.append(msg)
 
+    def fetch(msg, xpath):
+        try:
+            n = gbseq.find(xpath).text
+            return n
+        except AttributeError:
+            warn("Missing "+msg)
+
     host.host_species = "http://purl.obolibrary.org/obo/NCBITaxon_9606"
     sample.sample_id = id
     sample.database = "https://www.ncbi.nlm.nih.gov/genbank/"
@@ -132,14 +139,47 @@ def get_metadata(id, gbseq):
         warn("Missing collection_date")
         sample.collection_date = None
 
+    # --- Host info
+    # - Homo sapiens
+    # - Homo sapiens; female
+    # - Homo sapiens; female 63
+    # - Homo sapiens; female; age 40
+    # - Homo sapiens; gender: F; age: 61
+    # - Homo sapiens; gender: M; age: 68
+    # - Homo sapiens; hospitalized patient
+    # - Homo sapiens; male
+    # - Homo sapiens; male; 63
+    # - Homo sapiens; male; age 29
+    # - Homo sapiens; symptomatic
+    n = fetch("host_species", ".//GBQualifier/GBQualifier_name/[.='host']/../GBQualifier_value")
+    if n:
+        list = n.split('; ')
+        species = list[0]
+        host.host_species = species
+        if species != "Homo sapiens":
+            warn(f"Species not understood: {species}")
+        if len(list)>1:
+            sex = list[1]
+            if 'male' in sex or 'gender: M' in sex: host.host_sex = 'male'
+            if 'female' in sex or 'gender: F' in sex: host.host_sex = 'female'
+        if len(list)>2:
+            age = list[2]
+            p = re.compile(r'[^\d]+(\d+)')
+            m = p.match(n)
+            print(m.group(1))
+            if m:
+                host.host_age = int(m.group(1))
+                host.host_age_unit = 'http://purl.obolibrary.org/obo/UO_0000036'
+        # sys.exit(1)
+
     info = {
         'id': 'placeholder',
         'update_date': str(update_date),
-        'host': host,
-        'sample': sample,
+        'host': host.__dict__,
+        'sample': sample.__dict__,
         #'virus': virus,
-        'technology': technology,
-        'submitter': submitter,
+        'technology': technology.__dict__,
+        'submitter': submitter.__dict__,
         'warnings': warnings,
         }
     print(info)

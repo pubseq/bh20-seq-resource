@@ -26,53 +26,9 @@
                             technology[field_in_yaml] = tech_info_to_parse
 
 
-            for GBFeature in GBSeq.iter('GBFeature'):
-                if GBFeature.find('GBFeature_key').text != 'source':
-                    continue
 
-                for GBQualifier in GBFeature.iter('GBQualifier'):
-                    GBQualifier_value = GBQualifier.find('GBQualifier_value')
-                    if GBQualifier_value is None:
-                        continue
-                    GBQualifier_value_text = GBQualifier_value.text
 
-                    GBQualifier_name_text = GBQualifier.find('GBQualifier_name').text
-
-                    if GBQualifier_name_text == 'host':
-                        GBQualifier_value_text = GBQualifier_value_text.split(';')[0] # For case like Homo sapiens;sex:female
-                        if GBQualifier_value_text in field_to_term_to_uri_dict['ncbi_host_species']:
-                            # Cases like 'Felis catus; Domestic Shorthair'
-                            host['host_species'] = field_to_term_to_uri_dict['ncbi_host_species'][GBQualifier_value_text]
-                        else:
-                            GBQualifier_value_text_list = GBQualifier_value_text.split('; ')
-
-                            if GBQualifier_value_text_list[0] in field_to_term_to_uri_dict['ncbi_host_species']:
-                                host['host_species'] = field_to_term_to_uri_dict['ncbi_host_species'][GBQualifier_value_text_list[0]]
-                            elif GBQualifier_value_text_list[0] and ('MT215193' in accession_version or 'MT270814' in accession_version):
-                                # Information checked manually from NCBI Virus
-                                host['host_species'] = field_to_term_to_uri_dict['ncbi_host_species']['Canis lupus familiaris']
-                            else:
-                                missing_value_list.append('\t'.join([accession_version, 'host_species', GBQualifier_value_text_list[0]]))
-
-                            # Possible cases:
-                            # - Homo sapiens                        --> ['Homo sapiens']
-                            # - Homo sapiens; female                --> ['Homo sapiens', 'female']
-                            # - Homo sapiens; female 63             --> ['Homo sapiens', 'female 63']
-                            # - Homo sapiens; female; age 40        --> ['Homo sapiens', 'female', 'age 40']
-                            # - Homo sapiens; gender: F; age: 61    --> ['Homo sapiens', 'gender: F', 'age: 61']
-                            # - Homo sapiens; gender: M; age: 68    --> ['Homo sapiens', 'gender: M', 'age: 68']
-                            # - Homo sapiens; hospitalized patient  --> ['Homo sapiens', 'hospitalized patient']
-                            # - Homo sapiens; male                  --> ['Homo sapiens', 'male']
-                            # - Homo sapiens; male; 63              --> ['Homo sapiens', 'male', '63']
-                            # - Homo sapiens; male; age 29          --> ['Homo sapiens', 'male', 'age 29']
-                            # - Homo sapiens; symptomatic           --> ['Homo sapiens', 'symptomatic']
-                            if len(GBQualifier_value_text_list) > 1:
-                                host_sex = ''
-                                if 'female' in GBQualifier_value_text_list[1]:
-                                    host_sex = 'female'
-                                elif 'male' in GBQualifier_value_text_list[1]:
-                                    host_sex = 'male'
-                                elif 'gender' in GBQualifier_value_text_list[1]:
+       elif 'gender' in GBQualifier_value_text_list[1]:
                                     host_sex_one_lecter = GBQualifier_value_text_list[1].split(':')[-1].strip()
                                     if host_sex_one_lecter in ['F', 'M']:
                                         host_sex = 'female' if host_sex_one_lecter == 'F' else 'male'

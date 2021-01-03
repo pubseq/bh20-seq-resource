@@ -1,23 +1,5 @@
 # ---- BELOW IS JUST FOR REFERENCE ----
 
-            # This script download and prepare data and metadata for assemblies samples
-            technology['assembly_method'] = 'http://purl.obolibrary.org/obo/GENEPIO_0001628'
-
-            GBSeq_comment = GBSeq.find('GBSeq_comment')
-            if GBSeq_comment is not None and 'Assembly-Data' in GBSeq_comment.text:
-                prefix_split_string = '##Genome-Assembly' if GBSeq_comment.text.startswith('##Genome-') else '##Assembly'
-
-                GBSeq_comment_text = GBSeq_comment.text.split(
-                    '{}-Data-START## ; '.format(prefix_split_string)
-                )[1].split(' ; {}-Data-END##'.format(prefix_split_string))[0]
-
-                for info_to_check, field_in_yaml in zip(
-                    ['Assembly Method', 'Coverage', 'Sequencing Technology'],
-                    ['alignment_protocol', 'sequencing_coverage', 'sample_sequencing_technology']
-                ):
-                    if info_to_check in GBSeq_comment_text:
-                        tech_info_to_parse = GBSeq_comment_text.split('{} :: '.format(info_to_check))[1].split(' ;')[0]
-
                         if field_in_yaml == 'sequencing_coverage':
                             # A regular expression would be better!
                             try:

@@ -55,12 +55,15 @@ Example of an output JSON:
 Note: missing data should be None! Do not fill in other data by
 'guessing'.
 
+When data is malformed an warning should be issued.
+
 """
 
 def get_metadata(id, gbseq):
     host = types.SimpleNamespace()
     sample = types.SimpleNamespace()
     submitter = types.SimpleNamespace()
+    technology = types.SimpleNamespace()
     warnings = []
 
     def warn(msg):
@@ -95,6 +98,24 @@ def get_metadata(id, gbseq):
         submitter.additional_submitter_information = n
         pass
 
+    try:
+        n = gbseq.find("./GBSeq_comment").text
+    except AttributeError:
+        pass
+    if 'Assembly-Data' in n:
+        # print(n,file=sys.stderr)
+        # the following is wrong (de novo by default)
+        # technology.assembly_method = 'http://purl.obolibrary.org/obo/GENEPIO_0001628'
+        p = re.compile(r'.*Assembly Method :: ([^;]+).*')
+        m = p.match(n)
+        if m: technology.alignment_protocol = m.group(1)
+        p = re.compile(r'.*Coverage :: ([^;]+).*')
+        m = p.match(n)
+        if m: technology.sequencing_coverage = m.group(1)
+        p = re.compile(r'.*Sequencing Technology :: ([^;]+).*')
+        m = p.match(n)
+        if m: technology.sample_sequencing_technology = m.group(1).strip()
+
     # --- Dates
     n = gbseq.find("./GBSeq_create-date")
     creation_date = dateparse(n.text).date()
@@ -117,7 +138,7 @@ def get_metadata(id, gbseq):
         'host': host,
         'sample': sample,
         #'virus': virus,
-        #'technology': technology,
+        'technology': technology,
         'submitter': submitter,
         'warnings': warnings,
         }

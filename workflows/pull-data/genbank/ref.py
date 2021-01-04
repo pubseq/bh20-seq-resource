@@ -21,22 +21,3 @@ elif GBQualifier_name_text == 'collected_by':
 elif GBQualifier_name_text == 'isolation_source':
 if GBQualifier_value_text.upper() in field_to_term_to_uri_dict['ncbi_speciesman_source']:
     GBQualifier_value_text = GBQualifier_value_text.upper()  # For example, in case of 'usa: wa'
-
-# Little cleaning
-GBQualifier_value_text = GBQualifier_value_text.strip("/'")
-
-if GBQualifier_value_text in field_to_term_to_uri_dict['ncbi_speciesman_source']:
-    sample['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source'][GBQualifier_value_text]]
-else:
-    if GBQualifier_value_text.lower() in ['np/op', 'np-op', 'np/op swab', 'np/np swab', 'nasopharyngeal and oropharyngeal swab', 'nasopharyngeal/oropharyngeal swab', 'combined nasopharyngeal and oropharyngeal swab', 'naso and/or oropharyngeal swab']:
-        sample['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasopharyngeal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['oropharyngeal swab']]
-    elif GBQualifier_value_text.lower() in ['nasopharyngeal swab/throat swab', 'nasopharyngeal/throat swab', 'nasopharyngeal swab and throat swab', 'nasal swab and throat swab', 'nasopharyngeal aspirate/throat swab', 'Nasopharyngeal/Throat']:
-        sample['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasopharyngeal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['throat swab']]
-    elif GBQualifier_value_text.lower() in ['nasopharyngeal aspirate & throat swab', 'nasopharyngeal aspirate and throat swab']:
-        sample['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasopharyngeal aspirate'], field_to_term_to_uri_dict['ncbi_speciesman_source']['throat swab']]
-    elif GBQualifier_value_text.lower() in ['nasal swab and throat swab']:
-        sample['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['throat swab']]
-    elif GBQualifier_value_text.lower() in ['nasal-swab and oro-pharyngeal swab']:
-        sample['specimen_source'] = [field_to_term_to_uri_dict['ncbi_speciesman_source']['nasal swab'], field_to_term_to_uri_dict['ncbi_speciesman_source']['oropharyngeal swab']]
-    else:
-        missing_value_list.append('\t'.join([accession_version, 'specimen_source', GBQualifier_value_text]))

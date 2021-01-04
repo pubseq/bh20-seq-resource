@@ -27,21 +27,30 @@ def host_species(host,mapping):
             warning = f"No URI mapping for host_species <{key}>"
     return host.__dict__,warning
 
-Bronchoalveolar_Lavage_Fluid = "http://purl.obolibrary.org/obo/NCIT_C13195"
-Saliva = "http://purl.obolibrary.org/obo/NCIT_C13275"
-Nasal_Swab = "http://purl.obolibrary.org/obo/NCIT_C132119"
-Frozen_Food = "https://www.wikidata.org/wiki/Q751728"
+Unknown = "Not found" # So as not to create a warning
 
 def specimen_source(sample,mapping):
-    SPECIMEN_TERMS = {
-        r".*swab": Nasal_Swab,
+    Oronasopharynx = "http://purl.obolibrary.org/obo/NCIT_C155835"
+    Oropharyngeal = "http://purl.obolibrary.org/obo/NCIT_C155835"
+    Nasopharyngeal = "http://purl.obolibrary.org/obo/NCIT_C155831"
+    Bronchoalveolar_Lavage_Fluid = "http://purl.obolibrary.org/obo/NCIT_C13195"
+    Saliva = "http://purl.obolibrary.org/obo/NCIT_C13275"
+    Nasal_Swab = "http://purl.obolibrary.org/obo/NCIT_C132119"
+    Frozen_Food = "https://www.wikidata.org/wiki/Q751728"
+    SPECIMEN_TERMS = { # since Python 3.7 dict is ordered! Note that re is allowed
+        "Oronasopharynx": Oronasopharynx,
+        "orophar": Oropharyngeal,
+        "pharyngeal": Nasopharyngeal,
+        "\snares": Nasal_Swab,
         "saliva": Saliva,
+        "swab": Nasal_Swab,
         "seafood": Frozen_Food,
-        "packaging": Frozen_Food
+        "packaging": Frozen_Food,
+        "uknown": Unknown,
+        "unknown": Unknown
         }
     warning = None
     sample = types.SimpleNamespace(**sample)
-
     try:
         if sample.specimen_source and \
            not 'obolibrary' in sample.specimen_source and \
@@ -52,12 +61,13 @@ def specimen_source(sample,mapping):
                 sample.specimen_source = mapping[key]
             else:
                 for term in SPECIMEN_TERMS:
-                    p = re.compile(term,re.IGNORECASE)
+                    p = re.compile(".*?"+term,re.IGNORECASE)
                     m = p.match(key)
                     if m: sample.specimen_source = SPECIMEN_TERMS[term]
         if not sample.specimen_source:
             warning = f"No URI mapping for specimen_source <{key}>"
-        if sample.specimen_source == None: del(sample.specimen_source)
+        if sample.specimen_source == Unknown or sample.specimen_source == None:
+            del(sample.specimen_source)
     except AttributeError:
         pass
     return sample.__dict__,warning

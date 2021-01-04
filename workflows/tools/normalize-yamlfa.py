@@ -3,7 +3,7 @@
 #
 # Example:
 #
-#    python3 ./workflows/tools/normalize-yamlfa.py -s ~/tmp/yamlfa/state.json MW241349 --species ./scripts/dict_ontology_standardization/ncbi_host_species.csv
+#    python3 ./workflows/tools/normalize-yamlfa.py -s ~/tmp/yamlfa/state.json --species ncbi_host_species.csv --specimen specimen.csv --validate
 
 import argparse
 import json
@@ -30,7 +30,7 @@ won't stop - it is used for (automated) uploads.
 
 parser.add_argument('-s','--state', type=str, help='State file (JSON) as produced by transform2yamlfa', required=True)
 parser.add_argument('--species', type=str, help='Species mapping file')
-parser.add_argument('--specimen', type=str, help='Specimen mapping file')
+parser.add_argument('--specimen', type=str, help='Optional specimen mapping file')
 parser.add_argument('--validate', action='store_true', help='Validation mode - stops on warning')
 parser.add_argument('--rewrite', action='store_true', help='Rewrite mode - updates files')
 parser.add_argument('--yaml', action='store_true', help='Input YAML instead of JSON')

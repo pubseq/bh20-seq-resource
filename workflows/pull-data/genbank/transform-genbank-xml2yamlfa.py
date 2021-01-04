@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 #
-# Create a single YAML/FASTA from genbank XML
+# Create a single YAML/FASTA for each genbank entry in GenBank XML file
 #
 #   transform-genbank-xml2yamlfa --out ~/tmp/pubseq file(s)
 #
 # Also writes a validation file in the outdir named state.json
-#
-# Where --in can be a file or a directory
 # ----------------------------------------------------------------------
 
 # See also directory .guix-run and README.md
 
 import argparse
 import gzip
+import json
 import os
 import sys
 import types
@@ -47,6 +46,12 @@ for xmlfn in args.files:
             try:
                 valid,meta = genbank.get_metadata(id,gb)
                 if valid:
+                    # --- write JSON
+                    jsonfn = basename + ".json"
+                    with open(jsonfn, 'w') as outfile:
+                        print(f"    writing {jsonfn}")
+                        json.dump(meta, outfile, indent=4)
+                    # --- write FASTA
                     fa = basename+".fa"
                     seq = genbank.get_sequence(id,gb)
                     print(f"    writing {fa}")
@@ -66,4 +71,7 @@ for xmlfn in args.files:
                 state['warnings'] = meta['warnings']
             states[id] = state
 
-print(states)
+statefn = dir + '/state.json'
+with open(statefn, 'w') as outfile:
+    print(f"    Writing {statefn}")
+    json.dump(states, outfile, indent=4)

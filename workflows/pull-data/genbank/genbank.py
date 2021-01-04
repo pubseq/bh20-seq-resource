@@ -1,4 +1,6 @@
 # Genbank XML parser
+#
+# Pjotr Prins (c) 2021
 
 from collections import namedtuple
 import dateutil
@@ -59,7 +61,7 @@ Example of an output JSON:
 def get_metadata(id, gbseq):
     """This is a minimal data parser from genbank XML records. Inference
     on, for example geo location, is not allowed in this function and
-    happens downstream.
+    happens downstream (in normalize).
 
     That is to keep the parsing simple.
 

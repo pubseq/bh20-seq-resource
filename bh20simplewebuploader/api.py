@@ -3,6 +3,7 @@
 import os
 import requests
 import sys
+import types
 
 from flask import Flask, request, redirect, send_file, send_from_directory, render_template, jsonify
 from bh20simplewebuploader.main import app, sparqlURL
@@ -12,14 +13,16 @@ ARVADOS="https://collections.lugli.arvadosapi.com/c="
 
 # Helper functions
 
-def fetch_sample_metadata(id):
-    query = """
+def fetch_sample(id, query=None):
+    default_query = """
+
     PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
     PREFIX sio: <http://semanticscience.org/resource/>
     PREFIX edam: <http://edamontology.org/>
     PREFIX efo: <http://www.ebi.ac.uk/efo/>
     PREFIX evs: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
     PREFIX obo: <http://purl.obolibrary.org/obo/>
+
     select distinct ?id ?seq ?date ?info ?specimen ?sequencer ?mapper
     {
       ?sample sio:SIO_000115 "%s" ;
@@ -27,15 +30,49 @@ def fetch_sample_metadata(id):
               evs:C25164 ?date .
       ?seq    pubseq:technology ?tech ;
               pubseq:sample ?sample .
-      ?tech   efo:EFO_0002699 ?mapper ;
-              obo:OBI_0600047 ?sequencer .
+      optional { ?tech   efo:EFO_0002699 ?mapper } .
+      optional { ?tech   obo:OBI_0600047 ?sequencer . }
       optional { ?sample edam:data_2091 ?info } .
       optional { ?sample obo:OBI_0001479 ?specimen } .
     } limit 5
+
     """ % id
+    if not query: query = default_query
+    print(query)
     payload = {'query': query, 'format': 'json'}
     r = requests.get(sparqlURL, params=payload)
-    return r.json()['results']['bindings']
+    res = r.json()
+    print(res)
+    return res['results']['bindings'],res['head']['vars']
+
+def fetch_one_sample(id, query=None):
+    """Get the top sample and return a SimpleNamespace"""
+
+    result,varlist = fetch_sample(id,query)
+    h = {}
+    row = result[0]
+    for key in varlist:
+        if key in row:
+            h[key] = row[key]['value']
+    print(h)
+    h['arv_id'] = os.path.basename(h['seq'])
+    return types.SimpleNamespace(**h)
+
+def fetch_one_record(id):
+    m = fetch_one_sample(id)
+    arv_id = m.arv_id
+    rec = { "id": id,
+            'arv_id': arv_id,
+            "permalink": PUBSEQ+'/resource/'+id,
+            "collection": m.seq,
+            'collection_date': m.date,
+            'fasta': ARVADOS+arv_id+'/sequence.fasta',
+            'metadata': ARVADOS+arv_id+'/metadata.yaml',
+    }
+    h = m.__dict__ # for optional items
+    if 'mapper' in h: rec['mapper'] = m.mapper
+    if 'sequencer' in h: rec['sequencer']= m.sequencer
+    return rec
 
 # Main API routes
 
@@ -52,74 +89,33 @@ notably: permalink, original metadata record and the fasta
 data.
 
 curl http://localhost:5067/api/sample/MT533203.1.json
-[
-  {
-    "collection": "http://covid19.genenetwork.org/resource/lugli-4zz18-uovend31hdwa5ks",
-    "date": "2020-04-27",
-    "fasta": "https://collections.lugli.arvadosapi.com/c=lugli-4zz18-uovend31hdwa5ks/sequence.fasta",
-    "id": "MT533203.1",
-    "info": "http://identifiers.org/insdc/MT533203.1#sequence",
-    "mapper": "minimap v. 2.17",
-    "metadata": "https://collections.lugli.arvadosapi.com/c=lugli-4zz18-uovend31hdwa5ks/metadata.yaml",
-    "permalink": "http://covid19.genenetwork.org/resource/MT533203.1",
-    "sequencer": "http://www.ebi.ac.uk/efo/EFO_0008632",
-    "specimen": "http://purl.obolibrary.org/obo/NCIT_C155831"
-  }
-]
-
+{
+  "id": "MT533203.1",
+  "permalink": "http://covid19.genenetwork.org/resource/MT533203.1",
+  "collection": "http://covid19.genenetwork.org/resource/lugli-4zz18-uovend31hdwa5ks",
+  "collection_date": "2020-04-27",
+  "fasta": "https://collections.lugli.arvadosapi.com/c=lugli-4zz18-uovend31hdwa5ks/sequence.fasta",
+  "metadata": "https://collections.lugli.arvadosapi.com/c=lugli-4zz18-uovend31hdwa5ks/metadata.yaml",
+  "mapper": "minimap v. 2.17",
+  "sequencer": "http://www.ebi.ac.uk/efo/EFO_0008632"
+}
 
 """
-    # metadata = file.name(seq)+"/metadata.yaml"
-    meta = fetch_sample_metadata(id)
-    print(meta)
-    # http://collections.lugli.arvadosapi.com/c=lugli-4zz18-uovend31hdwa5ks/metadata.yaml
-    return jsonify([{
-        'id': x['id']['value'],
-        'collection': x['seq']['value'],
-        'permalink': PUBSEQ+'/resource/'+x['id']['value'],
-        'fasta': ARVADOS+os.path.basename(x['seq']['value'])+'/sequence.fasta',
-        'metadata': ARVADOS+os.path.basename(x['seq']['value'])+'/metadata.yaml',
-        'date': x['date']['value'],
-        'info': x['info']['value'],
-        'specimen': x['specimen']['value'],
-        'sequencer': x['sequencer']['value'],
-        'mapper': x['mapper']['value'],
-    } for x in meta])
+
+    return jsonify([fetch_one_record(id)])
 
 @app.route('/api/ebi/sample-<id>.xml', methods=['GET'])
 def ebi_sample(id):
-    meta = fetch_sample_metadata(id)[0]
+    meta,varlist = fetch_sample(id)[0]
     page = render_template('ebi-sample.xml',sampleid=id,sequencer=meta['sequencer']['value'],date=meta['date']['value'],specimen=meta['specimen']['value'])
     return page
 
 @app.route('/api/search', methods=['GET'])
 def search():
     """
-    Execute a 'global search'
+    Execute a 'global search'. Currently just duplicates fetch one
+    sample. Should be more flexible FIXME.
     """
     s = request.args.get('s')
-    if s == "":
-        s = "MT326090.1"
-    query = """
-    PREFIX pubseq: <http://biohackathon.org/bh20-seq-schema#MainSchema/>
-    PREFIX sio: <http://semanticscience.org/resource/>
-    PREFIX edam: <http://edamontology.org/>
-    select distinct ?id ?seq ?info
-    {
-    ?sample sio:SIO_000115 "%s" .
-    ?sample sio:SIO_000115 ?id .
-    ?seq pubseq:sample ?sample .
-    ?sample edam:data_2091 ?info .
-    } limit 100
-    """ % s
-    payload = {'query': query, 'format': 'json'}
-    r = requests.get(sparqlURL, params=payload)
-    result = r.json()['results']['bindings']
-    # metadata = file.name(seq)+"/metadata.yaml"
-    print(result)
-    return jsonify([{
-        'id': x['id']['value'],
-        'fasta': x['seq']['value'],
-        'collection': os.path.dirname(x['seq']['value']),
-        'info': x['info']['value'],
-    } for x in result])
+    if s == "": s = "MT326090.1"
+    return jsonify([fetch_one_record(s)])

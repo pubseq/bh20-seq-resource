@@ -34,6 +34,7 @@ if not os.path.isfile('bh20sequploader/main.py'):
     print("WARNING: run FLASK from the root of the source repository!", file=sys.stderr)
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
+app.config['JSON_SORT_KEYS'] = False
 
 # Limit file upload size. We shouldn't be working with anything over 1 MB; these are small genomes.
 # We will enforce the limit ourselves and set a higher safety limit here.
@@ -252,7 +253,7 @@ FORM_ITEMS = load_schema_generate_form()
 def get_feed_items(name, start=0, stop=9):
     redis_client = redis.Redis(host=os.environ.get('HOST', 'localhost'),
                                port=os.environ.get('PORT', 6379),
-                               db=os.environ.get('REDIS_DB', 0))    
+                               db=os.environ.get('REDIS_DB', 0))
     feed_items = []
     try:
         for el in redis_client.zrevrange(name, start, stop):

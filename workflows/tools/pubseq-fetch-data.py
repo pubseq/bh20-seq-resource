@@ -31,16 +31,20 @@ if (len(ids)==0):
 
 for id in ids:
     print(id)
-    r = requests.get(f"http://covid19.genenetwork.org/api/sample/{id}.json")
-    if r:
-        m_url = r.json()[0]['metadata']
-        mr = requests.get(m_url)
-        with open(dir+"/"+id+".json","w") as outf:
-            outf.write(mr.text)
-        if args.fasta:
-            fa_url = r.json()[0]['fasta']
-            fr = requests.get(fa_url)
-            with open(dir+"/"+id+".fa","w") as outf:
-                outf.write(fr.text)
-    else:
-        raise Exception(f"Can not find record for {id}")
+    jsonfn = dir+"/"+id+".json"
+    if not os.path.exists(jsonfn):
+        r = requests.get(f"http://covid19.genenetwork.org/api/sample/{id}.json")
+        if r:
+            m_url = r.json()[0]['metadata']
+            mr = requests.get(m_url)
+            with open(dir+"/"+id+".json","w") as outf:
+                outf.write(mr.text)
+            if args.fasta:
+                fastafn = dir+"/"+id+".fa"
+                if os.path.exists(fastafn): continue
+                fa_url = r.json()[0]['fasta']
+                fr = requests.get(fa_url)
+                with open(fastafn,"w") as outf:
+                    outf.write(fr.text)
+        else:
+            raise Exception(f"Can not find record for {id}")

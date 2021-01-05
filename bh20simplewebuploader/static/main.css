@@ -567,6 +567,7 @@ input[name="feed-tabs"] ~ .tab {
     display: none;
 }
 
+#tab-all-items:checked ~ .tab.content-all-items,
 #tab-pubmed-articles:checked ~ .tab.content-pubmed-articles,
 #tab-arxiv-articles:checked ~ .tab.content-arxiv-articles,
 #tab-tweets:checked ~ .tab.content-tweets,

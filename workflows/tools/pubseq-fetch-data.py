@@ -28,14 +28,13 @@ if (len(ids)==0):
     with open(args.ids) as f:
         ids = [ l.strip() for l in f.readlines() ]
 
-for id in ids[0:2]:
+for id in ids:
     print(id)
     r = requests.get(f"http://covid19.genenetwork.org/api/sample/{id}.json")
     if r:
         m_url = r.json()[0]['metadata']
         mr = requests.get(m_url)
-        meta = mr.json()
         with open(dir+"/"+id+".json","w") as outf:
-            json.dump(meta, outf, indent=4)
+            outf.write(mr.text)
     else:
         raise Exception(f"Can not find record for {id}")

@@ -751,8 +751,8 @@ union
     # http://covid19.genenetwork.org/resource/lugli-4zz18-gx0ifousk9yu0ql
     m = re.match(r"http://collections.lugli.arvadosapi.com/c=([^/]*)/sequence.fasta|http://covid19.genenetwork.org/resource/(.*)", sequenceuri)
     collection = m.group(1) or m.group(2)
-    fastauri = f"http://collections.lugli.arvadosapi.com/c={collection}/sequence.fasta"
-    metauri = f"http://collections.lugli.arvadosapi.com/c={collection}/metadata.yaml"
+    fastauri = f"https://collections.lugli.arvadosapi.com/c={collection}/sequence.fasta"
+    metauri = f"https://collections.lugli.arvadosapi.com/c={collection}/metadata.yaml"
     locationuri=sample['geo']['value']
     location=sample['geoname']['value']
     date=sample['date']['value']

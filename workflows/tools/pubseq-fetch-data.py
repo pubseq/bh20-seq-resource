@@ -12,6 +12,7 @@ Fetch metadata (JSON) from PubSeq and optionally the FASTA files.  IDs
 can be passed in on the command line or in a file.
 
 """)
+parser.add_argument('--fasta', action='store_true', help='Also fetch FASTA records')
 parser.add_argument('--out', type=str, help='Directory to write to',
 required=True)
 parser.add_argument('--ids', type=str, help='File with ids', required=False)
@@ -36,5 +37,10 @@ for id in ids:
         mr = requests.get(m_url)
         with open(dir+"/"+id+".json","w") as outf:
             outf.write(mr.text)
+        if args.fasta:
+            fa_url = r.json()[0]['fasta']
+            fr = requests.get(fa_url)
+            with open(dir+"/"+id+".fa","w") as outf:
+                outf.write(fr.text)
     else:
         raise Exception(f"Can not find record for {id}")

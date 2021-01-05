@@ -8,7 +8,6 @@
 
 import argparse
 import sys
-from datetime import date
 
 from Bio import Entrez
 

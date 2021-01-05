@@ -11,7 +11,8 @@ The following workflow sends GenBank data into PubSeq
 
 ```sh
 # --- get list of IDs already in PubSeq
-../../tools/sparql-fetch-ids > pubseq_ids.txt
+../../tools/pubseq-fetch-ids > pubseq_ids.txt
+
 # --- get list of missing genbank IDs
 python3 genbank-fetch-ids.py --skip pubseq_ids.txt > genbank_ids.txt
 
@@ -26,6 +27,13 @@ python3 ../../workflows/tools/normalize-yamlfa.py -s ~/tmp/yamlfa/state.json --s
 
 ```
 
+## Validate GenBank data
+
+To pull the data from PubSeq use the list of pubseq ids generated
+above.
+
+
+
 # TODO
 
-- [ ] Add id for GenBank accession - i.e. how can we tell a record is from GenBank
+- [X] Add id for GenBank accession - i.e. how can we tell a record is from GenBank

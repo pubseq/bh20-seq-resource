@@ -7,6 +7,9 @@ import sys
 from flask import Flask, request, redirect, send_file, send_from_directory, render_template, jsonify
 from bh20simplewebuploader.main import app, sparqlURL
 
+PUBSEQ="http://covid19.genenetwork.org"
+ARVADOS="https://collections.lugli.arvadosapi.com/c="
+
 # Helper functions
 
 def fetch_sample_metadata(id):
@@ -42,13 +45,40 @@ def version():
 
 @app.route('/api/sample/<id>.json')
 def sample(id):
+    """
+
+API sample should return a record pointing to other resources,
+notably: permalink, original metadata record and the fasta
+data.
+
+curl http://localhost:5067/api/sample/MT533203.1.json
+[
+  {
+    "collection": "http://covid19.genenetwork.org/resource/lugli-4zz18-uovend31hdwa5ks",
+    "date": "2020-04-27",
+    "fasta": "https://collections.lugli.arvadosapi.com/c=lugli-4zz18-uovend31hdwa5ks/sequence.fasta",
+    "id": "MT533203.1",
+    "info": "http://identifiers.org/insdc/MT533203.1#sequence",
+    "mapper": "minimap v. 2.17",
+    "metadata": "https://collections.lugli.arvadosapi.com/c=lugli-4zz18-uovend31hdwa5ks/metadata.yaml",
+    "permalink": "http://covid19.genenetwork.org/resource/MT533203.1",
+    "sequencer": "http://www.ebi.ac.uk/efo/EFO_0008632",
+    "specimen": "http://purl.obolibrary.org/obo/NCIT_C155831"
+  }
+]
+
+
+"""
     # metadata = file.name(seq)+"/metadata.yaml"
     meta = fetch_sample_metadata(id)
     print(meta)
+    # http://collections.lugli.arvadosapi.com/c=lugli-4zz18-uovend31hdwa5ks/metadata.yaml
     return jsonify([{
         'id': x['id']['value'],
-        'fasta': x['seq']['value'],
-        'collection': os.path.dirname(x['seq']['value']),
+        'collection': x['seq']['value'],
+        'permalink': PUBSEQ+'/resource/'+x['id']['value'],
+        'fasta': ARVADOS+os.path.basename(x['seq']['value'])+'/sequence.fasta',
+        'metadata': ARVADOS+os.path.basename(x['seq']['value'])+'/metadata.yaml',
         'date': x['date']['value'],
         'info': x['info']['value'],
         'specimen': x['specimen']['value'],

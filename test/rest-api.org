@@ -36,6 +36,35 @@ curl http://covid19.genenetwork.org/api/version
 }
 #+end_src
 
+The current API can fetch data
+
+#+begin_src js
+curl http://covid19.genenetwork.org/api/search?s=MT533203.1
+[
+  {
+    "collection": "http://covid19.genenetwork.org/resource",
+    "fasta": "http://covid19.genenetwork.org/resource/lugli-4zz18-uovend31hdwa5ks",
+    "id": "MT533203.1",
+    "info": "http://identifiers.org/insdc/MT533203.1#sequence"
+  }
+]
+
+curl http://covid19.genenetwork.org/api/sample/MT533203.1.json
+[
+  {
+    "collection": "http://covid19.genenetwork.org/resource",
+    "date": "2020-04-27",
+    "fasta": "http://covid19.genenetwork.org/resource/lugli-4zz18-uovend31hdwa5ks",
+    "id": "MT533203.1",
+    "info": "http://identifiers.org/insdc/MT533203.1#sequence",
+    "mapper": "minimap v. 2.17",
+    "sequencer": "http://www.ebi.ac.uk/efo/EFO_0008632",
+    "specimen": "http://purl.obolibrary.org/obo/NCIT_C155831"
+  }
+]
+#+end_src
+
+
 The Python3 version is
 
 #+begin_src python :session :exports both

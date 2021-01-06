@@ -1,22 +1,18 @@
 import gzip
 import tempfile
-import pkg_resources
 import magic
 import io
-
 import sys
 
 path_fasta = sys.argv[1]
 format_to_check = sys.argv[2]
 path_valid_formats = sys.argv[3]
 
-
-# ../../bh20sequploader/validation/formats
-
-schema_resource = pkg_resources.resource_stream(__name__, path_valid_formats)
 with tempfile.NamedTemporaryFile() as tmp:
-    tmp.write(schema_resource.read())
+    with open(path_valid_formats, 'rb') as f:
+        tmp.write(f.read())
     tmp.flush()
+
     check_format = magic.Magic(magic_file=tmp.name, uncompress=False, mime=True)
 
 with open(path_fasta, "rb") as f:

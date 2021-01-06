@@ -5,6 +5,7 @@ import json
 import os
 import requests
 import sys
+import time
 
 parser = argparse.ArgumentParser(description="""
 
@@ -33,18 +34,22 @@ for id in ids:
     print(id)
     jsonfn = dir+"/"+id+".json"
     if not os.path.exists(jsonfn):
+        count = 0
         r = requests.get(f"http://covid19.genenetwork.org/api/sample/{id}.json")
-        if r:
-            m_url = r.json()[0]['metadata']
-            mr = requests.get(m_url)
-            with open(dir+"/"+id+".json","w") as outf:
-                outf.write(mr.text)
-            if args.fasta:
-                fastafn = dir+"/"+id+".fa"
-                if os.path.exists(fastafn): continue
-                fa_url = r.json()[0]['fasta']
-                fr = requests.get(fa_url)
-                with open(fastafn,"w") as outf:
-                    outf.write(fr.text)
-        else:
-            raise Exception(f"Can not find record for {id}")
+        while not r:
+            count += 1
+            if count>10: raise Exception(f"Can not find record for {id}")
+            time.sleep(15)
+            r = requests.get(f"http://covid19.genenetwork.org/api/sample/{id}.json")
+        m_url = r.json()[0]['metadata']
+        mr = requests.get(m_url)
+        with open(dir+"/"+id+".json","w") as outf:
+            outf.write(mr.text)
+        if args.fasta:
+            fastafn = dir+"/"+id+".fa"
+            if os.path.exists(fastafn): continue
+            fa_url = r.json()[0]['fasta']
+            fr = requests.get(fa_url)
+            with open(fastafn,"w") as outf:
+                outf.write(fr.text)
+

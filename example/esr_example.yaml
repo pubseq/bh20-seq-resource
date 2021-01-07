@@ -1,7 +1,7 @@
 id: placeholder
 
 license:
-    license_type: http://creativecommons.org/licenses/by/4.0/
+    license_type: https://creativecommons.org/licenses/by/4.0/
     title: "SARS-CoV-2 New Zealand"
     attribution_name: "ESR"
     attribution_url: https://www.esr.cri.nz/
@@ -34,8 +34,6 @@ submitter:
     submitter_address: "PO Box 50348,  Porirua 5240, New Zealand"
     originating_lab: ESR
     submitter_sample_id: "PRJNA648792"
-    submitted_to: https://www.ncbi.nlm.nih.gov/biosample
     publication: https://doi.org/10.1101/2020.08.05.20168930
-    public_date: "2020-08-20"
     submitter_orcid: [https://orcid.org/0000-0003-0970-0153]
     additional_submitter_information: Optional free text field for additional information

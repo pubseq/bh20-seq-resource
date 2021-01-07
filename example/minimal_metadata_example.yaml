@@ -2,7 +2,9 @@ id: placeholder
 
 
 license:
-    license_type: http://creativecommons.org/licenses/by/4.0/
+    license_type: https://creativecommons.org/licenses/by/4.0/
+    attribution_url: https://www.uthsc.edu/medicine/molecular-sciences/faculty-directory/jonsson.php
+
 
 host:
     host_species: http://purl.obolibrary.org/obo/NCBITaxon_9606
@@ -16,7 +18,9 @@ virus:
     virus_species: http://purl.obolibrary.org/obo/NCBITaxon_2697049
 
 technology:
+    assembly_method: "http://purl.obolibrary.org/obo/GENEPIO_0001628"
     sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0008632]
+
 
 submitter:
     authors: [John Doe]

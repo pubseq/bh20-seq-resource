@@ -1,7 +1,7 @@
 id: placeholder
 
 license:
-    license_type: http://creativecommons.org/licenses/by/4.0/
+    license_type: https://creativecommons.org/licenses/by/4.0/
     title: "Sample"
     attribution_name: "John doe, Joe Boe, Jonny Oe"
     attribution_url: http://covid19.genenetwork.org/id
@@ -34,6 +34,7 @@ virus:
     virus_strain: SARS-CoV-2/human/CHN/HS_8/2020
 
 technology:
+    assembly_method: "http://purl.obolibrary.org/obo/GENEPIO_0001628"
     sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0009173,http://www.ebi.ac.uk/efo/EFO_0009173]
     alignment_protocol: Protocol used for assembly
     sequencing_coverage: [70.0, 100.0]

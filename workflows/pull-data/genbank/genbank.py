@@ -111,7 +111,8 @@ def get_metadata(id, gbseq):
         # print(n,file=sys.stderr)
         if n != 'Unpublished':
             institute,address = n.split(',',1)
-            submitter.submitter_name = institute.split(') ')[1]
+            if ")" in institute:
+                submitter.submitter_name = institute.split(')')[1]
             submitter.submitter_address = address.strip()
     except AttributeError:
         pass

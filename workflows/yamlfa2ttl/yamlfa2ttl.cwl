@@ -18,7 +18,15 @@ steps:
     in:
       path_fasta: path_fasta
       format_to_check: format_to_check
+    doc: the input has to be a valid FASTA format file
     out: []
     run: check_format.cwl
+
+  check_sequence:
+    in:
+      path_fasta: path_fasta
+    doc: the input sequence has to be enough similar to the reference
+    out: []
+    run: check_sequence.cwl
 
 outputs: []

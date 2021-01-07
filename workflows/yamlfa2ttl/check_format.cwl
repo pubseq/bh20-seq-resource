@@ -3,6 +3,7 @@
 cwlVersion: v1.1
 class: CommandLineTool
 baseCommand: python3
+
 inputs:
   script:
     type: File
@@ -18,5 +19,5 @@ inputs:
     type: File
     inputBinding: {position: 4}
     default: {class: File, location: ../../bh20sequploader/validation/formats}
-outputs: []
 
+outputs: []

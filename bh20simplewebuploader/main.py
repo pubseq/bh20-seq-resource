@@ -273,12 +273,23 @@ def send_home():
     """
     Send the front page.
     """
+    (tweets,
+     commits,
+     pubmed_articles,
+     arxiv_articles) = [get_feed_items(x) for x in ["bh20-tweet-score:",
+                                                    "bh20-commit-score:",
+                                                    "bh20-pubmed-score:",
+                                                    "bh20-arxiv-score:"]]
     return render_template(
         'home.html', menu='HOME',
-        tweets=get_feed_items("bh20-tweet-score:"),
-        commits=get_feed_items("bh20-commit-score:"),
-        pubmed_articles=get_feed_items("bh20-pubmed-score:"),
-        arxiv_articles=get_feed_items("bh20-arxiv-score:"),
+        all_items=list(itertools.chain(tweets,
+                                       commits,
+                                       pubmed_articles,
+                                       arxiv_articles)),
+        tweets=tweets,
+        commits=commits,
+        pubmed_articles=pubmed_articles,
+        arxiv_articles=arxiv_articles,
         load_map=True)
 
 

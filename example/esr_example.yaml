@@ -15,7 +15,7 @@ sample:
     collection_date: "2020-02-26"
     collection_location: https://www.wikidata.org/wiki/Q37100
     specimen_source: [http://purl.obolibrary.org/obo/NCIT_C155831]
-    source_database_accession: [http://identifiers.org/insdc/LC522350.1#sequence] ??
+    source_database_accession: [http://identifiers.org/insdc/LC522350.1#sequence]
     additional_collection_information: Optional free text field for additional information
 
 virus:
@@ -23,7 +23,7 @@ virus:
     virus_strain: SARS-CoV-2/human/CHN/HS_8/2020
 
 technology:
-    sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0008632] // Nanopore MinION
+    sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0008632] # Nanopore MinION
     alignment_protocol: https://github.com/ESR-NZ/NZ_SARS-CoV-2_genomics
     assembly_method: "http://purl.obolibrary.org/obo/GENEPIO_0001628"
     additional_technology_information: "Artic V3 workflow"

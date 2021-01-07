@@ -2,7 +2,7 @@
 #
 # Use a SPARQL query to fetch all IDs in the PubSeq database
 #
-#   sparql-fetch-ids > pubseq_ids.txt
+#   pubseq-fetch-ids > pubseq_ids.txt
 #
 # Note: requires Ruby 3.x. Older Ruby gives a syntax error
 

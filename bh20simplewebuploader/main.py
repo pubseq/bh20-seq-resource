@@ -34,6 +34,7 @@ if not os.path.isfile('bh20sequploader/main.py'):
     print("WARNING: run FLASK from the root of the source repository!", file=sys.stderr)
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
+app.config['JSON_SORT_KEYS'] = False
 
 # Limit file upload size. We shouldn't be working with anything over 1 MB; these are small genomes.
 # We will enforce the limit ourselves and set a higher safety limit here.
@@ -252,7 +253,7 @@ FORM_ITEMS = load_schema_generate_form()
 def get_feed_items(name, start=0, stop=9):
     redis_client = redis.Redis(host=os.environ.get('HOST', 'localhost'),
                                port=os.environ.get('PORT', 6379),
-                               db=os.environ.get('REDIS_DB', 0))    
+                               db=os.environ.get('REDIS_DB', 0))
     feed_items = []
     try:
         for el in redis_client.zrevrange(name, start, stop):
@@ -272,12 +273,23 @@ def send_home():
     """
     Send the front page.
     """
+    (tweets,
+     commits,
+     pubmed_articles,
+     arxiv_articles) = [get_feed_items(x) for x in ["bh20-tweet-score:",
+                                                    "bh20-commit-score:",
+                                                    "bh20-pubmed-score:",
+                                                    "bh20-arxiv-score:"]]
     return render_template(
         'home.html', menu='HOME',
-        tweets=get_feed_items("bh20-tweet-score:"),
-        commits=get_feed_items("bh20-commit-score:"),
-        pubmed_articles=get_feed_items("bh20-pubmed-score:"),
-        arxiv_articles=get_feed_items("bh20-arxiv-score:"),
+        all_items=list(itertools.chain(tweets,
+                                       commits,
+                                       pubmed_articles,
+                                       arxiv_articles)),
+        tweets=tweets,
+        commits=commits,
+        pubmed_articles=pubmed_articles,
+        arxiv_articles=arxiv_articles,
         load_map=True)
 
 
@@ -750,8 +762,8 @@ union
     # http://covid19.genenetwork.org/resource/lugli-4zz18-gx0ifousk9yu0ql
     m = re.match(r"http://collections.lugli.arvadosapi.com/c=([^/]*)/sequence.fasta|http://covid19.genenetwork.org/resource/(.*)", sequenceuri)
     collection = m.group(1) or m.group(2)
-    fastauri = f"http://collections.lugli.arvadosapi.com/c={collection}/sequence.fasta"
-    metauri = f"http://collections.lugli.arvadosapi.com/c={collection}/metadata.yaml"
+    fastauri = f"https://collections.lugli.arvadosapi.com/c={collection}/sequence.fasta"
+    metauri = f"https://collections.lugli.arvadosapi.com/c={collection}/metadata.yaml"
     locationuri=sample['geo']['value']
     location=sample['geoname']['value']
     date=sample['date']['value']

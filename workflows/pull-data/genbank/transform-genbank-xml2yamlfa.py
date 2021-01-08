@@ -60,7 +60,7 @@ for xmlfn in args.files:
                 seq = genbank.get_sequence(id,gb)
                 print(f"    writing {fa}")
                 with open(fa,"w") as f2:
-                    f2.write(f"> {id}\n")
+                    f2.write(f">{id}\n")
                     f2.write(seq)
                 # print(seq)
         except genbank.GBError as e:

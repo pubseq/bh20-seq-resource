@@ -90,10 +90,9 @@ def get_metadata(id, gbseq):
         except AttributeError:
             warn("Missing "+msg)
 
-    host.host_species = "http://purl.obolibrary.org/obo/NCBITaxon_9606"
     sample.sample_id = id
     sample.database = "https://www.ncbi.nlm.nih.gov/genbank/"
-    sample.source_database_accession = f"http://identifiers.org/insdc/{id}#sequence"
+    sample.source_database_accession = [ f"http://identifiers.org/insdc/{id}#sequence" ]
     #   <GBQualifier_value>USA: Cruise_Ship_1, California</GBQualifier_value>
     n = fetch("host_species", ".//GBQualifier/GBQualifier_name/[.='country']/../GBQualifier_value")
     if n: sample.collection_location = n
@@ -112,7 +111,7 @@ def get_metadata(id, gbseq):
         if n != 'Unpublished':
             institute,address = n.split(',',1)
             if ")" in institute:
-                submitter.submitter_name = institute.split(')')[1]
+                submitter.submitter_name = [institute.split(')')[1].strip()]
             submitter.submitter_address = address.strip()
     except AttributeError:
         pass
@@ -129,13 +128,13 @@ def get_metadata(id, gbseq):
         # technology.assembly_method = 'http://purl.obolibrary.org/obo/GENEPIO_0001628'
         p = re.compile(r'.*Assembly Method :: ([^;]+).*')
         m = p.match(n)
-        if m: technology.alignment_protocol = m.group(1)
+        if m: technology.alignment_protocol = m.group(1).strip()
         p = re.compile(r'.*Coverage :: ([^;]+).*')
         m = p.match(n)
         if m: technology.sequencing_coverage = m.group(1)
         p = re.compile(r'.*Sequencing Technology :: ([^;]+).*')
         m = p.match(n)
-        if m: technology.sample_sequencing_technology = m.group(1).strip()
+        if m: technology.sample_sequencing_technology = [m.group(1).strip()]
         else: warn("Missing sample_sequencing_technology")
 
     # --- Dates
@@ -167,10 +166,7 @@ def get_metadata(id, gbseq):
     n = fetch("host_species", ".//GBQualifier/GBQualifier_name/[.='host']/../GBQualifier_value")
     if n:
         list = n.split('; ')
-        species = list[0]
-        host.host_species = species
-        if species != "Homo sapiens":
-            warn(f"Species not understood: {species}")
+        host.host_species = list[0]
         if len(list)>1:
             sex = list[1]
             if 'male' in sex or 'gender: M' in sex: host.host_sex = 'male'
@@ -183,13 +179,12 @@ def get_metadata(id, gbseq):
             if m:
                 host.host_age = int(m.group(1))
                 host.host_age_unit = 'http://purl.obolibrary.org/obo/UO_0000036'
-        # sys.exit(1)
     n = fetch("virus_strain", ".//GBQualifier/GBQualifier_name/[.='isolate']/../GBQualifier_value")
     if n: virus.virus_strain = n
     n = fetch("virus_species", ".//GBQualifier/GBQualifier_name/[.='db_xref']/../GBQualifier_value")
     if n: virus.virus_species = "http://purl.obolibrary.org/obo/NCBITaxon_"+n.split('taxon:')[1]
     n = fetch("specimen_source", ".//GBQualifier/GBQualifier_name/[.='isolation_source']/../GBQualifier_value")
-    if n: sample.specimen_source = n
+    if n: sample.specimen_source = [n]
 
     info = {
         'id': 'placeholder',

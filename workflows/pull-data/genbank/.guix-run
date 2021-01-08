@@ -4,5 +4,5 @@
 echo # next run:
 echo 'export PATH=$GUIX_ENVIRONMENT/bin:$PATH'
 
-~/.config/guix/current/bin/guix environment guix --ad-hoc python python-biopython python-requests python-dateutil ruby
+~/.config/guix/current/bin/guix environment guix --ad-hoc python python-biopython python-requests python-dateutil ruby jq
 

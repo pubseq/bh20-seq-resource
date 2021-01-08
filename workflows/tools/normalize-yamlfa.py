@@ -19,10 +19,10 @@ directory are parsed using the state.json file. It is possible
 to select a subset of IDs.
 
 This tool has two modes of operation. It can validate with the
-`--validate` switch which stops at a warning and does no rewriting.
+--validate switch which stops at a warning and does no rewriting.
 This mode is typically used in troubleshooting.
 
-The other mode is `--rewrite` which rewrites the JSON files after
+The other mode is --rewrite which rewrites the JSON files after
 making a backup (.bak) of the original. This mode updates files and
 won't stop - it is used for (automated) uploads.
 
@@ -92,6 +92,6 @@ for id in ids:
                 os.rename(fn,fn+".bak")
             with open(fn, 'w') as outfile:
                 print(f"    Writing {fn}")
-                json.dump(rec.__dict__, outfile, indent=4)
+                json.dump(rec.__dict__, outfile, indent=2)
         else:
             print(rec)

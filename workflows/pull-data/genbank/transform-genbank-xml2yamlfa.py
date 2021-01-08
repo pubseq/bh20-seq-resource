@@ -44,7 +44,7 @@ for xmlfn in args.files:
         valid = None
         error = None
         meta = {}
-        id = gb.find("GBSeq_locus").text
+        id = gb.find("GBSeq_accession-version").text
         basename = dir+"/"+id
         print(f"    parsing {id}")
         try:

@@ -54,7 +54,7 @@ for xmlfn in args.files:
                 jsonfn = basename + ".json"
                 with open(jsonfn, 'w') as outfile:
                     print(f"    writing {jsonfn}")
-                    json.dump(meta, outfile, indent=4)
+                    json.dump(meta, outfile, indent=2)
                 # --- write FASTA
                 fa = basename+".fa"
                 seq = genbank.get_sequence(id,gb)

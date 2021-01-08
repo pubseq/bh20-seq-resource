@@ -26,7 +26,7 @@ def read_single_fasta(path_fasta):
     return header, ''.join(sequence)
 
 
-print("FASTA QC: checking similarity to the reference")
+print("FASTA QC: checking similarity to the reference", file=sys.stderr)
 
 header, sequence = read_single_fasta(path_fasta)
 
@@ -46,7 +46,7 @@ with tempfile.NamedTemporaryFile() as tmp_fasta:
             "minimap2", "-c", "-x", "asm20",
             tmp_sars_cov_2_reference_fasta.name, tmp_fasta.name
         ]
-        print(" ".join(cmd))
+        print(" ".join(cmd), file=sys.stderr)
 
         result = subprocess.run(cmd, stdout=subprocess.PIPE)
         result.check_returncode()

@@ -1,0 +1,78 @@
+message: Hello world!
+
+threads: 16
+
+pggb_wfmash: true
+pggb_fasta:
+  class: File
+  path: ../data/qc/relabeledSeqs.sorted.qc.100sample.fasta
+pggb_mash_k_mer: 19
+pggb_map_percent_identity: 95
+pggb_num_secondary_mappings: 10000
+pggb_segment_length: 5000
+pggb_output_dir: "."
+
+odgi_paths: paths
+odgi_graph:
+  class: File
+  path: ./relabeledSeqs.sorted.qc.100sample.fasta.pggb-W-s5000-l15000-p95-n10000-a0-K19-k19-w10000-j5000-e5000-I0-R0.smooth.og
+haplotypes: true
+
+consensus_regex: '!/^Consensus/' 
+coverage_tsv:
+  class: File
+  path: ./coverage.tsv
+
+main_py_script:
+  class: File
+  path: ../main.py
+metadata: get-metadata
+coverage_matrix:
+  class: File
+  path: ./coverage.no_consensus.tsv
+coverage_matrix_with_metadata: ./coverage.metadata.tsv
+
+clado-rsvd: clado-rsvd
+cladogram_matrix:
+  class: File
+  path: ./coverage.metadata.tsv
+reduced_matrix: ./coverage.reduced.tsv
+svg_figure: 30k_700cm.svg
+
+newick: gen-newick
+newick_dimensions: 100
+newick_coverage_matrix:
+  class: File
+  path: ./coverage.metadata.tsv
+newick_metadata: ./metadata.tsv
+newick_tree: ./tree.workflow.nwk
+
+nextstrain_R_script:
+  class: File
+  path: ../taxophages/viz/nextstrain.R 
+
+coverage_matrix_with_metadata_2:
+  class: File
+  path: ../data/5k/covmatrix.5k.metadata.tsv
+
+metadata_only: ./metadata.tsv
+newick_tree: tree.workflow.nwk
+distance_matrix: distance_matrix.workflow.tsv
+rsvd_dimensions: "1000"
+filter_unknowns: "TRUE"
+
+nextstrain_bash_script:
+  class: File
+  path: ../scripts/nextstrain.sh
+
+newick_tree_2:
+  class: File
+  path: ./tree.workflow.nwk
+
+metadata_newick:
+  class: File
+  path: ./metadata.tsv
+
+dataDir: 
+  class: Directory
+  path: ../config

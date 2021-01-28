@@ -1,0 +1,29 @@
+id: placeholder
+
+host:
+    host_species: "http://purl.obolibrary.org/obo/NCBITaxon_9606"
+
+sample:
+    sample_id: "JetsonXavNX_SARSCOV_TESTRUN001"
+    collection_date: "2020-12-05"
+    collection_location: "http://www.wikidata.org/entity/Q37100"
+    specimen_source: ["http://purl.obolibrary.org/obo/NCIT_C155831"]
+
+virus:
+    virus_species: "http://purl.obolibrary.org/obo/NCBITaxon_2697049"
+
+technology:
+    sample_sequencing_technology: ["http://www.ebi.ac.uk/efo/EFO_0008632"]
+    alignment_protocol: "https://github.com/ESR-NZ/NZ_SARS-CoV-2_genomics"
+    assembly_method: "http://purl.obolibrary.org/obo/GENEPIO_0001628"
+    additional_technology_information: "Modified Artic V3 workflow for Nvidia Jetson Xavier NX/AGX"
+
+submitter:
+    authors: ["Miles Benton", "Matthew Storey", "Joep de Ligt"]
+    submitter_name: ["Miles Benton"]
+    submitter_address: "PO Box 50348,  Porirua 5240, New Zealand"
+    originating_lab: "ESR"
+    submitter_sample_id: "PRJNA648792"
+    submitter_orcid: ["https://orcid.org/0000-0003-3442-965X"]
+    additional_submitter_information: "2021-01-20"
+    

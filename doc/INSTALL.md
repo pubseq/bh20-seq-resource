@@ -113,3 +113,27 @@ To update the turtle files do
     guix environment -C guix --ad-hoc python python-requests raptor2 curl --network -- python3 ./scripts/update_virtuoso/check_for_updates.py cache.txt dba dba
 
 where dba is the default password.
+
+## Run the Auspice phylo-tree viewer
+
+Auspice is developed by the Nextstrain team and we use it for
+exploring the phylogenetic tree. It does not scale well beyond 5,000
+SARS-CoV-2 virusses, so we need to limit the input set!
+
+Auspice runs on a separate port.
+
+Running on port 4001 using your repo:
+
+Install node with Guix
+
+    ~/.config/guix/current/bin/guix package -i node -p ~/opt/node
+
+Load Guix environment variables
+
+    . ~/opt/node/etc/profile
+
+Run server after fetching data in ./data
+
+    cd auspice
+    npm install --global --prefix node_modules .
+    env PORT=4001 ./node_modules/bin/auspice view --datasetDir ./data

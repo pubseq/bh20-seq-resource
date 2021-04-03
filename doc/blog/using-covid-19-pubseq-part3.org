@@ -262,8 +262,7 @@ a little bit of web searching may be required or [[./contact][contact]] us.
 
 ** Run the uploader (CLI)
 
-Installing with pip you should be
-able to run
+Installing with pip you should be able to run
 
 : bh20sequploader sequence.fasta metadata.yaml
 
@@ -296,25 +295,15 @@ optional arguments:
 The web interface using this exact same script so it should just work
 (TM).
 
-
 ** Example: uploading bulk GenBank sequences
 
-We also use above script to bulk upload GenBank sequences with a [[https://github.com/arvados/bh20-seq-resource/blob/master/scripts/download_genbank_data/from_genbank_to_fasta_and_yaml.py][FASTA
-and YAML]] extractor specific for GenBank. This means that the steps we
-took above for uploading a GenBank sequence are already automated.
+At this point, most of PubSeq's FASTA files come from NCBI [[https://www.ncbi.nlm.nih.gov/genbank/][GenBank]].
+This data is public (see the policy) and we provide it with metadata
+under a [[https://creativecommons.org/licenses/by/4.0/][CC-BY-4.0]] license.
 
-The steps are: from the
-~bh20-seq-resource/scripts/download_genbank_data/~ directory using the
-[[https://github.com/arvados/bh20-seq-resource/tree/master/scripts/download_genbank_data][from_genbank_to_fasta_and_yaml.py]] script:
-
-#+BEGIN_SRC sh
-python3 from_genbank_to_fasta_and_yaml.py
-dir_fasta_and_yaml=~/bh20-seq-resource/scripts/download_genbank_data/fasta_and_yaml
-ls $dir_fasta_and_yaml/*.yaml | while read path_code_yaml; do
-   path_code_fasta=${path_code_yaml%.*}.fasta
-   bh20-seq-uploader --skip-qc $path_code_yaml $path_code_fasta
-done
-#+END_SRC
+We use multiple scripts to fetch, check and update data. Since there
+are dependencies involved we suggest to match our development work
+place and use a Guix environment to run the tools, see [[../INSTALL.md][INSTALL.md]].
 
 
 ** Example: preparing metadata

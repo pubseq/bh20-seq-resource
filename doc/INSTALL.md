@@ -6,6 +6,28 @@ Other options for running this tool.
 
 ## GNU Guix
 
+### Install Guix
+
+GNU Guix can be installed on any Linux distribution without disturbing
+it because all files are store in /gnu/store.  GNU Guix comes in
+Debian these days:
+
+```sh
+sudo apt-get install guix
+```
+
+As a normal user
+
+```sh
+guix pull
+alias guix=~/.config/guix/current/bin/guix
+guix package -A python
+```
+
+Lists all python packages and all should be well. Alternatively use
+the GNU Guix installer following [these
+docs](https://guix.gnu.org/en/download/).
+
 ### Running the CLI uploader
 
 Another way to install this tool is inside a [GNU Guix Environment](https://guix.gnu.org/manual/en/html_node/Invoking-guix-environment.html), which can handle installing dependencies for you

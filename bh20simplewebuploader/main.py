@@ -251,6 +251,7 @@ FORM_ITEMS = load_schema_generate_form()
 
 
 def get_feed_items(name, start=0, stop=9):
+    """Load news feeds from Redis"""
     redis_client = redis.Redis(host=os.environ.get('HOST', 'localhost'),
                                port=os.environ.get('PORT', 6379),
                                db=os.environ.get('REDIS_DB', 0))
@@ -280,16 +281,20 @@ def send_home():
                                                     "bh20-commit-score:",
                                                     "bh20-pubmed-score:",
                                                     "bh20-arxiv-score:"]]
+    if tweets:
+        return render_template(
+            'home.html', menu='HOME',
+            all_items=list(itertools.chain(tweets,
+                                           commits,
+                                           pubmed_articles,
+                                           arxiv_articles)),
+            tweets=tweets,
+            commits=commits,
+            pubmed_articles=pubmed_articles,
+            arxiv_articles=arxiv_articles,
+            load_map=True)
     return render_template(
         'home.html', menu='HOME',
-        all_items=list(itertools.chain(tweets,
-                                       commits,
-                                       pubmed_articles,
-                                       arxiv_articles)),
-        tweets=tweets,
-        commits=commits,
-        pubmed_articles=pubmed_articles,
-        arxiv_articles=arxiv_articles,
         load_map=True)
 
 

@@ -28,6 +28,7 @@
                           <div id="mapid"></div>
                       </div>
 
+                      {% if all_items %}
                       <div id="feed">
                           <input name="feed-tabs" type="radio" id="tab-all-items" checked/>
                           <label for="tab-all-items">All Items</label>
@@ -160,14 +161,14 @@
                               {% endif %}
                           </ul>
                           <ul class="tab content-commits">
-                              {% if commits %}                              
+                              {% if commits %}
                               {% for commit in commits|sort(reverse=true, attribute="score")%}
                               <li>
                                   <p class="commit">
                                       <a href="{{commit.url}}" target="_blank">
                                           {{ commit.hash.split(":")[-1][:7] }}:{{ commit.content}}
                                       </a>
-                                      
+
                                   </p>
                                   <small class="timeposted">
                                       <a href="{{ commit['repository-url']}}" target="_blank">{{ commit.author }}/{{ commit.repository }}</a>
@@ -180,6 +181,7 @@
                               {%  endif %}
                           </ul>
                       </div>
+                      {%  endif %}
                   </section>
 
                   <a href="https://projectredcap.org/"><img class="img-right" src="static/image/REDCap.png" /></a>

@@ -12,9 +12,9 @@
 In this document we explain how to upload data into COVID-19 PubSeq.
 This can happen through a web page, or through a command line
 script. We'll also show how to parametrize uploads by using templates.
-The procedure is much easier than with other repositories and can be
-fully automated. Once uploaded you can use our export API to prepare
-for other repositories.
+The procedure is much easier than with other sequence repositories and
+PubSeq uploads can be fully automated. Once uploaded you can use our
+export API to prepare for other repositories, including GenBank.
 
 
 * Table of Contents                                                     :TOC:noexport:
@@ -30,18 +30,18 @@ for other repositories.
  - [[#bulk-sequence-uploader][Bulk sequence uploader]]
    - [[#run-the-uploader-cli][Run the uploader (CLI)]]
    - [[#example-uploading-bulk-genbank-sequences][Example: uploading bulk GenBank sequences]]
-   - [[#example-preparing-metadata][Example: preparing metadata]]
+   - [[#example-preparing-metadata-from-spreadsheets][Example: preparing metadata from spreadsheets]]
 
 * Uploading data
 
-The COVID-19 PubSeq allows you to upload your SARS-Cov-2 strains to a
-public resource for global comparisons. A recompute of the pangenome
-gets triggered on upload. Read the [[./about][ABOUT]] page for more information.
+PubSeq allows you to upload your SARS-Cov-2 strains to a public
+resource for global comparisons. A recompute of the pangenome gets
+triggered on upload. Read the [[./about][ABOUT]] page for more information.
 
 * Step 1: Upload sequence
 
-To upload a sequence in the [[http://covid19.genenetwork.org/][web upload page]] hit the browse button and
-select the FASTA file on your local hard disk.
+To upload a sequence with the [[http://covid19.genenetwork.org/][web upload page]] hit the File browse
+button and select the FASTA file on your local hard disk.
 
 We start with an assembled or mapped sequence in FASTA format. The
 PubSeq uploader contains a [[https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/qc_fasta.py][QC step]] which checks whether it is a likely
@@ -51,8 +51,8 @@ already is in the system by querying some metadata as described in
 [[./blog?id=using-covid-19-pubseq-part1][Query metadata with SPARQL]] or by simply downloading and checking one
 of the files on the [[./download][download]] page. We find GenBank [[https://www.ncbi.nlm.nih.gov/nuccore/MT536190][MT536190.1]] has not
 been included yet. A FASTA text file can be [[https://www.ncbi.nlm.nih.gov/nuccore/MT536190.1?report=fasta&log$=seqview&format=text][downloaded]] to your local
-disk and uploaded through our [[./][web upload page]]. Make sure the file does
-not include any HTML!
+disk and uploaded through our [[./][web upload page]]. Make sure the file is
+correct FASTA and does not include any HTML!
 
 Note: we currently only allow FASTA uploads. In the near future we'll
 allow for uploading raw sequence files. This is important for creating
@@ -61,21 +61,18 @@ an improved pangenome.
 * Step 2: Add metadata
 
 The [[./][web upload page]] contains fields for adding metadata. Metadata is
-not only important for attribution, is also important for
-analysis. The metadata is available for queries, see [[./blog?id=using-covid-19-pubseq-part1][Query metadata
-with SPARQL]], and can be used to annotate variations of the virus in
-different ways.
+important for analysis. The metadata is available for queries, see
+[[./blog?id=using-covid-19-pubseq-part1][Query metadata with SPARQL]], and can be used to annotate variations of
+the virus in different ways. Metadata also includes attribution
+details.
 
 A number of fields are obligatory: sample id, date, location,
 technology and authors. The others are optional, but it is valuable to
 enter them when information is available. Metadata is defined in this
 [[https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml][schema]]. From this schema we generate the input form. Note that
-optional fields have a question mark in the ~type~. You can add
-metadata yourself, btw, because this is a public resource! See also
-[[./blog?id=using-covid-19-pubseq-part5][Modify metadata]] for more information.
-
-To get more information about a field click on the question mark on
-the web form. Here we add some extra information.
+optional fields have a question mark in the ~type~. You can add code
+for metadata yourself because this is a public resource! See also
+[[./blog?id=using-covid-19-pubseq-part5][Modify metadata]] for more information. The fields are:
 
 ** Obligatory fields
 
@@ -150,16 +147,16 @@ submitted and the workflows should kick in!
 
 ** Trouble shooting
 
-We got an error saying: {"stem": "http://www.wikidata.org/entity/",...
-which means that our location field was not formed correctly!  After
-fixing it to look like http://www.wikidata.org/entity/Q65 (note http
-instead on https and entity instead of wiki) the submission went
-through. Reload the page (it won't empty the fields) to re-enable the
-submit button.
+Ooops. We got an error saying: {"stem":
+"http://www.wikidata.org/entity/",...  which means that our location
+field was not formed correctly!  After fixing it to look like
+http://www.wikidata.org/entity/Q65 (note http instead on https and
+entity instead of wiki) the submission went through. Reload the page
+(it won't empty the fields) to re-enable the submit button.
 
 * Step 4: Check output
 
-The current pipeline takes 5.5 hours to complete! Once it completes
+The current pipeline takes some time to complete! Once it completes
 the updated data can be checked on the [[./download][DOWNLOAD]] page. After completion
 of above output this [[http://sparql.genenetwork.org/sparql/?default-graph-uri=&query=PREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0APREFIX+sio%3A+%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2F%3E%0D%0Aselect+distinct+%3Fsample+%3Fp+%3Fo%0D%0A%7B%0D%0A+++%3Fsample+sio%3ASIO_000115+%22MT536190.1%22+.%0D%0A+++%3Fsample+%3Fp+%3Fo+.%0D%0A%7D&format=text%2Fhtml&timeout=0&debug=on&run=+Run+Query+][SPARQL query]] shows some of the metadata we put
 in.
@@ -303,15 +300,74 @@ under a [[https://creativecommons.org/licenses/by/4.0/][CC-BY-4.0]] license.
 
 We use multiple scripts to fetch, check and update data. Since there
 are dependencies involved we suggest to match our development work
-place and use a Guix environment to run the tools, see [[../INSTALL.md][INSTALL.md]].
+place and use a Guix environment to run the tools, see also
+[[../INSTALL.md][INSTALL.md]].
 
+The scripts to pull data from GenBank are in
+[[https://github.com/pubseq/bh20-seq-resource/tree/master/workflows/pull-data/genbank][workflows/pull-data/genbank]]. The scripts that query Pubseq are in
+[[https://github.com/pubseq/bh20-seq-resource/tree/master/workflows/pubseq][workflows/pubseq]].
 
-** Example: preparing metadata
+*** List PubSeq IDs
+
+The first script to run fetches a [[https://github.com/pubseq/bh20-seq-resource/blob/master/workflows/pubseq/pubseq-fetch-ids][list of Pubseq IDs]] to make sure we
+don't download data already in PubSeq. It requires Ruby3 and
+nothing else as a dependency and takes a second to run:
+
+#+begin_src sh
+  ruby pubseq-fetch-ids > pubseq_ids.txt
+  head pubseq_ids.txt
+    MT459889.1
+    MT509498.1
+    SRR11622145
+    ERR4304866
+    SRR11916007
+#+end_src
+
+showing all GenBank IDs stored in PubSeq.
+
+*** Fetch GenBank IDs
+
+In the next step we essentially follow the PubSeq [[https://github.com/pubseq/bh20-seq-resource/tree/master/workflows/pull-data/genbank][GenBank README]] and
+fetch the GenBank IDs as a list with
+
+#+begin_src sh
+python3 genbank-fetch-ids.py --skip pubseq_ids.txt > genbank_ids.txt
+#+end_src
+
+this list is what tells us to download from GenBank with the next
+script
+
+*** Fetch GenBank XML
+
+Here we fetch the XML files for all the IDs that are listed in
+genbank_ids.txt. This is a slow procedure!
+
+#+begin_src sh
+# --- fetch XML
+python3 update-from-genbank.py --ids genbank_ids.txt --out ~/tmp/genbank
+#+end_src
+
+*** Transform and normalize data for uploading
+
+Now we have the GenBank XML data we can start transforming
+
+#+begin_src sh
+# --- Transform to YAML/JSON and FASTA
+python3 transform-genbank-xml2yamlfa.py --out ~/tmp/pubseq file(s)
+
+# --- Normalize data (validation mode)
+python3 ../../workflows/tools/normalize-yamlfa.py -s ~/tmp/yamlfa/state.json --species ncbi_host_species.csv --specimen specimen.csv --validate
+#+end_src
+
+*** Upload data
+
+** Example: preparing metadata from spreadsheets
 
 Usually, metadata are available in a tabular format, such as
-spreadsheets. As an example, we provide a script [[https://github.com/arvados/bh20-seq-resource/tree/master/scripts/esr_samples][esr_samples.py]] to
-show you how to parse your metadata in YAML files ready for the
-upload. To execute the script, go in the
+spreadsheets (the GenBank data entry has that as a default). As an
+example, we provide a script [[https://github.com/arvados/bh20-seq-resource/tree/master/scripts/esr_samples][esr_samples.py]] to show you how to parse
+your metadata from a spreadsheet into YAML files, from a template,
+ready for PubSeq upload. To execute the script, go in the
 ~bh20-seq-resource/scripts/esr_samples and execute
 
 #+BEGIN_SRC sh

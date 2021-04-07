@@ -5,6 +5,8 @@
 #   pubseq-fetch-ids > pubseq_ids.txt
 #
 # Note: requires Ruby 3.x. Older Ruby gives a syntax error
+#
+# See also
 
 require 'net/http'
 require 'json'
@@ -29,7 +31,7 @@ def sparql query, transform = nil
 
   response = Net::HTTP.get_response(URI.parse(api_url))
   data = JSON.parse(response.body,symbolize_names: true)
-  data => { head: { vars: }, results: { bindings: results} }
+  data => { head: { vars: }, results: { bindings: results} } # Ruby3 destructuring
   vars = vars.map { |v| v.to_sym }
   results.map { |rec|
     # return results after transforming to a Hash and applying the

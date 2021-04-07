@@ -7,7 +7,18 @@ GenBank data.
 
 ## Prepare new GenBank data for upload
 
-The following workflow sends GenBank data into PubSeq
+The following workflow fetches GenBank data and uploads that into
+PubSeq. First (optionally) set up a Guix environment using
+this [guix-run](https://github.com/pubseq/bh20-seq-resource/blob/master/workflows/pull-data/genbank/.guix-run). And set the path to point
+to the right python3
+
+```sh
+export PATH=$GUIX_ENVIRONMENT/bin:$PATH
+which python3
+/gnu/store/j1c70...-profile/bin/python3
+```
+
+With dependencies set this should be a breeze with something like
 
 ```sh
 # --- get list of IDs already in PubSeq
@@ -26,6 +37,8 @@ python3 transform-genbank-xml2yamlfa.py --out ~/tmp/pubseq file(s)
 python3 ../../workflows/tools/normalize-yamlfa.py -s ~/tmp/yamlfa/state.json --species ncbi_host_species.csv --specimen specimen.csv --validate
 
 ```
+
+Note the latest writeup can be found [here](https://github.com/pubseq/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part3.org#example-uploading-bulk-genbank-sequences)
 
 ## Validate GenBank data
 

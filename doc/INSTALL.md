@@ -2,7 +2,9 @@
 
 # INSTALLATION
 
-Other options for running this tool.
+We run PubSeq tooling and webservice inside Guix containers,
+both for development and deployment. The alternative is to
+use pip, but YMMV on that one.
 
 ## GNU Guix
 

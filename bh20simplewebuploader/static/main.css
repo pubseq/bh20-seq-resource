@@ -319,6 +319,13 @@ footer {
     height: 4em;
 }
 
+.sponsorimg2 img {
+    width: auto;
+    display: block;
+    margin: auto;
+    height: 8em;
+}
+
 .loader {
     display: block;
     border: 5px solid #f3f3f3; /* Light grey */

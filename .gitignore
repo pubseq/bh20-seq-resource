@@ -12,6 +12,7 @@ eggs/
 
 # Temp files
 metadata.ttl
+metadata*
 cache.txt
 
 # Environments

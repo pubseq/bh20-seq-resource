@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-11-05 Thu 07:28 -->
+<!-- 2021-04-07 Wed 04:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq Uploading Data (part 3)</title>
@@ -224,80 +224,88 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org85998fd">1. Introduction</a></li>
-<li><a href="#orge783233">2. Uploading data</a></li>
-<li><a href="#orgc5810d7">3. Step 1: Upload sequence</a></li>
-<li><a href="#org5a4ae99">4. Step 2: Add metadata</a>
+<li><a href="#org1f8f24d">1. Introduction</a></li>
+<li><a href="#org87ccaac">2. Uploading data</a></li>
+<li><a href="#org10d2638">3. Step 1: Upload sequence</a></li>
+<li><a href="#org190c480">4. Step 2: Add metadata</a>
 <ul>
-<li><a href="#orga9824de">4.1. Obligatory fields</a>
+<li><a href="#orgee6c2a1">4.1. Obligatory fields</a>
 <ul>
-<li><a href="#org407fde2">4.1.1. Sample ID (sample_id)</a></li>
-<li><a href="#orgee3bb35">4.1.2. Collection date</a></li>
-<li><a href="#org123bf0c">4.1.3. Collection location</a></li>
-<li><a href="#org41b1f83">4.1.4. Sequencing technology</a></li>
-<li><a href="#org9bab62e">4.1.5. Authors</a></li>
+<li><a href="#org8a35bd1">4.1.1. Sample ID (sample_id)</a></li>
+<li><a href="#org4663ff7">4.1.2. Collection date</a></li>
+<li><a href="#org4f59b34">4.1.3. Collection location</a></li>
+<li><a href="#orga4c8a57">4.1.4. Sequencing technology</a></li>
+<li><a href="#org4638a61">4.1.5. Authors</a></li>
 </ul>
 </li>
-<li><a href="#org7071af8">4.2. Optional fields</a>
+<li><a href="#org0797d5c">4.2. Optional fields</a>
 <ul>
-<li><a href="#org2a04fdb">4.2.1. Host information</a></li>
-<li><a href="#orgc4084bc">4.2.2. Collecting institution</a></li>
-<li><a href="#orge552325">4.2.3. Specimen source</a></li>
-<li><a href="#org2577e1f">4.2.4. Source database accession</a></li>
-<li><a href="#org0305fb3">4.2.5. Strain name</a></li>
+<li><a href="#org022b25f">4.2.1. Host information</a></li>
+<li><a href="#orgd93804f">4.2.2. Collecting institution</a></li>
+<li><a href="#orgc823e19">4.2.3. Specimen source</a></li>
+<li><a href="#orge4a0897">4.2.4. Source database accession</a></li>
+<li><a href="#org846e1f2">4.2.5. Strain name</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgdf67705">5. Step 3: Submit to COVID-19 PubSeq</a>
+<li><a href="#org2ac8069">5. Step 3: Submit to COVID-19 PubSeq</a>
 <ul>
-<li><a href="#orgd33218c">5.1. Trouble shooting</a></li>
+<li><a href="#org597030a">5.1. Trouble shooting</a></li>
 </ul>
 </li>
-<li><a href="#orgbf4cd0f">6. Step 4: Check output</a></li>
-<li><a href="#orgc8d6fa4">7. Bulk sequence uploader</a>
+<li><a href="#org1877e79">6. Step 4: Check output</a></li>
+<li><a href="#org0238864">7. Bulk sequence uploader</a>
 <ul>
-<li><a href="#org338ebf7">7.1. Run the uploader (CLI)</a></li>
-<li><a href="#org46d5e2f">7.2. Example: uploading bulk GenBank sequences</a></li>
-<li><a href="#orgbfc3f90">7.3. Example: preparing metadata</a></li>
+<li><a href="#orgf9293b4">7.1. Run the uploader (CLI)</a></li>
+<li><a href="#orgbf47dd6">7.2. Example: uploading bulk GenBank sequences</a>
+<ul>
+<li><a href="#org78f9e9b">7.2.1. List PubSeq IDs</a></li>
+<li><a href="#org27826ee">7.2.2. Fetch GenBank IDs</a></li>
+<li><a href="#org0b2321f">7.2.3. Fetch GenBank XML</a></li>
+<li><a href="#orge25471e">7.2.4. Transform and normalize data for uploading</a></li>
+<li><a href="#orgf6e3acb">7.2.5. Upload data</a></li>
+</ul>
+</li>
+<li><a href="#orgda2e083">7.3. Example: preparing metadata from spreadsheets</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org85998fd" class="outline-2">
-<h2 id="org85998fd"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-org1f8f24d" class="outline-2">
+<h2 id="org1f8f24d"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 In this document we explain how to upload data into COVID-19 PubSeq.
 This can happen through a web page, or through a command line
 script. We'll also show how to parametrize uploads by using templates.
-The procedure is much easier than with other repositories and can be
-fully automated. Once uploaded you can use our export API to prepare
-for other repositories.
+The procedure is much easier than with other sequence repositories and
+PubSeq uploads can be fully automated. Once uploaded you can use our
+export API to prepare for other repositories, including GenBank.
 </p>
 </div>
 </div>
 
 
-<div id="outline-container-orge783233" class="outline-2">
-<h2 id="orge783233"><span class="section-number-2">2</span> Uploading data</h2>
+<div id="outline-container-org87ccaac" class="outline-2">
+<h2 id="org87ccaac"><span class="section-number-2">2</span> Uploading data</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-The COVID-19 PubSeq allows you to upload your SARS-Cov-2 strains to a
-public resource for global comparisons. A recompute of the pangenome
-gets triggered on upload. Read the <a href="./about">ABOUT</a> page for more information.
+PubSeq allows you to upload your SARS-Cov-2 strains to a public
+resource for global comparisons. A recompute of the pangenome gets
+triggered on upload. Read the <a href="./about">ABOUT</a> page for more information.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc5810d7" class="outline-2">
-<h2 id="orgc5810d7"><span class="section-number-2">3</span> Step 1: Upload sequence</h2>
+<div id="outline-container-org10d2638" class="outline-2">
+<h2 id="org10d2638"><span class="section-number-2">3</span> Step 1: Upload sequence</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-To upload a sequence in the <a href="http://covid19.genenetwork.org/">web upload page</a> hit the browse button and
-select the FASTA file on your local hard disk.
+To upload a sequence with the <a href="http://covid19.genenetwork.org/">web upload page</a> hit the File browse
+button and select the FASTA file on your local hard disk.
 </p>
 
 <p>
@@ -309,8 +317,8 @@ already is in the system by querying some metadata as described in
 <a href="./blog?id=using-covid-19-pubseq-part1">Query metadata with SPARQL</a> or by simply downloading and checking one
 of the files on the <a href="./download">download</a> page. We find GenBank <a href="https://www.ncbi.nlm.nih.gov/nuccore/MT536190">MT536190.1</a> has not
 been included yet. A FASTA text file can be <a href="https://www.ncbi.nlm.nih.gov/nuccore/MT536190.1?report=fasta&amp;log$=seqview&amp;format=text">downloaded</a> to your local
-disk and uploaded through our <a href="./">web upload page</a>. Make sure the file does
-not include any HTML!
+disk and uploaded through our <a href="./">web upload page</a>. Make sure the file is
+correct FASTA and does not include any HTML!
 </p>
 
 <p>
@@ -321,15 +329,15 @@ an improved pangenome.
 </div>
 </div>
 
-<div id="outline-container-org5a4ae99" class="outline-2">
-<h2 id="org5a4ae99"><span class="section-number-2">4</span> Step 2: Add metadata</h2>
+<div id="outline-container-org190c480" class="outline-2">
+<h2 id="org190c480"><span class="section-number-2">4</span> Step 2: Add metadata</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The <a href="./">web upload page</a> contains fields for adding metadata. Metadata is
-not only important for attribution, is also important for
-analysis. The metadata is available for queries, see <a href="./blog?id=using-covid-19-pubseq-part1">Query metadata
-with SPARQL</a>, and can be used to annotate variations of the virus in
-different ways.
+important for analysis. The metadata is available for queries, see
+<a href="./blog?id=using-covid-19-pubseq-part1">Query metadata with SPARQL</a>, and can be used to annotate variations of
+the virus in different ways. Metadata also includes attribution
+details.
 </p>
 
 <p>
@@ -337,23 +345,18 @@ A number of fields are obligatory: sample id, date, location,
 technology and authors. The others are optional, but it is valuable to
 enter them when information is available. Metadata is defined in this
 <a href="https://github.com/arvados/bh20-seq-resource/blob/master/bh20sequploader/bh20seq-schema.yml">schema</a>. From this schema we generate the input form. Note that
-optional fields have a question mark in the <code>type</code>. You can add
-metadata yourself, btw, because this is a public resource! See also
-<a href="./blog?id=using-covid-19-pubseq-part5">Modify metadata</a> for more information.
-</p>
-
-<p>
-To get more information about a field click on the question mark on
-the web form. Here we add some extra information.
+optional fields have a question mark in the <code>type</code>. You can add code
+for metadata yourself because this is a public resource! See also
+<a href="./blog?id=using-covid-19-pubseq-part5">Modify metadata</a> for more information. The fields are:
 </p>
 </div>
 
-<div id="outline-container-orga9824de" class="outline-3">
-<h3 id="orga9824de"><span class="section-number-3">4.1</span> Obligatory fields</h3>
+<div id="outline-container-orgee6c2a1" class="outline-3">
+<h3 id="orgee6c2a1"><span class="section-number-3">4.1</span> Obligatory fields</h3>
 <div class="outline-text-3" id="text-4-1">
 </div>
-<div id="outline-container-org407fde2" class="outline-4">
-<h4 id="org407fde2"><span class="section-number-4">4.1.1</span> Sample ID (sample_id)</h4>
+<div id="outline-container-org8a35bd1" class="outline-4">
+<h4 id="org8a35bd1"><span class="section-number-4">4.1.1</span> Sample ID (sample_id)</h4>
 <div class="outline-text-4" id="text-4-1-1">
 <p>
 This is a string field that defines a unique sample identifier by the
@@ -371,8 +374,8 @@ Here we add the GenBank ID MT536190.1.
 </div>
 </div>
 
-<div id="outline-container-orgee3bb35" class="outline-4">
-<h4 id="orgee3bb35"><span class="section-number-4">4.1.2</span> Collection date</h4>
+<div id="outline-container-org4663ff7" class="outline-4">
+<h4 id="org4663ff7"><span class="section-number-4">4.1.2</span> Collection date</h4>
 <div class="outline-text-4" id="text-4-1-2">
 <p>
 Estimated collection date. The GenBank page says April 6, 2020.
@@ -380,8 +383,8 @@ Estimated collection date. The GenBank page says April 6, 2020.
 </div>
 </div>
 
-<div id="outline-container-org123bf0c" class="outline-4">
-<h4 id="org123bf0c"><span class="section-number-4">4.1.3</span> Collection location</h4>
+<div id="outline-container-org4f59b34" class="outline-4">
+<h4 id="org4f59b34"><span class="section-number-4">4.1.3</span> Collection location</h4>
 <div class="outline-text-4" id="text-4-1-3">
 <p>
 A search on wikidata says Los Angeles is
@@ -390,8 +393,8 @@ A search on wikidata says Los Angeles is
 </div>
 </div>
 
-<div id="outline-container-org41b1f83" class="outline-4">
-<h4 id="org41b1f83"><span class="section-number-4">4.1.4</span> Sequencing technology</h4>
+<div id="outline-container-orga4c8a57" class="outline-4">
+<h4 id="orga4c8a57"><span class="section-number-4">4.1.4</span> Sequencing technology</h4>
 <div class="outline-text-4" id="text-4-1-4">
 <p>
 GenBank entry says Illumina, so we can fill that in
@@ -399,8 +402,8 @@ GenBank entry says Illumina, so we can fill that in
 </div>
 </div>
 
-<div id="outline-container-org9bab62e" class="outline-4">
-<h4 id="org9bab62e"><span class="section-number-4">4.1.5</span> Authors</h4>
+<div id="outline-container-org4638a61" class="outline-4">
+<h4 id="org4638a61"><span class="section-number-4">4.1.5</span> Authors</h4>
 <div class="outline-text-4" id="text-4-1-5">
 <p>
 GenBank entry says 'Lamers,S., Nolan,D.J., Rose,R., Cross,S., Moraga
@@ -411,16 +414,16 @@ Freehan,A. and Garcia-Diaz,J.', so we can fill that in.
 </div>
 </div>
 
-<div id="outline-container-org7071af8" class="outline-3">
-<h3 id="org7071af8"><span class="section-number-3">4.2</span> Optional fields</h3>
+<div id="outline-container-org0797d5c" class="outline-3">
+<h3 id="org0797d5c"><span class="section-number-3">4.2</span> Optional fields</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 All other fields are optional. But let's see what we can add.
 </p>
 </div>
 
-<div id="outline-container-org2a04fdb" class="outline-4">
-<h4 id="org2a04fdb"><span class="section-number-4">4.2.1</span> Host information</h4>
+<div id="outline-container-org022b25f" class="outline-4">
+<h4 id="org022b25f"><span class="section-number-4">4.2.1</span> Host information</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <p>
 Sadly, not much is known about the host from GenBank. A little
@@ -434,8 +437,8 @@ did to the person and what the person was like (say age group).
 </div>
 </div>
 
-<div id="outline-container-orgc4084bc" class="outline-4">
-<h4 id="orgc4084bc"><span class="section-number-4">4.2.2</span> Collecting institution</h4>
+<div id="outline-container-orgd93804f" class="outline-4">
+<h4 id="orgd93804f"><span class="section-number-4">4.2.2</span> Collecting institution</h4>
 <div class="outline-text-4" id="text-4-2-2">
 <p>
 We can fill that in.
@@ -443,8 +446,8 @@ We can fill that in.
 </div>
 </div>
 
-<div id="outline-container-orge552325" class="outline-4">
-<h4 id="orge552325"><span class="section-number-4">4.2.3</span> Specimen source</h4>
+<div id="outline-container-orgc823e19" class="outline-4">
+<h4 id="orgc823e19"><span class="section-number-4">4.2.3</span> Specimen source</h4>
 <div class="outline-text-4" id="text-4-2-3">
 <p>
 We have that: nasopharyngeal swab
@@ -452,8 +455,8 @@ We have that: nasopharyngeal swab
 </div>
 </div>
 
-<div id="outline-container-org2577e1f" class="outline-4">
-<h4 id="org2577e1f"><span class="section-number-4">4.2.4</span> Source database accession</h4>
+<div id="outline-container-orge4a0897" class="outline-4">
+<h4 id="orge4a0897"><span class="section-number-4">4.2.4</span> Source database accession</h4>
 <div class="outline-text-4" id="text-4-2-4">
 <p>
 Genbank which is <a href="http://identifiers.org/insdc/MT536190.1#sequence">http://identifiers.org/insdc/MT536190.1#sequence</a>.
@@ -462,8 +465,8 @@ Note we plug in our own identifier MT536190.1.
 </div>
 </div>
 
-<div id="outline-container-org0305fb3" class="outline-4">
-<h4 id="org0305fb3"><span class="section-number-4">4.2.5</span> Strain name</h4>
+<div id="outline-container-org846e1f2" class="outline-4">
+<h4 id="org846e1f2"><span class="section-number-4">4.2.5</span> Strain name</h4>
 <div class="outline-text-4" id="text-4-2-5">
 <p>
 SARS-CoV-2/human/USA/LA-BIE-070/2020
@@ -473,8 +476,8 @@ SARS-CoV-2/human/USA/LA-BIE-070/2020
 </div>
 </div>
 
-<div id="outline-container-orgdf67705" class="outline-2">
-<h2 id="orgdf67705"><span class="section-number-2">5</span> Step 3: Submit to COVID-19 PubSeq</h2>
+<div id="outline-container-org2ac8069" class="outline-2">
+<h2 id="org2ac8069"><span class="section-number-2">5</span> Step 3: Submit to COVID-19 PubSeq</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Once you have the sequence and the metadata together, hit
@@ -484,26 +487,26 @@ submitted and the workflows should kick in!
 </div>
 
 
-<div id="outline-container-orgd33218c" class="outline-3">
-<h3 id="orgd33218c"><span class="section-number-3">5.1</span> Trouble shooting</h3>
+<div id="outline-container-org597030a" class="outline-3">
+<h3 id="org597030a"><span class="section-number-3">5.1</span> Trouble shooting</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
-We got an error saying: {"stem": "<a href="http://www.wikidata.org/entity/">http://www.wikidata.org/entity/</a>",&#x2026;
-which means that our location field was not formed correctly!  After
-fixing it to look like <a href="http://www.wikidata.org/entity/Q65">http://www.wikidata.org/entity/Q65</a> (note http
-instead on https and entity instead of wiki) the submission went
-through. Reload the page (it won't empty the fields) to re-enable the
-submit button.
+Ooops. We got an error saying: {"stem":
+"<a href="http://www.wikidata.org/entity/">http://www.wikidata.org/entity/</a>",&#x2026;  which means that our location
+field was not formed correctly!  After fixing it to look like
+<a href="http://www.wikidata.org/entity/Q65">http://www.wikidata.org/entity/Q65</a> (note http instead on https and
+entity instead of wiki) the submission went through. Reload the page
+(it won't empty the fields) to re-enable the submit button.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgbf4cd0f" class="outline-2">
-<h2 id="orgbf4cd0f"><span class="section-number-2">6</span> Step 4: Check output</h2>
+<div id="outline-container-org1877e79" class="outline-2">
+<h2 id="org1877e79"><span class="section-number-2">6</span> Step 4: Check output</h2>
 <div class="outline-text-2" id="text-6">
 <p>
-The current pipeline takes 5.5 hours to complete! Once it completes
+The current pipeline takes some time to complete! Once it completes
 the updated data can be checked on the <a href="./download">DOWNLOAD</a> page. After completion
 of above output this <a href="http://sparql.genenetwork.org/sparql/?default-graph-uri=&amp;query=PREFIX+pubseq%3A+%3Chttp%3A%2F%2Fbiohackathon.org%2Fbh20-seq-schema%23MainSchema%2F%3E%0D%0APREFIX+sio%3A+%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2F%3E%0D%0Aselect+distinct+%3Fsample+%3Fp+%3Fo%0D%0A%7B%0D%0A+++%3Fsample+sio%3ASIO_000115+%22MT536190.1%22+.%0D%0A+++%3Fsample+%3Fp+%3Fo+.%0D%0A%7D&amp;format=text%2Fhtml&amp;timeout=0&amp;debug=on&amp;run=+Run+Query+">SPARQL query</a> shows some of the metadata we put
 in.
@@ -511,8 +514,8 @@ in.
 </div>
 </div>
 
-<div id="outline-container-orgc8d6fa4" class="outline-2">
-<h2 id="orgc8d6fa4"><span class="section-number-2">7</span> Bulk sequence uploader</h2>
+<div id="outline-container-org0238864" class="outline-2">
+<h2 id="org0238864"><span class="section-number-2">7</span> Bulk sequence uploader</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Above steps require a manual upload of one sequence with metadata.
@@ -532,21 +535,21 @@ A minimal example of metadata looks like
 <pre class="src src-json">id: placeholder
 
 license:
-    license_type: http://creativecommons.org/licenses/by/<span style="color: #8bc34a;">4.0</span>/
+    license_type: http://creativecommons.org/licenses/by/4.0/
 
 host:
-    host_species: http://purl.obolibrary.org/obo/NCBITaxon_<span style="color: #8bc34a;">9606</span>
+    host_species: http://purl.obolibrary.org/obo/NCBITaxon_9606
 
 sample:
     sample_id: XX
-    collection_date: <span style="color: #9ccc65;">"2020-01-01"</span>
-    collection_location: http://www.wikidata.org/entity/Q<span style="color: #8bc34a;">148</span>
+    collection_date: "2020-01-01"
+    collection_location: http://www.wikidata.org/entity/Q148
 
 virus:
-    virus_species: http://purl.obolibrary.org/obo/NCBITaxon_<span style="color: #8bc34a;">2697049</span>
+    virus_species: http://purl.obolibrary.org/obo/NCBITaxon_2697049
 
 technology:
-    sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_<span style="color: #8bc34a;">0008632</span>]
+    sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0008632]
 
 submitter:
     authors: [John Doe]
@@ -561,36 +564,37 @@ a more elaborate example (note most fields are optional) may look like
 <pre class="src src-json">id: placeholder
 
 host:
-    host_id: XX<span style="color: #8bc34a;">1</span>
-    host_species: http://purl.obolibrary.org/obo/NCBITaxon_<span style="color: #8bc34a;">9606</span>
-    host_sex: http://purl.obolibrary.org/obo/PATO_<span style="color: #8bc34a;">0000384</span>
-    host_age: <span style="color: #8bc34a;">20</span>
-    host_age_unit: http://purl.obolibrary.org/obo/UO_<span style="color: #8bc34a;">0000036</span>
-    host_health_status: http://purl.obolibrary.org/obo/NCIT_C<span style="color: #8bc34a;">25269</span>
+    host_id: XX1
+    host_species: http://purl.obolibrary.org/obo/NCBITaxon_9606
+    host_sex: http://purl.obolibrary.org/obo/PATO_0000384
+    host_age: 20
+    host_age_unit: http://purl.obolibrary.org/obo/UO_0000036
+    host_health_status: http://purl.obolibrary.org/obo/NCIT_C25269
     host_treatment: Process in which the act is intended to modify or alter host status (Compounds)
-    host_vaccination: [vaccines<span style="color: #8bc34a;">1</span>,vaccine<span style="color: #8bc34a;">2</span>]
-    ethnicity: http://purl.obolibrary.org/obo/HANCESTRO_<span style="color: #8bc34a;">0010</span>
+    host_vaccination: [vaccines1,vaccine2]
+    ethnicity: http://purl.obolibrary.org/obo/HANCESTRO_0010
     additional_host_information: Optional free text field for additional information
 
 sample:
     sample_id: Id of the sample as defined by the submitter
     collector_name: Name of the person that took the sample
     collecting_institution: Institute that was responsible of sampling
-    specimen_source: [http://purl.obolibrary.org/obo/NCIT_C<span style="color: #8bc34a;">155831</span>,http://purl.obolibrary.org/obo/NCIT_C<span style="color: #8bc34a;">155835</span>]
-    collection_date: <span style="color: #9ccc65;">"2020-01-01"</span>
-    collection_location: http://www.wikidata.org/entity/Q<span style="color: #8bc34a;">148</span>
+    specimen_source: [http://purl.obolibrary.org/obo/NCIT_C155831,http://purl.obolibrary.org/obo/NCIT_C155835]
+    collection_date: "2020-01-01"
+    collection_location: http://www.wikidata.org/entity/Q148
     sample_storage_conditions: frozen specimen
-    source_database_accession: [http://identifiers.org/insdc/LC<span style="color: #8bc34a;">522350.1</span>#sequence]
+    source_database_accession: [http://identifiers.org/insdc/LC522350.1#sequence]
     additional_collection_information: Optional free text field for additional information
 
 virus:
-    virus_species: http://purl.obolibrary.org/obo/NCBITaxon_<span style="color: #8bc34a;">2697049</span>
-    virus_strain: SARS-CoV-<span style="color: #8bc34a;">2</span>/human/CHN/HS_<span style="color: #8bc34a;">8</span>/<span style="color: #8bc34a;">2020</span>
+    virus_species: http://purl.obolibrary.org/obo/NCBITaxon_2697049
+    virus_strain: SARS-CoV-2/human/CHN/HS_8/2020
 
 technology:
-    sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_<span style="color: #8bc34a;">0009173</span>,http://www.ebi.ac.uk/efo/EFO_<span style="color: #8bc34a;">0009173</span>]
+    sample_sequencing_technology: [http://www.ebi.ac.uk/efo/EFO_0009173,http://www.ebi.ac.uk/efo/EFO_0009173]
     alignment_protocol: Protocol used for assembly
-    sequencing_coverage: [<span style="color: #8bc34a;">70.0</span>, <span style="color: #8bc34a;">100.0</span>]
+    sequencing_coverage: [70.0, 100.0]
+    assembly_method: "http://purl.obolibrary.org/obo/GENEPIO_0001628"
     additional_technology_information: Optional free text field for additional information
 
 submitter:
@@ -599,30 +603,30 @@ submitter:
     submitter_address: John Doe's address
     originating_lab: John Doe kitchen
     lab_address: John Doe's address
-    provider: XXX<span style="color: #8bc34a;">1</span>
-    submitter_sample_id: XXX<span style="color: #8bc34a;">2</span>
-    publication: PMID<span style="color: #8bc34a;">00001113</span>
-    submitter_orcid: [https://orcid.org/<span style="color: #8bc34a;">0000</span>-<span style="color: #8bc34a;">0000</span>-<span style="color: #8bc34a;">0000</span>-<span style="color: #8bc34a;">0000</span>,https://orcid.org/<span style="color: #8bc34a;">0000</span>-<span style="color: #8bc34a;">0000</span>-<span style="color: #8bc34a;">0000</span>-<span style="color: #8bc34a;">0001</span>]
+    provider: XXX1
+    submitter_sample_id: XXX2
+    publication: PMID00001113
+    submitter_orcid: [https://orcid.org/0000-0000-0000-0000,https://orcid.org/0000-0000-0000-0001]
     additional_submitter_information: Optional free text field for additional information
 </pre>
 </div>
 
 <p>
-more metadata is yummy. <a href="https://yummydata.org/">Yummydata</a> is useful to a wider community. Note
+more metadata is yummy when stored in RDF. <a href="https://yummydata.org/">Yummydata</a> is useful to a wider community. Note
 that many of the terms in above example are URIs, such as
 host_species: <a href="http://purl.obolibrary.org/obo/NCBITaxon_9606">http://purl.obolibrary.org/obo/NCBITaxon_9606</a>.  We use
 web ontologies for these to make the data less ambiguous and more
-FAIR. Check out the option fields as defined in the schema. If it is not listed
+FAIR. Check out the option fields as defined in the schema. If it is not listed,
+check the <a href="https://github.com/arvados/bh20-seq-resource/blob/master/semantic_enrichment/labels.ttl">labels.ttl</a> file. Also,
 a little bit of web searching may be required or <a href="./contact">contact</a> us.
 </p>
 </div>
 
-<div id="outline-container-org338ebf7" class="outline-3">
-<h3 id="org338ebf7"><span class="section-number-3">7.1</span> Run the uploader (CLI)</h3>
+<div id="outline-container-orgf9293b4" class="outline-3">
+<h3 id="orgf9293b4"><span class="section-number-3">7.1</span> Run the uploader (CLI)</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
-Installing with pip you should be
-able to run
+Installing with pip you should be able to run
 </p>
 
 <pre class="example">
@@ -671,43 +675,123 @@ The web interface using this exact same script so it should just work
 </div>
 </div>
 
-
-<div id="outline-container-org46d5e2f" class="outline-3">
-<h3 id="org46d5e2f"><span class="section-number-3">7.2</span> Example: uploading bulk GenBank sequences</h3>
+<div id="outline-container-orgbf47dd6" class="outline-3">
+<h3 id="orgbf47dd6"><span class="section-number-3">7.2</span> Example: uploading bulk GenBank sequences</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
-We also use above script to bulk upload GenBank sequences with a <a href="https://github.com/arvados/bh20-seq-resource/blob/master/scripts/download_genbank_data/from_genbank_to_fasta_and_yaml.py">FASTA
-and YAML</a> extractor specific for GenBank. This means that the steps we
-took above for uploading a GenBank sequence are already automated.
+At this point, most of PubSeq's FASTA files come from NCBI <a href="https://www.ncbi.nlm.nih.gov/genbank/">GenBank</a>.
+This data is public (see the policy) and we provide it with metadata
+under a <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a> license.
 </p>
 
 <p>
-The steps are: from the
-<code>bh20-seq-resource/scripts/download_genbank_data/</code> directory using the
-<a href="https://github.com/arvados/bh20-seq-resource/tree/master/scripts/download_genbank_data">from_genbank_to_fasta_and_yaml.py</a> script:
+We use multiple scripts to fetch, check and update data. Since there
+are dependencies involved we suggest to match our development work
+place and use a Guix environment to run the tools, see also
+<a href="../INSTALL.md">INSTALL.md</a>.
+</p>
+
+<p>
+The scripts to pull data from GenBank are in
+<a href="https://github.com/pubseq/bh20-seq-resource/tree/master/workflows/pull-data/genbank">workflows/pull-data/genbank</a>. The scripts that query Pubseq are in
+<a href="https://github.com/pubseq/bh20-seq-resource/tree/master/workflows/pubseq">workflows/pubseq</a>.
+</p>
+</div>
+
+<div id="outline-container-org78f9e9b" class="outline-4">
+<h4 id="org78f9e9b"><span class="section-number-4">7.2.1</span> List PubSeq IDs</h4>
+<div class="outline-text-4" id="text-7-2-1">
+<p>
+The first script to run fetches a <a href="https://github.com/pubseq/bh20-seq-resource/blob/master/workflows/pubseq/pubseq-fetch-ids">list of Pubseq IDs</a> to make sure we
+don't download data already in PubSeq. It requires Ruby3 and
+nothing else as a dependency and takes a second to run:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">python3 from_genbank_to_fasta_and_yaml.py
-<span style="color: #ffcc80;">dir_fasta_and_yaml</span>=~/bh20-seq-resource/scripts/download_genbank_data/fasta_and_yaml
-ls $<span style="color: #ffcc80;">dir_fasta_and_yaml</span>/*.yaml | <span style="color: #fff59d;">while </span><span style="color: #ff8A65;">read</span> path_code_yaml; <span style="color: #fff59d;">do</span>
-   <span style="color: #ffcc80;">path_code_fasta</span>=${<span style="color: #ffcc80;">path_code_yaml</span>%.*}.fasta
-   bh20-seq-uploader --skip-qc $<span style="color: #ffcc80;">path_code_yaml</span> $<span style="color: #ffcc80;">path_code_fasta</span>
-<span style="color: #fff59d;">done</span>
+<pre class="src src-sh">ruby pubseq-fetch-ids &gt; pubseq_ids.txt
+head pubseq_ids.txt
+  MT459889.1
+  MT509498.1
+  SRR11622145
+  ERR4304866
+  SRR11916007
+</pre>
+</div>
+
+<p>
+showing all GenBank IDs stored in PubSeq.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org27826ee" class="outline-4">
+<h4 id="org27826ee"><span class="section-number-4">7.2.2</span> Fetch GenBank IDs</h4>
+<div class="outline-text-4" id="text-7-2-2">
+<p>
+In the next step we essentially follow the PubSeq <a href="https://github.com/pubseq/bh20-seq-resource/tree/master/workflows/pull-data/genbank">GenBank README</a> and
+fetch the GenBank IDs as a list with
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">python3 genbank-fetch-ids.py --skip pubseq_ids.txt &gt; genbank_ids.txt
+</pre>
+</div>
+
+<p>
+this list is what tells us to download from GenBank with the next
+script
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0b2321f" class="outline-4">
+<h4 id="org0b2321f"><span class="section-number-4">7.2.3</span> Fetch GenBank XML</h4>
+<div class="outline-text-4" id="text-7-2-3">
+<p>
+Here we fetch the XML files for all the IDs that are listed in
+genbank_ids.txt. This is a slow procedure!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">--- fetch XML</span>
+python3 update-from-genbank.py --ids genbank_ids.txt --out ~/tmp/genbank
 </pre>
 </div>
 </div>
 </div>
 
+<div id="outline-container-orge25471e" class="outline-4">
+<h4 id="orge25471e"><span class="section-number-4">7.2.4</span> Transform and normalize data for uploading</h4>
+<div class="outline-text-4" id="text-7-2-4">
+<p>
+Now we have the GenBank XML data we can start transforming
+</p>
 
-<div id="outline-container-orgbfc3f90" class="outline-3">
-<h3 id="orgbfc3f90"><span class="section-number-3">7.3</span> Example: preparing metadata</h3>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">--- Transform to YAML/JSON and FASTA</span>
+python3 transform-genbank-xml2yamlfa.py --out ~/tmp/pubseq file(s)
+
+<span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">--- Normalize data (validation mode)</span>
+python3 ../../workflows/tools/normalize-yamlfa.py -s ~/tmp/yamlfa/state.json --species ncbi_host_species.csv --specimen specimen.csv --validate
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf6e3acb" class="outline-4">
+<h4 id="orgf6e3acb"><span class="section-number-4">7.2.5</span> Upload data</h4>
+</div>
+</div>
+
+<div id="outline-container-orgda2e083" class="outline-3">
+<h3 id="orgda2e083"><span class="section-number-3">7.3</span> Example: preparing metadata from spreadsheets</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 Usually, metadata are available in a tabular format, such as
-spreadsheets. As an example, we provide a script <a href="https://github.com/arvados/bh20-seq-resource/tree/master/scripts/esr_samples">esr_samples.py</a> to
-show you how to parse your metadata in YAML files ready for the
-upload. To execute the script, go in the
+spreadsheets (the GenBank data entry has that as a default). As an
+example, we provide a script <a href="https://github.com/arvados/bh20-seq-resource/tree/master/scripts/esr_samples">esr_samples.py</a> to show you how to parse
+your metadata from a spreadsheet into YAML files, from a template,
+ready for PubSeq upload. To execute the script, go in the
 ~bh20-seq-resource/scripts/esr_samples and execute
 </p>
 
@@ -730,14 +814,14 @@ in by <code>esr_samples.py</code> so we get a metadata YAML file for each sample
 <p>
 Next run the earlier CLI uploader for each YAML and FASTA combination.
 It can't be much easier than this. For ESR we uploaded a batch of 600
-sequences this way. See <a href="http://covid19.genenetwork.org/resource/20VR0995">example</a>.
+sequences this way writing a few lines of Python <a href="https://github.com/arvados/bh20-seq-resource/blob/master/scripts/esr_samples/esr_samples.py">code</a>. See <a href="http://covid19.genenetwork.org/resource/20VR0995">example</a>.
 </p>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2020-11-05 Thu 07:27</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2021-04-07 Wed 03:54</small>.
 </div>
 </body>
 </html>

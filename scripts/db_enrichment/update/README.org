@@ -1,0 +1,28 @@
+select distinct ?item ?country ?place ?official ?countryname ?loc where {
+    ?item  wdt:P17 ?country ;
+           wdt:P1705 ?place ;
+           wdt:P625 ?loc .
+    ?country wdt:P1448 ?countryname .
+    FILTER(LANG(?countryname) = "en")
+    FILTER(LANG(?place) = "en")
+    optional { ?item  wdt:P1448 ?official } .
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+}
+
+
+https://query.wikidata.org/#%23%20Find%20place%20and%20location%20coordinates%0Aselect%20distinct%20%3Fitem%20%3Fcountry%20%3Fplace%20%3Fofficial%20%3Fcountryname%20%3Floc%20where%20%7B%0A%20%20%20%20%3Fitem%20%20wdt%3AP17%20%3Fcountry%20%3B%0A%20%20%20%20%20%20%20%20%20%20%20wdt%3AP1705%20%3Fplace%20%3B%0A%20%20%20%20%20%20%20%20%20%20%20wdt%3AP625%20%3Floc%20.%0A%20%20%20%20%3Fcountry%20wdt%3AP1448%20%3Fcountryname%20.%0A%20%20%20%20FILTER%28LANG%28%3Fcountryname%29%20%3D%20%22en%22%29%0A%20%20%20%20FILTER%28LANG%28%3Fplace%29%20%3D%20%22en%22%29%0A%20%20%20%20optional%20%7B%20%3Fitem%20%20wdt%3AP1448%20%3Fofficial%20%7D%20.%0A%20%20%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22en%22%20%7D%0A%7D%0A
+
+Fetches a TSV:
+
+item  country place official  countryname loc
+http://www.wikidata.org/entity/Q1297  http://www.wikidata.org/entity/Q30  Chicago City of Chicago the Unite
+d States of America  Point(-87.627777777 41.881944444)
+http://www.wikidata.org/entity/Q1297  http://www.wikidata.org/entity/Q30  Chicago City of Chicago United St
+ates Point(-87.627777777 41.881944444)
+http://www.wikidata.org/entity/Q686 http://www.wikidata.org/entity/Q686 Republic of Vanuatu Ripablik blong
+Vanuatu  Republic of Vanuatu Point(168.016669444 -16.633330555)
+http://www.wikidata.org/entity/Q686 http://www.wikidata.org/entity/Q686 Republic of Vanuatu Vanuatu Republi
+c of Vanuatu Point(168.016669444 -16.633330555)
+http://www.wikidata.org/entity/Q686 http://www.wikidata.org/entity/Q686 Republic of Vanuatu Republic of Van
+uatu Republic of Vanuatu Point(168.016669444 -16.633330555)
+

@@ -20,11 +20,8 @@ to select a subset of IDs.
 
 This tool has two modes of operation. It can validate with the
 --validate switch which stops at a warning and does no rewriting.
-This mode is typically used in troubleshooting.
-
-The other mode is --rewrite which rewrites the JSON files after
-making a backup (.bak) of the original. This mode updates files and
-won't stop - it is used for (automated) uploads.
+This mode is typically used in troubleshooting. Use the --out
+switch to write files.
 
 """)
 
@@ -32,7 +29,7 @@ parser.add_argument('-s','--state', type=str, help='State file (JSON) as produce
 parser.add_argument('--species', type=str, help='Species mapping file')
 parser.add_argument('--specimen', type=str, help='Optional specimen mapping file')
 parser.add_argument('--validate', action='store_true', help='Validation mode - stops on warning')
-parser.add_argument('--rewrite', action='store_true', help='Rewrite mode - updates files')
+parser.add_argument('--out', type=str, help='Directory to write to')
 parser.add_argument('--yaml', action='store_true', help='Input YAML instead of JSON')
 parser.add_argument('id', nargs='*', help='optional id(s)')
 
@@ -43,7 +40,10 @@ with open(args.state) as jsonf:
 
 dir = os.path.dirname(args.state)
 do_validate = args.validate
-do_rewrite = args.rewrite
+
+outdir = args.out
+if outdir and not os.path.exists(outdir):
+    raise Exception(f"Directory {outdir} does not exist")
 
 ids = args.id
 if not len(ids):
@@ -56,7 +56,7 @@ if args.species:
             name,uri = line.strip().split(',')
             species[name] = uri
 else:
-    print("WARNING: no species mapping",file=sys.stderr)
+    print("WARNING: no species mapping file passed in",file=sys.stderr)
 specimen = {}
 if args.specimen:
     with open(args.specimen) as f:
@@ -64,7 +64,7 @@ if args.specimen:
             name,uri = line.strip().split(',')
             specimen[name] = uri
 else:
-    print("WARNING: no specimen mapping",file=sys.stderr)
+    print("WARNING: no specimen mapping file passed in",file=sys.stderr)
 
 for id in ids:
     if args.yaml:
@@ -87,11 +87,10 @@ for id in ids:
         if do_validate and warning:
             print("bailing out in validation mode",file=sys.stderr)
             sys.exit(2)
-        if do_rewrite:
-            if not os.path.exists(fn+".bak"): # make backup the first time
-                os.rename(fn,fn+".bak")
-            with open(fn, 'w') as outfile:
-                print(f"    Writing {fn}")
+        if outdir:
+            outfn = outdir+"/"+os.path.basename(fn)
+            with open(outfn, 'w') as outfile:
+                print(f"    Writing {outfn}")
                 json.dump(rec.__dict__, outfile, indent=2)
         else:
             print(rec)

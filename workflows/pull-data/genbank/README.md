@@ -31,11 +31,10 @@ python3 genbank-fetch-ids.py --skip pubseq_ids.txt > genbank_ids.txt
 python3 update-from-genbank.py --ids genbank_ids.txt --out ~/tmp/genbank
 
 # --- Transform to YAML/JSON and FASTA
-python3 transform-genbank-xml2yamlfa.py --out ~/tmp/pubseq file(s)
+python3 transform-genbank-xml2yamlfa.py --out ~/tmp/yamlfa file(s)
 
 # --- Normalize data (validation mode)
-python3 ../../workflows/tools/normalize-yamlfa.py -s ~/tmp/yamlfa/state.json --species ncbi_host_species.csv --specimen specimen.csv --validate
-
+python3 normalize-yamlfa.py -s ~/tmp/yamlfa/state.json --species ncbi_host_species.csv --specimen specimen.csv --validate
 ```
 
 Note the latest writeup can be found [here](https://github.com/pubseq/bh20-seq-resource/blob/master/doc/blog/using-covid-19-pubseq-part3.org#example-uploading-bulk-genbank-sequences)

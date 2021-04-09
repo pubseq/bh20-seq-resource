@@ -15,6 +15,7 @@ of PubSeq. In this document we explain why it is not so easy!
 * Table of Contents                                                     :TOC:noexport:
  - [[#introduction][Introduction]]
  - [[#location-data][Location data]]
+   - [[#why-use-wikidata-uris-instead-of-gps-coordinates][Why use WikiData URIs instead of GPS coordinates?]]
  - [[#normalizing-location-data][Normalizing location data]]
  - [[#missing-data][Missing data]]
 
@@ -36,14 +37,32 @@ From the full record we best place the sample on San Diego.
 There exist many opportunities for ambiguous entries, such as Memphis
 TN and Memphis IN. We decided to settle for Wikidata URIs because (1)
 they are not ambiguous and (2) allow for fetching more information,
-such as population size, density, county and GPS location. See the
-wikidata entries for [[https://www.wikidata.org/wiki/Q2447864][Memphis Tennessee]], [[https://www.wikidata.org/wiki/Q2699142][Memphis Indiana]], [[https://www.wikidata.org/wiki/Q979971][Memphis Texas]]
-[[https://www.wikidata.org/wiki/Q1890251][Memphis Michigan]] and [[https://www.wikidata.org/wiki/Q3289795][Memphis Nebraska]]. And then there is the original
-[[https://www.wikidata.org/wiki/Q5715][Memphis Egypt]], ancient capital of Aneb-Hetch.
+such as population size, density, county and GPS coordinates. Click on
+the wikidata entries for [[https://www.wikidata.org/wiki/Q2447864][Memphis Tennessee]], [[https://www.wikidata.org/wiki/Q2699142][Memphis Indiana]], [[https://www.wikidata.org/wiki/Q979971][Memphis
+Texas]] [[https://www.wikidata.org/wiki/Q1890251][Memphis Michigan]] and [[https://www.wikidata.org/wiki/Q3289795][Memphis Nebraska]]. And then there is the
+original [[https://www.wikidata.org/wiki/Q5715][Memphis Egypt]], ancient capital of Aneb-Hetch.
+
+** Why use WikiData URIs instead of GPS coordinates?
+
+A wikidata URI gives access to a lot of extra information that can be
+queried about an entry. It is fairly straightforward, for example, to
+find all entries that relate to one county or country. And these are
+typical queries for researchers. Wikidata URIs allows fetching GPS
+coordinates - we do that to display samples on the map.
+
+Querying samples and getting relevant information directly from GPS
+coordinates is much harder, if not impossible.
 
 * Normalizing location data
 
-Wikidata
+Wikidata is the stable and trusted backend for Wikipedia, a massive
+online encyclopedia. It is one of largest RDF-based databases on the
+planet and won't disappear any time soon. Also it contains URIs for
+almost all geographical entities of interest. Wikidata is therefore a
+good choice for normalizing geographical location data.
+
+PubSeq gets data from different sources and needs to convert that
+information to Wikidata URIs.
 
 * Missing data
 

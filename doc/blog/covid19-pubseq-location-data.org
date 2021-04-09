@@ -38,9 +38,11 @@ There exist many opportunities for ambiguous entries, such as Memphis
 TN and Memphis IN. We decided to settle for Wikidata URIs because (1)
 they are not ambiguous and (2) allow for fetching more information,
 such as population size, density, county and GPS coordinates. Click on
-the wikidata entries for [[https://www.wikidata.org/wiki/Q2447864][Memphis Tennessee]], [[https://www.wikidata.org/wiki/Q2699142][Memphis Indiana]], [[https://www.wikidata.org/wiki/Q979971][Memphis
-Texas]] [[https://www.wikidata.org/wiki/Q1890251][Memphis Michigan]] and [[https://www.wikidata.org/wiki/Q3289795][Memphis Nebraska]]. And then there is the
-original [[https://www.wikidata.org/wiki/Q5715][Memphis Egypt]], ancient capital of Aneb-Hetch.
+the wikidata entries for [[http://www.wikidata.org/entity/Q16563][Memphis Tennessee]] (not the song [[https://www.wikidata.org/wiki/Q2447864][Memphis
+Tennessee]]), [[https://www.wikidata.org/wiki/Q2699142][Memphis Indiana]], [[https://www.wikidata.org/wiki/Q979971][Memphis Texas]] [[https://www.wikidata.org/wiki/Q1890251][Memphis Michigan]] and
+[[https://www.wikidata.org/wiki/Q3289795][Memphis Nebraska]]. And then there is the original [[https://www.wikidata.org/wiki/Q5715][Memphis Egypt]],
+ancient capital of Aneb-Hetch. Wikidata URIs are great at
+disambiguation!
 
 ** Why use WikiData URIs instead of GPS coordinates?
 
@@ -48,7 +50,23 @@ A wikidata URI gives access to a lot of extra information that can be
 queried about an entry. It is fairly straightforward, for example, to
 find all entries that relate to one county or country. And these are
 typical queries for researchers. Wikidata URIs allows fetching GPS
-coordinates - we do that to display samples on the map.
+coordinates - we do that to display samples on the map. For example
+
+#+begin_src sql
+select ?gps  where {
+  <http://www.wikidata.org/entity/Q16563> wdt:P625 ?gps .
+}
+#+end_src
+[[https://query.wikidata.org/#select%20%3Fgps%20%20where%20%7B%0A%20%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ16563%3E%20wdt%3AP625%20%3Fgps%20.%0A%7D][execute query]]
+
+returns Point(-89.971111111 35.1175)
+
+#+begin_src sql
+select ?p ?gps  where {
+  <http://www.wikidata.org/entity/Q16563> ?p ?gps .
+}
+#+end_src
+Hit [[https://query.wikidata.org/#select%20%3Fp%20%3Fgps%20where%20%7B%0A%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ2447864%3E%20%3Fp%20%3Fgps%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D][execute query]]
 
 Querying samples and getting relevant information directly from GPS
 coordinates is much harder, if not impossible.

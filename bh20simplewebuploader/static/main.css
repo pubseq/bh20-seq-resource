@@ -197,8 +197,15 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
 }
 
 .intro {
+    padding: 2em;
     color: #505050;
     grid-area: a;
+}
+
+.cite {
+    padding-left: 5em;
+    padding-right: 5em;
+    background-color: white;
 }
 
 .fasta-file-select {

@@ -9,8 +9,9 @@
 
 * Introduction
 
-Normalized location metadata is one of the important features
-of PubSeq. In this document we explain why it is not so easy!
+Normalized location metadata is one of the most valuable features of
+PubSeq. In this document we explain how we create that metadata and
+why it is not so easy!
 
 * Table of Contents                                                     :TOC:noexport:
  - [[#introduction][Introduction]]
@@ -59,14 +60,18 @@ select ?gps  where {
 #+end_src
 [[https://query.wikidata.org/#select%20%3Fgps%20%20where%20%7B%0A%20%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ16563%3E%20wdt%3AP625%20%3Fgps%20.%0A%7D][execute query]]
 
-returns Point(-89.971111111 35.1175)
+returns
+
+: Point(-89.971111111 35.1175)
+
+To get a list of all directly available items related to Memphis TN:
 
 #+begin_src sql
-select ?p ?gps  where {
-  <http://www.wikidata.org/entity/Q16563> ?p ?gps .
+select ?p ?s  where {
+  <http://www.wikidata.org/entity/Q16563> ?p ?s .
 }
 #+end_src
-Hit [[https://query.wikidata.org/#select%20%3Fp%20%3Fgps%20where%20%7B%0A%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ2447864%3E%20%3Fp%20%3Fgps%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D][execute query]]
+[[https://query.wikidata.org/#select%20%3Fp%20%3Fgps%20where%20%7B%0A%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ2447864%3E%20%3Fp%20%3Fgps%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D][execute query]]
 
 Querying samples and getting relevant information directly from GPS
 coordinates is much harder, if not impossible.
@@ -74,13 +79,22 @@ coordinates is much harder, if not impossible.
 * Normalizing location data
 
 Wikidata is the stable and trusted backend for Wikipedia, a massive
-online encyclopedia. It is one of largest RDF-based databases on the
-planet and won't disappear any time soon. Also it contains URIs for
+online encyclopedia. It is also one of largest RDF-based databases on the
+planet and won't disappear any time soon. Wikidata contains URIs for
 almost all geographical entities of interest. Wikidata is therefore a
 good choice for normalizing geographical location data.
 
 PubSeq gets data from different sources and needs to convert that
-information to Wikidata URIs.
+information to Wikidata URIs. So, how would we go about fixing the
+location `USA: Cruise_Ship_1, California' in [[https://www.ncbi.nlm.nih.gov/nuccore/MT810507][MT810507]]. We can tokenize
+the address information into `USA' and `California'. Also `San Diego'
+is listed as an address in the record. We should aim for the smallest
+Geo description `San Diego' and relate that back to Wikidata to find
+the URI. Now Wikidata won't be pleased if we hit it with 100 thousand
+queries, so best is to fetch location related info and turn that into
+a small database using Python Pandas, or similar.
+
+/To be continued/
 
 * Missing data
 

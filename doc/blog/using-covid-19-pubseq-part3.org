@@ -16,7 +16,6 @@ The procedure is much easier than with other sequence repositories and
 PubSeq uploads can be fully automated. Once uploaded you can use our
 export API to prepare for other repositories, including GenBank.
 
-
 * Table of Contents                                                     :TOC:noexport:
  - [[#introduction][Introduction]]
  - [[#uploading-data][Uploading data]]
@@ -427,7 +426,7 @@ and run a diff with, for example,
 colordiff ~/tmp/new-yamlfa-orig.2/MW084447.json ~/tmp/test/MW084447.json
 #+end_src
 
-or a more fancy version using the excellent jq tool:
+or a more fancy version using the excellent [[https://stedolan.github.io/jq/][jq tool]]:
 
 #+begin_src sh
 colordiff <(jq -S . ~/tmp/new-yamlfa-orig.2/MW084447.json) <(jq -S . ~/tmp/test/MW084447.json )

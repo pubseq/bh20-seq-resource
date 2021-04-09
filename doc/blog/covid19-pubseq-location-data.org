@@ -1,0 +1,53 @@
+#+TITLE: COVID-19 PubSeq Location Data
+#+AUTHOR: Pjotr Prins
+# C-c C-e h h   publish
+# C-c !         insert date (use . for active agenda, C-u C-c ! for date, C-u C-c . for time)
+# C-c C-t       task rotate
+
+#+HTML_HEAD: <link rel="Blog stylesheet" type="text/css" href="blog.css" />
+#+OPTIONS: ^:nil
+
+* Introduction
+
+Normalized location metadata is one of the important features
+of PubSeq. In this document we explain why it is not so easy!
+
+* Table of Contents                                                     :TOC:noexport:
+ - [[#introduction][Introduction]]
+ - [[#location-data][Location data]]
+ - [[#normalizing-location-data][Normalizing location data]]
+ - [[#missing-data][Missing data]]
+
+* Location data
+
+When data gets uploaded to central repositories some metadata needs to
+be provided about sampling location and uploader (lab) location. This
+should be straightforward. Yeah, right.
+
+The main problem, probably, is that central repositories can not be
+strict about these parameters - otherwise uploads fail and uploaders
+get annoyed (and may stop uploading). This basic problem is about
+human expectation.
+
+The other problem is that not everything is fixed to a site. What to
+to make of the location `USA: Cruise_Ship_1, California' in [[https://www.ncbi.nlm.nih.gov/nuccore/MT810507][MT810507]].
+From the full record we best place the sample on San Diego.
+
+There exist many opportunities for ambiguous entries, such as Memphis
+TN and Memphis IN. We decided to settle for Wikidata URIs because (1)
+they are not ambiguous and (2) allow for fetching more information,
+such as population size, density, county and GPS location. See the
+wikidata entries for [[https://www.wikidata.org/wiki/Q2447864][Memphis Tennessee]], [[https://www.wikidata.org/wiki/Q2699142][Memphis Indiana]], [[https://www.wikidata.org/wiki/Q979971][Memphis Texas]]
+[[https://www.wikidata.org/wiki/Q1890251][Memphis Michigan]] and [[https://www.wikidata.org/wiki/Q3289795][Memphis Nebraska]]. And then there is the original
+[[https://www.wikidata.org/wiki/Q5715][Memphis Egypt]], ancient capital of Aneb-Hetch.
+
+* Normalizing location data
+
+Wikidata
+
+* Missing data
+
+After normalization, the original data we maintain in a field
+`collection_location_original'. If we can normalize to a Wikidata
+entry URI that is stored in `collection_location'.  Otherwise it is
+missing (RDF favours treating missing data as really missing data).

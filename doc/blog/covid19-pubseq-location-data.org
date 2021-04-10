@@ -95,6 +95,25 @@ the URI. Now Wikidata won't be pleased if we hit it with 100 thousand
 queries, so best is to fetch location related info and turn that into
 a small database using Python Pandas, or similar.
 
+We do not want to find all these links by hand. Initially, when we started out,
+we did just that. But at 100K entries it is not feasible. So we end up
+with a stepped approach:
+
+1. Search a database with all known Wikidata entries
+2. Search a separate database with 'vetted' items including Regex
+3. If GPS coordinates are provided we can use that
+4. Tokenize the record and use the Wikidata or Wikipedia search engine
+
+Hopefully that covers 90% of cases correctly.  We still may end up
+with misses and wrong data. E.g. it is easy to imagine a sample taken
+on Antartica that got sequenced in the USA and gets placed in the
+USA. In Wiki-spirit the best solution is to leave it to end-users to
+re-place those entries. End-users scale, unlike us. For this we will
+create an API.
+
+Note that normalization has to be fully automated to execute regular
+updates from the upstream data repositories.
+
 ** Shape expressions (ShEx)
 
 PubSeq uses [[http://shex.io/shex-semantics/][ShEx]] to validate RDF data (see also the [[http://shex.io/shex-primer/][primer]]). This is

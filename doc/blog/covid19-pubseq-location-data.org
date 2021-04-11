@@ -18,7 +18,10 @@ why it is not so easy!
  - [[#location-data][Location data]]
    - [[#why-use-wikidata-uris-instead-of-gps-coordinates][Why use WikiData URIs instead of GPS coordinates?]]
  - [[#normalizing-location-data][Normalizing location data]]
-   - [[#shape-expressions-shex][Shape expressions (ShEx)]]
+   - [[#simple-search-wikidata][Simple search Wikidata]]
+   - [[#regex-search-known-items][RegEx search known items]]
+   - [[#fuzzy-search-wikidata][Fuzzy search Wikidata]]
+ - [[#shape-expressions-shex-and-validation][Shape expressions (ShEx) and validation]]
  - [[#missing-data][Missing data]]
 
 * Location data
@@ -114,7 +117,76 @@ create an API.
 Note that normalization has to be fully automated to execute regular
 updates from the upstream data repositories.
 
-** Shape expressions (ShEx)
+** Simple search Wikidata
+
+** RegEx search known items
+
+** Fuzzy search Wikidata
+
+You wonder how Wikimedia's search box works?  Wikimedia which powers
+Wikipedia and has this amazing `fuzzy' search facility called [[https://www.mediawiki.org/wiki/Wikidata_Query_Service/User_Manual/MWAPI][MWAPI]]
+that can be used from Wikidata SPARQL.  The following query finds all
+places named Memphis - the ~wdt:P625~ forces anything that has map GPS
+coordinates(!)
+
+#+begin_src sql
+SELECT * WHERE {
+    SERVICE wikibase:mwapi
+            { bd:serviceParam wikibase:api "EntitySearch" .
+              bd:serviceParam wikibase:endpoint "www.wikidata.org" .
+              bd:serviceParam mwapi:search "memphis" .
+              bd:serviceParam mwapi:language "en" .
+              ?place wikibase:apiOutputItem mwapi:item .
+              ?num wikibase:apiOrdinal true .
+            }
+    ?place wdt:P625 ?coordinates .
+  }
+#+end_src
+[[https://query.wikidata.org/#SELECT%20%2a%20WHERE%20%7B%0A%20%20SERVICE%20wikibase%3Amwapi%0A%20%20%20%20%20%20%20%20%20%20%7B%20bd%3AserviceParam%20wikibase%3Aapi%20%22EntitySearch%22%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20bd%3AserviceParam%20wikibase%3Aendpoint%20%22www.wikidata.org%22%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20bd%3AserviceParam%20mwapi%3Asearch%20%22memphis%22%20.%20bd%3AserviceParam%20mwapi%3Alanguage%20%22en%22%20.%0A%20%20%20%20%20%20%20%20%20%20%20%3Fitem%20wikibase%3AapiOutputItem%20mwapi%3Aitem%20.%20%3Fnum%20wikibase%3AapiOrdinal%20true%20.%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%3Fitem%20wdt%3AP625%20%3Floc%0A%7D][run query]]
+
+Above query renders 15 results.
+And this lists Memphis uniquely as a city:
+
+#+begin_src sql
+SELECT * WHERE {
+  VALUES ?type { wd:Q1093829 } .
+  SERVICE wikibase:mwapi {
+      bd:serviceParam wikibase:api "Search" .
+      bd:serviceParam wikibase:endpoint "www.wikidata.org" .
+      bd:serviceParam mwapi:srsearch "memphis te*essee usa" .
+      ?place wikibase:apiOutputItem mwapi:title .
+  }
+  ?place wdt:P625 ?coordinates .
+  ?place wdt:P31|wdt:P279 ?type .
+} limit 10
+#+end_src
+
+But this is the query that is the most flexible as long as the
+city/county/country is in there. Note that subclassing should be
+possible but I have not figured that out yet:
+
+#+begin_src sql
+SELECT * WHERE {
+  # VALUES ?type { wd:Q1093829 wd:Q52511956 wd:Q515 wd:Q6256 wd:Q35657} .
+  SERVICE wikibase:mwapi {
+      bd:serviceParam wikibase:api "Search" .
+      bd:serviceParam wikibase:endpoint "www.wikidata.org" .
+      bd:serviceParam mwapi:srsearch "napels italie" .
+      ?place wikibase:apiOutputItem mwapi:title .
+  }
+  ?place wdt:P625 ?coordinates .
+  ?place rdfs:label ?placename .
+  FILTER( LANG(?placename)="en") .
+  ?place wdt:P17 ?country .
+  ?place wdt:P1082 ?population .
+  # ?place (a|wdt:P31|wdt:P279) ?type .
+}
+ORDER by DESC(?population)
+LIMIT 10
+#+end_src
+[[https://query.wikidata.org/#SELECT%20%2a%20WHERE%20%7B%0A%20%20%23%20VALUES%20%3Ftype%20%7B%20wd%3AQ1093829%20wd%3AQ52511956%20wd%3AQ515%20wd%3AQ6256%20wd%3AQ35657%7D%20.%0A%20%20SERVICE%20wikibase%3Amwapi%20%7B%0A%20%20%20%20%20%20bd%3AserviceParam%20wikibase%3Aapi%20%22Search%22%20.%0A%20%20%20%20%20%20bd%3AserviceParam%20wikibase%3Aendpoint%20%22www.wikidata.org%22%20.%0A%20%20%20%20%20%20bd%3AserviceParam%20mwapi%3Asrsearch%20%22napels%20italie%22%20.%0A%20%20%20%20%20%20%3Fplace%20wikibase%3AapiOutputItem%20mwapi%3Atitle%20.%0A%20%20%7D%0A%20%20%3Fplace%20wdt%3AP625%20%3Fcoordinates%20.%0A%20%20%3Fplace%20rdfs%3Alabel%20%3Fplacename%20.%0A%20%20FILTER%28%20LANG%28%3Fplacename%29%3D%22en%22%29%20.%0A%20%20%3Fplace%20wdt%3AP17%20%3Fcountry%20.%0A%20%20%3Fplace%20wdt%3AP1082%20%3Fpopulation%20.%0A%20%20%23%20%3Fplace%20%28a%7Cwdt%3AP31%7Cwdt%3AP279%29%20%3Ftype%20.%0A%7D%20%0AORDER%20by%20DESC%28%3Fpopulation%29%20%0ALIMIT%2010][run query]].
+
+* Shape expressions (ShEx) and validation
 
 PubSeq uses [[http://shex.io/shex-semantics/][ShEx]] to validate RDF data (see also the [[http://shex.io/shex-primer/][primer]]). This is
 particularly useful for data coming from outside. Before data gets

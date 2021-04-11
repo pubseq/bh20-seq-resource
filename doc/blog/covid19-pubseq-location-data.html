@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-09 Fri 04:21 -->
+<!-- 2021-04-11 Sun 10:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq Location Data</title>
@@ -224,26 +224,38 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgdae1021">1. Introduction</a></li>
-<li><a href="#org4faca08">2. Location data</a></li>
-<li><a href="#orgf2e9a65">3. Normalizing location data</a></li>
-<li><a href="#orgb1426c2">4. Missing data</a></li>
+<li><a href="#org6abac52">1. Introduction</a></li>
+<li><a href="#org6479c20">2. Location data</a>
+<ul>
+<li><a href="#orgbfc0c3b">2.1. Why use WikiData URIs instead of GPS coordinates?</a></li>
+</ul>
+</li>
+<li><a href="#org8048c60">3. Normalizing location data</a>
+<ul>
+<li><a href="#org6fee2aa">3.1. Simple search Wikidata</a></li>
+<li><a href="#orgd8a279f">3.2. RegEx search known items</a></li>
+<li><a href="#org63ff4e7">3.3. Fuzzy search Wikidata</a></li>
+</ul>
+</li>
+<li><a href="#org350ca35">4. Shape expressions (ShEx) and validation</a></li>
+<li><a href="#orgd6fe576">5. Missing data</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgdae1021" class="outline-2">
-<h2 id="orgdae1021"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-org6abac52" class="outline-2">
+<h2 id="org6abac52"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-Normalized location metadata is one of the important features
-of PubSeq. In this document we explain why it is not so easy!
+Normalized location metadata is one of the most valuable features of
+PubSeq. In this document we explain how we create that metadata and
+why it is not so easy!
 </p>
 </div>
 </div>
 
-<div id="outline-container-org4faca08" class="outline-2">
-<h2 id="org4faca08"><span class="section-number-2">2</span> Location data</h2>
+<div id="outline-container-org6479c20" class="outline-2">
+<h2 id="org6479c20"><span class="section-number-2">2</span> Location data</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 When data gets uploaded to central repositories some metadata needs to
@@ -268,26 +280,227 @@ From the full record we best place the sample on San Diego.
 There exist many opportunities for ambiguous entries, such as Memphis
 TN and Memphis IN. We decided to settle for Wikidata URIs because (1)
 they are not ambiguous and (2) allow for fetching more information,
-such as population size, density, county and GPS location. See the
-wikidata entries for <a href="https://www.wikidata.org/wiki/Q2447864">Memphis Tennessee</a>, <a href="https://www.wikidata.org/wiki/Q2699142">Memphis Indiana</a>, <a href="https://www.wikidata.org/wiki/Q979971">Memphis Texas</a>
-<a href="https://www.wikidata.org/wiki/Q1890251">Memphis Michigan</a> and <a href="https://www.wikidata.org/wiki/Q3289795">Memphis Nebraska</a>. And then there is the original
-<a href="https://www.wikidata.org/wiki/Q5715">Memphis Egypt</a>, ancient capital of Aneb-Hetch.
+such as population size, density, county and GPS coordinates. Click on
+the wikidata entries for <a href="http://www.wikidata.org/entity/Q16563">Memphis Tennessee</a> (not the song <a href="https://www.wikidata.org/wiki/Q2447864">Memphis
+Tennessee</a>), <a href="https://www.wikidata.org/wiki/Q2699142">Memphis Indiana</a>, <a href="https://www.wikidata.org/wiki/Q979971">Memphis Texas</a> <a href="https://www.wikidata.org/wiki/Q1890251">Memphis Michigan</a> and
+<a href="https://www.wikidata.org/wiki/Q3289795">Memphis Nebraska</a>. And then there is the original <a href="https://www.wikidata.org/wiki/Q5715">Memphis Egypt</a>,
+ancient capital of Aneb-Hetch. Wikidata URIs are great at
+disambiguation!
+</p>
+</div>
+
+<div id="outline-container-orgbfc0c3b" class="outline-3">
+<h3 id="orgbfc0c3b"><span class="section-number-3">2.1</span> Why use WikiData URIs instead of GPS coordinates?</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+A wikidata URI gives access to a lot of extra information that can be
+queried about an entry. It is fairly straightforward, for example, to
+find all entries that relate to one county or country. And these are
+typical queries for researchers. Wikidata URIs allows fetching GPS
+coordinates - we do that to display samples on the map. For example
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">select</span> ?gps  <span style="color: #fff59d;">where</span> {
+  <a href="http://www.wikidata.org/entity/Q16563">&lt;http://www.wikidata.org/entity/Q16563&gt;</a> wdt:P625 ?gps .
+}
+</pre>
+</div>
+<p>
+<a href="https://query.wikidata.org/#select%20%3Fgps%20%20where%20%7B%0A%20%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ16563%3E%20wdt%3AP625%20%3Fgps%20.%0A%7D">execute query</a>
+</p>
+
+<p>
+returns
+</p>
+
+<pre class="example">
+Point(-89.971111111 35.1175)
+</pre>
+
+
+<p>
+To get a list of all directly available items related to Memphis TN:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">select</span> ?p ?s  <span style="color: #fff59d;">where</span> {
+  <a href="http://www.wikidata.org/entity/Q16563">&lt;http://www.wikidata.org/entity/Q16563&gt;</a> ?p ?s .
+}
+</pre>
+</div>
+<p>
+<a href="https://query.wikidata.org/#select%20%3Fp%20%3Fgps%20where%20%7B%0A%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ2447864%3E%20%3Fp%20%3Fgps%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D">execute query</a>
+</p>
+
+<p>
+Querying samples and getting relevant information directly from GPS
+coordinates is much harder, if not impossible.
 </p>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgf2e9a65" class="outline-2">
-<h2 id="orgf2e9a65"><span class="section-number-2">3</span> Normalizing location data</h2>
+<div id="outline-container-org8048c60" class="outline-2">
+<h2 id="org8048c60"><span class="section-number-2">3</span> Normalizing location data</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-Wikidata
+Wikidata is the stable and trusted backend for Wikipedia, a massive
+online encyclopedia. It is also one of largest RDF-based databases on the
+planet and won't disappear any time soon. Wikidata contains URIs for
+almost all geographical entities of interest. Wikidata is therefore a
+good choice for normalizing geographical location data.
+</p>
+
+<p>
+PubSeq gets data from different sources and needs to convert that
+information to Wikidata URIs. So, how would we go about fixing the
+location `USA: Cruise_Ship_1, California' in <a href="https://www.ncbi.nlm.nih.gov/nuccore/MT810507">MT810507</a>. We can tokenize
+the address information into `USA' and `California'. Also `San Diego'
+is listed as an address in the record. We should aim for the smallest
+Geo description `San Diego' and relate that back to Wikidata to find
+the URI. Now Wikidata won't be pleased if we hit it with 100 thousand
+queries, so best is to fetch location related info and turn that into
+a small database using Python Pandas, or similar.
+</p>
+
+<p>
+We do not want to find all these links by hand. Initially, when we started out,
+we did just that. But at 100K entries it is not feasible. So we end up
+with a stepped approach:
+</p>
+
+<ol class="org-ol">
+<li>Search a database with all known Wikidata entries</li>
+<li>Search a separate database with 'vetted' items including Regex</li>
+<li>If GPS coordinates are provided we can use that</li>
+<li>Tokenize the record and use the Wikidata or Wikipedia search engine</li>
+</ol>
+
+<p>
+Hopefully that covers 90% of cases correctly.  We still may end up
+with misses and wrong data. E.g. it is easy to imagine a sample taken
+on Antartica that got sequenced in the USA and gets placed in the
+USA. In Wiki-spirit the best solution is to leave it to end-users to
+re-place those entries. End-users scale, unlike us. For this we will
+create an API.
+</p>
+
+<p>
+Note that normalization has to be fully automated to execute regular
+updates from the upstream data repositories.
+</p>
+</div>
+
+<div id="outline-container-org6fee2aa" class="outline-3">
+<h3 id="org6fee2aa"><span class="section-number-3">3.1</span> Simple search Wikidata</h3>
+</div>
+
+<div id="outline-container-orgd8a279f" class="outline-3">
+<h3 id="orgd8a279f"><span class="section-number-3">3.2</span> RegEx search known items</h3>
+</div>
+
+<div id="outline-container-org63ff4e7" class="outline-3">
+<h3 id="org63ff4e7"><span class="section-number-3">3.3</span> Fuzzy search Wikidata</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+You wonder how Wikimedia's search box works?  Wikimedia which powers
+Wikipedia and has this amazing `fuzzy' search facility called <a href="https://www.mediawiki.org/wiki/Wikidata_Query_Service/User_Manual/MWAPI">MWAPI</a>
+that can be used from Wikidata SPARQL.  The following query finds all
+places named Memphis - the <code>wdt:P625</code> forces anything that has map GPS
+coordinates(!)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">SELECT</span> * <span style="color: #fff59d;">WHERE</span> {
+    SERVICE wikibase:mwapi
+            { bd:serviceParam wikibase:api "EntitySearch" .
+              bd:serviceParam wikibase:endpoint "www.wikidata.org" .
+              bd:serviceParam mwapi:<span style="color: #fff59d;">search</span> "memphis" .
+              bd:serviceParam mwapi:<span style="color: #fff59d;">language</span> "en" .
+              ?place wikibase:apiOutputItem mwapi:item .
+              ?num wikibase:apiOrdinal <span style="color: #fff59d;">true</span> .
+            }
+    ?place wdt:P625 ?coordinates .
+  }
+</pre>
+</div>
+<p>
+<a href="https://query.wikidata.org/#SELECT%20%2a%20WHERE%20%7B%0A%20%20SERVICE%20wikibase%3Amwapi%0A%20%20%20%20%20%20%20%20%20%20%7B%20bd%3AserviceParam%20wikibase%3Aapi%20%22EntitySearch%22%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20bd%3AserviceParam%20wikibase%3Aendpoint%20%22www.wikidata.org%22%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20bd%3AserviceParam%20mwapi%3Asearch%20%22memphis%22%20.%20bd%3AserviceParam%20mwapi%3Alanguage%20%22en%22%20.%0A%20%20%20%20%20%20%20%20%20%20%20%3Fitem%20wikibase%3AapiOutputItem%20mwapi%3Aitem%20.%20%3Fnum%20wikibase%3AapiOrdinal%20true%20.%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%3Fitem%20wdt%3AP625%20%3Floc%0A%7D">run query</a>
+</p>
+
+<p>
+Above query renders 15 results.
+And this lists Memphis uniquely as a city:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">SELECT</span> * <span style="color: #fff59d;">WHERE</span> {
+  <span style="color: #fff59d;">VALUES</span> ?<span style="color: #fff59d;">type</span> { wd:Q1093829 } .
+  SERVICE wikibase:mwapi {
+      bd:serviceParam wikibase:api "<span style="color: #fff59d;">Search</span>" .
+      bd:serviceParam wikibase:endpoint "www.wikidata.org" .
+      bd:serviceParam mwapi:srsearch "memphis te*essee usa" .
+      ?place wikibase:apiOutputItem mwapi:title .
+  }
+  ?place wdt:P625 ?coordinates .
+  ?place wdt:P31|wdt:P279 ?<span style="color: #fff59d;">type</span> .
+} <span style="color: #fff59d;">limit</span> 10
+</pre>
+</div>
+
+<p>
+But this is the query that is the most flexible as long as the
+city/county/country is in there. Note that subclassing should be
+possible but I have not figured that out yet:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">SELECT</span> * <span style="color: #fff59d;">WHERE</span> {
+  # <span style="color: #fff59d;">VALUES</span> ?<span style="color: #fff59d;">type</span> { wd:Q1093829 wd:Q52511956 wd:Q515 wd:Q6256 wd:Q35657} .
+  SERVICE wikibase:mwapi {
+      bd:serviceParam wikibase:api "<span style="color: #fff59d;">Search</span>" .
+      bd:serviceParam wikibase:endpoint "www.wikidata.org" .
+      bd:serviceParam mwapi:srsearch "napels italie" .
+      ?place wikibase:apiOutputItem mwapi:title .
+  }
+  ?place wdt:P625 ?coordinates .
+  ?place rdfs:label ?placename .
+  FILTER( LANG(?placename)="en") .
+  ?place wdt:P17 ?country .
+  ?place wdt:P1082 ?population .
+  # ?place (a|wdt:P31|wdt:P279) ?<span style="color: #fff59d;">type</span> .
+}
+<span style="color: #fff59d;">ORDER</span> <span style="color: #fff59d;">by</span> <span style="color: #fff59d;">DESC</span>(?population)
+<span style="color: #fff59d;">LIMIT</span> 10
+</pre>
+</div>
+<p>
+<a href="https://query.wikidata.org/#SELECT%20%2a%20WHERE%20%7B%0A%20%20%23%20VALUES%20%3Ftype%20%7B%20wd%3AQ1093829%20wd%3AQ52511956%20wd%3AQ515%20wd%3AQ6256%20wd%3AQ35657%7D%20.%0A%20%20SERVICE%20wikibase%3Amwapi%20%7B%0A%20%20%20%20%20%20bd%3AserviceParam%20wikibase%3Aapi%20%22Search%22%20.%0A%20%20%20%20%20%20bd%3AserviceParam%20wikibase%3Aendpoint%20%22www.wikidata.org%22%20.%0A%20%20%20%20%20%20bd%3AserviceParam%20mwapi%3Asrsearch%20%22napels%20italie%22%20.%0A%20%20%20%20%20%20%3Fplace%20wikibase%3AapiOutputItem%20mwapi%3Atitle%20.%0A%20%20%7D%0A%20%20%3Fplace%20wdt%3AP625%20%3Fcoordinates%20.%0A%20%20%3Fplace%20rdfs%3Alabel%20%3Fplacename%20.%0A%20%20FILTER%28%20LANG%28%3Fplacename%29%3D%22en%22%29%20.%0A%20%20%3Fplace%20wdt%3AP17%20%3Fcountry%20.%0A%20%20%3Fplace%20wdt%3AP1082%20%3Fpopulation%20.%0A%20%20%23%20%3Fplace%20%28a%7Cwdt%3AP31%7Cwdt%3AP279%29%20%3Ftype%20.%0A%7D%20%0AORDER%20by%20DESC%28%3Fpopulation%29%20%0ALIMIT%2010">run query</a>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org350ca35" class="outline-2">
+<h2 id="org350ca35"><span class="section-number-2">4</span> Shape expressions (ShEx) and validation</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+PubSeq uses <a href="http://shex.io/shex-semantics/">ShEx</a> to validate RDF data (see also the <a href="http://shex.io/shex-primer/">primer</a>). This is
+particularly useful for data coming from outside. Before data gets
+accepted by PubSeq it first needs to go through a ShEx validation
+step.
+</p>
+
+<p>
+<i>To be continued</i>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb1426c2" class="outline-2">
-<h2 id="orgb1426c2"><span class="section-number-2">4</span> Missing data</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-orgd6fe576" class="outline-2">
+<h2 id="orgd6fe576"><span class="section-number-2">5</span> Missing data</h2>
+<div class="outline-text-2" id="text-5">
 <p>
 After normalization, the original data we maintain in a field
 `collection_location_original'. If we can normalize to a Wikidata
@@ -298,7 +511,7 @@ missing (RDF favours treating missing data as really missing data).
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2021-04-09 Fri 04:05</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2021-04-11 Sun 10:49</small>.
 </div>
 </body>
 </html>

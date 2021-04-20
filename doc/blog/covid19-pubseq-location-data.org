@@ -123,7 +123,9 @@ annotate these by hand ourselves.
 ** Simple search Wikidata
 
 We can dump all known contries/states/states/cities from Wikidata into
-files. First all 180 odd countries (2s):
+files.
+
+*** Fetch all 180 odd countries with aliases
 
 #+begin_src sql
   SELECT DISTINCT * WHERE {
@@ -132,27 +134,48 @@ files. First all 180 odd countries (2s):
     minus { ?place wdt:P31 wd:Q3024240 } .
     ?country rdfs:label ?countryname .
     FILTER( LANG(?countryname)="en") .
+    OPTIONAL {
+        ?country wdt:P30 ?continent.
+        ?continent rdfs:label ?continent_label
+        FILTER (lang(?continent_label)='en')
+      }
     }
 #+end_src
 
-Just adding `?place skos:altLabel ?alias .' for all aliases
-is somewhat slower at 11s, but it does get 15K results.
+[[https://query.wikidata.org/#%0A%20%20SELECT%20DISTINCT%20%2a%20WHERE%20%7B%0A%20%20%20%20%3Fplace%20wdt%3AP17%20%3Fcountry%20.%0A%20%20%20%20%3Fplace%20%28a%7Cwdt%3AP31%7Cwdt%3AP279%29%20wd%3AQ6256%20.%0A%20%20%20%20minus%20%7B%20%3Fplace%20wdt%3AP31%20wd%3AQ3024240%20%7D%20.%0A%20%20%20%20%3Fcountry%20rdfs%3Alabel%20%3Fcountryname%20.%0A%20%20%20%20FILTER%28%20LANG%28%3Fcountryname%29%3D%22en%22%29%20.%0A%20%20%20%20OPTIONAL%20%7B%0A%20%20%20%20%20%20%20%20%3Fcountry%20wdt%3AP30%20%3Fcontinent.%0A%20%20%20%20%20%20%20%20%3Fcontinent%20rdfs%3Alabel%20%3Fcontinent_label%0A%20%20%20%20%20%20%20%20FILTER%20%28lang%28%3Fcontinent_label%29%3D%27en%27%29%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A][run query]]
+
+Save the file as data/contries.tsv.
+
+Just adding =?place skos:altLabel ?alias= for all country aliases
+gets 15K results:
 
 #+begin_src sql
-SELECT DISTINCT * WHERE {
-  ?place wdt:P17 ?country ;
-    (a|wdt:P31|wdt:P279) wd:Q6256 ;
-    wdt:P1448 ?officialname .
-  minus { ?place wdt:P31 wd:Q3024240 } .
-  ?country rdfs:label ?countryname .
-  FILTER( LANG(?countryname)="en") .
-  ?place skos:altLabel ?alias .
+  SELECT DISTINCT * WHERE {
+    ?place wdt:P17 ?country ;
+      (a|wdt:P31|wdt:P279) wd:Q6256 .
+    minus { ?place wdt:P31 wd:Q3024240 } .
+    ?place skos:altLabel ?alias .
   }
 #+end_src
 
+[[https://query.wikidata.org/#%20%20SELECT%20DISTINCT%20%2a%20WHERE%20%7B%0A%20%20%20%20%3Fplace%20wdt%3AP17%20%3Fcountry%20%3B%0A%20%20%20%20%20%20%28a%7Cwdt%3AP31%7Cwdt%3AP279%29%20wd%3AQ6256%20.%0A%20%20%20%20minus%20%7B%20%3Fplace%20wdt%3AP31%20wd%3AQ3024240%20%7D%20.%0A%20%20%20%20%3Fplace%20skos%3AaltLabel%20%3Falias%20.%0A%20%20%7D][run query]]
 
+Save the file as data/wikidata/country_aliases.tsv.
 
+*** Fetch all places with coordinates (no aliases)
 
+#+begin_src sql
+  select DISTINCT * where {
+    ?place wdt:P625 ?coor ;
+           wdt:P17 ?country .
+    minus { ?place wdt:P31 wd:Q3024240 } .
+    ?place wdt:P1082 ?population .
+  }
+    #+end_src
+
+[[https://query.wikidata.org/#select%20%2a%20where%20%7B%0A%20%20%3Fplace%20wdt%3AP625%20%3Fcoor%20%3B%0A%20%20%20%20%20%20%20%20%20wdt%3AP17%20%3Fcountry%20.%0A%20%20minus%20%7B%20%3Fplace%20wdt%3AP31%20wd%3AQ3024240%20%7D%20.%0A%20%20%3Fplace%20wdt%3AP1082%20%3Fpopulation%20.%20%20%0A%7D%0A%0A][run query]] --- 520221 results in 52939 ms
+
+Save file as data/wikidata/places.tsv
 
 ** RegEx search known items
 

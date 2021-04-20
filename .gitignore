@@ -14,6 +14,7 @@ eggs/
 metadata.ttl
 metadata*
 cache.txt
+data/wikidata
 
 # Environments
 .env

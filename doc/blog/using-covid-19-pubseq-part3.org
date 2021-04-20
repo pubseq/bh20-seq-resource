@@ -346,9 +346,9 @@ genbank_ids.txt. This is a slow procedure!
 python3 update-from-genbank.py --ids genbank_ids.txt --out ~/tmp/genbank
 #+end_src
 
-Sometimes the download stops. In that case best to continue with below
-and when done reiterate to above 'List PubSeq IDs'. Particularly if
-you are fetching a lot of records.
+Sometimes the download stops. In that case you can restart the
+download with above command. It will only fetch the missing files.
+With the same =genbank_ids.txt= file that should work fine.
 
 *** Transform and normalize data for uploading
 

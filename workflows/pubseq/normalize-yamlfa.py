@@ -1,4 +1,8 @@
-# --- Normalize data
+# --- Normalize species and specimen data
+#
+# This code takes a metadata file and normalizes the species and specimen
+# fields. The actual code is in normalize/mapping.py
+#
 # normalize-yamlfa.py [--yaml] --in ~/tmp/pubseq/state.json file(s)
 #
 # Example:

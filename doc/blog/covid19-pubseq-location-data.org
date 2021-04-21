@@ -19,6 +19,7 @@ why it is not so easy!
    - [[#why-use-wikidata-uris-instead-of-gps-coordinates][Why use WikiData URIs instead of GPS coordinates?]]
  - [[#normalizing-location-data][Normalizing location data]]
    - [[#simple-search-wikidata][Simple search Wikidata]]
+   - [[#start-normalizing-geo-location][Start normalizing geo-location]]
    - [[#regex-search-known-items][RegEx search known items]]
    - [[#fuzzy-search-wikidata][Fuzzy search Wikidata]]
  - [[#shape-expressions-shex-and-validation][Shape expressions (ShEx) and validation]]
@@ -120,6 +121,9 @@ Note that normalization has to be fully automated to execute regular
 updates from the upstream data repositories. There is no way we can
 annotate these by hand ourselves.
 
+Also data fetched from wikidata is not stored in the github
+repository, but online on IPFS.
+
 ** Simple search Wikidata
 
 We can dump all known contries/states/states/cities from Wikidata into
@@ -173,9 +177,19 @@ Save the file as data/wikidata/country_aliases.tsv.
   }
     #+end_src
 
-[[https://query.wikidata.org/#select%20%2a%20where%20%7B%0A%20%20%3Fplace%20wdt%3AP625%20%3Fcoor%20%3B%0A%20%20%20%20%20%20%20%20%20wdt%3AP17%20%3Fcountry%20.%0A%20%20minus%20%7B%20%3Fplace%20wdt%3AP31%20wd%3AQ3024240%20%7D%20.%0A%20%20%3Fplace%20wdt%3AP1082%20%3Fpopulation%20.%20%20%0A%7D%0A%0A][run query]] --- 520221 results in 52939 ms
+[[https://query.wikidata.org/#select%20%2a%20where%20%7B%0A%20%20%3Fplace%20wdt%3AP625%20%3Fcoor%20%3B%0A%20%20%20%20%20%20%20%20%20wdt%3AP17%20%3Fcountry%20.%0A%20%20minus%20%7B%20%3Fplace%20wdt%3AP31%20wd%3AQ3024240%20%7D%20.%0A%20%20%3Fplace%20wdt%3AP1082%20%3Fpopulation%20.%20%20%0A%7D%0A%0A][run query]] --- 520255 results in 32151 ms
 
-Save file as data/wikidata/places.tsv
+Save file as data/wikidata/places.tsv.
+
+** Start normalizing geo-location
+
+Now we have three data files from wikidata with place information we
+can start normalizing the data we have in the records that are coming
+from other sources.
+
+*** Normalize country
+
+The first step is to normalize by country.
 
 ** RegEx search known items
 

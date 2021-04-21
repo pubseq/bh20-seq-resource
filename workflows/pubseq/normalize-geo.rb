@@ -22,6 +22,7 @@ VERSION_FILENAME=File.join(GEMPATH,'VERSION')
 VERSION = File.new(VERSION_FILENAME).read.chomp
 
 require 'optparse'
+require 'ostruct'
 require 'fileutils'
 require 'json'
 
@@ -29,6 +30,12 @@ options = { show_help: false, source: 'https://github.com/pubseq', version: VERS
 
 opts = OptionParser.new do |o|
   o.banner = "Usage: #{TOOL} [options] path"
+  o.on('--dir path',String, 'Path to JSON files') do |path|
+    options[:path] = path
+  end
+
+  o.separator ""
+
   o.on("-q", "--quiet", "Run quietly") do |q|
     # Bio::Log::CLI.trace('error')
     options[:quiet] = true
@@ -64,3 +71,11 @@ if RUBY_VERSION =~ /^[12]/
 end
 
 $stderr.print "Options: ",options,"\n" if !options[:quiet]
+
+GLOBAL = OpenStruct.new(options)
+
+Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
+  next if fn == "state.json"
+  jsonfn = GLOBAL.path+"/"+fn
+  json = JSON.parse(File.read(jsonfn))
+end

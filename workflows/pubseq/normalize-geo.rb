@@ -25,6 +25,7 @@ require 'optparse'
 require 'ostruct'
 require 'fileutils'
 require 'json'
+require 'zlib'
 
 options = { show_help: false, source: 'https://github.com/pubseq', version: VERSION+' (Pjotr Prins)', date: Time.now.to_s }
 
@@ -74,8 +75,20 @@ $stderr.print "Options: ",options,"\n" if !options[:quiet]
 
 GLOBAL = OpenStruct.new(options)
 
+# ---- So far it is boiler plate to set the environment
+
+# ---- For each metadata JSON file
 Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
   next if fn == "state.json"
   jsonfn = GLOBAL.path+"/"+fn
   json = JSON.parse(File.read(jsonfn))
+  # p json
+  meta = OpenStruct.new(json)
+  # ---- Step 1: find and normalize country
+  collection_location = meta.sample['collection_location']
+  # if text.match('countryname',collection_location)
+  #   p
+  Zlib::GzipReader.open('../../data/wikidata/countries.tsv.gz').each_line {|line|
+    p line
+  }
 end

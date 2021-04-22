@@ -148,7 +148,7 @@ files.
 
 [[https://query.wikidata.org/#%0A%20%20SELECT%20DISTINCT%20%2a%20WHERE%20%7B%0A%20%20%20%20%3Fplace%20wdt%3AP17%20%3Fcountry%20.%0A%20%20%20%20%3Fplace%20%28a%7Cwdt%3AP31%7Cwdt%3AP279%29%20wd%3AQ6256%20.%0A%20%20%20%20minus%20%7B%20%3Fplace%20wdt%3AP31%20wd%3AQ3024240%20%7D%20.%0A%20%20%20%20%3Fcountry%20rdfs%3Alabel%20%3Fcountryname%20.%0A%20%20%20%20FILTER%28%20LANG%28%3Fcountryname%29%3D%22en%22%29%20.%0A%20%20%20%20OPTIONAL%20%7B%0A%20%20%20%20%20%20%20%20%3Fcountry%20wdt%3AP30%20%3Fcontinent.%0A%20%20%20%20%20%20%20%20%3Fcontinent%20rdfs%3Alabel%20%3Fcontinent_label%0A%20%20%20%20%20%20%20%20FILTER%20%28lang%28%3Fcontinent_label%29%3D%27en%27%29%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A][run query]]
 
-Save the file as data/contries.tsv.
+Save the file as data/countries.tsv.
 
 Just adding =?place skos:altLabel ?alias= for all country aliases
 gets 15K results:
@@ -187,9 +187,19 @@ Now we have three data files from wikidata with place information we
 can start normalizing the data we have in the records that are coming
 from other sources.
 
-*** Normalize country
+*** Step 1: Normalize country
 
-The first step is to normalize by country.
+The first step is to normalize by country. We take above
+country_aliases file which consists of 4 fields
+
+: place country countryname alias
+
+and we search "collection_location": "USA: MD" and
+"submitter_address": "Maryland Department of Health, 1, 1, MD 1, USA"
+fields for matches. That, likely, will get the right country
+and we plug in the Wikidata URI, in this case http://www.wikidata.org/entity/Q30.
+
+
 
 ** RegEx search known items
 

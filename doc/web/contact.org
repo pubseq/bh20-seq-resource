@@ -3,22 +3,22 @@
 
 * CONTACT and SUPPORT
 
-COVID-19 PubSeq was created by a group of [[https://github.com/arvados/bh20-seq-resource/graphs/contributors][bioinformaticians]] and
+COVID-19 PubSeq is run by a community of [[https://github.com/arvados/bh20-seq-resource/graphs/contributors][bioinformaticians]] and
 software developers working at leading institutes (see sponsors below)
 with the goal of making online analysis available to everyone. You can
-talk with us directly on a [[https://gitter.im/arvados/pubseq?utm_source=share-link&utm_medium=link&utm_campaign=share-link][gitter channel]]. We are open to improving
-work flows and analysis.
+talk with us directly in the [[https://matrix.to/#/!kyAxaAAAOgUKAMmXRz:matrix.org?via=matrix.org][matrix PubSeq room]]. We are open to
+improving tools, work flows and analysis.
 
 ** Oxford Nanopore Analysis
 
 @@html: <img class="img-right" src="static/image/oxford-nanopore.jpg" />@@
 
-We run [[https://en.wikipedia.org/wiki/Oxford_Nanopore_Technologies][Oxford Nanopore]] ourselves. It is an exaciting technology
-because it gives us an accurate SARS-CoV-2 sequencer for a few
-thousand dollars which can be run in a living room! With PubSeq we aim
-to make it easy to analyse Nanopore material using our *free* Cloud
-infrastructure. If you need help in using the online workflows don't
-hesitate to contact us.
+We run [[https://en.wikipedia.org/wiki/Oxford_Nanopore_Technologies][Oxford Nanopore]] ourselves. It is an exciting technology because
+it gives us an accurate SARS-CoV-2 sequencer for a few thousand
+dollars which can be run in a living room! With PubSeq we aim to make
+it easy to analyse Nanopore material using our *free* Cloud
+infrastructure and the [[https://github.com/pubseq/jetson_nanopore_sequencing][NVIDIA Jetson computer]]. If you need help in
+using the online workflows don't hesitate to contact us.
 
 @@html: </br></br></br>@@
 

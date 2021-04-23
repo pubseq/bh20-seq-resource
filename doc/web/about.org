@@ -189,6 +189,9 @@ reproducible and improved results we want/need to work with the raw
 sequence reads (both short reads and long reads) and take alternative
 assembly variations into consideration. This is all work in progress.
 
+We also have a [[https://github.com/pubseq/jetson_nanopore_sequencing][project going]] for uploading sequence data directly from
+the sequencer into PubSeq using the NVIDIA Jetson.
+
 * How do I change metadata?
 
 See the [[http://covid19.genenetwork.org/blog]]!
@@ -233,12 +236,12 @@ We are planning to remove reads that match the human reference.
 
 * Does PubSeq support only SARS-CoV-2 data?
 
-To date, PubSeq is a resource specific to SARS-CoV-2, but we are designing it to be able to support other species in the future.
-
+To date, PubSeq is a resource specific to SARS-CoV-2, but we are
+designing it to be able to support other species in the future.
 
 * Contact: how do I communicate with you?
 
-We use a [[https://gitter.im/arvados/pubseq?utm_source=share-link&utm_medium=link&utm_campaign=share-link][gitter channel]] you can join. See also [[./contact][contact]].
+We use a [[https://matrix.to/#/!kyAxaAAAOgUKAMmXRz:matrix.org?via=matrix.org][matrix room]] you can join. See also [[./contact][contact]].
 
 * Citing PubSeq
 

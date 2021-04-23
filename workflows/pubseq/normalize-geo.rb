@@ -76,6 +76,16 @@ $stderr.print "Options: ",options,"\n" if !options[:quiet]
 GLOBAL = OpenStruct.new(options)
 
 # ---- So far it is boiler plate to set the environment
+country_uri = {}
+Zlib::GzipReader.open('../../data/wikidata/countries.tsv.gz',:encoding => 'UTF-8').each_line {|line|
+  place,country,countryname,continent = line.split(/\t/)
+  country_uri[countryname.strip] = place
+}
+country_alias_uri = {}
+Zlib::GzipReader.open('../../data/wikidata/country_aliases.tsv.gz',:encoding => 'UTF-8').each_line {|line|
+  place,country,countryname,aliases = line.split(/\t/)
+  country_alias_uri[aliases.upcase.strip] = place
+}
 
 # ---- For each metadata JSON file
 Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
@@ -84,11 +94,33 @@ Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
   json = JSON.parse(File.read(jsonfn))
   # p json
   meta = OpenStruct.new(json)
-  # ---- Step 1: find and normalize country
-  collection_location = meta.sample['collection_location']
-  # if text.match('countryname',collection_location)
-  #   p
-  Zlib::GzipReader.open('../../data/wikidata/countries.tsv.gz').each_line {|line|
-    p line
+  match = lambda { |hash,location|
+    loc = location.upcase.strip
+    hash.each { |c,uri|
+      if loc =~ /\W#{c}\W/
+        meta.sample['collection_location'] = uri
+        meta.sample['original_collection_location'] = location
+        meta.sample['country'] = c
+        meta.sample['wd:country'] = uri
+        return true
+      end
+    }
+    false
   }
+  # ---- Step 1: find and normalize by country
+  collection_location = meta.sample['collection_location']
+  if collection_location
+    loc = collection_location.strip
+    if not match.call(country_uri,loc)
+      # ---- Step 2: find and normalize by alias
+      if not match.call(country_alias_uri,loc)
+        # ---- Step 3: find and normalize using submitter address
+        submitter_address = meta.submitter['submitter_address']
+        if submitter_address
+          match.call(country_uri,submitter_address)
+        end
+      end
+    end
+  end
+  p meta
 end

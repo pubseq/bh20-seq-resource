@@ -187,8 +187,6 @@ Now we have three data files from wikidata with place information we
 can start normalizing the data we have in the records that are coming
 from other sources.
 
-*** Step 1: Normalize country
-
 The first step is to normalize by country. We take above
 country_aliases file which consists of 4 fields
 
@@ -196,10 +194,18 @@ country_aliases file which consists of 4 fields
 
 and we search "collection_location": "USA: MD" and
 "submitter_address": "Maryland Department of Health, 1, 1, MD 1, USA"
-fields for matches. That, likely, will get the right country
-and we plug in the Wikidata URI, in this case http://www.wikidata.org/entity/Q30.
+fields for matches. That, likely, will get the right country and we
+plug in the Wikidata URI, in this case
+http://www.wikidata.org/entity/Q30. If that fails we look for country
+aliases from the second wikidata file.
 
+"collection_location" gets updated to the new country URI. We also set
+the "country" to the same entity at this stage. Arguably that is not
+necessary - as the refined location can be queried in wikidata to
+provide the country - but we are adding it as a convenience.
 
+We immediately hit snags like "original_collection_location"=>"USA:
+Utah" -> "country"=>"SA" which meant we have to execute a proper regex.
 
 ** RegEx search known items
 
@@ -282,6 +288,6 @@ step.
 * Missing data
 
 After normalization, the original data we maintain in a field
-`collection_location_original'. If we can normalize to a Wikidata
+`original_collection_location'. If we can normalize to a Wikidata
 entry URI that is stored in `collection_location'.  Otherwise it is
 missing (RDF favours treating missing data as really missing data).

@@ -149,13 +149,15 @@ using workflows from the High Performance Open Biology Lab defined
 
 * Who uses the public sequence resource?
 
-The Swiss Institute of Bioinformatics has included this data in
-https://covid-19-sparql.expasy.org/ and made it part of [[https://www.uniprot.org/][Uniprot]].
+The Swiss Institute of Bioinformatics has included this data in the
+SPARQL https://covid-19-sparql.expasy.org/ endpoint.
 
 The Pantograph [[https://graph-genome.github.io/][viewer]] uses PubSeq data for their visualisations.
 
 [[https://uthsc.edu][UTHSC]] (USA), [[https://www.esr.cri.nz/][ESR]] (New Zealand) and [[https://www.ornl.gov/news/ornl-fight-against-covid-19][ORNL]] (USA) use COVID-19 PubSeq data
 for monitoring, protein prediction and drug development.
+
+Amazon AWS has included PubSeq in the [[https://registry.opendata.aws/pubseq/][Amazon AWS OpenData]] registry.
 
 * How can I contribute?
 

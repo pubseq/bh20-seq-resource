@@ -33,12 +33,14 @@ useful resource for COVID-19 research.  The focus is on providing the
 best possible sequence data with associated metadata that can be used
 for sequence comparison and protein prediction.
 
-Just to avoid the notion that PubSeq is a biorepository: it is far
-more than that. We are not competing with the likes of GenBank,
-EBI/ENA and GISAID - in fact, PubSeq sources much of the data from
-those and they get ours.
+Just to avoid the notion that PubSeq is a biorepository: it is
+different. We are not competing with the likes of GenBank and EBI/ENA
+Open Data - in fact, PubSeq federates open data and adds useful
+normalised metadata and opens up running workflows by anyone on that
+data.
 
-There is no conflict of posting data to multiple repositories.
+Note that there is no conflict of posting data to multiple
+repositories.
 
 It is better to view PubSeq as an *open precision medicine initiative* that
 allows for early detection of new variants and strains; very valuable

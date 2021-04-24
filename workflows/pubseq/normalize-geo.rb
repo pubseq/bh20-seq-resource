@@ -150,7 +150,6 @@ Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
   meta.warnings.push "Failed to normalize location" if not meta.sample['collection_location']
 
   # Write new meta file
-  print JSON::pretty_generate(meta.to_h)
-  exit 1
-  File.write(GLOBAL.out+"/"+fn,meta.as_json.to_json)
+  json = JSON::pretty_generate(meta.to_h)
+  File.write(GLOBAL.out+"/"+fn,json)
 end

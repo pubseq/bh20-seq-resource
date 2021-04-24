@@ -1,5 +1,7 @@
 #! /usr/bin/env ruby
 #
+# -*- coding: UTF-8 -*-
+#
 # PubSeq normalize geo info using wikidata URIs. Based on earlier
 # PubSeq scripts (written in Python)
 #
@@ -33,6 +35,9 @@ opts = OptionParser.new do |o|
   o.banner = "Usage: #{TOOL} [options] path"
   o.on('--dir path',String, 'Path to JSON files') do |path|
     options[:path] = path
+  end
+  o.on('--out path',String, 'Dir to write to') do |path|
+    options[:out] = path
   end
 
   o.separator ""
@@ -75,52 +80,77 @@ $stderr.print "Options: ",options,"\n" if !options[:quiet]
 
 GLOBAL = OpenStruct.new(options)
 
+raise "--out directory is required" if not GLOBAL.out
+
 # ---- So far it is boiler plate to set the environment
-country_uri = {}
+country_uri = [] # tuples
 Zlib::GzipReader.open('../../data/wikidata/countries.tsv.gz',:encoding => 'UTF-8').each_line {|line|
   place,country,countryname,continent = line.split(/\t/)
-  country_uri[countryname.strip] = place
+  country_uri.push [countryname.upcase.strip,place]
 }
-country_alias_uri = {}
+
+explicit = [
+  ["USA","http://www.wikidata.org/entity/Q30"],
+]
+
+country_uris = country_uri.sort_by { |t| t[0].length }.reverse + explicit
+
+alias_uri = []
 Zlib::GzipReader.open('../../data/wikidata/country_aliases.tsv.gz',:encoding => 'UTF-8').each_line {|line|
   place,country,countryname,aliases = line.split(/\t/)
-  country_alias_uri[aliases.upcase.strip] = place
+  alias_uri.push [aliases.upcase.strip,place]
 }
+alias_uris = alias_uri.sort_by { |t| t[0].length }.reverse
 
 # ---- For each metadata JSON file
 Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
   next if fn == "state.json"
   jsonfn = GLOBAL.path+"/"+fn
   json = JSON.parse(File.read(jsonfn))
-  # p json
   meta = OpenStruct.new(json)
-  match = lambda { |hash,location|
-    loc = location.upcase.strip
-    hash.each { |c,uri|
-      if loc =~ /\W#{c}\W/
+
+  # ---- Check for location
+  location = meta.sample['collection_location']
+  # meta.warnings.push "Missing collection_location" if not location - caught in yamlfa
+
+  # ---- Update orginal_collection_location
+  if not meta.sample['original_collection_location']
+    meta.sample['original_collection_location'] = location if location
+    meta.sample.delete('collection_location')
+  end
+
+  address = meta.submitter['submitter_address']
+
+  match = lambda { |wds,find|
+    wds.each { |name,uri|
+      if find.call(name)
         meta.sample['collection_location'] = uri
-        meta.sample['original_collection_location'] = location
-        meta.sample['country'] = c
-        meta.sample['wd:country'] = uri
+        meta.sample['country'] = name
+        # meta.sample['wd:country'] = uri
         return true
       end
     }
     false
   }
-  # ---- Step 1: find and normalize by country
-  collection_location = meta.sample['collection_location']
-  if collection_location
-    loc = collection_location.strip
-    if not match.call(country_uri,loc)
-      # ---- Step 2: find and normalize by alias
-      if not match.call(country_alias_uri,loc)
-        # ---- Step 3: find and normalize using submitter address
-        submitter_address = meta.submitter['submitter_address']
-        if submitter_address
-          match.call(country_uri,submitter_address)
-        end
+
+  location = ( location ? location.upcase.strip : "UNDEF")
+  address = ( address ? address.upcase.strip : "UNDEF")
+  # GenBank countries are formed as "USA: MD"
+  if not match.call(country_uris, lambda { |n| location =~ /^#{n}:/ui or location.end_with?(n) })
+    # Try aliases
+    if not match.call(alias_uris, lambda { |n| location.start_with?(n) })
+      # Try submitter address
+      if not match.call(country_uris, lambda { |n| address =~ /#{n}$/ui })
+        # Try aliases on submitter address
+        match.call(alias_uris, lambda { |n| address.end_with?(n) })
       end
     end
   end
-  p meta
+
+  meta.warnings.push "Failed to normalize location" if not meta.sample['collection_location']
+
+  # Write new meta file
+  print JSON::pretty_generate(meta.to_h)
+  exit 1
+  File.write(GLOBAL.out+"/"+fn,meta.as_json.to_json)
 end

@@ -202,10 +202,14 @@ aliases from the second wikidata file.
 "collection_location" gets updated to the new country URI. We also set
 the "country" to the same entity at this stage. Arguably that is not
 necessary - as the refined location can be queried in wikidata to
-provide the country - but we are adding it as a convenience.
+provide the country - but we are adding it as a convenience. This also
+allows quick visual checks of mismatches in the JSON records.
 
-We immediately hit snags like "original_collection_location"=>"USA:
-Utah" -> "country"=>"SA" which meant we have to execute a proper regex.
+Of course, we immediately hit snags like
+"original_collection_location"=>"USA: Utah" -> "country"=>"SA" which
+is South Africa instead and it meant we have to add some logic. The logic can
+be found in normalize_geo.rb.
+
 
 ** RegEx search known items
 

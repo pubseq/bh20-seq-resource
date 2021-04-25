@@ -1,0 +1,2 @@
+This directory contains scripts to directly download
+data from wikidata.org

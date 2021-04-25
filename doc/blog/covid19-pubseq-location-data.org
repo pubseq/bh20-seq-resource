@@ -168,20 +168,115 @@ Save the file as data/wikidata/country_aliases.tsv.
 
 *** Fetch all places with coordinates (no aliases)
 
+
 #+begin_src sql
-  select DISTINCT * where {
-    ?place wdt:P625 ?coor ;
-           wdt:P17 ?country .
-    minus { ?place wdt:P31 wd:Q3024240 } .
-    ?place wdt:P1082 ?population .
-  }
+select DISTINCT * where {
+  ?place wdt:P17 ?country ;
+         wdt:P625 ?coor ;
+         wdt:P1082 ?population .
+}
+#+end_src
+
+518076 results in 20247 ms
+
+#+begin_src sql
+      select DISTINCT * where {
+        ?place wdt:P17 ?country ;
+             wdt:P625 ?coor ;
+             wdt:P1082 ?population ;
+             rdfs:label ?placename .
+      }
     #+end_src
 
 [[https://query.wikidata.org/#select%20%2a%20where%20%7B%0A%20%20%3Fplace%20wdt%3AP625%20%3Fcoor%20%3B%0A%20%20%20%20%20%20%20%20%20wdt%3AP17%20%3Fcountry%20.%0A%20%20minus%20%7B%20%3Fplace%20wdt%3AP31%20wd%3AQ3024240%20%7D%20.%0A%20%20%3Fplace%20wdt%3AP1082%20%3Fpopulation%20.%20%20%0A%7D%0A%0A][run query]] --- 520255 results in 32151 ms
 
+I ended up chunking the query using OFFSET in the script wikidata-fetch-places.rb
+
+#+begin_src sql
+  select DISTINCT ?place ?placename ?country ?coor ?population where {
+    ?place wdt:P17 ?country ;
+           wdt:P625 ?coor ;
+           wdt:P1082 ?population .
+    FILTER (?population > 9999)
+    # ?place rdfs:label ?placename .
+    # FILTER (lang(?placename)='en')
+    ?place rdfs:label ?placename filter (lang(?placename) = "en").
+  } limit 10000
+#+end_src
+
+[[https://query.wikidata.org/#select%20DISTINCT%20%3Fplace%20%3Fplacename%20%3Fcountry%20%3Fcoor%20%3Fpopulation%20where%20%7B%0A%20%20%3Fplace%20wdt%3AP17%20%3Fcountry%20%3B%0A%20%20%20%20%20%20%20%20%20wdt%3AP625%20%3Fcoor%20%3B%0A%20%20%20%20%20%20%20%20%20wdt%3AP1082%20%3Fpopulation%20.%0A%20%20FILTER%20%28%3Fpopulation%20%3E%209999%29%0A%20%20%3Fplace%20rdfs%3Alabel%20%3Fplacename%20.%20%20%0A%20%20FILTER%20%28lang%28%3Fplacename%29%3D%27en%27%29%20%20%0A%7D%20limit%2010000%0A][run query]] --- 10000 results in 6253 ms
+
+#+begin_src sh
+curl -G https://query.wikidata.org/sparql -H "Accept: text/tab-separated-values; charset=utf-8" --data-urlencode query="
+SELECT DISTINCT ?placename ?place ?country ?coor ?population where {
+  ?place wdt:P17 ?country ;
+         wdt:P625 ?coor ;
+         wdt:P1082 ?population .
+  FILTER (?population > 9999)
+  ?place rdfs:label ?placename .
+  FILTER (lang(?placename)='en')
+}
+"
+#+end_src
+
 Save file as data/wikidata/places.tsv.
 
+*** Fetch all states
+
+This query lists all USA states:
+
+#+begin_src sql
+select DISTINCT ?place ?placename ?country ?coor ?population where {
+  ?place wdt:P17 ?country ;
+         wdt:P31 wd:Q35657 ;
+         wdt:P625 ?coor ;
+         wdt:P1082 ?population .
+  ?place rdfs:label ?placename .
+  FILTER (lang(?placename)='en')
+
+}
+#+end_src
+
+List any area that has a capital.
+
+#+begin_src sql
+select DISTINCT ?place ?placename ?country ?coor ?population where {
+  ?place wdt:P17 ?country ;
+         wdt:P36 ?capital ;
+         wdt:P625 ?coor ;
+         wdt:P1082 ?population .
+  ?place rdfs:label ?placename .
+  FILTER (lang(?placename)='en')
+
+} limit 1000
+#+end_src
+
+But I think this is the best option which lists all larger states and
+cities that are a member of the subclass 'federal state' or 'region'
+
+#+begin_src sql
+  select distinct ?placename ?place ?country ?population ?coor where {
+  VALUES ?v { wd:Q82794 wd:Q107390 wd:Q34876 wd:Q9316670 wd:Q515 }
+  ?statetype wdt:P279+ ?v .
+  ?place wdt:P31 ?statetype ;
+         wdt:P17 ?country ;
+         wdt:P625 ?coor;
+         wdt:P1082 ?population .
+  FILTER (?population > 99999)
+  ?place rdfs:label ?placename .
+  FILTER (lang(?placename)='en')
+}
+
+  #+end_src
+
+The script 'fetch-regions.sh' with curl takes over a minute with about
+20K results.
+
+Save file as data/wikidata/regions.csv.gz
+
 ** Start normalizing geo-location
+
+*** Normalize by country
 
 Now we have three data files from wikidata with place information we
 can start normalizing the data we have in the records that are coming
@@ -209,6 +304,17 @@ Of course, we immediately hit snags like
 "original_collection_location"=>"USA: Utah" -> "country"=>"SA" which
 is South Africa instead and it meant we have to add some logic. The logic can
 be found in normalize_geo.rb.
+
+*** Normalize by state
+
+*** Refine location
+
+The above step should have normalized country information towards a
+wikidata URI. Next we try to refine the location using the places file
+downloaded earlier which has half a million records. It contains
+for fields for
+
+: place coor  country population
 
 
 ** RegEx search known items

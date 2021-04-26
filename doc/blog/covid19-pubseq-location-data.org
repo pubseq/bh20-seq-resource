@@ -315,6 +315,11 @@ regions files downloaded earlier (latest queries are in
 
 : placename,place,country,coor,population
 
+The current heuristic simply takes all GEO location and resolves by
+length of matches. This is not perfect, but works because we only use
+places that have a population abvoe 100K. Future refinements should be
+by country/state/province/council and distinguish between the
+different locations with the same name.
 
 
 ** RegEx search known items

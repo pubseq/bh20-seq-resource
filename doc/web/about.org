@@ -94,12 +94,13 @@ others are regularly added to PubSeq. We encourage people to everyone
 to submit on PubSeq because of its superior live tooling and metadata
 support (see the next question).
 
-Importantly: all data is published under either the [[https://creativecommons.org/licenses/by/4.0/][Creative Commons
-4.0 attribution license]] or the [[https://creativecommons.org/share-your-work/public-domain/cc0/][CC0 “No Rights Reserved” license]] which
+Importantly: all data is published under either the
+[[https://creativecommons.org/licenses/by/4.0/][Creative Commons 4.0
+attribution license]] or the [[https://creativecommons.org/share-your-work/public-domain/cc0/][CC0 “No Rights Reserved” license]] which
 means it data can be published and workflows can run in public
 environments allowing for improved access for research and
 reproducible results. This contrasts with some other public resources,
-such as GISAID.
+as described in this [[https://www.nature.com/articles/d41586-021-00305-7][Nature article]].
 
 * Why should I upload my data here?
 

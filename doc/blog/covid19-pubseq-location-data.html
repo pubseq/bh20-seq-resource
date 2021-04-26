@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-11 Sun 10:49 -->
+<!-- 2021-04-26 Mon 02:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq Location Data</title>
@@ -224,27 +224,40 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6abac52">1. Introduction</a></li>
-<li><a href="#org6479c20">2. Location data</a>
+<li><a href="#org5559f32">1. Introduction</a></li>
+<li><a href="#org2843661">2. Location data</a>
 <ul>
-<li><a href="#orgbfc0c3b">2.1. Why use WikiData URIs instead of GPS coordinates?</a></li>
+<li><a href="#orgd591aea">2.1. Why use WikiData URIs instead of GPS coordinates?</a></li>
 </ul>
 </li>
-<li><a href="#org8048c60">3. Normalizing location data</a>
+<li><a href="#org73b6c3a">3. Normalizing location data</a>
 <ul>
-<li><a href="#org6fee2aa">3.1. Simple search Wikidata</a></li>
-<li><a href="#orgd8a279f">3.2. RegEx search known items</a></li>
-<li><a href="#org63ff4e7">3.3. Fuzzy search Wikidata</a></li>
+<li><a href="#org9452b70">3.1. Simple search Wikidata</a>
+<ul>
+<li><a href="#org90e875d">3.1.1. Fetch all 180 odd countries with aliases</a></li>
+<li><a href="#orgb755685">3.1.2. Fetch all places with coordinates (no aliases)</a></li>
+<li><a href="#orgf569871">3.1.3. Fetch all states</a></li>
 </ul>
 </li>
-<li><a href="#org350ca35">4. Shape expressions (ShEx) and validation</a></li>
-<li><a href="#orgd6fe576">5. Missing data</a></li>
+<li><a href="#org1db088a">3.2. Start normalizing geo-location</a>
+<ul>
+<li><a href="#orgc02c096">3.2.1. Normalize by country</a></li>
+<li><a href="#org35cadc3">3.2.2. Normalize by state</a></li>
+<li><a href="#org1c142a5">3.2.3. Refine location</a></li>
+</ul>
+</li>
+<li><a href="#org56a5937">3.3. RegEx search known items</a></li>
+<li><a href="#org8f974fe">3.4. Fuzzy search Wikidata</a></li>
+</ul>
+</li>
+<li><a href="#org1dd9aaa">4. Shape expressions (ShEx) and validation</a></li>
+<li><a href="#org99d0c7e">5. Missing data</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6abac52" class="outline-2">
-<h2 id="org6abac52"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-org5559f32" class="outline-2">
+<h2 id="org5559f32"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Normalized location metadata is one of the most valuable features of
@@ -254,8 +267,8 @@ why it is not so easy!
 </div>
 </div>
 
-<div id="outline-container-org6479c20" class="outline-2">
-<h2 id="org6479c20"><span class="section-number-2">2</span> Location data</h2>
+<div id="outline-container-org2843661" class="outline-2">
+<h2 id="org2843661"><span class="section-number-2">2</span> Location data</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 When data gets uploaded to central repositories some metadata needs to
@@ -279,18 +292,19 @@ From the full record we best place the sample on San Diego.
 <p>
 There exist many opportunities for ambiguous entries, such as Memphis
 TN and Memphis IN. We decided to settle for Wikidata URIs because (1)
-they are not ambiguous and (2) allow for fetching more information,
-such as population size, density, county and GPS coordinates. Click on
-the wikidata entries for <a href="http://www.wikidata.org/entity/Q16563">Memphis Tennessee</a> (not the song <a href="https://www.wikidata.org/wiki/Q2447864">Memphis
-Tennessee</a>), <a href="https://www.wikidata.org/wiki/Q2699142">Memphis Indiana</a>, <a href="https://www.wikidata.org/wiki/Q979971">Memphis Texas</a> <a href="https://www.wikidata.org/wiki/Q1890251">Memphis Michigan</a> and
-<a href="https://www.wikidata.org/wiki/Q3289795">Memphis Nebraska</a>. And then there is the original <a href="https://www.wikidata.org/wiki/Q5715">Memphis Egypt</a>,
-ancient capital of Aneb-Hetch. Wikidata URIs are great at
-disambiguation!
+they are unambiguous and (2) allow for fetching more information, such
+as population size, density, county, country, and GPS
+coordinates. Click on the wikidata entries for <a href="http://www.wikidata.org/entity/Q16563">Memphis Tennessee</a> (not
+the song <a href="https://www.wikidata.org/wiki/Q2447864">Memphis Tennessee</a>), <a href="https://www.wikidata.org/wiki/Q2699142">Memphis Indiana</a>, <a href="https://www.wikidata.org/wiki/Q979971">Memphis Texas</a> <a href="https://www.wikidata.org/wiki/Q1890251">Memphis
+Michigan</a> and <a href="https://www.wikidata.org/wiki/Q3289795">Memphis Nebraska</a>. And then there is the original <a href="https://www.wikidata.org/wiki/Q5715">Memphis
+Egypt</a>, ancient capital of Aneb-Hetch. All listed on Wikidata. Wikidata
+URIs are great at disambiguation of locality while grouping data in a
+sensible way for research!
 </p>
 </div>
 
-<div id="outline-container-orgbfc0c3b" class="outline-3">
-<h3 id="orgbfc0c3b"><span class="section-number-3">2.1</span> Why use WikiData URIs instead of GPS coordinates?</h3>
+<div id="outline-container-orgd591aea" class="outline-3">
+<h3 id="orgd591aea"><span class="section-number-3">2.1</span> Why use WikiData URIs instead of GPS coordinates?</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 A wikidata URI gives access to a lot of extra information that can be
@@ -330,19 +344,20 @@ To get a list of all directly available items related to Memphis TN:
 </pre>
 </div>
 <p>
-<a href="https://query.wikidata.org/#select%20%3Fp%20%3Fgps%20where%20%7B%0A%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ2447864%3E%20%3Fp%20%3Fgps%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D">execute query</a>
+[<a href="https://query.wikidata.org/#select%20%3Fp%20%3Fgps%20where%20%7B%0A%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2FQ2447864%3E%20%3Fp%20%3Fgps%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D">execute query</a>]
 </p>
 
 <p>
-Querying samples and getting relevant information directly from GPS
-coordinates is much harder, if not impossible.
+The other way round, querying samples and getting relevant information
+directly from GPS coordinates, is much harder. Wikidata URIs are very
+useful.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8048c60" class="outline-2">
-<h2 id="org8048c60"><span class="section-number-2">3</span> Normalizing location data</h2>
+<div id="outline-container-org73b6c3a" class="outline-2">
+<h2 id="org73b6c3a"><span class="section-number-2">3</span> Normalizing location data</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Wikidata is the stable and trusted backend for Wikipedia, a massive
@@ -373,36 +388,324 @@ with a stepped approach:
 <ol class="org-ol">
 <li>Search a database with all known Wikidata entries</li>
 <li>Search a separate database with 'vetted' items including Regex</li>
-<li>If GPS coordinates are provided we can use that</li>
+<li>If GPS coordinates are provided we can use them for location</li>
 <li>Tokenize the record and use the Wikidata or Wikipedia search engine</li>
 </ol>
 
 <p>
-Hopefully that covers 90% of cases correctly.  We still may end up
-with misses and wrong data. E.g. it is easy to imagine a sample taken
-on Antartica that got sequenced in the USA and gets placed in the
-USA. In Wiki-spirit the best solution is to leave it to end-users to
-re-place those entries. End-users scale, unlike us. For this we will
-create an API.
+Hopefully that covers over 90% of cases correctly.  We still may end
+up with misses and wrong data. E.g. it is easy to imagine a sample
+taken on Antartica that got sequenced in the USA and gets placed in
+the USA. In Wiki-spirit the best solution is to leave it to end-users
+to re-place those entries. End-users scale, unlike us. For this we
+will create a simple API.
 </p>
 
 <p>
 Note that normalization has to be fully automated to execute regular
-updates from the upstream data repositories.
+updates from the upstream data repositories. There is no way we can
+annotate these by hand ourselves.
+</p>
+
+<p>
+Also data fetched from wikidata is not stored in the github
+repository, but online on IPFS.
 </p>
 </div>
 
-<div id="outline-container-org6fee2aa" class="outline-3">
-<h3 id="org6fee2aa"><span class="section-number-3">3.1</span> Simple search Wikidata</h3>
+<div id="outline-container-org9452b70" class="outline-3">
+<h3 id="org9452b70"><span class="section-number-3">3.1</span> Simple search Wikidata</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+We can dump all known contries/states/states/cities from Wikidata into
+files.
+</p>
 </div>
 
-<div id="outline-container-orgd8a279f" class="outline-3">
-<h3 id="orgd8a279f"><span class="section-number-3">3.2</span> RegEx search known items</h3>
+<div id="outline-container-org90e875d" class="outline-4">
+<h4 id="org90e875d"><span class="section-number-4">3.1.1</span> Fetch all 180 odd countries with aliases</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">SELECT</span> <span style="color: #fff59d;">DISTINCT</span> * <span style="color: #fff59d;">WHERE</span> {
+  ?place wdt:P17 ?country .
+  ?place (a|wdt:P31|wdt:P279) wd:Q6256 .
+  minus { ?place wdt:P31 wd:Q3024240 } .
+  ?country rdfs:label ?countryname .
+  FILTER( LANG(?countryname)="en") .
+  OPTIONAL {
+      ?country wdt:P30 ?continent.
+      ?continent rdfs:label ?continent_label
+      FILTER (lang(?continent_label)=<span style="color: #9ccc65;">'en'</span>)
+    }
+  }
+</pre>
 </div>
 
-<div id="outline-container-org63ff4e7" class="outline-3">
-<h3 id="org63ff4e7"><span class="section-number-3">3.3</span> Fuzzy search Wikidata</h3>
+<p>
+<a href="https://query.wikidata.org/#%0A%20%20SELECT%20DISTINCT%20%2a%20WHERE%20%7B%0A%20%20%20%20%3Fplace%20wdt%3AP17%20%3Fcountry%20.%0A%20%20%20%20%3Fplace%20%28a%7Cwdt%3AP31%7Cwdt%3AP279%29%20wd%3AQ6256%20.%0A%20%20%20%20minus%20%7B%20%3Fplace%20wdt%3AP31%20wd%3AQ3024240%20%7D%20.%0A%20%20%20%20%3Fcountry%20rdfs%3Alabel%20%3Fcountryname%20.%0A%20%20%20%20FILTER%28%20LANG%28%3Fcountryname%29%3D%22en%22%29%20.%0A%20%20%20%20OPTIONAL%20%7B%0A%20%20%20%20%20%20%20%20%3Fcountry%20wdt%3AP30%20%3Fcontinent.%0A%20%20%20%20%20%20%20%20%3Fcontinent%20rdfs%3Alabel%20%3Fcontinent_label%0A%20%20%20%20%20%20%20%20FILTER%20%28lang%28%3Fcontinent_label%29%3D%27en%27%29%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A">run query</a>
+</p>
+
+<p>
+Save the file as data/countries.tsv.
+</p>
+
+<p>
+Just adding <code>?place skos:altLabel ?alias</code> for all country aliases
+gets 15K results:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">SELECT</span> <span style="color: #fff59d;">DISTINCT</span> * <span style="color: #fff59d;">WHERE</span> {
+  ?place wdt:P17 ?country ;
+    (a|wdt:P31|wdt:P279) wd:Q6256 .
+  minus { ?place wdt:P31 wd:Q3024240 } .
+  ?place skos:altLabel ?<span style="color: #fff59d;">alias</span> .
+}
+</pre>
+</div>
+
+<p>
+<a href="https://query.wikidata.org/#%20%20SELECT%20DISTINCT%20%2a%20WHERE%20%7B%0A%20%20%20%20%3Fplace%20wdt%3AP17%20%3Fcountry%20%3B%0A%20%20%20%20%20%20%28a%7Cwdt%3AP31%7Cwdt%3AP279%29%20wd%3AQ6256%20.%0A%20%20%20%20minus%20%7B%20%3Fplace%20wdt%3AP31%20wd%3AQ3024240%20%7D%20.%0A%20%20%20%20%3Fplace%20skos%3AaltLabel%20%3Falias%20.%0A%20%20%7D">run query</a>
+</p>
+
+<p>
+Save the file as data/wikidata/country_aliases.tsv.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb755685" class="outline-4">
+<h4 id="orgb755685"><span class="section-number-4">3.1.2</span> Fetch all places with coordinates (no aliases)</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">DISTINCT</span> * <span style="color: #fff59d;">where</span> {
+  ?place wdt:P17 ?country ;
+         wdt:P625 ?coor ;
+         wdt:P1082 ?population .
+}
+</pre>
+</div>
+
+<p>
+518076 results in 20247 ms
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">DISTINCT</span> * <span style="color: #fff59d;">where</span> {
+  ?place wdt:P17 ?country ;
+       wdt:P625 ?coor ;
+       wdt:P1082 ?population ;
+       rdfs:label ?placename .
+}
+</pre>
+</div>
+
+<p>
+<a href="https://query.wikidata.org/#select%20%2a%20where%20%7B%0A%20%20%3Fplace%20wdt%3AP625%20%3Fcoor%20%3B%0A%20%20%20%20%20%20%20%20%20wdt%3AP17%20%3Fcountry%20.%0A%20%20minus%20%7B%20%3Fplace%20wdt%3AP31%20wd%3AQ3024240%20%7D%20.%0A%20%20%3Fplace%20wdt%3AP1082%20%3Fpopulation%20.%20%20%0A%7D%0A%0A">run query</a> &#x2014; 520255 results in 32151 ms
+</p>
+
+<p>
+I ended up chunking the query using OFFSET in the script wikidata-fetch-places.rb
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">DISTINCT</span> ?place ?placename ?country ?coor ?population <span style="color: #fff59d;">where</span> {
+  ?place wdt:P17 ?country ;
+         wdt:P625 ?coor ;
+         wdt:P1082 ?population .
+  FILTER (?population &gt; 9999)
+  # ?place rdfs:label ?placename .
+  # FILTER (lang(?placename)=<span style="color: #9ccc65;">'en'</span>)
+  ?place rdfs:label ?placename filter (lang(?placename) = "en").
+} <span style="color: #fff59d;">limit</span> 10000
+</pre>
+</div>
+
+<p>
+<a href="https://query.wikidata.org/#select%20DISTINCT%20%3Fplace%20%3Fplacename%20%3Fcountry%20%3Fcoor%20%3Fpopulation%20where%20%7B%0A%20%20%3Fplace%20wdt%3AP17%20%3Fcountry%20%3B%0A%20%20%20%20%20%20%20%20%20wdt%3AP625%20%3Fcoor%20%3B%0A%20%20%20%20%20%20%20%20%20wdt%3AP1082%20%3Fpopulation%20.%0A%20%20FILTER%20%28%3Fpopulation%20%3E%209999%29%0A%20%20%3Fplace%20rdfs%3Alabel%20%3Fplacename%20.%20%20%0A%20%20FILTER%20%28lang%28%3Fplacename%29%3D%27en%27%29%20%20%0A%7D%20limit%2010000%0A">run query</a> &#x2014; 10000 results in 6253 ms
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">curl -G https://query.wikidata.org/sparql -H <span style="color: #9ccc65;">"Accept: text/tab-separated-values; charset=utf-8"</span> --data-urlencode <span style="color: #ffcc80;">query</span>=<span style="color: #9ccc65;">"</span>
+<span style="color: #9ccc65;">SELECT DISTINCT ?placename ?place ?country ?coor ?population where {</span>
+<span style="color: #9ccc65;">  ?place wdt:P17 ?country ;</span>
+<span style="color: #9ccc65;">         wdt:P625 ?coor ;</span>
+<span style="color: #9ccc65;">         wdt:P1082 ?population .</span>
+<span style="color: #9ccc65;">  FILTER (?population &gt; 9999)</span>
+<span style="color: #9ccc65;">  ?place rdfs:label ?placename .</span>
+<span style="color: #9ccc65;">  FILTER (lang(?placename)='en')</span>
+<span style="color: #9ccc65;">}</span>
+<span style="color: #9ccc65;">"</span>
+</pre>
+</div>
+
+<p>
+Save file as data/wikidata/places.tsv.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf569871" class="outline-4">
+<h4 id="orgf569871"><span class="section-number-4">3.1.3</span> Fetch all states</h4>
+<div class="outline-text-4" id="text-3-1-3">
+<p>
+This query lists all USA states:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">DISTINCT</span> ?place ?placename ?country ?coor ?population <span style="color: #fff59d;">where</span> {
+  ?place wdt:P17 ?country ;
+         wdt:P31 wd:Q35657 ;
+         wdt:P625 ?coor ;
+         wdt:P1082 ?population .
+  ?place rdfs:label ?placename .
+  FILTER (lang(?placename)=<span style="color: #9ccc65;">'en'</span>)
+
+}
+</pre>
+</div>
+
+<p>
+List any area that has a capital.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">DISTINCT</span> ?place ?placename ?country ?coor ?population <span style="color: #fff59d;">where</span> {
+  ?place wdt:P17 ?country ;
+         wdt:P36 ?capital ;
+         wdt:P625 ?coor ;
+         wdt:P1082 ?population .
+  ?place rdfs:label ?placename .
+  FILTER (lang(?placename)=<span style="color: #9ccc65;">'en'</span>)
+
+} <span style="color: #fff59d;">limit</span> 1000
+</pre>
+</div>
+
+<p>
+But I think this is the best option which lists all larger states and
+cities that are a member of the subclass 'federal state' or 'region'
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql">  <span style="color: #fff59d;">select</span> <span style="color: #fff59d;">distinct</span> ?placename ?place ?country ?population ?coor <span style="color: #fff59d;">where</span> {
+  <span style="color: #fff59d;">VALUES</span> ?v { wd:Q82794 wd:Q107390 wd:Q34876 wd:Q9316670 wd:Q515 }
+  ?statetype wdt:P279+ ?v .
+  ?place wdt:P31 ?statetype ;
+         wdt:P17 ?country ;
+         wdt:P625 ?coor;
+         wdt:P1082 ?population .
+  FILTER (?population &gt; 99999)
+  ?place rdfs:label ?placename .
+  FILTER (lang(?placename)=<span style="color: #9ccc65;">'en'</span>)
+}
+</pre>
+</div>
+
+<p>
+The script 'fetch-regions.sh' with curl takes over a minute with about
+20K results.
+</p>
+
+<p>
+Save file as data/wikidata/regions.csv.gz
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1db088a" class="outline-3">
+<h3 id="org1db088a"><span class="section-number-3">3.2</span> Start normalizing geo-location</h3>
+<div class="outline-text-3" id="text-3-2">
+</div>
+<div id="outline-container-orgc02c096" class="outline-4">
+<h4 id="orgc02c096"><span class="section-number-4">3.2.1</span> Normalize by country</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p>
+Now we have three data files from wikidata with place information we
+can start normalizing the data we have in the records that are coming
+from other sources.
+</p>
+
+<p>
+The first step is to normalize by country. We take above
+country_aliases file which consists of 4 fields
+</p>
+
+<pre class="example">
+place country countryname alias
+</pre>
+
+
+<p>
+and we search "collection_location": "USA: MD" and
+"submitter_address": "Maryland Department of Health, 1, 1, MD 1, USA"
+fields for matches. That, likely, will get the right country and we
+plug in the Wikidata URI, in this case
+<a href="http://www.wikidata.org/entity/Q30">http://www.wikidata.org/entity/Q30</a>. If that fails we look for country
+aliases from the second wikidata file.
+</p>
+
+<p>
+"collection_location" gets updated to the new country URI. We also set
+the "country" to the same entity at this stage. Arguably that is not
+necessary - as the refined location can be queried in wikidata to
+provide the country - but we are adding it as a convenience. This also
+allows quick visual checks of mismatches in the JSON records.
+</p>
+
+<p>
+Of course, we immediately hit snags like
+"original_collection_location"=&gt;"USA: Utah" -&gt; "country"=&gt;"SA" which
+is South Africa instead and it meant we have to add some logic. The logic can
+be found in normalize_geo.rb.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org35cadc3" class="outline-4">
+<h4 id="org35cadc3"><span class="section-number-4">3.2.2</span> Normalize by state</h4>
+</div>
+
+<div id="outline-container-org1c142a5" class="outline-4">
+<h4 id="org1c142a5"><span class="section-number-4">3.2.3</span> Refine location</h4>
+<div class="outline-text-4" id="text-3-2-3">
+<p>
+The above step should have normalized country information towards a
+wikidata URI. Next we try to refine the location using the places and
+regions files downloaded earlier (latest queries are in
+<a href="../../workflows/pubseq/wikidata">../../workflows/pubseq/wikidata</a> scripts). They contain for fields for
+</p>
+
+<pre class="example">
+placename,place,country,coor,population
+</pre>
+
+
+<p>
+The current heuristic simply takes all GEO location and resolves by
+length of matches. This is not perfect, but works because we only use
+places that have a population abvoe 100K. Future refinements should be
+by country/state/province/council and distinguish between the
+different locations with the same name.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org56a5937" class="outline-3">
+<h3 id="org56a5937"><span class="section-number-3">3.3</span> RegEx search known items</h3>
 <div class="outline-text-3" id="text-3-3">
+<p>
+Hand-filtered search
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8f974fe" class="outline-3">
+<h3 id="org8f974fe"><span class="section-number-3">3.4</span> Fuzzy search Wikidata</h3>
+<div class="outline-text-3" id="text-3-4">
 <p>
 You wonder how Wikimedia's search box works?  Wikimedia which powers
 Wikipedia and has this amazing `fuzzy' search facility called <a href="https://www.mediawiki.org/wiki/Wikidata_Query_Service/User_Manual/MWAPI">MWAPI</a>
@@ -426,7 +729,7 @@ coordinates(!)
 </pre>
 </div>
 <p>
-<a href="https://query.wikidata.org/#SELECT%20%2a%20WHERE%20%7B%0A%20%20SERVICE%20wikibase%3Amwapi%0A%20%20%20%20%20%20%20%20%20%20%7B%20bd%3AserviceParam%20wikibase%3Aapi%20%22EntitySearch%22%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20bd%3AserviceParam%20wikibase%3Aendpoint%20%22www.wikidata.org%22%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20bd%3AserviceParam%20mwapi%3Asearch%20%22memphis%22%20.%20bd%3AserviceParam%20mwapi%3Alanguage%20%22en%22%20.%0A%20%20%20%20%20%20%20%20%20%20%20%3Fitem%20wikibase%3AapiOutputItem%20mwapi%3Aitem%20.%20%3Fnum%20wikibase%3AapiOrdinal%20true%20.%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%3Fitem%20wdt%3AP625%20%3Floc%0A%7D">run query</a>
+[<a href="https://query.wikidata.org/#SELECT%20%2a%20WHERE%20%7B%0A%20%20SERVICE%20wikibase%3Amwapi%0A%20%20%20%20%20%20%20%20%20%20%7B%20bd%3AserviceParam%20wikibase%3Aapi%20%22EntitySearch%22%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20bd%3AserviceParam%20wikibase%3Aendpoint%20%22www.wikidata.org%22%20.%0A%20%20%20%20%20%20%20%20%20%20%20%20bd%3AserviceParam%20mwapi%3Asearch%20%22memphis%22%20.%20bd%3AserviceParam%20mwapi%3Alanguage%20%22en%22%20.%0A%20%20%20%20%20%20%20%20%20%20%20%3Fitem%20wikibase%3AapiOutputItem%20mwapi%3Aitem%20.%20%3Fnum%20wikibase%3AapiOrdinal%20true%20.%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%3Fitem%20wdt%3AP625%20%3Floc%0A%7D">run query</a>]
 </p>
 
 <p>
@@ -476,14 +779,14 @@ possible but I have not figured that out yet:
 </pre>
 </div>
 <p>
-<a href="https://query.wikidata.org/#SELECT%20%2a%20WHERE%20%7B%0A%20%20%23%20VALUES%20%3Ftype%20%7B%20wd%3AQ1093829%20wd%3AQ52511956%20wd%3AQ515%20wd%3AQ6256%20wd%3AQ35657%7D%20.%0A%20%20SERVICE%20wikibase%3Amwapi%20%7B%0A%20%20%20%20%20%20bd%3AserviceParam%20wikibase%3Aapi%20%22Search%22%20.%0A%20%20%20%20%20%20bd%3AserviceParam%20wikibase%3Aendpoint%20%22www.wikidata.org%22%20.%0A%20%20%20%20%20%20bd%3AserviceParam%20mwapi%3Asrsearch%20%22napels%20italie%22%20.%0A%20%20%20%20%20%20%3Fplace%20wikibase%3AapiOutputItem%20mwapi%3Atitle%20.%0A%20%20%7D%0A%20%20%3Fplace%20wdt%3AP625%20%3Fcoordinates%20.%0A%20%20%3Fplace%20rdfs%3Alabel%20%3Fplacename%20.%0A%20%20FILTER%28%20LANG%28%3Fplacename%29%3D%22en%22%29%20.%0A%20%20%3Fplace%20wdt%3AP17%20%3Fcountry%20.%0A%20%20%3Fplace%20wdt%3AP1082%20%3Fpopulation%20.%0A%20%20%23%20%3Fplace%20%28a%7Cwdt%3AP31%7Cwdt%3AP279%29%20%3Ftype%20.%0A%7D%20%0AORDER%20by%20DESC%28%3Fpopulation%29%20%0ALIMIT%2010">run query</a>.
+[<a href="https://query.wikidata.org/#SELECT%20%2a%20WHERE%20%7B%0A%20%20%23%20VALUES%20%3Ftype%20%7B%20wd%3AQ1093829%20wd%3AQ52511956%20wd%3AQ515%20wd%3AQ6256%20wd%3AQ35657%7D%20.%0A%20%20SERVICE%20wikibase%3Amwapi%20%7B%0A%20%20%20%20%20%20bd%3AserviceParam%20wikibase%3Aapi%20%22Search%22%20.%0A%20%20%20%20%20%20bd%3AserviceParam%20wikibase%3Aendpoint%20%22www.wikidata.org%22%20.%0A%20%20%20%20%20%20bd%3AserviceParam%20mwapi%3Asrsearch%20%22napels%20italie%22%20.%0A%20%20%20%20%20%20%3Fplace%20wikibase%3AapiOutputItem%20mwapi%3Atitle%20.%0A%20%20%7D%0A%20%20%3Fplace%20wdt%3AP625%20%3Fcoordinates%20.%0A%20%20%3Fplace%20rdfs%3Alabel%20%3Fplacename%20.%0A%20%20FILTER%28%20LANG%28%3Fplacename%29%3D%22en%22%29%20.%0A%20%20%3Fplace%20wdt%3AP17%20%3Fcountry%20.%0A%20%20%3Fplace%20wdt%3AP1082%20%3Fpopulation%20.%0A%20%20%23%20%3Fplace%20%28a%7Cwdt%3AP31%7Cwdt%3AP279%29%20%3Ftype%20.%0A%7D%20%0AORDER%20by%20DESC%28%3Fpopulation%29%20%0ALIMIT%2010">run query</a>]
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org350ca35" class="outline-2">
-<h2 id="org350ca35"><span class="section-number-2">4</span> Shape expressions (ShEx) and validation</h2>
+<div id="outline-container-org1dd9aaa" class="outline-2">
+<h2 id="org1dd9aaa"><span class="section-number-2">4</span> Shape expressions (ShEx) and validation</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 PubSeq uses <a href="http://shex.io/shex-semantics/">ShEx</a> to validate RDF data (see also the <a href="http://shex.io/shex-primer/">primer</a>). This is
@@ -498,12 +801,12 @@ step.
 </div>
 </div>
 
-<div id="outline-container-orgd6fe576" class="outline-2">
-<h2 id="orgd6fe576"><span class="section-number-2">5</span> Missing data</h2>
+<div id="outline-container-org99d0c7e" class="outline-2">
+<h2 id="org99d0c7e"><span class="section-number-2">5</span> Missing data</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 After normalization, the original data we maintain in a field
-`collection_location_original'. If we can normalize to a Wikidata
+`original_collection_location'. If we can normalize to a Wikidata
 entry URI that is stored in `collection_location'.  Otherwise it is
 missing (RDF favours treating missing data as really missing data).
 </p>
@@ -511,7 +814,7 @@ missing (RDF favours treating missing data as really missing data).
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2021-04-11 Sun 10:49</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2021-04-26 Mon 02:24</small>.
 </div>
 </body>
 </html>

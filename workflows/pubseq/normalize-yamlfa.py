@@ -71,6 +71,9 @@ else:
     print("WARNING: no specimen mapping file passed in",file=sys.stderr)
 
 for id in ids:
+    if not data[id]["valid"]:
+      print(f"SKIPPING invalid {id}",file=sys.stderr)
+      continue
     if args.yaml:
         raise Exception("YAML not yet supported")
     fn = f"{dir}/{id}.json"

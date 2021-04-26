@@ -202,12 +202,16 @@ span.dropt:hover {text-decoration: none; background: #ffffff; z-index: 6; }
     grid-area: a;
 }
 
-.cite {
-    font-family: 'Inter', sans-serif;
-
+.cite-block {
     padding-left: 5em;
     padding-right: 5em;
-    background-color: white;
+}
+
+.cite {
+    padding-left: 2em;
+    padding-right: 2em;
+    background-color: #ebf0ec;
+    font-family: 'Inter', sans-serif;
     color: black;
     font-weight: normal;
     font-style: oblique;

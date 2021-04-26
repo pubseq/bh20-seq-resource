@@ -3,7 +3,7 @@
 /* .text-table-of-contents { font-family: monospace; color: black; font-size:80%; } */
 .timestamp { font-family: monospace; color: darkgreen; }
 
-h1,h2 { font-family: Lucida Sans Typewriter,Lucida Console,monaco,Bitstream Vera Sans Mono,monospace; color:black;background-color:#F0F8FF; }
+h1,h2 { font-family: Lucida Sans Typewriter,Lucida Console,monaco,Bitstream Vera Sans Mono,monospace; color:black;background-color:white; }
 h2 { color: black; }
 h3,h4 { color: black; margin:0; }
 code { color: darkblue; }

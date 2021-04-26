@@ -80,6 +80,7 @@ $stderr.print "Options: ",options,"\n" if !options[:quiet]
 
 GLOBAL = OpenStruct.new(options)
 
+raise "--dir directory is required" if not GLOBAL.path
 raise "--out directory is required" if not GLOBAL.out
 
 # ---- So far it is boiler plate to set the environment
@@ -102,12 +103,26 @@ Zlib::GzipReader.open('../../data/wikidata/country_aliases.tsv.gz',:encoding => 
 }
 alias_uris = alias_uri.sort_by { |t| t[0].length }.reverse
 
+places_uri = []
+Zlib::GzipReader.open('../../data/wikidata/places.csv.gz',:encoding => 'UTF-8').each_line {|line|
+  placename,place,country,coor,population = line.split(/,/)
+  places_uri.push [placename.strip,place,country,coor,population]
+}
+Zlib::GzipReader.open('../../data/wikidata/regions.csv.gz',:encoding => 'UTF-8').each_line {|line|
+  placename,place,country,coor,population = line.split(/,/)
+  places_uri.push [placename.strip,place,country,coor,population]
+}
+places_uris = places_uri.sort_by { |t| t[0].length }.reverse
+
 # ---- For each metadata JSON file
 Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
   next if fn == "state.json"
   jsonfn = GLOBAL.path+"/"+fn
   json = JSON.parse(File.read(jsonfn))
   meta = OpenStruct.new(json)
+
+  # ==== Normalize by country using uploader location fields for
+  #      collection_location and submitter_address
 
   # ---- Check for location
   location = meta.sample['collection_location']
@@ -126,7 +141,7 @@ Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
       if find.call(name)
         meta.sample['collection_location'] = uri
         meta.sample['country'] = name
-        # meta.sample['wd:country'] = uri
+        meta.sample['wd:country'] = uri
         return true
       end
     }
@@ -147,9 +162,32 @@ Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
     end
   end
 
+  # ==== Refine location using the places/regions information
+  wd_country = meta.sample['wd:country']
+  countryname = meta.sample['country']
+
+  match_place = lambda { |places,find|
+    places.each { |name,uri,country_uri,coor,population|
+      if wd_country == country_uri and find.call(name)
+        meta.sample['collection_location'] = uri
+        meta.sample['place'] = name
+        return true
+      end
+    }
+    false
+  }
+
+  location = meta.sample['original_collection_location']
+  address = meta.submitter['submitter_address']
+
+  if not match_place.call(places_uris, lambda { |n| location =~ /:.*#{n}/ })
+    match_place.call(places_uris, lambda { |n| address =~ /#{n}/ })
+  end
+
   meta.warnings.push "Failed to normalize location" if not meta.sample['collection_location']
 
   # Write new meta file
   json = JSON::pretty_generate(meta.to_h)
+  print json,"\n" if GLOBAL.verbose
   File.write(GLOBAL.out+"/"+fn,json)
 end

@@ -266,7 +266,6 @@ cities that are a member of the subclass 'federal state' or 'region'
   ?place rdfs:label ?placename .
   FILTER (lang(?placename)='en')
 }
-
   #+end_src
 
 The script 'fetch-regions.sh' with curl takes over a minute with about
@@ -310,11 +309,12 @@ be found in normalize_geo.rb.
 *** Refine location
 
 The above step should have normalized country information towards a
-wikidata URI. Next we try to refine the location using the places file
-downloaded earlier which has half a million records. It contains
-for fields for
+wikidata URI. Next we try to refine the location using the places and
+regions files downloaded earlier (latest queries are in
+[[../../workflows/pubseq/wikidata]] scripts). They contain for fields for
 
-: place coor  country population
+: placename,place,country,coor,population
+
 
 
 ** RegEx search known items

@@ -16,7 +16,7 @@
 import re
 import types
 
-def host_species(host,mapping):
+def host_species(host1,mapping):
     Homo_sapiens = "http://purl.obolibrary.org/obo/NCBITaxon_9606"
 
     SPECIES_TERMS = { # since Python 3.7 dict is ordered! Note that re is allowed
@@ -32,8 +32,8 @@ def host_species(host,mapping):
         }
 
     warning = None
-    host = types.SimpleNamespace(**host)
-    if not 'obolibrary' in host.host_species:
+    host = types.SimpleNamespace(**host1)
+    if 'host_species' in host1 and not 'obolibrary' in host.host_species:
         key = host.host_species
         host.host_species = None
         if key in mapping:
@@ -59,8 +59,9 @@ def specimen_source(sample,mapping):
     Saliva = "http://purl.obolibrary.org/obo/NCIT_C13275"
     Nasal_Swab = Nasopharyngeal # "http://purl.obolibrary.org/obo/NCIT_C132119"
     Frozen_Food = "https://www.wikidata.org/wiki/Q751728"
-    Bronchoalveolar_Lavage = "http://purl.obolibrary.org/obo/NCIT_C13195",
-    Biospecimen = "http://purl.obolibrary.org/obo/NCIT_C70699"
+    Bronchoalveolar_Lavage = "http://purl.obolibrary.org/obo/NCIT_C13195"
+    Biospecimen = "http://purl.obolibrary.org/obo/NCIT_C70699" # Biological sample (default)
+    Specimen = "http://purl.obolibrary.org/obo/NCIT_C19157"
     SPECIMEN_TERMS = { # since Python 3.7 dict is ordered! Note that re is allowed
         "Oronasopharynx": Oronasopharynx,
         "orophar": Oropharyngeal,
@@ -73,6 +74,7 @@ def specimen_source(sample,mapping):
         "packaging": Frozen_Food,
         "specimen": Biospecimen,
         "patient": Biospecimen,
+        "clinical": Biospecimen,
         "uknown": Unknown,
         "unknown": Unknown
         }

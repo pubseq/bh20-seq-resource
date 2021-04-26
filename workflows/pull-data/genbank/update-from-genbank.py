@@ -41,8 +41,11 @@ if args.max:
 
 for i, idsx in enumerate(chunks(list(ids), request_num)):
     xmlfn = os.path.join(dir, f"metadata_{i}.xml.gz")
-    print(f"Fetching {xmlfn} ({i*request_num})",file=sys.stderr)
-    with gzip.open(xmlfn, 'w') as f:
+    if os.path.exists(xmlfn):
+      print(f"Skipping {xmlfn} ({i*request_num})",file=sys.stderr)
+    else:
+      print(f"Fetching {xmlfn} ({i*request_num})",file=sys.stderr)
+      with gzip.open(xmlfn, 'w') as f:
         f.write((Entrez.efetch(db='nuccore', id=idsx, retmode='xml').read()).encode())
     if args.max and i*request_num >= args.max:
         break

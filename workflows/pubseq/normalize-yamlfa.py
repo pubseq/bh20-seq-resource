@@ -34,10 +34,13 @@ parser.add_argument('--species', type=str, help='Species mapping file')
 parser.add_argument('--specimen', type=str, help='Optional specimen mapping file')
 parser.add_argument('--validate', action='store_true', help='Validation mode - stops on warning')
 parser.add_argument('--out', type=str, help='Directory to write to')
+parser.add_argument('--start', type=int, help='Start reporting at #')
 parser.add_argument('--yaml', action='store_true', help='Input YAML instead of JSON')
 parser.add_argument('id', nargs='*', help='optional id(s)')
 
 args = parser.parse_args()
+
+startpos = args.start
 
 with open(args.state) as jsonf:
     data = json.load(jsonf)
@@ -70,14 +73,18 @@ if args.specimen:
 else:
     print("WARNING: no specimen mapping file passed in",file=sys.stderr)
 
+count = 0
 for id in ids:
+    count += 1
+    if count < startpos:
+      continue
     if not data[id]["valid"]:
       print(f"SKIPPING invalid {id}",file=sys.stderr)
       continue
     if args.yaml:
         raise Exception("YAML not yet supported")
     fn = f"{dir}/{id}.json"
-    print(f"Reading {fn}",file=sys.stderr)
+    print(f"Reading {fn} ({count})",file=sys.stderr)
     with open(fn) as f:
         rec = types.SimpleNamespace(**json.load(f))
         if do_validate:

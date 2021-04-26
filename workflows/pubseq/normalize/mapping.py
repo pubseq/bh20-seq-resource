@@ -59,22 +59,50 @@ def specimen_source(sample,mapping):
     Saliva = "http://purl.obolibrary.org/obo/NCIT_C13275"
     Nasal_Swab = Nasopharyngeal # "http://purl.obolibrary.org/obo/NCIT_C132119"
     Frozen_Food = "https://www.wikidata.org/wiki/Q751728"
+    Tracheal = "http://purl.obolibrary.org/obo/NCIT_C171504"
     Bronchoalveolar_Lavage = "http://purl.obolibrary.org/obo/NCIT_C13195"
     Biospecimen = "http://purl.obolibrary.org/obo/NCIT_C70699" # Biological sample (default)
     Specimen = "http://purl.obolibrary.org/obo/NCIT_C19157"
+    Lung = "http://purl.obolibrary.org/obo/NCIT_C12468"
+    Cell_Culture = "http://purl.obolibrary.org/obo/NCIT_C16396"
+    Fecal = "http://purl.obolibrary.org/obo/NCIT_C13234"
+    Surface = "http://purl.obolibrary.org/obo/NCIT_C25245"
+    Air = "http://purl.obolibrary.org/obo/NCIT_C73434"
+
     SPECIMEN_TERMS = { # since Python 3.7 dict is ordered! Note that re is allowed
         "Oronasopharynx": Oronasopharynx,
         "orophar": Oropharyngeal,
         "pharyngeal": Nasopharyngeal,
         "\snares": Nasal_Swab,
         "saliva": Saliva,
+        "sputum": Saliva,
+        "nasophar": Nasal_Swab,
+        "nasal": Nasal_Swab,
+        "nares": Nasal_Swab,
+        "respir": Nasal_Swab,
+        "trachea": Tracheal,
         "swab": Nasal_Swab,
-        "broncho": Bronchoalveolar_Lavage,
+        "feces": Fecal,
+        "fecal": Fecal,
+        "sewage": Fecal,
+        "anterior": Fecal,
+        "lung": Lung,
+        "bronch": Bronchoalveolar_Lavage,
+        "nps": Nasopharyngeal,
         "seafood": Frozen_Food,
         "packaging": Frozen_Food,
         "specimen": Biospecimen,
         "patient": Biospecimen,
         "clinical": Biospecimen,
+        "cell": Cell_Culture,
+        "culture": Cell_Culture,
+        "door": Surface,
+        "table": Surface,
+        "chair": Surface,
+        "oral": Oronasopharynx,
+        "other": Unknown,
+        "anus": Fecal,
+        "air": Air,
         "uknown": Unknown,
         "unknown": Unknown
         }

@@ -42,7 +42,7 @@ for xmlfn in args.files:
             meta = {}
             id = gb.find("GBSeq_locus").text
             basename = dir+"/"+id
-            print(f"    parsing {id}")
+            print(f"    parsing {xmlfn} {id}")
             try:
                 valid,meta = genbank.get_metadata(id,gb)
                 if valid:
@@ -54,11 +54,13 @@ for xmlfn in args.files:
                     # --- write FASTA
                     fa = basename+".fa"
                     seq = genbank.get_sequence(id,gb)
-                    print(f"    writing {fa}")
-                    with open(fa,"w") as f2:
-                        f2.write(f"> {id}\n")
-                        f2.write(seq)
-                    # print(seq)
+                    if seq:
+                      print(f"    writing {fa}")
+                      with open(fa,"w") as f2:
+                         f2.write(f"> {id}\n")
+                         f2.write(seq)
+                    else:
+                      valid = False
             except genbank.GBError as e:
                 error = f"{e} for {id}"
                 print(error,file=sys.stderr)

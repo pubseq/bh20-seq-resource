@@ -147,7 +147,7 @@ def get_metadata(id, gbseq):
         date = dateparse(n.text).date()
         sample.collection_date = str(date)
     except dateutil.parser._parser.ParserError as e:
-        warn("No collection_date: ",str(e))
+        warn(f"No collection_date: {e}")
     except AttributeError:
         warn("Missing collection_date")
 
@@ -175,8 +175,8 @@ def get_metadata(id, gbseq):
             age = list[2]
             p = re.compile(r'[^\d]+(\d+)')
             m = p.match(n)
-            print(m.group(1))
             if m:
+                # print(m.group(1))
                 host.host_age = int(m.group(1))
                 host.host_age_unit = 'http://purl.obolibrary.org/obo/UO_0000036'
     n = fetch("virus_strain", ".//GBQualifier/GBQualifier_name/[.='isolate']/../GBQualifier_value")

@@ -76,7 +76,7 @@ else:
 count = 0
 for id in ids:
     count += 1
-    if count < startpos:
+    if startpos and count < startpos:
       continue
     if not data[id]["valid"]:
       print(f"SKIPPING invalid {id}",file=sys.stderr)

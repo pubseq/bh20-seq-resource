@@ -33,10 +33,10 @@ options = { show_help: false, source: 'https://github.com/pubseq', version: VERS
 
 opts = OptionParser.new do |o|
   o.banner = "Usage: #{TOOL} [options] path"
-  o.on('--dir path',String, 'Path to JSON files') do |path|
+  o.on('--dir path',String, 'Path to JSON files [REQUIRED]') do |path|
     options[:path] = path
   end
-  o.on('--out path',String, 'Dir to write to') do |path|
+  o.on('--out path',String, 'Dir to write to [REQUIRED]') do |path|
     options[:out] = path
   end
 
@@ -64,8 +64,8 @@ end
 
 opts.parse!(ARGV)
 
-NORMALIZE_GEO_BANNER = "#{TOOL} #{VERSION} (Ruby #{RUBY_VERSION}) by Pjotr Prins 2021\n"
-$stderr.print NORMALIZE_GEO_BANNER if !options[:quiet]
+BANNER = "#{TOOL} #{VERSION} (Ruby #{RUBY_VERSION}) by Pjotr Prins 2021\n"
+$stderr.print BANNER if !options[:quiet]
 
 if options[:show_help]
   print opts
@@ -83,7 +83,11 @@ GLOBAL = OpenStruct.new(options)
 raise "--dir directory is required" if not GLOBAL.path
 raise "--out directory is required" if not GLOBAL.out
 
+
+# =======================================================================
 # ---- So far it is boiler plate to set the environment
+# ---- continue reading the tables from Wikidata
+
 country_uri = [] # tuples
 Zlib::GzipReader.open('../../data/wikidata/countries.tsv.gz',:encoding => 'UTF-8').each_line {|line|
   place,country,countryname,continent = line.split(/\t/)
@@ -114,9 +118,18 @@ Zlib::GzipReader.open('../../data/wikidata/regions.csv.gz',:encoding => 'UTF-8')
 }
 places_uris = places_uri.sort_by { |t| t[0].length }.reverse
 
+# =======================================================================
+# ---- Actual processing starts here
 # ---- For each metadata JSON file
-Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
-  next if fn == "state.json"
+
+# ---- Fetch state.json file
+state = JSON.parse(File.read(GLOBAL.path+"/state.json"))
+
+# Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
+# next if fn == "state.json"
+
+state.keys.each do |id|
+  fn = id+".json"
   jsonfn = GLOBAL.path+"/"+fn
   json = JSON.parse(File.read(jsonfn))
   meta = OpenStruct.new(json)
@@ -162,7 +175,7 @@ Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
     end
   end
 
-  # ==== Refine location using the places/regions information
+  # ---- Refine location using the places/regions information
   wd_country = meta.sample['wd:country']
   countryname = meta.sample['country']
 
@@ -186,7 +199,7 @@ Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
 
   meta.warnings.push "Failed to normalize location" if not meta.sample['collection_location']
 
-  # Write new meta file
+  # ---- Write new meta file
   json = JSON::pretty_generate(meta.to_h)
   print json,"\n" if GLOBAL.verbose
   File.write(GLOBAL.out+"/"+fn,json)

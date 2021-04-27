@@ -129,6 +129,7 @@ state = JSON.parse(File.read(GLOBAL.path+"/state.json"))
 # next if fn == "state.json"
 
 state.keys.each do |id|
+  next if not state[id]['valid']
   fn = id+".json"
   jsonfn = GLOBAL.path+"/"+fn
   json = JSON.parse(File.read(jsonfn))

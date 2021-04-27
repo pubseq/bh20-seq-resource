@@ -43,7 +43,7 @@ args = parser.parse_args()
 startpos = args.start
 
 with open(args.state) as jsonf:
-    data = json.load(jsonf)
+    state = json.load(jsonf)
 
 dir = os.path.dirname(args.state)
 do_validate = args.validate
@@ -54,7 +54,7 @@ if outdir and not os.path.exists(outdir):
 
 ids = args.id
 if not len(ids):
-    ids = list(data.keys())
+    ids = list(state.keys())
 
 species = {}
 if args.species:
@@ -78,7 +78,7 @@ for id in ids:
     count += 1
     if startpos and count < startpos:
       continue
-    if not data[id]["valid"]:
+    if not state[id]["valid"]:
       print(f"SKIPPING invalid {id}",file=sys.stderr)
       continue
     if args.yaml:
@@ -108,3 +108,9 @@ for id in ids:
                 json.dump(rec.__dict__, outfile, indent=2)
         else:
             print(rec)
+
+statefn = outdir + '/state.json'
+with open(statefn, 'w') as outfile:
+    print(f"    Writing {statefn}")
+    json.dump(state, outfile, indent=4)
+

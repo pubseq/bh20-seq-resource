@@ -118,7 +118,7 @@ Zlib::GzipReader.open('../../data/wikidata/regions.csv.gz',:encoding => 'UTF-8')
 }
 places_uris = places_uri.sort_by { |t| t[0].length }.reverse
 
-# =======================================================================
+# ========================================================================
 # ---- Actual processing starts here
 # ---- For each metadata JSON file
 
@@ -134,6 +134,7 @@ state.keys.each do |id|
   json = JSON.parse(File.read(jsonfn))
   meta = OpenStruct.new(json)
 
+  # ---- GEO Normalisation -----------------------------------------------
   # ==== Normalize by country using uploader location fields for
   #      collection_location and submitter_address
 
@@ -199,8 +200,16 @@ state.keys.each do |id|
 
   meta.warnings.push "Failed to normalize location" if not meta.sample['collection_location']
 
+
   # ---- Write new meta file
   json = JSON::pretty_generate(meta.to_h)
   print json,"\n" if GLOBAL.verbose
   File.write(GLOBAL.out+"/"+fn,json)
+
+  # ---- Update state file
+  state[id]["warnings"] = meta.warnings
 end
+
+# ---- Write the state file
+state_json = JSON::pretty_generate(state)
+File.write(GLOBAL.out+"/state.json",state_json)

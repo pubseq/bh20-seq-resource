@@ -208,6 +208,7 @@ def get_sequence(id, gbseq):
             raise GBError(f"Expected one sequence for {id}")
         seq = gbseq_sequence.text.upper()
         print(f"SEQ: size={len(seq)}",seq[0:30])
-        if len(seq) < 20_000:
+        if len(seq) < 27_000:
             raise GBError(f"Sequence too short")
         return seq
+

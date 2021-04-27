@@ -108,9 +108,10 @@ for id in ids:
                 json.dump(rec.__dict__, outfile, indent=2)
         else:
             print(rec)
+        state[id]['warning'] = rec.warnings
 
-statefn = outdir + '/state.json'
-with open(statefn, 'w') as outfile:
-    print(f"    Writing {statefn}")
-    json.dump(state, outfile, indent=4)
-
+if outdir:
+    statefn = outdir + '/state.json'
+    with open(statefn, 'w') as outfile:
+        print(f"    Writing {statefn}")
+        json.dump(state, outfile, indent=4)

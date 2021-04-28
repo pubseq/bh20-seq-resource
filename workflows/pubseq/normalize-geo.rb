@@ -137,7 +137,7 @@ state.keys.each do |id|
 
   warn = lambda { |msg|
     msg += " for #{id}"
-    meta.warnings.push msg if not meta.sample['collection_location']
+    meta.warnings.push msg
     $stderr.print "WARNING: #{msg}\n" if GLOBAL.verbose or GLOBAL.debug
   }
 
@@ -210,7 +210,7 @@ state.keys.each do |id|
   warn.call "Failed to normalize location" if not meta.sample['collection_location']
 
   # ---- Normalise sequencing method -------------------------------------
-  sequencers = [
+  known_sequencers = [
     [ "HiSeq 1000", "http://www.ebi.ac.uk/efo/EFO_0004204" ],
     [ "HiSeq 2000", "http://www.ebi.ac.uk/efo/EFO_0004203" ],
     [ "HiSeq 2500", "http://www.ebi.ac.uk/efo/EFO_0008565" ],
@@ -242,6 +242,20 @@ state.keys.each do |id|
     [ "454", "http://www.ebi.ac.uk/efo/EFO_0004431" ],
     [ "SOLiD", "http://www.ebi.ac.uk/efo/EFO_0004435" ],
   ]
+
+  if meta.technology['sample_sequencing_technology']
+    meta.technology['sample_sequencing_technology'].map! { |seq|
+      index = known_sequencers.index { |pair|
+        name,uri = pair
+        ( seq =~ /#{name}/i ? uri : false )
+      }
+      if index
+        known_sequencers[index][1]
+      else
+        warn.call "Failed to normalize sequencer <#{seq}>"
+      end
+    }
+  end
 
   # ---- Wrap up ---------------------------------------------------------
   # ---- Write new meta file

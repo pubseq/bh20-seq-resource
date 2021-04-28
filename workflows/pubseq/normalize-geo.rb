@@ -206,6 +206,7 @@ state.keys.each do |id|
       match_place.call(places_uris, lambda { |n| strain =~ /#{n}/ })
     end
   end
+  meta.sample.delete('wd:country') # implicit in Wikidata location
 
   warn.call "Failed to normalize location" if not meta.sample['collection_location']
 
@@ -255,6 +256,32 @@ state.keys.each do |id|
       end
     }
   end
+
+  # ---- Normalise assembly method -------------------------------------
+  known_assembly = [
+    [ "spades", "http://purl.obolibrary.org/obo/GENEPIO_0001628" ], # de novo
+    [ "de novo", "http://purl.obolibrary.org/obo/GENEPIO_0001628" ], # de novo
+    [ "assembly", "http://purl.obolibrary.org/obo/GENEPIO_0001628" ], # de novo
+    [ "bwa", "http://purl.obolibrary.org/obo/GENEPIO_0002028" ], # default mapped
+  ]
+
+  ap = meta.technology['alignment_protocol']
+  if ap
+    known_assembly.each do |pair|
+      name,uri = pair
+      if ap =~ /#{name}/
+        meta.technology['assembly_method'] = uri
+        break
+      end
+    end
+  else
+    warn.call "Missing alignment protocol"
+  end
+  am = meta.technology['assembly_method']
+  if not am or am !~ /^http/
+    meta.technology['assembly_method'] = "http://purl.obolibrary.org/obo/GENEPIO_0002028"
+  end
+
 
   # ---- Wrap up ---------------------------------------------------------
   # ---- Write new meta file

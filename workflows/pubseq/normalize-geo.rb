@@ -135,6 +135,12 @@ state.keys.each do |id|
   json = JSON.parse(File.read(jsonfn))
   meta = OpenStruct.new(json)
 
+  warn = lambda { |msg|
+    msg += " for #{id}"
+    meta.warnings.push msg if not meta.sample['collection_location']
+    $stderr.print "WARNING: #{msg}\n" if GLOBAL.verbose or GLOBAL.debug
+  }
+
   # ---- GEO Normalisation -----------------------------------------------
   # ==== Normalize by country using uploader location fields for
   #      collection_location and submitter_address
@@ -194,14 +200,50 @@ state.keys.each do |id|
 
   location = meta.sample['original_collection_location']
   address = meta.submitter['submitter_address']
-
+  strain = meta.virus['virus_strain']
   if not match_place.call(places_uris, lambda { |n| location =~ /:.*#{n}/ })
-    match_place.call(places_uris, lambda { |n| address =~ /#{n}/ })
+    if not match_place.call(places_uris, lambda { |n| address =~ /#{n}/ })
+      match_place.call(places_uris, lambda { |n| strain =~ /#{n}/ })
+    end
   end
 
-  meta.warnings.push "Failed to normalize location" if not meta.sample['collection_location']
+  warn.call "Failed to normalize location" if not meta.sample['collection_location']
 
+  # ---- Normalise sequencing method -------------------------------------
+  sequencers = [
+    [ "HiSeq 1000", "http://www.ebi.ac.uk/efo/EFO_0004204" ],
+    [ "HiSeq 2000", "http://www.ebi.ac.uk/efo/EFO_0004203" ],
+    [ "HiSeq 2500", "http://www.ebi.ac.uk/efo/EFO_0008565" ],
+    [ "HiSeq 3000", "http://www.ebi.ac.uk/efo/EFO_0008564" ],
+    [ "HiSeq 4000", "http://www.ebi.ac.uk/efo/EFO_0008563" ],
+    [ "HiSeq 100", "http://www.ebi.ac.uk/efo/EFO_0008635" ],
+    [ "HiSeq X", "http://www.ebi.ac.uk/efo/EFO_0008567" ],
+    [ "NextSeq 500", "http://www.ebi.ac.uk/efo/EFO_0009173" ],
+    [ "NextSeq 550", "http://www.ebi.ac.uk/efo/EFO_0008566" ],
+    [ "MiSeq", "http://www.ebi.ac.uk/efo/EFO_0004205" ],
+    [ "MiniSeq", "http://www.ebi.ac.uk/efo/EFO_0008636" ],
+    [ "NovaSeq", "http://www.ebi.ac.uk/efo/EFO_0008637" ],
+    [ "Genome Analyzer", "http://www.ebi.ac.uk/efo/EFO_0004200" ],
+    [ "Genome Analyzer II", "http://www.ebi.ac.uk/efo/EFO_0004201" ],
+    [ "Genome Analyzer IIx", "http://www.ebi.ac.uk/efo/EFO_0004202" ],
+    [ "Illumina", "http://purl.obolibrary.org/obo/OBI_0000759" ],
+    [ "MinION", "http://www.ebi.ac.uk/efo/EFO_0008632" ],
+    [ "Nanopore", "http://purl.obolibrary.org/obo/NCIT_C146818" ],
+    [ "GridION", "http://www.ebi.ac.uk/efo/EFO_0008633" ],
+    [ "PremethION", "http://www.ebi.ac.uk/efo/EFO_0008634" ],
+    [ "Oxford Nanopore", "http://purl.obolibrary.org/obo/NCIT_C146818" ],
+    [ "IonTorrent", "http://purl.obolibrary.org/obo/NCIT_C125894" ],
+    [ "Ion Torrent", "http://purl.obolibrary.org/obo/NCIT_C125894" ],
+    [ "ThermoFisher", "http://purl.obolibrary.org/obo/NCIT_C125894" ],
+    [ "Sanger", "http://purl.obolibrary.org/obo/NCIT_C19641" ],
+    [ "MGISEQ 2000", "http://virtual-bh/MGISEQ2000" ],
+    [ "PacBio RS II", "http://www.ebi.ac.uk/efo/EFO_0008631" ],
+    [ "PacBio", "http://www.ebi.ac.uk/efo/EFO_0008630" ],
+    [ "454", "http://www.ebi.ac.uk/efo/EFO_0004431" ],
+    [ "SOLiD", "http://www.ebi.ac.uk/efo/EFO_0004435" ],
+  ]
 
+  # ---- Wrap up ---------------------------------------------------------
   # ---- Write new meta file
   json = JSON::pretty_generate(meta.to_h)
   print json,"\n" if GLOBAL.verbose

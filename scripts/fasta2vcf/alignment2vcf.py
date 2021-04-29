@@ -151,5 +151,3 @@ save_vcf(ref_variant, qry_variant, output_prefix, out_fn)
 
 print(f"Normalize, update ID, and index.")
 postprocess_vcf(out_fn, path_reference)
-
-# Delete temporary files

@@ -1,3 +1,5 @@
+# From https://github.com/boxiangliu/covseq
+
 from collections import defaultdict
 
 def parse_align(align_fn):

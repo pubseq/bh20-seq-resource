@@ -89,6 +89,7 @@ raise "--out directory is required" if not GLOBAL.out
 # ---- continue reading the tables from Wikidata
 
 country_uri = [] # tuples
+
 Zlib::GzipReader.open('../../data/wikidata/countries.tsv.gz',:encoding => 'UTF-8').each_line {|line|
   place,country,countryname,continent = line.split(/\t/)
   country_uri.push [countryname.upcase.strip,place]
@@ -101,6 +102,8 @@ explicit = [
 country_uris = country_uri.sort_by { |t| t[0].length }.reverse + explicit
 
 alias_uri = []
+geo_lookup = {}
+
 Zlib::GzipReader.open('../../data/wikidata/country_aliases.tsv.gz',:encoding => 'UTF-8').each_line {|line|
   place,country,countryname,aliases = line.split(/\t/)
   alias_uri.push [aliases.upcase.strip,place]
@@ -111,16 +114,23 @@ places_uri = []
 Zlib::GzipReader.open('../../data/wikidata/places.csv.gz',:encoding => 'UTF-8').each_line {|line|
   placename,place,country,coor,population = line.split(/,/)
   places_uri.push [placename.strip,place,country,coor,population]
+  geo_lookup[place] = [placename,coor]
 }
 Zlib::GzipReader.open('../../data/wikidata/regions.csv.gz',:encoding => 'UTF-8').each_line {|line|
   placename,place,country,coor,population = line.split(/,/)
   places_uri.push [placename.strip,place,country,coor,population]
+  geo_lookup[place] = [placename,coor]
 }
 places_uris = places_uri.sort_by { |t| t[0].length }.reverse
 
 # ========================================================================
 # ---- Actual processing starts here
 # ---- For each metadata JSON file
+
+geo = {} # hash of wikidata geo entities tracks used coordinates
+geo_add = lambda { |name,uri|
+  geo[uri] = geo_lookup[uri]
+}
 
 # ---- Fetch state.json file
 state = JSON.parse(File.read(GLOBAL.path+"/state.json"))
@@ -163,6 +173,7 @@ state.keys.each do |id|
         meta.sample['collection_location'] = uri
         meta.sample['country'] = name
         meta.sample['wd:country'] = uri
+        geo_add.call(name,uri)
         return true
       end
     }
@@ -192,6 +203,7 @@ state.keys.each do |id|
       if wd_country == country_uri and find.call(name)
         meta.sample['collection_location'] = uri
         meta.sample['place'] = name
+        geo_add.call(name,uri)
         return true
       end
     }
@@ -293,6 +305,10 @@ state.keys.each do |id|
   state[id]["warnings"] = meta.warnings
 end
 
-# ---- Write the state file
+$stderr.print "Write geo.json\n" if GLOBAL.verbose
+geo_json = JSON::pretty_generate(geo)
+File.write(GLOBAL.out+"/geo.json",geo_json)
+
+$stderr.print "Write state.json\n" if GLOBAL.verbose
 state_json = JSON::pretty_generate(state)
 File.write(GLOBAL.out+"/state.json",state_json)

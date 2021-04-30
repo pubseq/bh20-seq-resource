@@ -321,6 +321,39 @@ places that have a population abvoe 100K. Future refinements should be
 by country/state/province/council and distinguish between the
 different locations with the same name.
 
+*** Track location coordinates
+
+Every location comes with GPS coordinates in wikidata. We capture
+those in triples in our RDF store so we don't have to visit wikidata
+for every query. A triple for Washington looks like
+
+#+begin_src rdf
+<http://www.wikidata.org/entity/Q1223> rdfs:label "Washington" ;
+    wdt:P17 <http://www.wikidata.org/entity/Q30> ;
+    wdt:P625 "Point(-120.5 47.5)" .
+#+end_src
+
+The intermediate JSON record is stored in a file geo.json which can
+be used by JSON parsers:
+
+#+begin_src n
+  {
+    "http://www.wikidata.org/entity/Q30": [
+      "United States of America",
+      "Point(-98.5795 39.828175)"
+    ],
+    "http://www.wikidata.org/entity/Q110739": [
+      "Santa Clara County",
+      "Point(-121.97 37.36)"
+    ],
+    "http://www.wikidata.org/entity/Q99": [
+      "California",
+      "Point(-120.0 37.0)"
+    ],
+    ...
+  }
+
+#+end_src
 
 ** RegEx search known items
 

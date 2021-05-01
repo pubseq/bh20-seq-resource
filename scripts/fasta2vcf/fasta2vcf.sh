@@ -12,7 +12,11 @@ mafft ref+qry.fasta > ref+qry.alignment
 
 python3 alignment2vcf.py $path_reference ref+qry.alignment $output_prefix
 
-java -jar /home/tools/snpEff/5.0e/snpEff.jar NC_045512.2 $output_prefix.vcf | bgzip -c > $output_prefix.annotated.vcf.gz && tabix -p vcf $output_prefix.annotated.vcf.gz
+bcftools norm -f $path_reference $output_prefix.vcf -Ou | bcftools annotate --set-id '%CHROM\_%POS\_%REF\_%FIRST_ALT' -Ov -o - | bgzip -c > $output_prefix.vcf.gz
+#tabix -p vcf $output_prefix.vcf.gz
+
+#java -jar /home/tools/snpEff/5.0e/snpEff.jar NC_045512.2 $output_prefix.vcf | bgzip -c > $output_prefix.annotated.vcf.gz && tabix -p vcf $output_prefix.annotated.vcf.gz
 
 echo "Removing temporary files"
-rm snpEff_genes.txt snpEff_summary.html ref+qry.fasta ref+qry.alignment $output_prefix.vcf
+#rm snpEff_genes.txt snpEff_summary.html
+rm ref+qry.fasta ref+qry.alignment $output_prefix.vcf

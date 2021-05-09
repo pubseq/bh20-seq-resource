@@ -51,6 +51,10 @@ opts = OptionParser.new do |o|
     options[:verbose] = true
   end
 
+  o.on("--progress", "Show progress") do |p|
+    options[:progress] = true
+  end
+
   o.on("--debug", "Show debug messages and keep intermediate output") do |v|
     # Bio::Log::CLI.trace('debug')
     options[:debug] = true
@@ -139,7 +143,8 @@ state = JSON.parse(File.read(GLOBAL.path+"/state.json"))
 # Dir.new(GLOBAL.path).entries.select {|s| s =~/json$/}.each do |fn|
 # next if fn == "state.json"
 
-state.keys.each do |id|
+state.keys.each_with_index do |id,count|
+  print("\r#{count}") if GLOBAL.progress
   next if not state[id]['valid']
   fn = id+".json"
   jsonfn = GLOBAL.path+"/"+fn

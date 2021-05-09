@@ -404,20 +404,20 @@ mappings in regex [[https://github.com/pubseq/bh20-seq-resource/blob/master/work
 To run the normalization use the command:
 
 #+begin_src sh
-python3 normalize-yamlfa.py -s ~/tmp/yamlfa/state.json --species ncbi_host_species.csv --specimen specimen.csv --validate
+python3 normalize-step1.py -s ~/tmp/yamlfa/state.json --species ncbi_host_species.csv --specimen specimen.csv --validate
 #+end_src
 
 To work on one single JSON/YAML file/record, you can pass in the ID,
 e.g.
 
 #+begin_src sh
-python3 normalize-yamlfa.py -s ~/tmp/new-yamlfa-orig.2/state.json --validate MW084447
+python3 normalize-step1.py -s ~/tmp/new-yamlfa-orig.2/state.json --validate MW084447
 #+end_src
 
 To write output specify the output dir:
 
 #+begin_src sh
-  python3 normalize-yamlfa.py -s ~/tmp/new-yamlfa-orig.2/state.json --validate MW084447 --out ~/tmp/test
+  python3 normalize-step1.py -s ~/tmp/new-yamlfa-orig.2/state.json --validate MW084447 --out ~/tmp/test
 #+end_src
 
 and run a diff with, for example,

@@ -127,9 +127,10 @@ places_uris = places_uri.sort_by { |t| t[0].length }.reverse
 # ---- Actual processing starts here
 # ---- For each metadata JSON file
 
-geo = {} # hash of wikidata geo entities tracks used coordinates
+geo = {} # hash of wikidata geo entities tracks used coordinates -> geo.json
 geo_add = lambda { |name,uri|
-  geo[uri] = geo_lookup[uri]
+  name,coor = geo_lookup[uri]
+  geo[uri] = { "name": name, "geo": coor }
 }
 
 # ---- Fetch state.json file

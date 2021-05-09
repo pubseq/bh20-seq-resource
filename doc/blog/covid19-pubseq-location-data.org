@@ -19,7 +19,8 @@ why it is not so easy!
    - [[#why-use-wikidata-uris-instead-of-gps-coordinates][Why use WikiData URIs instead of GPS coordinates?]]
  - [[#normalizing-location-data][Normalizing location data]]
    - [[#simple-search-wikidata][Simple search Wikidata]]
-   - [[#start-normalizing-geo-location][Start normalizing geo-location]]
+   - [[#start-normalizing-geo-location-step-2][Start normalizing geo-location (step 2)]]
+   - [[#create-database-step-3][Create database (step 3)]]
    - [[#regex-search-known-items][RegEx search known items]]
    - [[#fuzzy-search-wikidata][Fuzzy search Wikidata]]
  - [[#shape-expressions-shex-and-validation][Shape expressions (ShEx) and validation]]
@@ -273,7 +274,7 @@ The script 'fetch-regions.sh' with curl takes over a minute with about
 
 Save file as data/wikidata/regions.csv.gz
 
-** Start normalizing geo-location
+** Start normalizing geo-location (step 2)
 
 *** Normalize by country
 
@@ -333,27 +334,34 @@ for every query. A triple for Washington looks like
     wdt:P625 "Point(-120.5 47.5)" .
 #+end_src
 
-The intermediate JSON record is stored in a file geo.json which can
-be used by JSON parsers:
+The intermediate JSON record is stored in a file geo.json which is
+used to generate RDF triples and can also be used directly by JSON
+parsers:
 
-#+begin_src n
-  {
-    "http://www.wikidata.org/entity/Q30": [
-      "United States of America",
-      "Point(-98.5795 39.828175)"
-    ],
-    "http://www.wikidata.org/entity/Q110739": [
-      "Santa Clara County",
-      "Point(-121.97 37.36)"
-    ],
-    "http://www.wikidata.org/entity/Q99": [
-      "California",
-      "Point(-120.0 37.0)"
-    ],
+#+begin_src json
+{
+  "http://www.wikidata.org/entity/Q30": {
+    "name": "United States of America",
+    "geo": "Point(-98.5795 39.828175)"
+  },
+  "http://www.wikidata.org/entity/Q110739": {
+    "name": "Santa Clara County",
+    "geo": "Point(-121.97 37.36)"
+  },
+  "http://www.wikidata.org/entity/Q99": {
+    "name": "California",
+    "geo": "Point(-120.0 37.0)"
+  },
     ...
-  }
-
+}
 #+end_src
+
+
+** Create database (step 3)
+
+In the final step the RDF database is updated using the normalized
+data from step 1 and 2. For location data the geo.json file is used to
+generate RDF triples.
 
 ** RegEx search known items
 

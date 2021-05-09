@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-07 Wed 04:16 -->
+<!-- 2021-05-09 Sun 02:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq Uploading Data (part 3)</title>
@@ -224,58 +224,59 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1f8f24d">1. Introduction</a></li>
-<li><a href="#org87ccaac">2. Uploading data</a></li>
-<li><a href="#org10d2638">3. Step 1: Upload sequence</a></li>
-<li><a href="#org190c480">4. Step 2: Add metadata</a>
+<li><a href="#orgdce1d82">1. Introduction</a></li>
+<li><a href="#org0b76809">2. Uploading data</a></li>
+<li><a href="#orga924255">3. Step 1: Upload sequence</a></li>
+<li><a href="#org5f791e4">4. Step 2: Add metadata</a>
 <ul>
-<li><a href="#orgee6c2a1">4.1. Obligatory fields</a>
+<li><a href="#org70a4825">4.1. Obligatory fields</a>
 <ul>
-<li><a href="#org8a35bd1">4.1.1. Sample ID (sample_id)</a></li>
-<li><a href="#org4663ff7">4.1.2. Collection date</a></li>
-<li><a href="#org4f59b34">4.1.3. Collection location</a></li>
-<li><a href="#orga4c8a57">4.1.4. Sequencing technology</a></li>
-<li><a href="#org4638a61">4.1.5. Authors</a></li>
+<li><a href="#orgd7dd05b">4.1.1. Sample ID (sample_id)</a></li>
+<li><a href="#orgbfa5e6f">4.1.2. Collection date</a></li>
+<li><a href="#org9a767b6">4.1.3. Collection location</a></li>
+<li><a href="#org78d41f5">4.1.4. Sequencing technology</a></li>
+<li><a href="#org8a91e82">4.1.5. Authors</a></li>
 </ul>
 </li>
-<li><a href="#org0797d5c">4.2. Optional fields</a>
+<li><a href="#org1b9ae44">4.2. Optional fields</a>
 <ul>
-<li><a href="#org022b25f">4.2.1. Host information</a></li>
-<li><a href="#orgd93804f">4.2.2. Collecting institution</a></li>
-<li><a href="#orgc823e19">4.2.3. Specimen source</a></li>
-<li><a href="#orge4a0897">4.2.4. Source database accession</a></li>
-<li><a href="#org846e1f2">4.2.5. Strain name</a></li>
+<li><a href="#org5c6db3e">4.2.1. Host information</a></li>
+<li><a href="#orgd6880ca">4.2.2. Collecting institution</a></li>
+<li><a href="#org53c6a46">4.2.3. Specimen source</a></li>
+<li><a href="#org34a9c9a">4.2.4. Source database accession</a></li>
+<li><a href="#orgb572a75">4.2.5. Strain name</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org2ac8069">5. Step 3: Submit to COVID-19 PubSeq</a>
+<li><a href="#org53381c7">5. Step 3: Submit to COVID-19 PubSeq</a>
 <ul>
-<li><a href="#org597030a">5.1. Trouble shooting</a></li>
+<li><a href="#org5d317ac">5.1. Trouble shooting</a></li>
 </ul>
 </li>
-<li><a href="#org1877e79">6. Step 4: Check output</a></li>
-<li><a href="#org0238864">7. Bulk sequence uploader</a>
+<li><a href="#org389fedb">6. Step 4: Check output</a></li>
+<li><a href="#org3fb7fc8">7. Bulk sequence uploader</a>
 <ul>
-<li><a href="#orgf9293b4">7.1. Run the uploader (CLI)</a></li>
-<li><a href="#orgbf47dd6">7.2. Example: uploading bulk GenBank sequences</a>
+<li><a href="#org3514567">7.1. Run the uploader (CLI)</a></li>
+<li><a href="#orgc97a930">7.2. Example: uploading bulk GenBank sequences</a>
 <ul>
-<li><a href="#org78f9e9b">7.2.1. List PubSeq IDs</a></li>
-<li><a href="#org27826ee">7.2.2. Fetch GenBank IDs</a></li>
-<li><a href="#org0b2321f">7.2.3. Fetch GenBank XML</a></li>
-<li><a href="#orge25471e">7.2.4. Transform and normalize data for uploading</a></li>
-<li><a href="#orgf6e3acb">7.2.5. Upload data</a></li>
+<li><a href="#orga76159c">7.2.1. List PubSeq IDs</a></li>
+<li><a href="#org89757c4">7.2.2. Fetch GenBank IDs</a></li>
+<li><a href="#org538bf18">7.2.3. Fetch GenBank XML</a></li>
+<li><a href="#orgf96d0f6">7.2.4. Transform and normalize data for uploading</a></li>
+<li><a href="#org274ef05">7.2.5. Normalize metadata</a></li>
+<li><a href="#org2351e31">7.2.6. Upload data</a></li>
 </ul>
 </li>
-<li><a href="#orgda2e083">7.3. Example: preparing metadata from spreadsheets</a></li>
+<li><a href="#org5985f41">7.3. Example: preparing metadata from spreadsheets</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org1f8f24d" class="outline-2">
-<h2 id="org1f8f24d"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-orgdce1d82" class="outline-2">
+<h2 id="orgdce1d82"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 In this document we explain how to upload data into COVID-19 PubSeq.
@@ -288,9 +289,8 @@ export API to prepare for other repositories, including GenBank.
 </div>
 </div>
 
-
-<div id="outline-container-org87ccaac" class="outline-2">
-<h2 id="org87ccaac"><span class="section-number-2">2</span> Uploading data</h2>
+<div id="outline-container-org0b76809" class="outline-2">
+<h2 id="org0b76809"><span class="section-number-2">2</span> Uploading data</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 PubSeq allows you to upload your SARS-Cov-2 strains to a public
@@ -300,8 +300,8 @@ triggered on upload. Read the <a href="./about">ABOUT</a> page for more informat
 </div>
 </div>
 
-<div id="outline-container-org10d2638" class="outline-2">
-<h2 id="org10d2638"><span class="section-number-2">3</span> Step 1: Upload sequence</h2>
+<div id="outline-container-orga924255" class="outline-2">
+<h2 id="orga924255"><span class="section-number-2">3</span> Step 1: Upload sequence</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 To upload a sequence with the <a href="http://covid19.genenetwork.org/">web upload page</a> hit the File browse
@@ -329,8 +329,8 @@ an improved pangenome.
 </div>
 </div>
 
-<div id="outline-container-org190c480" class="outline-2">
-<h2 id="org190c480"><span class="section-number-2">4</span> Step 2: Add metadata</h2>
+<div id="outline-container-org5f791e4" class="outline-2">
+<h2 id="org5f791e4"><span class="section-number-2">4</span> Step 2: Add metadata</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The <a href="./">web upload page</a> contains fields for adding metadata. Metadata is
@@ -351,12 +351,12 @@ for metadata yourself because this is a public resource! See also
 </p>
 </div>
 
-<div id="outline-container-orgee6c2a1" class="outline-3">
-<h3 id="orgee6c2a1"><span class="section-number-3">4.1</span> Obligatory fields</h3>
+<div id="outline-container-org70a4825" class="outline-3">
+<h3 id="org70a4825"><span class="section-number-3">4.1</span> Obligatory fields</h3>
 <div class="outline-text-3" id="text-4-1">
 </div>
-<div id="outline-container-org8a35bd1" class="outline-4">
-<h4 id="org8a35bd1"><span class="section-number-4">4.1.1</span> Sample ID (sample_id)</h4>
+<div id="outline-container-orgd7dd05b" class="outline-4">
+<h4 id="orgd7dd05b"><span class="section-number-4">4.1.1</span> Sample ID (sample_id)</h4>
 <div class="outline-text-4" id="text-4-1-1">
 <p>
 This is a string field that defines a unique sample identifier by the
@@ -374,8 +374,8 @@ Here we add the GenBank ID MT536190.1.
 </div>
 </div>
 
-<div id="outline-container-org4663ff7" class="outline-4">
-<h4 id="org4663ff7"><span class="section-number-4">4.1.2</span> Collection date</h4>
+<div id="outline-container-orgbfa5e6f" class="outline-4">
+<h4 id="orgbfa5e6f"><span class="section-number-4">4.1.2</span> Collection date</h4>
 <div class="outline-text-4" id="text-4-1-2">
 <p>
 Estimated collection date. The GenBank page says April 6, 2020.
@@ -383,8 +383,8 @@ Estimated collection date. The GenBank page says April 6, 2020.
 </div>
 </div>
 
-<div id="outline-container-org4f59b34" class="outline-4">
-<h4 id="org4f59b34"><span class="section-number-4">4.1.3</span> Collection location</h4>
+<div id="outline-container-org9a767b6" class="outline-4">
+<h4 id="org9a767b6"><span class="section-number-4">4.1.3</span> Collection location</h4>
 <div class="outline-text-4" id="text-4-1-3">
 <p>
 A search on wikidata says Los Angeles is
@@ -393,8 +393,8 @@ A search on wikidata says Los Angeles is
 </div>
 </div>
 
-<div id="outline-container-orga4c8a57" class="outline-4">
-<h4 id="orga4c8a57"><span class="section-number-4">4.1.4</span> Sequencing technology</h4>
+<div id="outline-container-org78d41f5" class="outline-4">
+<h4 id="org78d41f5"><span class="section-number-4">4.1.4</span> Sequencing technology</h4>
 <div class="outline-text-4" id="text-4-1-4">
 <p>
 GenBank entry says Illumina, so we can fill that in
@@ -402,8 +402,8 @@ GenBank entry says Illumina, so we can fill that in
 </div>
 </div>
 
-<div id="outline-container-org4638a61" class="outline-4">
-<h4 id="org4638a61"><span class="section-number-4">4.1.5</span> Authors</h4>
+<div id="outline-container-org8a91e82" class="outline-4">
+<h4 id="org8a91e82"><span class="section-number-4">4.1.5</span> Authors</h4>
 <div class="outline-text-4" id="text-4-1-5">
 <p>
 GenBank entry says 'Lamers,S., Nolan,D.J., Rose,R., Cross,S., Moraga
@@ -414,16 +414,16 @@ Freehan,A. and Garcia-Diaz,J.', so we can fill that in.
 </div>
 </div>
 
-<div id="outline-container-org0797d5c" class="outline-3">
-<h3 id="org0797d5c"><span class="section-number-3">4.2</span> Optional fields</h3>
+<div id="outline-container-org1b9ae44" class="outline-3">
+<h3 id="org1b9ae44"><span class="section-number-3">4.2</span> Optional fields</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 All other fields are optional. But let's see what we can add.
 </p>
 </div>
 
-<div id="outline-container-org022b25f" class="outline-4">
-<h4 id="org022b25f"><span class="section-number-4">4.2.1</span> Host information</h4>
+<div id="outline-container-org5c6db3e" class="outline-4">
+<h4 id="org5c6db3e"><span class="section-number-4">4.2.1</span> Host information</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <p>
 Sadly, not much is known about the host from GenBank. A little
@@ -437,8 +437,8 @@ did to the person and what the person was like (say age group).
 </div>
 </div>
 
-<div id="outline-container-orgd93804f" class="outline-4">
-<h4 id="orgd93804f"><span class="section-number-4">4.2.2</span> Collecting institution</h4>
+<div id="outline-container-orgd6880ca" class="outline-4">
+<h4 id="orgd6880ca"><span class="section-number-4">4.2.2</span> Collecting institution</h4>
 <div class="outline-text-4" id="text-4-2-2">
 <p>
 We can fill that in.
@@ -446,8 +446,8 @@ We can fill that in.
 </div>
 </div>
 
-<div id="outline-container-orgc823e19" class="outline-4">
-<h4 id="orgc823e19"><span class="section-number-4">4.2.3</span> Specimen source</h4>
+<div id="outline-container-org53c6a46" class="outline-4">
+<h4 id="org53c6a46"><span class="section-number-4">4.2.3</span> Specimen source</h4>
 <div class="outline-text-4" id="text-4-2-3">
 <p>
 We have that: nasopharyngeal swab
@@ -455,8 +455,8 @@ We have that: nasopharyngeal swab
 </div>
 </div>
 
-<div id="outline-container-orge4a0897" class="outline-4">
-<h4 id="orge4a0897"><span class="section-number-4">4.2.4</span> Source database accession</h4>
+<div id="outline-container-org34a9c9a" class="outline-4">
+<h4 id="org34a9c9a"><span class="section-number-4">4.2.4</span> Source database accession</h4>
 <div class="outline-text-4" id="text-4-2-4">
 <p>
 Genbank which is <a href="http://identifiers.org/insdc/MT536190.1#sequence">http://identifiers.org/insdc/MT536190.1#sequence</a>.
@@ -465,8 +465,8 @@ Note we plug in our own identifier MT536190.1.
 </div>
 </div>
 
-<div id="outline-container-org846e1f2" class="outline-4">
-<h4 id="org846e1f2"><span class="section-number-4">4.2.5</span> Strain name</h4>
+<div id="outline-container-orgb572a75" class="outline-4">
+<h4 id="orgb572a75"><span class="section-number-4">4.2.5</span> Strain name</h4>
 <div class="outline-text-4" id="text-4-2-5">
 <p>
 SARS-CoV-2/human/USA/LA-BIE-070/2020
@@ -476,8 +476,8 @@ SARS-CoV-2/human/USA/LA-BIE-070/2020
 </div>
 </div>
 
-<div id="outline-container-org2ac8069" class="outline-2">
-<h2 id="org2ac8069"><span class="section-number-2">5</span> Step 3: Submit to COVID-19 PubSeq</h2>
+<div id="outline-container-org53381c7" class="outline-2">
+<h2 id="org53381c7"><span class="section-number-2">5</span> Step 3: Submit to COVID-19 PubSeq</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Once you have the sequence and the metadata together, hit
@@ -487,8 +487,8 @@ submitted and the workflows should kick in!
 </div>
 
 
-<div id="outline-container-org597030a" class="outline-3">
-<h3 id="org597030a"><span class="section-number-3">5.1</span> Trouble shooting</h3>
+<div id="outline-container-org5d317ac" class="outline-3">
+<h3 id="org5d317ac"><span class="section-number-3">5.1</span> Trouble shooting</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 Ooops. We got an error saying: {"stem":
@@ -502,8 +502,8 @@ entity instead of wiki) the submission went through. Reload the page
 </div>
 </div>
 
-<div id="outline-container-org1877e79" class="outline-2">
-<h2 id="org1877e79"><span class="section-number-2">6</span> Step 4: Check output</h2>
+<div id="outline-container-org389fedb" class="outline-2">
+<h2 id="org389fedb"><span class="section-number-2">6</span> Step 4: Check output</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 The current pipeline takes some time to complete! Once it completes
@@ -514,8 +514,8 @@ in.
 </div>
 </div>
 
-<div id="outline-container-org0238864" class="outline-2">
-<h2 id="org0238864"><span class="section-number-2">7</span> Bulk sequence uploader</h2>
+<div id="outline-container-org3fb7fc8" class="outline-2">
+<h2 id="org3fb7fc8"><span class="section-number-2">7</span> Bulk sequence uploader</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Above steps require a manual upload of one sequence with metadata.
@@ -622,8 +622,8 @@ a little bit of web searching may be required or <a href="./contact">contact</a>
 </p>
 </div>
 
-<div id="outline-container-orgf9293b4" class="outline-3">
-<h3 id="orgf9293b4"><span class="section-number-3">7.1</span> Run the uploader (CLI)</h3>
+<div id="outline-container-org3514567" class="outline-3">
+<h3 id="org3514567"><span class="section-number-3">7.1</span> Run the uploader (CLI)</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 Installing with pip you should be able to run
@@ -675,8 +675,8 @@ The web interface using this exact same script so it should just work
 </div>
 </div>
 
-<div id="outline-container-orgbf47dd6" class="outline-3">
-<h3 id="orgbf47dd6"><span class="section-number-3">7.2</span> Example: uploading bulk GenBank sequences</h3>
+<div id="outline-container-orgc97a930" class="outline-3">
+<h3 id="orgc97a930"><span class="section-number-3">7.2</span> Example: uploading bulk GenBank sequences</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 At this point, most of PubSeq's FASTA files come from NCBI <a href="https://www.ncbi.nlm.nih.gov/genbank/">GenBank</a>.
@@ -698,8 +698,8 @@ The scripts to pull data from GenBank are in
 </p>
 </div>
 
-<div id="outline-container-org78f9e9b" class="outline-4">
-<h4 id="org78f9e9b"><span class="section-number-4">7.2.1</span> List PubSeq IDs</h4>
+<div id="outline-container-orga76159c" class="outline-4">
+<h4 id="orga76159c"><span class="section-number-4">7.2.1</span> List PubSeq IDs</h4>
 <div class="outline-text-4" id="text-7-2-1">
 <p>
 The first script to run fetches a <a href="https://github.com/pubseq/bh20-seq-resource/blob/master/workflows/pubseq/pubseq-fetch-ids">list of Pubseq IDs</a> to make sure we
@@ -724,8 +724,8 @@ showing all GenBank IDs stored in PubSeq.
 </div>
 </div>
 
-<div id="outline-container-org27826ee" class="outline-4">
-<h4 id="org27826ee"><span class="section-number-4">7.2.2</span> Fetch GenBank IDs</h4>
+<div id="outline-container-org89757c4" class="outline-4">
+<h4 id="org89757c4"><span class="section-number-4">7.2.2</span> Fetch GenBank IDs</h4>
 <div class="outline-text-4" id="text-7-2-2">
 <p>
 In the next step we essentially follow the PubSeq <a href="https://github.com/pubseq/bh20-seq-resource/tree/master/workflows/pull-data/genbank">GenBank README</a> and
@@ -744,8 +744,8 @@ script
 </div>
 </div>
 
-<div id="outline-container-org0b2321f" class="outline-4">
-<h4 id="org0b2321f"><span class="section-number-4">7.2.3</span> Fetch GenBank XML</h4>
+<div id="outline-container-org538bf18" class="outline-4">
+<h4 id="org538bf18"><span class="section-number-4">7.2.3</span> Fetch GenBank XML</h4>
 <div class="outline-text-4" id="text-7-2-3">
 <p>
 Here we fetch the XML files for all the IDs that are listed in
@@ -757,34 +757,156 @@ genbank_ids.txt. This is a slow procedure!
 python3 update-from-genbank.py --ids genbank_ids.txt --out ~/tmp/genbank
 </pre>
 </div>
+
+<p>
+Sometimes the download stops. In that case you can restart the
+download with above command. It will only fetch the missing files.
+With the same <code>genbank_ids.txt</code> file that should work fine.
+</p>
 </div>
 </div>
 
-<div id="outline-container-orge25471e" class="outline-4">
-<h4 id="orge25471e"><span class="section-number-4">7.2.4</span> Transform and normalize data for uploading</h4>
+<div id="outline-container-orgf96d0f6" class="outline-4">
+<h4 id="orgf96d0f6"><span class="section-number-4">7.2.4</span> Transform and normalize data for uploading</h4>
 <div class="outline-text-4" id="text-7-2-4">
 <p>
 Now we have the GenBank XML data we can start transforming
+and the metadata
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">--- Transform to YAML/JSON and FASTA</span>
-python3 transform-genbank-xml2yamlfa.py --out ~/tmp/pubseq file(s)
+<pre class="src src-sh"><span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">--- Basic transform to YAML/JSON and FASTA</span>
+python3 transform-genbank-xml2yamlfa.py --out ~/tmp/pubseq [XML file(s)]
+</pre>
+</div>
 
-<span style="color: #b0bec5;"># </span><span style="color: #b0bec5;">--- Normalize data (validation mode)</span>
-python3 ../../workflows/tools/normalize-yamlfa.py -s ~/tmp/yamlfa/state.json --species ncbi_host_species.csv --specimen specimen.csv --validate
+<p>
+which also writes a file named 'state.json' in the output directory.
+This file contains all errors and warnings! For example we find
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span style="color: #9ccc65;">"MT665288"</span>: {
+    <span style="color: #9ccc65;">"valid"</span>: <span style="color: #8bc34a;">false</span>,
+    <span style="color: #9ccc65;">"error"</span>: <span style="color: #9ccc65;">"Sequence too short for MT665288"</span>,
+    <span style="color: #9ccc65;">"warnings"</span>: [
+        <span style="color: #9ccc65;">"Missing host_species"</span>,
+        <span style="color: #9ccc65;">"Missing collection_location"</span>,
+        <span style="color: #9ccc65;">"Missing collection_date"</span>,
+        <span style="color: #9ccc65;">"Missing host_species"</span>,
+        <span style="color: #9ccc65;">"Missing specimen_source"</span>
+    ]
+},
+</pre>
+</div>
+
+<p>
+Ouch! Not only does it fail the sequence, it also fails on other
+metadata fields. This will mean this record gets dropped.
+</p>
+
+<p>
+Note we split transformation from normalizing metadata. Mostly
+because transformation is related to the source of the data. In this case
+we transform GenBank XML to first stage JSON.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org274ef05" class="outline-4">
+<h4 id="org274ef05"><span class="section-number-4">7.2.5</span> Normalize metadata</h4>
+<div class="outline-text-4" id="text-7-2-5">
+<p>
+In the next stage we adjust and normalize the metadata so it can be
+transformed to RDF. This transformation checks data and transforms
+ambiguous statements into 'absolute' statements where possible.  For
+example human and Homo sapiens mean the same thing and translate to
+the unambiguous URI <a href="http://purl.obolibrary.org/obo/NCBITaxon_9606">http://purl.obolibrary.org/obo/NCBITaxon_9606</a>.
+</p>
+
+<p>
+Note that, in addition to the earlier state.json file, which refers to
+the input YAML/JSON files, we pass in two optional comma separated
+transformation files which are simple mappings, e.g. for above
+</p>
+
+<pre class="example">
+Homo sapiens,http://purl.obolibrary.org/obo/NCBITaxon_9606
+</pre>
+
+
+<p>
+Do note, however, that we are increasingly moving to handling such
+mappings in regex <a href="https://github.com/pubseq/bh20-seq-resource/blob/master/workflows/pubseq/normalize/mapping.py">code</a>.
+</p>
+
+<p>
+To run the normalization use the command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">python3 normalize-step1.py -s ~/tmp/yamlfa/state.json --species ncbi_host_species.csv --specimen specimen.csv --validate
+</pre>
+</div>
+
+<p>
+To work on one single JSON/YAML file/record, you can pass in the ID,
+e.g.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">python3 normalize-step1.py -s ~/tmp/new-yamlfa-orig.2/state.json --validate MW084447
+</pre>
+</div>
+
+<p>
+To write output specify the output dir:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">python3 normalize-step1.py -s ~/tmp/new-yamlfa-orig.2/state.json --validate MW084447 --out ~/tmp/test
+</pre>
+</div>
+
+<p>
+and run a diff with, for example,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">colordiff ~/tmp/new-yamlfa-orig.2/MW084447.json ~/tmp/test/MW084447.json
+</pre>
+</div>
+
+<p>
+or a more fancy version using the excellent <a href="https://stedolan.github.io/jq/">jq tool</a>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">colordiff &lt;(jq -S . ~/tmp/new-yamlfa-orig.2/MW084447.json) &lt;(jq -S . ~/tmp/test/MW084447.json )
+</pre>
+</div>
+
+<p>
+which shows the transformation very clearly:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-diff"><span style="color: #b39ddb;">3c3</span>
+<span style="color: #aa2222;">&lt;</span><span style="color: #ff9800;">     "host_species": "</span><span style="color: #ff9800;">Homo sapiens</span><span style="color: #ff9800;">"</span>
+<span style="color: #b39ddb;">---</span>
+&gt;     "host_species": "<span style="color: #8bc34a;">http://purl.obolibrary.org/obo/NCBITaxon_9606</span>"
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf6e3acb" class="outline-4">
-<h4 id="orgf6e3acb"><span class="section-number-4">7.2.5</span> Upload data</h4>
+<div id="outline-container-org2351e31" class="outline-4">
+<h4 id="org2351e31"><span class="section-number-4">7.2.6</span> Upload data</h4>
 </div>
 </div>
 
-<div id="outline-container-orgda2e083" class="outline-3">
-<h3 id="orgda2e083"><span class="section-number-3">7.3</span> Example: preparing metadata from spreadsheets</h3>
+<div id="outline-container-org5985f41" class="outline-3">
+<h3 id="org5985f41"><span class="section-number-3">7.3</span> Example: preparing metadata from spreadsheets</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 Usually, metadata are available in a tabular format, such as
@@ -821,7 +943,7 @@ sequences this way writing a few lines of Python <a href="https://github.com/arv
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2021-04-07 Wed 03:54</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2021-05-09 Sun 02:52</small>.
 </div>
 </body>
 </html>

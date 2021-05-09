@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-04-26 Mon 02:25 -->
+<!-- 2021-05-09 Sun 02:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>COVID-19 PubSeq Location Data</title>
@@ -224,40 +224,41 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org5559f32">1. Introduction</a></li>
-<li><a href="#org2843661">2. Location data</a>
+<li><a href="#org94abea9">1. Introduction</a></li>
+<li><a href="#orgce4b90e">2. Location data</a>
 <ul>
-<li><a href="#orgd591aea">2.1. Why use WikiData URIs instead of GPS coordinates?</a></li>
+<li><a href="#orgc23edc6">2.1. Why use WikiData URIs instead of GPS coordinates?</a></li>
 </ul>
 </li>
-<li><a href="#org73b6c3a">3. Normalizing location data</a>
+<li><a href="#orgd5e3b90">3. Normalizing location data</a>
 <ul>
-<li><a href="#org9452b70">3.1. Simple search Wikidata</a>
+<li><a href="#org9be5cb3">3.1. Simple search Wikidata</a>
 <ul>
-<li><a href="#org90e875d">3.1.1. Fetch all 180 odd countries with aliases</a></li>
-<li><a href="#orgb755685">3.1.2. Fetch all places with coordinates (no aliases)</a></li>
-<li><a href="#orgf569871">3.1.3. Fetch all states</a></li>
+<li><a href="#org655df82">3.1.1. Fetch all 180 odd countries with aliases</a></li>
+<li><a href="#org384ed61">3.1.2. Fetch all places with coordinates (no aliases)</a></li>
+<li><a href="#orgb095110">3.1.3. Fetch all states</a></li>
 </ul>
 </li>
-<li><a href="#org1db088a">3.2. Start normalizing geo-location</a>
+<li><a href="#orgd1944f4">3.2. Start normalizing geo-location</a>
 <ul>
-<li><a href="#orgc02c096">3.2.1. Normalize by country</a></li>
-<li><a href="#org35cadc3">3.2.2. Normalize by state</a></li>
-<li><a href="#org1c142a5">3.2.3. Refine location</a></li>
+<li><a href="#orgf2dc5c1">3.2.1. Normalize by country</a></li>
+<li><a href="#org0f10913">3.2.2. Normalize by state</a></li>
+<li><a href="#org63a24c2">3.2.3. Refine location</a></li>
+<li><a href="#org606632f">3.2.4. Track location coordinates</a></li>
 </ul>
 </li>
-<li><a href="#org56a5937">3.3. RegEx search known items</a></li>
-<li><a href="#org8f974fe">3.4. Fuzzy search Wikidata</a></li>
+<li><a href="#org45a54cd">3.3. RegEx search known items</a></li>
+<li><a href="#orgfc6243f">3.4. Fuzzy search Wikidata</a></li>
 </ul>
 </li>
-<li><a href="#org1dd9aaa">4. Shape expressions (ShEx) and validation</a></li>
-<li><a href="#org99d0c7e">5. Missing data</a></li>
+<li><a href="#orgf4c8c74">4. Shape expressions (ShEx) and validation</a></li>
+<li><a href="#orgd31fe08">5. Missing data</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org5559f32" class="outline-2">
-<h2 id="org5559f32"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-org94abea9" class="outline-2">
+<h2 id="org94abea9"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Normalized location metadata is one of the most valuable features of
@@ -267,8 +268,8 @@ why it is not so easy!
 </div>
 </div>
 
-<div id="outline-container-org2843661" class="outline-2">
-<h2 id="org2843661"><span class="section-number-2">2</span> Location data</h2>
+<div id="outline-container-orgce4b90e" class="outline-2">
+<h2 id="orgce4b90e"><span class="section-number-2">2</span> Location data</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 When data gets uploaded to central repositories some metadata needs to
@@ -303,8 +304,8 @@ sensible way for research!
 </p>
 </div>
 
-<div id="outline-container-orgd591aea" class="outline-3">
-<h3 id="orgd591aea"><span class="section-number-3">2.1</span> Why use WikiData URIs instead of GPS coordinates?</h3>
+<div id="outline-container-orgc23edc6" class="outline-3">
+<h3 id="orgc23edc6"><span class="section-number-3">2.1</span> Why use WikiData URIs instead of GPS coordinates?</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 A wikidata URI gives access to a lot of extra information that can be
@@ -356,8 +357,8 @@ useful.
 </div>
 </div>
 
-<div id="outline-container-org73b6c3a" class="outline-2">
-<h2 id="org73b6c3a"><span class="section-number-2">3</span> Normalizing location data</h2>
+<div id="outline-container-orgd5e3b90" class="outline-2">
+<h2 id="orgd5e3b90"><span class="section-number-2">3</span> Normalizing location data</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Wikidata is the stable and trusted backend for Wikipedia, a massive
@@ -413,8 +414,8 @@ repository, but online on IPFS.
 </p>
 </div>
 
-<div id="outline-container-org9452b70" class="outline-3">
-<h3 id="org9452b70"><span class="section-number-3">3.1</span> Simple search Wikidata</h3>
+<div id="outline-container-org9be5cb3" class="outline-3">
+<h3 id="org9be5cb3"><span class="section-number-3">3.1</span> Simple search Wikidata</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 We can dump all known contries/states/states/cities from Wikidata into
@@ -422,8 +423,8 @@ files.
 </p>
 </div>
 
-<div id="outline-container-org90e875d" class="outline-4">
-<h4 id="org90e875d"><span class="section-number-4">3.1.1</span> Fetch all 180 odd countries with aliases</h4>
+<div id="outline-container-org655df82" class="outline-4">
+<h4 id="org655df82"><span class="section-number-4">3.1.1</span> Fetch all 180 odd countries with aliases</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #fff59d;">SELECT</span> <span style="color: #fff59d;">DISTINCT</span> * <span style="color: #fff59d;">WHERE</span> {
@@ -474,8 +475,8 @@ Save the file as data/wikidata/country_aliases.tsv.
 </div>
 </div>
 
-<div id="outline-container-orgb755685" class="outline-4">
-<h4 id="orgb755685"><span class="section-number-4">3.1.2</span> Fetch all places with coordinates (no aliases)</h4>
+<div id="outline-container-org384ed61" class="outline-4">
+<h4 id="org384ed61"><span class="section-number-4">3.1.2</span> Fetch all places with coordinates (no aliases)</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #fff59d;">select</span> <span style="color: #fff59d;">DISTINCT</span> * <span style="color: #fff59d;">where</span> {
@@ -545,8 +546,8 @@ Save file as data/wikidata/places.tsv.
 </div>
 </div>
 
-<div id="outline-container-orgf569871" class="outline-4">
-<h4 id="orgf569871"><span class="section-number-4">3.1.3</span> Fetch all states</h4>
+<div id="outline-container-orgb095110" class="outline-4">
+<h4 id="orgb095110"><span class="section-number-4">3.1.3</span> Fetch all states</h4>
 <div class="outline-text-4" id="text-3-1-3">
 <p>
 This query lists all USA states:
@@ -614,12 +615,12 @@ Save file as data/wikidata/regions.csv.gz
 </div>
 </div>
 
-<div id="outline-container-org1db088a" class="outline-3">
-<h3 id="org1db088a"><span class="section-number-3">3.2</span> Start normalizing geo-location</h3>
+<div id="outline-container-orgd1944f4" class="outline-3">
+<h3 id="orgd1944f4"><span class="section-number-3">3.2</span> Start normalizing geo-location</h3>
 <div class="outline-text-3" id="text-3-2">
 </div>
-<div id="outline-container-orgc02c096" class="outline-4">
-<h4 id="orgc02c096"><span class="section-number-4">3.2.1</span> Normalize by country</h4>
+<div id="outline-container-orgf2dc5c1" class="outline-4">
+<h4 id="orgf2dc5c1"><span class="section-number-4">3.2.1</span> Normalize by country</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
 Now we have three data files from wikidata with place information we
@@ -663,12 +664,12 @@ be found in normalize_geo.rb.
 </div>
 </div>
 
-<div id="outline-container-org35cadc3" class="outline-4">
-<h4 id="org35cadc3"><span class="section-number-4">3.2.2</span> Normalize by state</h4>
+<div id="outline-container-org0f10913" class="outline-4">
+<h4 id="org0f10913"><span class="section-number-4">3.2.2</span> Normalize by state</h4>
 </div>
 
-<div id="outline-container-org1c142a5" class="outline-4">
-<h4 id="org1c142a5"><span class="section-number-4">3.2.3</span> Refine location</h4>
+<div id="outline-container-org63a24c2" class="outline-4">
+<h4 id="org63a24c2"><span class="section-number-4">3.2.3</span> Refine location</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <p>
 The above step should have normalized country information towards a
@@ -691,11 +692,53 @@ different locations with the same name.
 </p>
 </div>
 </div>
+
+<div id="outline-container-org606632f" class="outline-4">
+<h4 id="org606632f"><span class="section-number-4">3.2.4</span> Track location coordinates</h4>
+<div class="outline-text-4" id="text-3-2-4">
+<p>
+Every location comes with GPS coordinates in wikidata. We capture
+those in triples in our RDF store so we don't have to visit wikidata
+for every query. A triple for Washington looks like
+</p>
+
+<div class="org-src-container">
+<pre class="src src-rdf">&lt;http://www.wikidata.org/entity/Q1223&gt; rdfs:label "Washington" ;
+    wdt:P17 &lt;http://www.wikidata.org/entity/Q30&gt; ;
+    wdt:P625 "Point(-120.5 47.5)" .
+</pre>
 </div>
 
+<p>
+The intermediate JSON record is stored in a file geo.json which is
+used to generate RDF triples and can also be used directly by JSON
+parsers:
+</p>
 
-<div id="outline-container-org56a5937" class="outline-3">
-<h3 id="org56a5937"><span class="section-number-3">3.3</span> RegEx search known items</h3>
+<div class="org-src-container">
+<pre class="src src-json">{
+  "http://www.wikidata.org/entity/Q30": {
+    "name": "United States of America",
+    "geo": "Point(-98.5795 39.828175)"
+  },
+  "http://www.wikidata.org/entity/Q110739": {
+    "name": "Santa Clara County",
+    "geo": "Point(-121.97 37.36)"
+  },
+  "http://www.wikidata.org/entity/Q99": {
+    "name": "California",
+    "geo": "Point(-120.0 37.0)"
+  },
+    ...
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org45a54cd" class="outline-3">
+<h3 id="org45a54cd"><span class="section-number-3">3.3</span> RegEx search known items</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Hand-filtered search
@@ -703,8 +746,8 @@ Hand-filtered search
 </div>
 </div>
 
-<div id="outline-container-org8f974fe" class="outline-3">
-<h3 id="org8f974fe"><span class="section-number-3">3.4</span> Fuzzy search Wikidata</h3>
+<div id="outline-container-orgfc6243f" class="outline-3">
+<h3 id="orgfc6243f"><span class="section-number-3">3.4</span> Fuzzy search Wikidata</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 You wonder how Wikimedia's search box works?  Wikimedia which powers
@@ -785,8 +828,8 @@ possible but I have not figured that out yet:
 </div>
 </div>
 
-<div id="outline-container-org1dd9aaa" class="outline-2">
-<h2 id="org1dd9aaa"><span class="section-number-2">4</span> Shape expressions (ShEx) and validation</h2>
+<div id="outline-container-orgf4c8c74" class="outline-2">
+<h2 id="orgf4c8c74"><span class="section-number-2">4</span> Shape expressions (ShEx) and validation</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 PubSeq uses <a href="http://shex.io/shex-semantics/">ShEx</a> to validate RDF data (see also the <a href="http://shex.io/shex-primer/">primer</a>). This is
@@ -801,8 +844,8 @@ step.
 </div>
 </div>
 
-<div id="outline-container-org99d0c7e" class="outline-2">
-<h2 id="org99d0c7e"><span class="section-number-2">5</span> Missing data</h2>
+<div id="outline-container-orgd31fe08" class="outline-2">
+<h2 id="orgd31fe08"><span class="section-number-2">5</span> Missing data</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 After normalization, the original data we maintain in a field
@@ -814,7 +857,7 @@ missing (RDF favours treating missing data as really missing data).
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2021-04-26 Mon 02:24</small>.
+<hr><small>Created by <a href="http://thebird.nl/">Pjotr Prins</a> (pjotr.public768 at thebird 'dot' nl) using Emacs org-mode and a healthy dose of Lisp!<br />Modified 2021-05-09 Sun 02:46</small>.
 </div>
 </body>
 </html>

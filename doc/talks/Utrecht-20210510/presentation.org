@@ -1,0 +1,186 @@
+#+TITLE:  PubSeq - https://covid19.genenetwork.org/
+#+AUTHOR: Pjotr Prins
+#+EMAIL:  pjotr.public221@thebird.nl
+#+DATE:   2021-05-10
+#+STARTUP:  content
+# Images: C-c C-x C-v
+# org-tree-slide-mode  C-< and C->
+# C-c C-e h h   publish
+
+* PubSeq
+
+- Started in lock down biohackathon
+- 100+ bioinformaticians participated
+- PubSeq started simply as a public data resource with live workflows
+
+* Key points
+
+- No all so-called public repositories are open
+- This hampers research
+
+Scientists call for fully open sharing of coronavirus genome data
+Nature. 2021 Feb;590(7845):195-196.
+
+- Improved pandemic monitoring:
+
+EMBL-EBI and partners launch new COVID-19 Data Portal
+http://www.covid19dataportal.org
+
+* PubSeq
+
+- Make data available for analysis
+
+Do public databases, such as EBI/ENA, make PubSeq irrelevant?
+
+- PubSeq aggregates data
+- PubSeq federates data
+- PubSeq adds metadata
+- PubSeq normalises metadata
+- PubSeq provides a metadata search engine
+
+* Geo location
+
+https://covid19.genenetwork.org/resource/MT951170.1
+
+https://collections.lugli.arvadosapi.com/c=lugli-4zz18-shna9dz7wbrt1et/sequence.fasta
+https://collections.lugli.arvadosapi.com/c=lugli-4zz18-shna9dz7wbrt1et/metadata.yaml
+https://www.ncbi.nlm.nih.gov/nuccore/MT951170.1#sequence
+
+There exist many opportunities for ambiguous entries, such as Memphis
+TN and Memphis IN. We decided to settle for Wikidata URIs because (1)
+they are unambiguous and (2) allow for fetching more information, such
+as population size, density, county, country, and GPS
+coordinates.
+
+https://www.wikidata.org/wiki/Q16563 => Memphis Tennessee
+
+* Other normalisation/disambiguation
+
+- Sampling
+- Sequencing platform
+- Protocol
+- Analysis (tools)
+
+* Add value
+
+- List important mutations
+- Find nearest neighbour
+- Phylogeny
+- Pangenome - PubSeq only
+- Live workflows - PubSeq only
+
+* French hacking
+
+Vite ma dose!
+https://www.euronews.com/2021/04/05/as-france-ramps-up-vaccine-rollout-some-find-ways-to-jump-the-queue
+
+* PubSeq is about hacking!
+
+- PubSeq is both a 'hackers' resource and a resource with impact
+- Anyone can join, anyone can contribute
+- Miles Benton & Joep de Ligt working on affordable hardware
+
+* PubSeq - Current mission!
+
+Mission: global on-the-spot variant detection using cheap technology
+   and public compute
+
+What is needed...
+
+- Oxford Nanopore on the spot sequencing - excellent results!
+- Mini-GPU does base-calling locally
+- Upload sequence into PubSeq
+- Triggers workflows for computation
+- We can send these mini-labs to India, Africa, anywhere!
+
+* Why do we need public data?
+
+- Detect new mutations
+- Detect active mutations
+- Do we really know what is happening in India or Africa?
+
+* Data
+
+- Make data as private as it needs to be
+  (Mark Wilkinson)
+
+- Make data as public as possible
+  (same thing)
+
+* Viral data
+
+- Q: Does viral data need to be protected?
+- Q: Does human data need to be protected?
+- Q: Does human clinical data need to be protected?
+
+* Why online compute?
+
+To analyse and mine data effectively
+
+- Online analysis helps sequencing centres that lack bioinformatics
+- Funding is for sequencing, not for analysis
+- Reproducible analysis and re-analysis of data
+
+* Why public data?
+
+To make online compute possible.
+
+- Without public data there is no open sharing (try Nextstrain)
+- Without public data there is no online compute
+- Without public data there is no easy sharing of methods/workflows:
+  everyone reinvents the wheel
+- Without public data analysis is hard and often impossible to reproduce
+
+During a pandemic this is very visible - but it really is a long term
+problem we need to address
+
+* PubSeq
+
+Current setup:
+
+- Online compute using common workflow language (CWL)
+- Cloud platform sponsored by Amazon OpenData, AWS and Curii
+- Virtual HPC at SARA (Sas Swart & Michael Crusoe)
+- Permanent identifiers and federated data using IPFS
+- Amazon Open Data initiative (TCGA, NCBI Sequence Read Archive etc)
+
+* How can I contribute?
+
+- Analyse data
+- Add features
+- This is all about being an open initiative
+
+Matrix/element chat:
+
+https://matrix.to/#/!kyAxaAAAOgUKAMmXRz:matrix.org?via=matrix.org
+
+* Take Home Messages
+
+1. FAIR data should be as free and open as possible
+   - FAIR does not mean open
+   - So called 'public' repositories are often not free and open
+   - Even proper public repositories, such as GenBank and EBI/ENA lack
+     support for metadata and online compute
+2. PubSeq is about query-able metadata
+3. PubSeq is about online reproducible workflows
+4. Mission: global on-the-spot variant detection using cheap
+   technology and public cloud
+
+* Thank you
+
+Over 100 people contributed to PubSeq in some way. I particularly want
+to thank:
+
+- Andrea Guarracino (hacker extra ordinaire)
+- Peter Amstutz & Sasha Wait Zaranek (Curii, CWL workflows)
+- Joep de Ligt & Miles Benton (Open science, live analysis)
+- Erik Garrison (Pangenomes, all to all comparisons)
+- Michael Crusoe (CWL, SARA)
+- Thomas Liener (RDF'ing, normalization)
+- Jerven Bolleman (RDF, SPODGI)
+- Mark Wilkinson (FAIR)
+- Bonface Munyoki & Adam Novak (web sites)
+- Njagi Mwaniki (phylogeny, pangenomes)
+- Erin Chu, Prasun Anand (Amazon Open Data, AWS Cloud)
+
+Sponsors: UTHSC, ESR, Amazon, Curii, ... & NCBI/GenBank, EBI/ENA

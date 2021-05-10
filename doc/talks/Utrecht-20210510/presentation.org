@@ -42,9 +42,9 @@ Do public databases, such as EBI/ENA, make PubSeq irrelevant?
 
 https://covid19.genenetwork.org/resource/MT951170.1
 
-https://collections.lugli.arvadosapi.com/c=lugli-4zz18-shna9dz7wbrt1et/sequence.fasta
-https://collections.lugli.arvadosapi.com/c=lugli-4zz18-shna9dz7wbrt1et/metadata.yaml
-https://www.ncbi.nlm.nih.gov/nuccore/MT951170.1#sequence
+- https://collections.lugli.arvadosapi.com/c=lugli-4zz18-shna9dz7wbrt1et/sequence.fasta
+- https://collections.lugli.arvadosapi.com/c=lugli-4zz18-shna9dz7wbrt1et/metadata.yaml
+- https://www.ncbi.nlm.nih.gov/nuccore/MT951170.1#sequence
 
 There exist many opportunities for ambiguous entries, such as Memphis
 TN and Memphis IN. We decided to settle for Wikidata URIs because (1)
@@ -61,6 +61,11 @@ https://www.wikidata.org/wiki/Q16563 => Memphis Tennessee
 - Protocol
 - Analysis (tools)
 
+More metadata?
+
+- Environment
+- Clinical
+
 * Add value
 
 - List important mutations
@@ -72,7 +77,7 @@ https://www.wikidata.org/wiki/Q16563 => Memphis Tennessee
 * French hacking
 
 Vite ma dose!
-https://www.euronews.com/2021/04/05/as-france-ramps-up-vaccine-rollout-some-find-ways-to-jump-the-queue
+- https://www.euronews.com/2021/04/05/as-france-ramps-up-vaccine-rollout-some-find-ways-to-jump-the-queue
 
 * PubSeq is about hacking!
 
@@ -95,9 +100,13 @@ What is needed...
 
 * Why do we need public data?
 
-- Detect new mutations
-- Detect active mutations
+- Remember they said the virus does not mutate?
+- Remember they said the virus would get weaker?
+
+- Detect new mutations -> testing
+- Detect active mutations -> vaccins
 - Do we really know what is happening in India or Africa?
+- Dominant mutants will surface - eventually
 
 * Data
 
@@ -144,11 +153,20 @@ Current setup:
 - Permanent identifiers and federated data using IPFS
 - Amazon Open Data initiative (TCGA, NCBI Sequence Read Archive etc)
 
+* Innovation
+
+PubSeq as an initiative triggered innovation:
+
+- Pangenome work on SARS-CoV-2 - methods for large scale phylogeny
+- Demonstration platform for best practices (CWL, RDF, Arvados)
+- Metadata normalisation (Elixir/EBI)
+
 * How can I contribute?
 
 - Analyse data
-- Add features
+- Add features; fix stuff
 - This is all about being an open initiative
+- Data uploads: GenBank & EBI exports
 
 Matrix/element chat:
 
@@ -179,6 +197,7 @@ to thank:
 - Thomas Liener (RDF'ing, normalization)
 - Jerven Bolleman (RDF, SPODGI)
 - Mark Wilkinson (FAIR)
+- Alex Kanitz (GA4GH)
 - Bonface Munyoki & Adam Novak (web sites)
 - Njagi Mwaniki (phylogeny, pangenomes)
 - Erin Chu, Prasun Anand (Amazon Open Data, AWS Cloud)

@@ -7,7 +7,11 @@ $namespaces:
   obo: http://purl.obolibrary.org/obo/
   sio: http://semanticscience.org/resource/
   edam: http://edamontology.org/
+  # Vocabulary for clinical care, translational and basic research,
+  # and public information and administrative activities
   evs: http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#
+  # Software Ontology
+  swo: http://www.ebi.ac.uk/swo/
 
 $graph:
 
@@ -122,10 +126,29 @@ $graph:
       doc: Date when the sample was taken
       type: string
       jsonldPredicate:
-        _id: http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C25164
+        _id: https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=C164024
     collection_location:
       doc: Geographical location where the sample was collected as wikidata reference, e.g. http://www.wikidata.org/entity/Q148 (China)
-      type: string
+      type: string?
+      jsonldPredicate:
+        _id: http://purl.obolibrary.org/obo/GAZ_00000448
+        _type: "@id"
+        noLinkCheck: true
+    original_collection_location:
+      doc: Original geographical location where the sample was collected as a string
+      type: string?
+      jsonldPredicate:
+        _id: http://purl.obolibrary.org/obo/GAZ_00000448
+    country:
+      doc: Origina country location
+      type: string?
+      jsonldPredicate:
+        _id: http://purl.obolibrary.org/obo/GAZ_00000448
+        _type: "@id"
+        noLinkCheck: true
+    place:
+      doc: Origina country location
+      type: string?
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/GAZ_00000448
         _type: "@id"
@@ -157,6 +180,11 @@ $graph:
       type: string?
       jsonldPredicate:
           _id: http://semanticscience.org/resource/SIO_001167
+    database:
+      doc: URI to database, e.g. https://www.ncbi.nlm.nih.gov/genbank/
+      type: string?
+      jsonldPredicate:
+          _id: https://schema.org/maintainer
     source_database_accession:
       doc: If data is deposit at a public resource (e.g. Genbank, ENA) enter the Accession Id here. Please use a resolveable URL (e.g. http://identifiers.org/insdc/LC522350.1#sequence)
       type: string[]?
@@ -269,6 +297,7 @@ $graph:
       jsonldPredicate:
         _id: http://semanticscience.org/resource/SIO_001167
 
+
 - name: MainSchema
   type: record
   documentRoot: true
@@ -286,3 +315,14 @@ $graph:
         _id: "@id"
         _type: "@id"
         noLinkCheck: true
+    update_date:
+      doc: Date when record was last updated
+      type: string
+      jsonldPredicate:
+        _id: https://schema.org/dateModified
+    warnings:
+      doc: List processing warnings
+      type: string[]?
+      jsonldPredicate:
+        _id: http://www.ebi.ac.uk/swo/objective/SWO_7000012
+        _type: string?

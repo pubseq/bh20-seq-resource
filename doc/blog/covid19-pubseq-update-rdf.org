@@ -17,6 +17,7 @@ JSON files.
  - [[#introduction][Introduction]]
  - [[#rdf-linked-data][RDF linked data]]
  - [[#preparing-the-data][Preparing the data]]
+ - [[#run-schema-salad][Run schema-salad]]
  - [[#create-a-unique-identifier][Create a unique identifier]]
 
 * RDF linked data
@@ -32,7 +33,63 @@ steps. The final JSON and FASTA records get uploaded to PubSeq
 repositories and from this data we create a queriable RDF database
 image. That is the basic architecture.
 
+* Run schema-salad
+
+After generating the JSON using the steps in =./workflows/pubseq/= set
+up the environment and run schema salad to validate and generate RDF
+
+#+begin_src sh
+   .guix-run
+   schema-salad-tool --print-rdf bh20sequploader/bh20seq-schema.yml MW184422.1.json
+#+end_src
+
+This will output turtle that looks like
+
+#+begin_example
+@prefix MainSchema: <http://biohackathon.org/bh20-seq-schema#MainSchema/> .
+@prefix cc: <https://creativecommons.org/ns#> .
+@prefix dc: <http://purl.org/metadata/dublin_core_elements#> .
+@prefix edam: <http://edamontology.org/> .
+@prefix efo: <http://www.ebi.ac.uk/efo/> .
+@prefix evs: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#> .
+@prefix ns1: <http://www.ebi.ac.uk/swo/objective/> .
+@prefix ns2: <https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit&code=> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sch: <https://schema.org/> .
+@prefix sio: <http://semanticscience.org/resource/> .
+@prefix swo: <http://www.ebi.ac.uk/swo/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<file:///export/local/home/wrk/iwrk/opensource/code/pangenome/bh20-seq-resource/placeholder> MainSchema:host [ efo:EFO_0000532 obo:NCBITaxon_9606 ] ;
+    MainSchema:sample [ edam:data_2091 <http://identifiers.org/insdc/MW184422.1#sequence> ;
+            obo:GAZ_00000448 <file:///export/local/home/wrk/iwrk/opensource/code/pangenome/bh20-seq-resource/AUSTRALIA>,
+                <file:///export/local/home/wrk/iwrk/opensource/code/pangenome/bh20-seq-resource/Victoria>,
+                <http://www.wikidata.org/entity/Q36687>,
+                "Australia: Victoria" ;
+            sio:SIO_000115 "MW184422.1" ;
+            ns2:C164024 "2020-08-03" ;
+            sch:maintainer "https://www.ncbi.nlm.nih.gov/genbank/" ] ;
+    MainSchema:submitter [ obo:NCIT_C42781 "Caly,L.",
+                "Druce,J.",
+                "Sait,M.",
+                "Schultz,M.B.",
+                "Seemann,T.",
+                "Sherry,N." ;
+            sio:SIO_000116 " MDU-PHL" ;
+            sio:SIO_000172 "The Peter Doherty Institute for Infection and Immunity, 792 Elizabeth Street, Melbourne, Vic 3000, Australia" ] ;
+    MainSchema:technology [ obo:GENEPIO_0000090 obo:GENEPIO_0002028 ;
+            obo:NCIT_C153598 obo:OBI_0000759 ;
+            efo:EFO_0004917 "ARTIC v. 3" ] ;
+    MainSchema:virus [ edam:data_1875 obo:NCBITaxon_2697049 ;
+            sio:SIO_010055 "SARS-CoV-2/human/AUS/VIC15702/2020" ] ;
+    ns1:SWO_7000012 "Missing specimen_source" ;
+    sch:dateModified "2020-10-28" .
+#+end_example
+
 * Create a unique identifier
 
 All JSON and FASTA files get uploaded to IPFS with a mirror on
-AWS Open Data. See
+AWS Open Data.

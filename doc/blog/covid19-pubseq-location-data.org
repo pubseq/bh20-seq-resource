@@ -434,8 +434,8 @@ LIMIT 10
 
 * Shape expressions (ShEx) and validation
 
-PubSeq uses [[http://shex.io/shex-semantics/][ShEx]] to validate RDF data (see also the [[http://shex.io/shex-primer/][primer]]). This is
-particularly useful for data coming from outside. Before data gets
+PubSeq uses [[http://shex.io/shex-semantics/][ShEx]] to validate JSON/RDF data (see also the [[http://shex.io/shex-primer/][primer]]). This
+is particularly useful for data coming from outside. Before data gets
 accepted by PubSeq it first needs to go through a ShEx validation
 step.
 

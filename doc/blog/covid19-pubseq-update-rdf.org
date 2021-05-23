@@ -1,0 +1,38 @@
+#+TITLE: COVID-19 PubSeq Update RDF
+#+AUTHOR: Pjotr Prins
+# C-c C-e h h   publish
+# C-c !         insert date (use . for active agenda, C-u C-c ! for date, C-u C-c . for time)
+# C-c C-t       task rotate
+
+#+HTML_HEAD: <link rel="Blog stylesheet" type="text/css" href="blog.css" />
+#+OPTIONS: ^:nil
+
+* Introduction
+
+Normalized metadata is one of the most valuable features of PubSeq. In
+this document we explain how we create an RDF store from normalized
+JSON files.
+
+* Table of Contents                                                     :TOC:noexport:
+ - [[#introduction][Introduction]]
+ - [[#rdf-linked-data][RDF linked data]]
+ - [[#preparing-the-data][Preparing the data]]
+ - [[#create-a-unique-identifier][Create a unique identifier]]
+
+* RDF linked data
+
+RDF linked data elegantly and unambiguously represents data that is
+organised in a graph database. In this case we use [[https://en.wikipedia.org/wiki/Virtuoso_Universal_Server][Virtuoso-OSE]] as a
+graph database with our own [[http://sparql.genenetwork.org/sparql/][SPARQL]] end point.
+
+* Preparing the data
+
+PubSeq imports GenBank data and normalizes that data in multiple
+steps. The final JSON and FASTA records get uploaded to PubSeq
+repositories and from this data we create a queriable RDF database
+image. That is the basic architecture.
+
+* Create a unique identifier
+
+All JSON and FASTA files get uploaded to IPFS with a mirror on
+AWS Open Data. See

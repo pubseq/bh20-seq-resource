@@ -140,26 +140,23 @@ $graph:
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/GAZ_00000448
     country:
-      doc: Origina country location
+      doc: Original country location as text
       type: string?
       jsonldPredicate:
-        _id: http://purl.obolibrary.org/obo/GAZ_00000448
-        _type: "@id"
-        noLinkCheck: true
+        _id: http://purl.obolibrary.org/obo/OBI_0001627
     place:
-      doc: Origina country location
+      doc: Original place as text
       type: string?
       jsonldPredicate:
-        _id: http://purl.obolibrary.org/obo/GAZ_00000448
-        _type: "@id"
-        noLinkCheck: true
+        # Geographical region
+        _id: http://purl.obolibrary.org/obo/GEO_000000372
     collector_name:
       doc: Name of the person that took the sample
       type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/OBI_0001895
     collecting_institution:
-      doc: Institute that was responsible for sampeling
+      doc: Institute that was responsible for sampling
       type: string?
       jsonldPredicate:
           _id: http://purl.obolibrary.org/obo/NCIT_C41206
@@ -285,6 +282,7 @@ $graph:
       jsonldPredicate:
         _id: http://purl.obolibrary.org/obo/NCIT_C19026
     submitter_orcid:
+      # An identifier curated by ORCID, Inc. to denote some academic author
       doc: ORCID of the submitter as a full URI, e.g. https://orcid.org/0000-0002-1825-0097
       type: string[]?
       jsonldPredicate:
@@ -321,7 +319,7 @@ $graph:
       jsonldPredicate:
         _id: https://schema.org/dateModified
     warnings:
-      doc: List processing warnings
+      doc: List processing warnings An error correction is a data transformation objective where the aim is to remove (correct for) erroneous contributions arising from the input data, or the transformation itself.
       type: string[]?
       jsonldPredicate:
         _id: http://www.ebi.ac.uk/swo/objective/SWO_7000012

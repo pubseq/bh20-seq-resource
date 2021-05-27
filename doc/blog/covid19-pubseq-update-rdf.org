@@ -19,6 +19,8 @@ JSON files.
  - [[#preparing-the-data][Preparing the data]]
  - [[#run-schema-salad][Run schema-salad]]
  - [[#create-a-unique-identifier][Create a unique identifier]]
+ - [[#extra][Extra]]
+   - [[#notes][Notes]]
 
 * RDF linked data
 
@@ -89,7 +91,25 @@ This will output turtle that looks like
     sch:dateModified "2020-10-28" .
 #+end_example
 
+Schema_salad only can consume one JSON file. To parse many files,
+either concat them into one JSON array, or write a little code as is
+done in [[https://github.com/pubseq/bh20-seq-resource/blob/master/workflows/pangenome-generate/merge-metadata.py][merge metadata]]. This script also replaces the identifier:
+
 * Create a unique identifier
 
-All JSON and FASTA files get uploaded to IPFS with a mirror on
-AWS Open Data.
+All JSON and FASTA files get uploaded to IPFS with a mirror on AWS
+Open Data. One of the imporant facilities of PubSeq is the concept of
+a unique identifier that resolves to the sequence data and to the
+metadata. In the original version
+http://covid19.genenetwork.org/resource/MT318827.1 points to the
+record with links into Arvados Keep.
+
+* Extra
+
+Schema salad can also output metadata and other formats.
+
+** Notes
+
+The workflow for RDF generation is in this [[https://github.com/pubseq/bh20-seq-resource/tree/master/workflows/pangenome-generate][workflow]]. Note that
+[[https://github.com/pubseq/bh20-seq-resource/blob/master/workflows/pangenome-generate/merge-metadata.py][merge metadata]] uses the schema to generate Turtle RDF from all
+the YAML/JSON files.

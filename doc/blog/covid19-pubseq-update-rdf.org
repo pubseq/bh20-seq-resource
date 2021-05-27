@@ -98,30 +98,30 @@ done in [[https://github.com/pubseq/bh20-seq-resource/blob/master/workflows/pang
 * Create a unique identifier
 
 All JSON and FASTA files get uploaded to IPFS with a mirror on AWS
-Open Data. One of the imporant facilities of PubSeq is the concept of
+Open Data. One of the important facilities of PubSeq is the concept of
 a unique identifier that resolves to the sequence data and to the
-metadata. In the original version
+metadata. In the original version the URL
 http://covid19.genenetwork.org/resource/MT318827.1 points to the
 record with links into Arvados Keep,
 e.g. https://collections.lugli.arvadosapi.com/c=lugli-4zz18-58sojhix2szyna5/sequence.fasta.
-We also have a copy of this record on AWS OpenData,
+We also have a copies of records on AWS OpenData,
 e.g. https://pubseq-datasets.s3-us-east-2.amazonaws.com/PubSeq-20210407/json/MT232665.json.
-And then we have the same data in federated IPFS(!).
+And then, as a third option, we have the same data in federated IPFS(!).
 
-With RDF it is easy, we just keep adding references and update
-Virtuoso on the fly. The permanent identifier we'll change to
-http://covid19.genenetwork.org/GenBank/MT318827.1 for GenBank
-entries - to avoid name collisions between repositories. This is also
-the URI that is used to uniquely identify records in the PubSeq RDF
-store.
+The good news is that with RDF it is easy: we just keep adding
+references and update Virtuoso on the fly. The permanent identifier
+we'll change to http://covid19.genenetwork.org/GenBank/MT318827.1 for
+GenBank entries - to avoid name collisions between repositories. This
+is also the URI that is used to uniquely identify records in the
+PubSeq RDF store.
 
-What identifier should I use?  For the purpose of sharing it is
-probably best to use the last covid19.genenetwork.org PubSeq
+As a user, what identifier should I use?  For the purpose of sharing
+it is probably best to use the last covid19.genenetwork.org PubSeq
 identifier because it resolves to the latest information. For
 reproducible pipelines it is probably best to use the IPFS URLs as
-they are content addressable and stable. If you are on Arvados, use
-the Keep link. If you are crunching data on AWS it may be best to use
-the AWS OpenData links as they are local.
+they are content addressable, federated, and stable. If you are on
+Arvados, use the Keep link. If you are crunching data on AWS it may be
+best to use the AWS OpenData links as they are local.
 
 * Extra
 

@@ -9,22 +9,22 @@ authors:
     orcid: 0000-0002-8021-9162
     affiliation: 1
   - name: Peter Amstutz
-    orcid: 0000
+    orcid: 0000-0003-3566-7705
     affiliation: 2
   - name: Tazro Ohta
-    orcid: 0000
+    orcid: 0000-0003-3777-5945
     affiliation: 3
   - name: Thomas Liener
-    orcid: https://orcid.org/0000-0003-3257-9937
+    orcid: 0000-0003-3257-9937
     affiliation: 4
   - name: Erik Garrison
-    orcid: 0000
+    orcid: 0000-0003-3821-631X
     affiliation: 5
   - name: Michael R. Crusoe
     orcid: 0000-0002-2961-9670
     affiliation: 6, 2
   - name: Rutger Vos
-    orcid: 0000
+    orcid: 0000-0001-9254-7318
     affiliation: 7
   - name: Michael Heuer
     orcid: 0000-0002-9052-6000
@@ -33,22 +33,22 @@ authors:
     orcid: 0000-0001-5828-047X
     affiliation: 5
   - name: Alex Kanitz
-    orcid: 0000
+    orcid: 0000-0002-3468-0652
     affiliation: 10
   - name: Jerven Bolleman
-    orcid: 0000
+    orcid: 0000-0002-7449-1266
     affiliation: 11
   - name: Joep de Ligt
-    orcid: 0000
+    orcid: 0000-0002-0348-419X
     affiliation: 12
   - name: Bonface Munyoki
-    orcid: 0000
+    orcid: 0000-0002-5049-8658
     affiliation: 13
   - name: Andrea Guarracino
-    orcid: https://orcid.org/0000-0001-9744-131X
+    orcid: 0000-0001-9744-131X
     affiliation: 14
   - name: Danielle Welter
-    orcid: https://orcid.org/0000-0003-1058-2668
+    orcid: 0000-0003-1058-2668
     affiliation: 15
 affiliations:
   - name: Department of Genetics, Genomics and Informatics, The University of Tennessee Health Science Center, Memphis, TN, USA.
